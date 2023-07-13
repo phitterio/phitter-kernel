@@ -1,7 +1,7 @@
 import numpy
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from measurements__ import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS
 
 mpl.style.use("ggplot")
 

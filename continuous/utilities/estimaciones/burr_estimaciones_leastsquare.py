@@ -35,7 +35,9 @@ def equations(initial_solution, data_mean, data_variance, data_median):
 ## Import function to get measurements
 import sys
 sys.path.append("C: / Users / USUARIO / Desktop / Fitter / utilities")
-from measurements_cont.measurements import MEASUREMENTS
+import sys
+    sys.path.append("../measurements")
+    from measurements import MEASUREMENTS
 
 ## Import function to get measurements
 def get_data(direction):

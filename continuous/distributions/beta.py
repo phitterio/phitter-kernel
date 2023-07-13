@@ -104,7 +104,9 @@ class BETA:
     
 if __name__ == "__main__":
     ## Import function to get measurements
-    from measurements_cont.measurements import MEASUREMENTS
+    import sys
+    sys.path.append("../measurements")
+    from measurements import MEASUREMENTS
 
     ## Import function to get measurements
     def get_data(direction):
@@ -124,47 +126,47 @@ if __name__ == "__main__":
     
     
     
-    def equations(initial_solution: list[float], measurements) -> tuple[float]:
-        ## Variables declaration
-        alpha_, beta_, A, B_ = initial_solution
+    # def equations(initial_solution: list[float], measurements) -> tuple[float]:
+    #     ## Variables declaration
+    #     alpha_, beta_, A, B_ = initial_solution
         
-        ## Parametric expected expressions
-        parametric_mean = A + (alpha_ / ( alpha_ + beta_ )) * (B_ - A)
-        parametric_variance = ((alpha_ * beta_) / ((alpha_ + beta_) ** 2 * (alpha_ + beta_ + 1))) * (B_ - A) ** 2
-        parametric_skewness = 2 * ((beta_ - alpha_) / (alpha_ + beta_ + 2)) * math.sqrt((alpha_ + beta_ + 1) / (alpha_ * beta_))
-        parametric_kurtosis = 3 * (((alpha_ + beta_ + 1) * (2 * (alpha_ + beta_) ** 2  + (alpha_ * beta_) * (alpha_ + beta_ - 6))) / ((alpha_ * beta_) * (alpha_ + beta_ + 2) * (alpha_ + beta_ + 3)))
+    #     ## Parametric expected expressions
+    #     parametric_mean = A + (alpha_ / ( alpha_ + beta_ )) * (B_ - A)
+    #     parametric_variance = ((alpha_ * beta_) / ((alpha_ + beta_) ** 2 * (alpha_ + beta_ + 1))) * (B_ - A) ** 2
+    #     parametric_skewness = 2 * ((beta_ - alpha_) / (alpha_ + beta_ + 2)) * math.sqrt((alpha_ + beta_ + 1) / (alpha_ * beta_))
+    #     parametric_kurtosis = 3 * (((alpha_ + beta_ + 1) * (2 * (alpha_ + beta_) ** 2  + (alpha_ * beta_) * (alpha_ + beta_ - 6))) / ((alpha_ * beta_) * (alpha_ + beta_ + 2) * (alpha_ + beta_ + 3)))
         
-        ## System Equations
-        eq1 = parametric_mean - measurements.mean
-        eq2 = parametric_variance - measurements.variance
-        eq3 = parametric_skewness - measurements.skewness
-        eq4 = parametric_kurtosis  - measurements.kurtosis
+    #     ## System Equations
+    #     eq1 = parametric_mean - measurements.mean
+    #     eq2 = parametric_variance - measurements.variance
+    #     eq3 = parametric_skewness - measurements.skewness
+    #     eq4 = parametric_kurtosis  - measurements.kurtosis
         
-        return (eq1, eq2, eq3, eq4)
+    #     return (eq1, eq2, eq3, eq4)
     
-    ## Get parameters of distribution: SCIPY vs EQUATIONS
-    import time
-    print("=====")
-    ti = time.time()
-    solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), measurements)
-    parameters = {"alpha": solution[0], "beta": solution[1], "A": solution[2], "B": solution[3]}
-    print(parameters)
-    print("Solve equations time: ", time.time() - ti)
+    # ## Get parameters of distribution: SCIPY vs EQUATIONS
+    # import time
+    # print("=====")
+    # ti = time.time()
+    # solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), measurements)
+    # parameters = {"alpha": solution[0], "beta": solution[1], "A": solution[2], "B": solution[3]}
+    # print(parameters)
+    # print("Solve equations time: ", time.time() - ti)
     
-    print("=====")
-    ti = time.time()
-    scipy_params = scipy.stats.beta.fit(measurements.data)
-    parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "A": scipy_params[2], "B": scipy_params[3]}
-    print(parameters)
-    print("Scipy time get parameters: ",time.time() - ti)
+    # print("=====")
+    # ti = time.time()
+    # scipy_params = scipy.stats.beta.fit(measurements.data)
+    # parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "A": scipy_params[2], "B": scipy_params[3]}
+    # print(parameters)
+    # print("Scipy time get parameters: ",time.time() - ti)
     
-    print("=====")
+    # print("=====")
     
-    ti = time.time()
-    bnds = ((0, 0,  - numpy.inf, measurements.mean), (numpy.inf, numpy.inf, measurements.mean, numpy.inf))
-    x0 = (1, 1, measurements.min, measurements.max)
-    args = ([measurements])
-    solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
-    print(solution.x)
-    print("Solve equations time: ", time.time() - ti)
+    # ti = time.time()
+    # bnds = ((0, 0,  - numpy.inf, measurements.mean), (numpy.inf, numpy.inf, measurements.mean, numpy.inf))
+    # x0 = (1, 1, measurements.min, measurements.max)
+    # args = ([measurements])
+    # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+    # print(solution.x)
+    # print("Solve equations time: ", time.time() - ti)
     

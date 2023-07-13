@@ -1,6 +1,6 @@
 import math
 import utilities.ad_marsaglia as ad
-from measurements__ import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS
 
 def test_anderson_darling(data, distribution_class):
     """

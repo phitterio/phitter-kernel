@@ -1,6 +1,6 @@
 import scipy.stats
 import math
-from measurements__ import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS
 
 def test_chi_square(data, distribution_class):
     """

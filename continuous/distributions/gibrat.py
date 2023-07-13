@@ -74,7 +74,9 @@ class GIBRAT:
 if __name__ == "__main__":   
     
     ## Import function to get measurements
-    from measurements_cont.measurements import MEASUREMENTS
+    import sys
+    sys.path.append("../measurements")
+    from measurements import MEASUREMENTS
     
     ## Import function to get measurements
     def get_data(direction):

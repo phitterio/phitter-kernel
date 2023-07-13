@@ -45,7 +45,7 @@ def plot_histogram(data, results):
     plt.show()
 
 def fit_data(data):
-    from measurements__ import MEASUREMENTS
+    from measurements.measurements import MEASUREMENTS
     from distributions.beta import BETA
     from distributions.burr import BURR
     from distributions.cauchy import CAUCHY

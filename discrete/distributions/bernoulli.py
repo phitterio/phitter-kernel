@@ -21,7 +21,7 @@ class BERNOULLI:
             result = 1
         return result
     
-    def pdf(self, x: int) -> float::
+    def pmf(self, x: int) -> float:
         """
         Probability density function
         Calculated using the definition of the function
@@ -63,7 +63,9 @@ class BERNOULLI:
 
 if __name__ == "__main__":
     ## Import function to get measurements
-    from measurements.measurements import MEASUREMENTS
+    import sys
+    sys.path.append("../measurements")
+    from measurements import MEASUREMENTS
 
     ## Import function to get measurements
     def get_data(direction):

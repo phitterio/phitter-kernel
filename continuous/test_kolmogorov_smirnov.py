@@ -1,5 +1,5 @@
 import scipy.stats
-from measurements__ import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS
 
 def test_kolmogorov_smirnov(data, distribution_class):
     """
