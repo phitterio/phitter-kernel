@@ -1,6 +1,8 @@
 import math
-import utilities.ad_marsaglia as ad
 from measurements.measurements import MEASUREMENTS
+import sys
+sys.path.append("../utilities")
+import ad_marsaglia as ad
 
 def test_anderson_darling(data, distribution_class):
     """
