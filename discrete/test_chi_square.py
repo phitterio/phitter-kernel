@@ -9,7 +9,7 @@ def test_chi_square(data, distribution_class):
     
     The hypothesis that the sample is distributed following the probability distribution
     is not rejected if the test statistic is less than the critical value or equivalently
-    if the p - value is less than 0.05
+    if the p-value is less than 0.05
     
     Parameters
     ==========
@@ -27,7 +27,7 @@ def test_chi_square(data, distribution_class):
         2. critical_value(float):
             inverse of the distribution chi square to 0.95 with freedom degrees
             n - 1 minus the number of parameters of the distribution.
-        3. p - value([0,1]):
+        3. p-value([0,1]):
             right - tailed probability of the test statistic for the chi - square distribution
             with the same degrees of freedom as for the critical value calculation.
         4. rejected(bool):
@@ -60,7 +60,7 @@ def test_chi_square(data, distribution_class):
     result_test_chi2 = {
         "test_statistic": statistic_chi2, 
         "critical_value": critical_value, 
-        "p - value": p_value,
+        "p-value": p_value,
         "rejected": rejected
         }
     

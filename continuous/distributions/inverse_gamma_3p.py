@@ -39,7 +39,7 @@ class INVERSE_GAMMA_3P:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return ((self.beta ** self.alpha) * ((x - self.loc) ** (-self.alpha - 1)) * math.e ** (-(self.beta / (x - self.loc)))) / math.gamma(self.alpha)
+        return ((self.beta ** self.alpha) * ((x - self.loc) ** (-self.alpha - 1)) * math.exp(-(self.beta / (x - self.loc)))) / math.gamma(self.alpha)
     
     def get_num_parameters(self) -> int:
         """

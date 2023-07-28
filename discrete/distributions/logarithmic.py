@@ -1,5 +1,5 @@
 import math
-from scipy.optimize import least_squares
+import scipy.optimize
 import scipy.stats
 
 class LOGARITHMIC:
@@ -67,7 +67,7 @@ class LOGARITHMIC:
             ## System Equations
             eq1 = parametric_mean - measurements.mean
             return (eq1)
-        solution = least_squares(equations, 0.5, bounds = (0, 1), args=([measurements]))
+        solution = scipy.optimize.least_squares(equations, 0.5, bounds = (0, 1), args=([measurements]))
         parameters = {"p": solution.x[0]}
         return parameters
 

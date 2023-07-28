@@ -19,6 +19,12 @@ class MEASUREMENTS:
         self.mode = self.calculate_mode()
         self.num_bins = self.doanes_formula()
 
+    def __str__(self) -> str:
+        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+
+    def __repr__(self) -> str:
+        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+
     def calculate_mode(self):
         def calc_shgo_mode(distribution):
             objective = lambda x: -distribution.pdf(x)[0]

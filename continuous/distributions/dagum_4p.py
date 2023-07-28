@@ -87,7 +87,7 @@ class DAGUM_4P:
             ## Parametric expected expressions
             parametric_mean = miu(1) + loc
             parametric_variance = -(miu(1) ** 2) + miu(2)
-            parametric_skewness = (2 * miu(1) ** 3 - 3 * miu(1) * miu(2) + miu(3)) / (-(miu(1) ** 2) + miu(2)) ** 1.5
+            # parametric_skewness = (2 * miu(1) ** 3 - 3 * miu(1) * miu(2) + miu(3)) / (-(miu(1) ** 2) + miu(2)) ** 1.5
             # parametric_kurtosis = (-3 * miu(1) ** 4 + 6 * miu(1) ** 2 * miu(2) -4 * miu(1) * miu(3) + miu(4)) / (-(miu(1) ** 2) + miu(2)) ** 2
             parametric_median = b * ((2 ** (1 / p)) - 1) ** (-1 / a) + loc
             parametric_mode = b * ((a * p - 1) / (a + 1)) ** (1 / a) + loc

@@ -28,7 +28,7 @@ class CHI_SQUARE:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = (1 / (2 ** (self.df / 2) * math.gamma(self.df / 2))) * (x ** ((self.df / 2) - 1)) * (math.e ** (-x / 2))
+        # result = (1 / (2 ** (self.df / 2) * math.gamma(self.df / 2))) * (x ** ((self.df / 2) - 1)) * (math.exp(-x / 2))
         # print(result)
         result = scipy.stats.chi2.pdf(x, self.df)
         return result

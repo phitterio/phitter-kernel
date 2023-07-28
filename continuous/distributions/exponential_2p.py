@@ -15,14 +15,14 @@ class EXPONENTIAL_2P:
         Cumulative distribution function.
         Calculated with known formula.
         """
-        return 1 - math.e ** (-self.lambda_ * (x - self.loc))
+        return 1 - math.exp(-self.lambda_ * (x - self.loc))
     
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return self.lambda_ * math.e ** (-self.lambda_ * (x - self.loc))
+        return self.lambda_ * math.exp(-self.lambda_ * (x - self.loc))
     
     def get_num_parameters(self) -> int:
         """

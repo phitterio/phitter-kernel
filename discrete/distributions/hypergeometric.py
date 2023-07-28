@@ -1,7 +1,7 @@
 import scipy.stats
 import math
 import numpy
-from scipy.optimize import least_squares
+import scipy.optimize
 import scipy.special as sc
 
 class HYPERGEOMETRIC:
@@ -87,7 +87,7 @@ class HYPERGEOMETRIC:
         bnds = ((measurements.max, measurements.max, 1), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (measurements.max * 5, measurements.max * 3, measurements.max)
         args = ([measurements])
-        solution = least_squares(equations, x0, bounds = bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
         parameters = {"N": round(solution.x[0]), "K": round(solution.x[1]), "n": round(solution.x[2])}
         
         # N, K, n = solution.x

@@ -33,7 +33,7 @@ class CHI_SQUARE_3P:
         """
         # result = scipy.stats.chi2.pdf(x, self.df, loc=self.loc, scale=self.scale)
         z = lambda t: (t - self.loc) / self.scale
-        result = (1 / self.scale) * (1 / (2 ** (self.df / 2) * math.gamma(self.df / 2))) * (z(x) ** ((self.df / 2) - 1)) * (math.e ** (-z(x) / 2))
+        result = (1 / self.scale) * (1 / (2 ** (self.df / 2) * math.gamma(self.df / 2))) * (z(x) ** ((self.df / 2) - 1)) * (math.exp(-z(x) / 2))
         return result
     
     def get_num_parameters(self) -> int:

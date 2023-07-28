@@ -31,7 +31,7 @@ class JOHNSON_SB:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.xi_) / self.lambda_
-        return (self.delta_ / (self.lambda_ * math.sqrt(2 * math.pi) * z(x) * (1 - z(x)))) * math.e ** (-(1 / 2) * (self.gamma_ + self.delta_ * math.log(z(x) / (1 - z(x)))) ** 2)
+        return (self.delta_ / (self.lambda_ * math.sqrt(2 * math.pi) * z(x) * (1 - z(x)))) * math.exp(-(1 / 2) * (self.gamma_ + self.delta_ * math.log(z(x) / (1 - z(x)))) ** 2)
     
     def get_num_parameters(self) -> int:
         """

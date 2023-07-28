@@ -14,14 +14,14 @@ class EXPONENTIAL:
         Cumulative distribution function.
         Calculated with known formula.
         """
-        return 1 - math.e ** (-self.lambda_ * x)
+        return 1 - math.exp(-self.lambda_ * x)
     
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return self.lambda_ * math.e ** (-self.lambda_ * x)
+        return self.lambda_ * math.exp(-self.lambda_ * x)
     
     def get_num_parameters(self) -> int:
         """

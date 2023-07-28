@@ -28,7 +28,7 @@ class NORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        result = (1 / (self.sigma * math.sqrt(2 * math.pi))) * math.e ** (-(((x - self.miu) ** 2) / (2 * self.sigma ** 2)))
+        result = (1 / (self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((x - self.miu) ** 2) / (2 * self.sigma ** 2)))
         return result
     
     def get_num_parameters(self) -> int:

@@ -8,7 +8,7 @@ def test_kolmogorov_smirnov(data, distribution_class):
     
     The hypothesis that the sample is distributed following the probability distribution
     is not rejected if the test statistic is less than the critical value or equivalently
-    if the p - value is less than 0.05
+    if the p-value is less than 0.05
     
     Parameters
     ==========
@@ -26,7 +26,7 @@ def test_kolmogorov_smirnov(data, distribution_class):
         2. critical_value(float):
             inverse of the kolmogorov - smirnov distribution to 0.95 whit size of 
             sample N as parameter.
-        3. p - value[0,1]:
+        3. p-value[0,1]:
             probability of the test statistic for the kolmogorov - smirnov distribution
             whit size of sample N as parameter.
         4. rejected(bool):
@@ -66,7 +66,7 @@ def test_kolmogorov_smirnov(data, distribution_class):
     result_test_ks = {
         "test_statistic": statistic_ks, 
         "critical_value": critical_value, 
-        "p - value": p_value,
+        "p-value": p_value,
         "rejected": rejected
     }
     
@@ -230,7 +230,7 @@ if __name__ == "__main__":
 
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
-    _my_distributions = [BETA_PRIME_4P]
+    _my_distributions = [RECIPROCAL]
     for distribution_class in _my_distributions:
         print(distribution_class.__name__)
         path = "./data/data_" + distribution_class.__name__.lower() + ".txt"

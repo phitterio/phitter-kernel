@@ -29,7 +29,7 @@ class ERLANG_3P:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = ((self.beta**-self.k) * ((x - self.loc) ** (self.k - 1)) * math.e ** (-((x - self.loc) / self.beta))) / math.factorial(self.k - 1)
+        # result = ((self.beta**-self.k) * ((x - self.loc) ** (self.k - 1)) * math.exp(-((x - self.loc) / self.beta))) / math.factorial(self.k - 1)
         result = scipy.stats.erlang.pdf(x, self.k, scale=self.beta, loc=self.loc)
         return result
 

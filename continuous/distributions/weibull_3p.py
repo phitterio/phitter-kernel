@@ -28,7 +28,7 @@ class WEIBULL_3P:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.loc) / self.beta
-        return (self.alpha / self.beta) * (z(x) ** (self.alpha - 1)) * math.e ** (-z(x) ** self.alpha)
+        return (self.alpha / self.beta) * (z(x) ** (self.alpha - 1)) * math.exp(-z(x) ** self.alpha)
     
     def get_num_parameters(self) -> int:
         """

@@ -18,14 +18,14 @@ class WEIBULL:
         Cumulative distribution function.
         Calculated with known formula.
         """
-        return 1 - math.e ** (-(x / self.beta) ** self.alpha)
+        return 1 - math.exp(-(x / self.beta) ** self.alpha)
     
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (self.alpha / self.beta) * ((x / self.beta) ** (self.alpha - 1)) * math.e ** (-(x / self.beta) ** self.alpha)
+        return (self.alpha / self.beta) * ((x / self.beta) ** (self.alpha - 1)) * math.exp(-(x / self.beta) ** self.alpha)
     
     def get_num_parameters(self) -> int:
         """

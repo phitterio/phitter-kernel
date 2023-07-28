@@ -26,7 +26,7 @@ class LOGNORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (1 / (x * self.sigma * math.sqrt(2 * math.pi))) * math.e ** (-(((math.log(x) - self.miu) ** 2) / (2 * self.sigma ** 2)))
+        return (1 / (x * self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((math.log(x) - self.miu) ** 2) / (2 * self.sigma ** 2)))
     
     def get_num_parameters(self) -> int:
         """
