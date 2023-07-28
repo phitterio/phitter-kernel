@@ -1,5 +1,5 @@
 import math
-from measurements.measurements import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS_DISCRETE
 import sys
 sys.path.append("../utilities")
 import ad_marsaglia as ad
@@ -50,7 +50,7 @@ def test_anderson_darling(data, distribution_class):
            The Annals of Mathematical Statistics, 1118 - 1124.
     """
     ## Init a instance of class
-    measurements = MEASUREMENTS(data)
+    measurements = MEASUREMENTS_DISCRETE(data)
     distribution = distribution_class(measurements)
 
     ## Parameters and preparations

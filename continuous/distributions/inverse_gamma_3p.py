@@ -110,7 +110,7 @@ if __name__ == "__main__":
     ## Import function to get measurements
     import sys
     sys.path.append("../measurements")
-    from measurements import MEASUREMENTS
+    from measurements import MEASUREMENTS_CONTINUOUS
     
     ## Import function to get measurements
     def getData(direction):
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../data/data_inverse_gamma_3p.txt"
     data = getData(path)
-    measurements = MEASUREMENTS(data)
+    measurements = MEASUREMENTS_CONTINUOUS(data)
     distribution = INVERSE_GAMMA_3P(measurements)
     
     print(distribution.get_parameters(measurements))

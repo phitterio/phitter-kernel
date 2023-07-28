@@ -1,9 +1,9 @@
 import scipy.stats
 import numpy
-from measurements.measurements import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS_CONTINUOUS
 
 
-def test_chi_square(data, distribution_class):
+def test_chi_square(data, distribution, measurements):
     """
     Chi Square test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -36,9 +36,6 @@ def test_chi_square(data, distribution_class):
             considered that the sample is distributed according to the probability
             distribution. If it's true, no.
     """
-    ## Init a instance of class
-    measurements = MEASUREMENTS(data)
-    distribution = distribution_class(measurements)
 
     ## Parameters and preparations
     N = measurements.length
@@ -219,7 +216,7 @@ if __name__ == "__main__":
         T_STUDENT_3P,
         UNIFORM,
         WEIBULL,
-        WEIBULL_3P
+        WEIBULL_3P,
     ]
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
@@ -234,4 +231,8 @@ if __name__ == "__main__":
         print(distribution_class.__name__)
         path = f"../animations/data/data_alpha.txt"
         data = get_data(path)
-        print(test_chi_square(data, distribution_class))
+
+        ## Init a instance of class
+        measurements = MEASUREMENTS_CONTINUOUS(data)
+        distribution = distribution_class(measurements)
+        print(test_chi_square(data, distribution, measurements))

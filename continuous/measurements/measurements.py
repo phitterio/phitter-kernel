@@ -4,7 +4,7 @@ import scipy.optimize
 import math
 
 
-class MEASUREMENTS:
+class MEASUREMENTS_CONTINUOUS:
     def __init__(self, data):
         self.data = data
         self.length = len(data)
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     path = "./data/data_generalized_pareto.txt"
     data = get_data(path)
 
-    measurements = MEASUREMENTS(data)
+    measurements = MEASUREMENTS_CONTINUOUS(data)
 
     print("Length: ", measurements.length)
     print("Min: ", measurements.min)

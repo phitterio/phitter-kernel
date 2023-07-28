@@ -107,7 +107,7 @@ if __name__ == "__main__":
     ## Import function to get measurements
     import sys
     sys.path.append("../measurements")
-    from measurements import MEASUREMENTS
+    from measurements import MEASUREMENTS_CONTINUOUS
 
     ## Import function to get measurements
     def get_data(direction):
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../data/data_burr_4P.txt"
     data = get_data(path) 
-    measurements = MEASUREMENTS(data)
+    measurements = MEASUREMENTS_CONTINUOUS(data)
     distribution = BURR_4P(measurements)
     print(distribution.get_parameters(measurements))
 

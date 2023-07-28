@@ -2,7 +2,7 @@ import scipy.stats
 import numpy
 import scipy.optimize
 
-class MEASUREMENTS:
+class MEASUREMENTS_DISCRETE:
     def __init__(self, data):
         self.data = data
         self.length = len(data)
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     path = "../data/data_binomial.txt"
     data = get_data(path) 
 
-    measurements = MEASUREMENTS(data)
+    measurements = MEASUREMENTS_DISCRETE(data)
 
     print("Length: ", measurements.length)
     print("Min: ", measurements.min)

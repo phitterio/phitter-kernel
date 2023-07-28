@@ -1,18 +1,20 @@
 import math
-from measurements.measurements import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS_CONTINUOUS
 import sys
+
 sys.path.append("../utilities")
 import ad_marsaglia as ad
 
-def test_anderson_darling(data, distribution_class):
+
+def test_anderson_darling(data, distribution, measurements):
     """
-    Anderson Darling test to evaluate that a sample is distributed according to a probability 
+    Anderson Darling test to evaluate that a sample is distributed according to a probability
     distribution.
-    
+
     The hypothesis that the sample is distributed following the probability distribution
     is not rejected if the test statistic is less than the critical value or equivalently
     if the p-value is less than 0.05
-    
+
     Parameters
     ==========
     data: iterable
@@ -20,7 +22,7 @@ def test_anderson_darling(data, distribution_class):
     distribution: class
         distribution class initialized whit parameters of distribution and methods
         cdf() and get_num_parameters()
-        
+
     Return
     ======
     result_test_ks: dict
@@ -33,30 +35,27 @@ def test_anderson_darling(data, distribution_class):
             probability of the test statistic for the Anderson - Darling distribution
             whit size of sample N as parameter.
         4. rejected(bool):
-            decision if the null hypothesis is rejected. If it is false, it can be 
-            considered that the sample is distributed according to the probability 
+            decision if the null hypothesis is rejected. If it is false, it can be
+            considered that the sample is distributed according to the probability
             distribution. If it's true, no.
-            
+
     References
-     -  -  -  -  -  -  -  -  -  - 
-    .. [1] Marsaglia, G., & Marsaglia, J. (2004). 
-           Evaluating the anderson - darling distribution. 
+     -  -  -  -  -  -  -  -  -  -
+    .. [1] Marsaglia, G., & Marsaglia, J. (2004).
+           Evaluating the anderson - darling distribution.
            Journal of Statistical Software, 9(2), 1 - 5.
     .. [2] Sinclair, C. D., & Spurr, B. D. (1988).
            Approximations to the distribution function of the anderson—darling test statistic.
            Journal of the American Statistical Association, 83(404), 1190 - 1191.
-    .. [3] Lewis, P. A. (1961). 
-           Distribution of the Anderson - Darling statistic. 
+    .. [3] Lewis, P. A. (1961).
+           Distribution of the Anderson - Darling statistic.
            The Annals of Mathematical Statistics, 1118 - 1124.
     """
-    ## Init a instance of class
-    measurements = MEASUREMENTS(data)
-    distribution = distribution_class(measurements)
 
     ## Parameters and preparations
     N = measurements.length
     data.sort()
-    
+
     ## Calculation S
     S = 0
     for k in range(N):
@@ -64,22 +63,18 @@ def test_anderson_darling(data, distribution_class):
         c2 = math.log(1 - distribution.cdf(data[N - k - 1]))
         c3 = (2 * (k + 1) - 1) / N
         S += c3 * (c1 + c2)
-    
+
     ## Calculation of indicators
     A2 = -N - S
     critical_value = ad.ad_critical_value(0.95, N)
     p_value = ad.ad_p_value(N, A2)
     rejected = A2 >= critical_value
-    
+
     ## Construction of answer
-    result_test_ad = {
-        "test_statistic": A2, 
-        "critical_value": critical_value,
-        "p-value": p_value,
-        "rejected": rejected
-    }
-    
+    result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+
     return result_test_ad
+
 
 if __name__ == "__main__":
     from distributions.alpha import ALPHA
@@ -155,12 +150,12 @@ if __name__ == "__main__":
     from distributions.uniform import UNIFORM
     from distributions.weibull import WEIBULL
     from distributions.weibull_3p import WEIBULL_3P
-    
+
     def get_data(direction):
         sample_distribution_file = open(direction, "r")
         data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
         return data
-    
+
     _all_distributions = [
         ALPHA,
         ARCSINE,
@@ -237,11 +232,14 @@ if __name__ == "__main__":
         WEIBULL_3P,
     ]
 
-
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
     _my_distributions = [PERT]
     for distribution_class in _my_distributions:
         print(distribution_class.__name__)
         path = "./data/data_" + distribution_class.__name__.lower() + ".txt"
-        data = get_data(path)                   
-        print(test_anderson_darling(data, distribution_class))
+        data = get_data(path)
+
+        ## Init a instance of class
+        measurements = MEASUREMENTS_CONTINUOUS(data)
+        distribution = distribution_class(measurements)
+        print(test_anderson_darling(data, distribution, measurements))

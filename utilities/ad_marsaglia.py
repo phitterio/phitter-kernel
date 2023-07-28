@@ -1,5 +1,5 @@
 import math
-from scipy import optimize
+import scipy.optimize
 
 
 def adinf(z):
@@ -44,8 +44,7 @@ def AD(n, z):
 def ad_critical_value(q, n):
     def f(x):
         return AD(n, x) - q
-
-    root = optimize.newton(f, 2)
+    root = scipy.optimize.newton(f, 2)
     return root
 
 

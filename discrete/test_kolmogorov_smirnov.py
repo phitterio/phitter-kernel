@@ -1,5 +1,5 @@
 import scipy.stats
-from measurements.measurements import MEASUREMENTS
+from measurements.measurements import MEASUREMENTS_DISCRETE
 
 def test_kolmogorov_smirnov(data, distribution_class):
     """
@@ -35,7 +35,7 @@ def test_kolmogorov_smirnov(data, distribution_class):
             distribution. If it's true, no.
     """
     ## Init a instance of class
-    measurements = MEASUREMENTS(data)
+    measurements = MEASUREMENTS_DISCRETE(data)
     distribution = distribution_class(measurements)
 
     ## Parameters and preparations
