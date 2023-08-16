@@ -2744,7 +2744,10 @@ class MEASUREMENTS_CONTINUOUS:
     def __repr__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
-    def calculate_mode(self):
+    def get_dict(self) -> str:
+        return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
+
+    def calculate_mode(self) -> float:
         def calc_shgo_mode(distribution):
             objective = lambda x: -distribution.pdf(x)[0]
             bnds = [[self.min, self.max]]
@@ -2863,12 +2866,87 @@ def test_anderson_darling(data, distribution, measurements):
     result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_ad
 
+
 if __name__ == "__main__":
-    path = "../../continuous/data/data_uniform.txt"
+    path = "../../continuous/data/data_beta.txt"
     sample_distribution_file = open(path, "r")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
-    _all_distributions = [ ALPHA, ARCSINE, ARGUS, BETA, BETA_PRIME, BETA_PRIME_4P, BRADFORD, BURR, BURR_4P, CAUCHY, CHI_SQUARE, CHI_SQUARE_3P, DAGUM, DAGUM_4P, ERLANG, ERLANG_3P, ERROR_FUNCTION, EXPONENTIAL, EXPONENTIAL_2P, F, FATIGUE_LIFE, FOLDED_NORMAL, FRECHET, F_4P, GAMMA, GAMMA_3P, GENERALIZED_EXTREME_VALUE, GENERALIZED_GAMMA, GENERALIZED_GAMMA_4P, GENERALIZED_LOGISTIC, GENERALIZED_NORMAL, GENERALIZED_PARETO, GIBRAT, GUMBEL_LEFT, GUMBEL_RIGHT, HALF_NORMAL, HYPERBOLIC_SECANT, INVERSE_GAMMA, INVERSE_GAMMA_3P, INVERSE_GAUSSIAN, INVERSE_GAUSSIAN_3P, JOHNSON_SB, JOHNSON_SU, KUMARASWAMY, LAPLACE, LEVY, LOGGAMMA, LOGISTIC, LOGLOGISTIC, LOGLOGISTIC_3P, LOGNORMAL, MAXWELL, MOYAL, NAKAGAMI, NC_CHI_SQUARE, NC_F, NC_T_STUDENT, NORMAL, PARETO_FIRST_KIND, PARETO_SECOND_KIND, PERT, POWER_FUNCTION, RAYLEIGH, RECIPROCAL, RICE, SEMICIRCULAR, TRAPEZOIDAL, TRIANGULAR, T_STUDENT, T_STUDENT_3P, UNIFORM, WEIBULL, WEIBULL_3P]
+    _all_distributions = [
+        ALPHA,
+        ARCSINE,
+        ARGUS,
+        BETA,
+        BETA_PRIME,
+        BETA_PRIME_4P,
+        BRADFORD,
+        BURR,
+        BURR_4P,
+        CAUCHY,
+        CHI_SQUARE,
+        CHI_SQUARE_3P,
+        DAGUM,
+        DAGUM_4P,
+        ERLANG,
+        ERLANG_3P,
+        ERROR_FUNCTION,
+        EXPONENTIAL,
+        EXPONENTIAL_2P,
+        F,
+        FATIGUE_LIFE,
+        FOLDED_NORMAL,
+        FRECHET,
+        F_4P,
+        GAMMA,
+        GAMMA_3P,
+        GENERALIZED_EXTREME_VALUE,
+        GENERALIZED_GAMMA,
+        GENERALIZED_GAMMA_4P,
+        GENERALIZED_LOGISTIC,
+        GENERALIZED_NORMAL,
+        GENERALIZED_PARETO,
+        GIBRAT,
+        GUMBEL_LEFT,
+        GUMBEL_RIGHT,
+        HALF_NORMAL,
+        HYPERBOLIC_SECANT,
+        INVERSE_GAMMA,
+        INVERSE_GAMMA_3P,
+        INVERSE_GAUSSIAN,
+        INVERSE_GAUSSIAN_3P,
+        JOHNSON_SB,
+        JOHNSON_SU,
+        KUMARASWAMY,
+        LAPLACE,
+        LEVY,
+        LOGGAMMA,
+        LOGISTIC,
+        LOGLOGISTIC,
+        LOGLOGISTIC_3P,
+        LOGNORMAL,
+        MAXWELL,
+        MOYAL,
+        NAKAGAMI,
+        NC_CHI_SQUARE,
+        NC_F,
+        NC_T_STUDENT,
+        NORMAL,
+        PARETO_FIRST_KIND,
+        PARETO_SECOND_KIND,
+        PERT,
+        POWER_FUNCTION,
+        RAYLEIGH,
+        RECIPROCAL,
+        RICE,
+        SEMICIRCULAR,
+        TRAPEZOIDAL,
+        TRIANGULAR,
+        T_STUDENT,
+        T_STUDENT_3P,
+        UNIFORM,
+        WEIBULL,
+        WEIBULL_3P,
+    ]
     measurements = MEASUREMENTS_CONTINUOUS(data)
 
     ## Calculae Histogram
@@ -2898,7 +2976,7 @@ if __name__ == "__main__":
 
         DISTRIBUTION_RESULTS = {}
         v1, v2, v3 = False, False, False
-        if validate_estimation and not math.isnan(sse):
+        if validate_estimation and not math.isnan(sse) and not math.isinf(sse):
             try:
                 chi2_test = test_chi_square(data, distribution, measurements)
                 if numpy.isnan(chi2_test["test_statistic"]) == False and math.isinf(chi2_test["test_statistic"]) == False and chi2_test["test_statistic"] > 0:
@@ -2959,10 +3037,8 @@ if __name__ == "__main__":
 
                 RESPONSE[distribution_name] = DISTRIBUTION_RESULTS
 
-    filtered_results = {distribution: results for distribution, results in RESPONSE.items() if results["n_test_passed"] > 0}
-    sorted_results = sorted(RESPONSE.items(), key=lambda x: x[1]["sse"])
+    sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: x[1]["sse"])}
+    aproved_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
 
-    # Mostrar los resultados ordenados
-    for distribution, results in sorted_results:
-        print(f"Distribution: {distribution}, SSE: {results['sse']}")
-
+    for distribution, results in aproved_results.items():
+        print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")

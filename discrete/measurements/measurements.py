@@ -17,7 +17,10 @@ class MEASUREMENTS_DISCRETE:
         self.kurtosis = scipy.stats.moment(data, 4) / pow(self.std, 4)
         self.median = int(numpy.median(self.data))
         self.mode = int(scipy.stats.mode(data, keepdims=True)[0][0])
-        self.frequencies = self.get_frequencies()
+        self.histogram = self.get_histogram()
+        self.domain = list(self.histogram.keys())
+        self.frequencies = list(self.histogram.values())
+        self.frequencies_pmf = list(map(lambda x: x / self.length, self.histogram.values()))
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -28,9 +31,9 @@ class MEASUREMENTS_DISCRETE:
     def get_dict(self) -> str:
         return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
 
-    def get_frequencies(self) -> dict[int, float | int]:
-        frequencies = collections.Counter(self.data)
-        return {k: v for k, v in sorted(frequencies.items(), key=lambda item: item[0])}
+    def get_histogram(self) -> dict[int, float | int]:
+        histogram = collections.Counter(self.data)
+        return {k: v for k, v in sorted(histogram.items(), key=lambda item: item[0])}
 
 
 if __name__ == "__main__":
@@ -55,4 +58,6 @@ if __name__ == "__main__":
     print("Kurtosis: ", measurements.kurtosis)
     print("Median: ", measurements.median)
     print("Mode: ", measurements.mode)
-    print(measurements.frequencies)
+    print("Histogram: ", measurements.histogram)
+    print("Domain: ", measurements.domain)
+    print("Frequencies: ", measurements.frequencies)
