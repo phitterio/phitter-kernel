@@ -1,0 +1,28 @@
+{
+	"name": "bessel",
+	"version": "1.0.2",
+	"author": "SheetJS",
+	"description": "Pure-JS Bessel Functions",
+	"keywords": [ "bessel", "math", "specfun" ],
+	"main": "./bessel",
+	"dependencies": {
+	},
+	"devDependencies": {
+		"mocha":"~2.5.3",
+		"voc":"~1.0.0"
+	},
+	"repository": { "type":"git", "url":"git://github.com/SheetJS/bessel.git" },
+	"scripts": {
+		"test": "make test"
+	},
+	"config": {
+		"blanket": {
+			"pattern": "bessel.js"
+		}
+	},
+	"files": ["bessel.js", "LICENSE", "README.md"],
+	"homepage": "https://oss.sheetjs.com/bessel/",
+	"bugs": { "url": "https://github.com/SheetJS/bessel/issues" },
+	"license": "Apache-2.0",
+	"engines": { "node": ">=0.8" }
+}

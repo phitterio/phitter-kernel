@@ -25,7 +25,10 @@ class MEASUREMENTS_CONTINUOUS:
     def __repr__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
-    def calculate_mode(self):
+    def get_dict(self) -> str:
+        return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
+
+    def calculate_mode(self) -> float:
         def calc_shgo_mode(distribution):
             objective = lambda x: -distribution.pdf(x)[0]
             bnds = [[self.min, self.max]]
