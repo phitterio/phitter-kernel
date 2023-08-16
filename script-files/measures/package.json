@@ -1,0 +1,15 @@
+{
+  "name": "measures",
+  "version": "1.0.0",
+  "description": "",
+  "main": "x.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bessel": "^1.0.2",
+    "jstat": "^1.9.6"
+  }
+}
