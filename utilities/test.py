@@ -46,9 +46,9 @@ if __name__ == "__main__":
     from distributions.uniform import UNIFORM
     from distributions.weibull import WEIBULL
     
-    from test_chi_square import test_chi_square
-    from test_kolmogorov_smirnov import test_kolmogorov_smirnov
-    from test_anderson_darling import test_anderson_darling
+    from test_chi_square_continuous import test_chi_square
+    from test_kolmogorov_smirnov_continuous import test_kolmogorov_smirnov
+    from test_anderson_darling_continuous import test_anderson_darling
     
     from colorama import init, Fore, Back, Style
     init(convert=True)

@@ -2767,7 +2767,7 @@ class MEASUREMENTS_CONTINUOUS:
         return num_bins
 
 
-def test_chi_square(data, distribution, measurements):
+def test_chi_square_continuous(data, distribution, measurements):
     N = measurements.length
     num_bins = measurements.num_bins
     frequencies, bin_edges = numpy.histogram(data, num_bins)
@@ -2786,7 +2786,7 @@ def test_chi_square(data, distribution, measurements):
     return result_test_chi2
 
 
-def test_kolmogorov_smirnov(data, distribution, measurements):
+def test_kolmogorov_smirnov_continuous(data, distribution, measurements):
     N = measurements.length
     data.sort()
     errors = []
@@ -2850,7 +2850,7 @@ def ad_p_value(n, z):
     return 1 - AD(n, z)
 
 
-def test_anderson_darling(data, distribution, measurements):
+def test_anderson_darling_continuous(data, distribution, measurements):
     N = measurements.length
     data.sort()
     S = 0
@@ -2978,7 +2978,7 @@ if __name__ == "__main__":
         v1, v2, v3 = False, False, False
         if validate_estimation and not math.isnan(sse) and not math.isinf(sse):
             try:
-                chi2_test = test_chi_square(data, distribution, measurements)
+                chi2_test = test_chi_square_continuous(data, distribution, measurements)
                 if numpy.isnan(chi2_test["test_statistic"]) == False and math.isinf(chi2_test["test_statistic"]) == False and chi2_test["test_statistic"] > 0:
                     DISTRIBUTION_RESULTS["chi_square"] = {
                         "test_statistic": chi2_test["test_statistic"],
@@ -2993,7 +2993,7 @@ if __name__ == "__main__":
                 DISTRIBUTION_RESULTS["chi_square"] = NONE_RESULTS
 
             try:
-                ks_test = test_kolmogorov_smirnov(data, distribution, measurements)
+                ks_test = test_kolmogorov_smirnov_continuous(data, distribution, measurements)
                 if numpy.isnan(ks_test["test_statistic"]) == False and math.isinf(ks_test["test_statistic"]) == False and ks_test["test_statistic"] > 0:
                     DISTRIBUTION_RESULTS["kolmogorov_smirnov"] = {
                         "test_statistic": ks_test["test_statistic"],
@@ -3007,7 +3007,7 @@ if __name__ == "__main__":
             except:
                 DISTRIBUTION_RESULTS["kolmogorov_smirnov"] = NONE_RESULTS
             try:
-                ad_test = test_anderson_darling(data, distribution, measurements)
+                ad_test = test_anderson_darling_continuous(data, distribution, measurements)
                 if numpy.isnan(ad_test["test_statistic"]) == False and math.isinf(ad_test["test_statistic"]) == False and ad_test["test_statistic"] > 0:
                     DISTRIBUTION_RESULTS["anderson_darling"] = {
                         "test_statistic": ad_test["test_statistic"],

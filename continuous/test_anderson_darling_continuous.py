@@ -6,7 +6,7 @@ sys.path.append("../utilities")
 import ad_marsaglia as ad
 
 
-def test_anderson_darling(data, distribution, measurements):
+def test_anderson_darling_continuous(data, distribution, measurements):
     """
     Anderson Darling test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -242,4 +242,4 @@ if __name__ == "__main__":
         ## Init a instance of class
         measurements = MEASUREMENTS_CONTINUOUS(data)
         distribution = distribution_class(measurements)
-        print(test_anderson_darling(data, distribution, measurements))
+        print(test_anderson_darling_continuous(data, distribution, measurements))

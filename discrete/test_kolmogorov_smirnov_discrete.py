@@ -2,7 +2,7 @@ import scipy.stats
 from measurements.measurements import MEASUREMENTS_DISCRETE
 
 
-def test_kolmogorov_smirnov(data, distribution, measurements):
+def test_kolmogorov_smirnov_discrete(data, distribution, measurements):
     """
     Kolmogorov Smirnov test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -90,4 +90,4 @@ if __name__ == "__main__":
         ## Init a instance of class
         measurements = MEASUREMENTS_DISCRETE(data)
         distribution = distribution_class(measurements)
-        print(test_kolmogorov_smirnov(data, distribution, measurements))
+        print(test_kolmogorov_smirnov_discrete(data, distribution, measurements))

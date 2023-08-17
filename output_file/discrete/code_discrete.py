@@ -265,7 +265,10 @@ class MEASUREMENTS_DISCRETE:
         self.kurtosis = scipy.stats.moment(data, 4) / pow(self.std, 4)
         self.median = int(numpy.median(self.data))
         self.mode = int(scipy.stats.mode(data, keepdims=True)[0][0])
-        self.frequencies = self.get_frequencies()
+        self.histogram = self.get_histogram()
+        self.domain = list(self.histogram.keys())
+        self.frequencies = list(self.histogram.values())
+        self.frequencies_pmf = list(map(lambda x: x / self.length, self.histogram.values()))
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -276,19 +279,16 @@ class MEASUREMENTS_DISCRETE:
     def get_dict(self) -> str:
         return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
 
-    def get_frequencies(self) -> dict[int, float | int]:
-        frequencies = collections.Counter(self.data)
-        return {k: v for k, v in sorted(frequencies.items(), key=lambda item: item[0])}
+    def get_histogram(self) -> dict[int, float | int]:
+        histogram = collections.Counter(self.data)
+        return {k: v for k, v in sorted(histogram.items(), key=lambda item: item[0])}
 
 
-def test_chi_square(data, distribution_class):
-    measurements = MEASUREMENTS_DISCRETE(data)
-    distribution = distribution_class(measurements)
+def test_chi_square_discrete(data, distribution, measurements):
     N = measurements.length
-    frequencies = measurements.frequencies
-    freedom_degrees = len(frequencies.items()) - 1
+    freedom_degrees = len(measurements.histogram.items()) - 1
     errors = []
-    for i, observed in frequencies.items():
+    for i, observed in measurements.histogram.items():
         expected = math.ceil(N * (distribution.pmf(i)))
         errors.append(((observed - expected) ** 2) / expected)
     statistic_chi2 = sum(errors)
@@ -299,9 +299,7 @@ def test_chi_square(data, distribution_class):
     return result_test_chi2
 
 
-def test_kolmogorov_smirnov(data, distribution_class):
-    measurements = MEASUREMENTS_DISCRETE(data)
-    distribution = distribution_class(measurements)
+def test_kolmogorov_smirnov_discrete(data, distribution, measurements):
     N = measurements.length
     data.sort()
     errors = []
@@ -324,66 +322,6 @@ def test_kolmogorov_smirnov(data, distribution_class):
     return result_test_ks
 
 
-def adinf(z):
-    if z < 2:
-        return (z**-0.5) * math.exp(-1.2337141 / z) * (2.00012 + (0.247105 - (0.0649821 - (0.0347962 - (0.011672 - 0.00168691 * z) * z) * z) * z) * z)
-    return math.exp(-math.exp(1.0776 - (2.30695 - (0.43424 - (0.082433 - (0.008056 - 0.0003146 * z) * z) * z) * z) * z))
-
-
-def errfix(n, x):
-    def g1(t):
-        return math.sqrt(t) * (1 - t) * (49 * t - 102)
-
-    def g2(t):
-        return -0.00022633 + (6.54034 - (14.6538 - (14.458 - (8.259 - 1.91864 * t) * t) * t) * t) * t
-
-    def g3(t):
-        return -130.2137 + (745.2337 - (1705.091 - (1950.646 - (1116.360 - 255.7844 * t) * t) * t) * t) * t
-
-    c = 0.01265 + 0.1757 / n
-    if x < c:
-        return (0.0037 / (n**3) + 0.00078 / (n**2) + 0.00006 / n) * g1(x / c)
-    elif x > c and x < 0.8:
-        return (0.04213 / n + 0.01365 / (n**2)) * g2((x - c) / (0.8 - c))
-    else:
-        return (g3(x)) / n
-
-
-def AD(n, z):
-    return adinf(z) + errfix(n, adinf(z))
-
-
-def ad_critical_value(q, n):
-    def f(x):
-        return AD(n, x) - q
-
-    root = scipy.optimize.newton(f, 2)
-    return root
-
-
-def ad_p_value(n, z):
-    return 1 - AD(n, z)
-
-
-def test_anderson_darling(data, distribution_class):
-    measurements = MEASUREMENTS_DISCRETE(data)
-    distribution = distribution_class(measurements)
-    N = measurements.length
-    data.sort()
-    S = 0
-    for k in range(N):
-        c1 = math.log(distribution.cdf(data[k]))
-        c2 = math.log(1 - distribution.cdf(data[N - k - 1]))
-        c3 = (2 * (k + 1) - 1) / N
-        S += c3 * (c1 + c2)
-    A2 = -N - S
-    critical_value = ad_critical_value(0.95, N)
-    p_value = ad_p_value(N, A2)
-    rejected = A2 >= critical_value
-    result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
-    return result_test_ad
-
-
 if __name__ == "__main__":
     path = "../../discrete/data/data_binomial.txt"
     sample_distribution_file = open(path, "r")
@@ -391,11 +329,6 @@ if __name__ == "__main__":
 
     _all_distributions = [BERNOULLI, BINOMIAL, GEOMETRIC, HYPERGEOMETRIC, LOGARITHMIC, NEGATIVE_BINOMIAL, POISSON, UNIFORM]
     measurements = MEASUREMENTS_DISCRETE(data)
-
-    ## Calculae Histogram
-    num_bins = measurements.num_bins
-    frequencies, bin_edges = numpy.histogram(data, num_bins, density=True)
-    central_values = [(bin_edges[i] + bin_edges[i + 1]) / 2 for i in range(len(bin_edges) - 1)]
 
     NONE_RESULTS = {
         "test_statistic": None,
@@ -412,16 +345,16 @@ if __name__ == "__main__":
         sse = 0
         try:
             distribution = distribution_class(measurements)
-            pdf_values = [distribution.pdf(c) for c in central_values]
-            sse = numpy.sum(numpy.power(frequencies - pdf_values, 2.0))
+            pmf_values = [distribution.pmf(d) for d in measurements.domain]
+            sse = numpy.sum(numpy.power(numpy.array(pmf_values) - numpy.array(measurements.frequencies_pmf), 2.0))
         except:
             validate_estimation = False
 
         DISTRIBUTION_RESULTS = {}
-        v1, v2, v3 = False, False, False
+        v1, v2 = False, False
         if validate_estimation and not math.isnan(sse) and not math.isinf(sse):
             try:
-                chi2_test = test_chi_square(data, distribution, measurements)
+                chi2_test = test_chi_square_discrete(data, distribution, measurements)
                 if numpy.isnan(chi2_test["test_statistic"]) == False and math.isinf(chi2_test["test_statistic"]) == False and chi2_test["test_statistic"] > 0:
                     DISTRIBUTION_RESULTS["chi_square"] = {
                         "test_statistic": chi2_test["test_statistic"],
@@ -436,7 +369,7 @@ if __name__ == "__main__":
                 DISTRIBUTION_RESULTS["chi_square"] = NONE_RESULTS
 
             try:
-                ks_test = test_kolmogorov_smirnov(data, distribution, measurements)
+                ks_test = test_kolmogorov_smirnov_discrete(data, distribution, measurements)
                 if numpy.isnan(ks_test["test_statistic"]) == False and math.isinf(ks_test["test_statistic"]) == False and ks_test["test_statistic"] > 0:
                     DISTRIBUTION_RESULTS["kolmogorov_smirnov"] = {
                         "test_statistic": ks_test["test_statistic"],
@@ -449,33 +382,17 @@ if __name__ == "__main__":
                     DISTRIBUTION_RESULTS["anderson_darling"] = NONE_RESULTS
             except:
                 DISTRIBUTION_RESULTS["kolmogorov_smirnov"] = NONE_RESULTS
-            try:
-                ad_test = test_anderson_darling(data, distribution, measurements)
-                if numpy.isnan(ad_test["test_statistic"]) == False and math.isinf(ad_test["test_statistic"]) == False and ad_test["test_statistic"] > 0:
-                    DISTRIBUTION_RESULTS["anderson_darling"] = {
-                        "test_statistic": ad_test["test_statistic"],
-                        "critical_value": ad_test["critical_value"],
-                        "p_value": ad_test["p-value"],
-                        "rejected": ad_test["rejected"],
-                    }
-                    v3 = True
-                else:
-                    DISTRIBUTION_RESULTS["anderson_darling"] = NONE_RESULTS
-            except:
-                DISTRIBUTION_RESULTS["anderson_darling"] = NONE_RESULTS
 
-            if v1 or v2 or v3:
+            if v1 or v2:
                 DISTRIBUTION_RESULTS["sse"] = sse
                 DISTRIBUTION_RESULTS["parameters"] = str(distribution.parameters)
                 DISTRIBUTION_RESULTS["n_test_passed"] = (
                     int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == False)
                     + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == False)
-                    + int(DISTRIBUTION_RESULTS["anderson_darling"]["rejected"] == False)
                 )
                 DISTRIBUTION_RESULTS["n_test_null"] = (
                     int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == None)
                     + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == None)
-                    + int(DISTRIBUTION_RESULTS["anderson_darling"]["rejected"] == None)
                 )
 
                 RESPONSE[distribution_name] = DISTRIBUTION_RESULTS

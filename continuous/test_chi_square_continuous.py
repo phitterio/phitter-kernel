@@ -1,10 +1,11 @@
 import scipy.stats
+import numpy
 from measurements.measurements import MEASUREMENTS_CONTINUOUS
 
 
-def test_kolmogorov_smirnov(data, distribution, measurements):
+def test_chi_square_continuous(data, distribution, measurements):
     """
-    Kolmogorov Smirnov test to evaluate that a sample is distributed according to a probability
+    Chi Square test to evaluate that a sample is distributed according to a probability
     distribution.
 
     The hypothesis that the sample is distributed following the probability distribution
@@ -21,15 +22,15 @@ def test_kolmogorov_smirnov(data, distribution, measurements):
 
     Return
     ======
-    result_test_ks: dict
+    result_test_chi2: dict
         1. test_statistic(float):
-            sum over all data of the value |Sn - Fn|
+            sum over all classes of the value (expected - observed) ^ 2 / expected
         2. critical_value(float):
-            inverse of the kolmogorov - smirnov distribution to 0.95 whit size of
-            sample N as parameter.
-        3. p-value[0,1]:
-            probability of the test statistic for the kolmogorov - smirnov distribution
-            whit size of sample N as parameter.
+            inverse of the distribution chi square to 0.95 with freedom degrees
+            n - 1 minus the number of parameters of the distribution.
+        3. p-value([0,1]):
+            right - tailed probability of the test statistic for the chi - square distribution
+            with the same degrees of freedom as for the critical value calculation.
         4. rejected(bool):
             decision if the null hypothesis is rejected. If it is false, it can be
             considered that the sample is distributed according to the probability
@@ -38,32 +39,28 @@ def test_kolmogorov_smirnov(data, distribution, measurements):
 
     ## Parameters and preparations
     N = measurements.length
-    data.sort()
+    num_bins = measurements.num_bins
+    frequencies, bin_edges = numpy.histogram(data, num_bins)
+    freedom_degrees = num_bins - 1 - distribution.get_num_parameters()
 
     ## Calculation of errors
     errors = []
-    for i in range(N):
-        Sn = (i + 1) / N
-        if i < N - 1:
-            if data[i] != data[i + 1]:
-                Fn = distribution.cdf(data[i])
-                errors.append(abs(Sn - Fn))
-            else:
-                Fn = 0
-        else:
-            Fn = distribution.cdf(data[i])
-            errors.append(abs(Sn - Fn))
+    for i, observed in enumerate(frequencies):
+        lower = bin_edges[i]
+        upper = bin_edges[i + 1]
+        expected = N * (distribution.cdf(upper) - distribution.cdf(lower))
+        errors.append(((observed - expected) ** 2) / expected)
 
     ## Calculation of indicators
-    statistic_ks = max(errors)
-    critical_value = scipy.stats.kstwo.ppf(0.95, N)
-    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
-    rejected = statistic_ks >= critical_value
+    statistic_chi2 = sum(errors)
+    critical_value = scipy.stats.chi2.ppf(0.95, freedom_degrees)
+    p_value = 1 - scipy.stats.chi2.cdf(statistic_chi2, freedom_degrees)
+    rejected = statistic_chi2 >= critical_value
 
     ## Construction of answer
-    result_test_ks = {"test_statistic": statistic_ks, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_chi2 = {"test_statistic": statistic_chi2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
 
-    return result_test_ks
+    return result_test_chi2
 
 
 if __name__ == "__main__":
@@ -223,13 +220,19 @@ if __name__ == "__main__":
     ]
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
-    _my_distributions = [RECIPROCAL]
-    for distribution_class in _my_distributions:
+    _my_distributions = [PERT]
+    # for distribution_class in _my_distributions:
+    #     print(distribution_class.__name__)
+    #     path = f"./data/data_{distribution_class.__name__.lower()}.txt"
+    #     data = get_data(path)
+    #     print(test_chi_square_continuous(data, distribution_class))
+
+    for distribution_class in _all_distributions:
         print(distribution_class.__name__)
-        path = "./data/data_" + distribution_class.__name__.lower() + ".txt"
+        path = f"../animations/data/data_alpha.txt"
         data = get_data(path)
 
         ## Init a instance of class
         measurements = MEASUREMENTS_CONTINUOUS(data)
         distribution = distribution_class(measurements)
-        print(test_kolmogorov_smirnov(data, distribution, measurements))
+        print(test_chi_square_continuous(data, distribution, measurements))

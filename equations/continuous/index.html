@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script src="./equationsSlash.js"></script>
+        <script src="./distributionsInfoContinious__.js"></script>
+        <script>
+            console.log(
+                eqs
+                    .slice(1, -1)
+                    .split("\n\n")
+                    .map(function (blockDistribution) {
+                        return blockDistribution
+                            .split("\n")
+                            .map(function (line) {
+                                if (line.slice(-2) === "\\\\") {
+                                    return line.slice(0, -2);
+                                } else {
+                                    return line;
+                                }
+                            });
+                    })
+            );
+
+            const EQUATIONS_OBJECT = {};
+            eqs.slice(1, -1)
+                .split("\n\n")
+                .map(function (blockDistribution) {
+                    return blockDistribution.split("\n").map(function (line) {
+                        if (line.slice(-2) === "\\\\") {
+                            return line.slice(0, -2);
+                        } else {
+                            return line;
+                        }
+                    });
+                })
+                .forEach(function (equations) {
+                    const nameDistribution = equations[0].toLowerCase().trim();
+                    const notation = equations[1].trim();
+                    const domain = equations[2].trim();
+                    const parameters = equations[3].trim().split(",");
+                    const cdf = equations[4].trim();
+                    const pdf = equations[5].trim();
+                    const ppf = equations[6].trim();
+                    const centeredMoments = equations[7].trim();
+                    const mean = equations[8].trim();
+                    const variance = equations[9].trim();
+                    const skewness = equations[10].trim();
+                    const kurtosis = equations[11].trim();
+                    const median = equations[12].trim();
+                    const mode = equations[13].trim();
+                    const notes = equations
+                        .slice(14)
+                        .map((note) => note.trim());
+                    EQUATIONS_OBJECT[nameDistribution] = {
+                        notation: notation,
+                        domain: domain,
+                        parameters: parameters,
+                        cdf: cdf,
+                        pdf: pdf,
+                        ppf: ppf,
+                        centeredMoments: centeredMoments,
+                        mean: mean,
+                        variance: variance,
+                        skewness: skewness,
+                        kurtosis: kurtosis,
+                        median: median,
+                        mode: mode,
+                        notes: notes,
+                    };
+                });
+
+            console.log("EQUATIONS: ", EQUATIONS_OBJECT);
+
+            Object.keys(distributionsInfoContinious).forEach(function (key) {
+                const n = distributionsInfoContinious[key]["numberParameters"];
+                const eqs = EQUATIONS_OBJECT[key]["parameters"].slice(0, n);
+                const parametersDomains = {};
+                eqs.forEach(function (eq, index) {
+                    parametersDomains[
+                        distributionsInfoContinious[key]["parametersNames"][
+                            index
+                        ]
+                    ] = eq;
+                });
+                distributionsInfoContinious[key]["parametersDomains"] =
+                    parametersDomains;
+                distributionsInfoContinious[key]["equations"] =
+                    EQUATIONS_OBJECT[key];
+                console.log(key, key in EQUATIONS_OBJECT, parametersDomains);
+            });
+            console.log(distributionsInfoContinious);
+            // console.log(Object.keys(distributionsInfoContinious));
+        </script>
+    </body>
+</html>
