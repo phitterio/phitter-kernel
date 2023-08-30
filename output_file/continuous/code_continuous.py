@@ -2736,7 +2736,7 @@ class MEASUREMENTS_CONTINUOUS:
         self.kurtosis = scipy.stats.moment(data, 4) / pow(self.standard_deviation, 4)
         self.median = numpy.median(data)
         self.mode = self.calculate_mode()
-        self.num_bins = self.doanes_formula()
+        self.num_bins = self.num_bins_doane()
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -2758,7 +2758,7 @@ class MEASUREMENTS_CONTINUOUS:
         shgo_mode = calc_shgo_mode(distribution)
         return shgo_mode
 
-    def doanes_formula(self):
+    def num_bins_doane(self):
         N = self.length
         skewness = scipy.stats.skew(self.data)
         sigma_g1 = math.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
@@ -2866,12 +2866,7 @@ def test_anderson_darling_continuous(data, distribution, measurements):
     result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_ad
 
-
-if __name__ == "__main__":
-    path = "../../continuous/data/data_beta.txt"
-    sample_distribution_file = open(path, "r")
-    data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
-
+def phitter(data):
     _all_distributions = [
         ALPHA,
         ARCSINE,
@@ -3042,3 +3037,11 @@ if __name__ == "__main__":
 
     for distribution, results in aproved_results.items():
         print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")
+
+
+if __name__ == "__main__":
+    path = "../../continuous/data/data_beta.txt"
+    sample_distribution_file = open(path, "r")
+    data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
+
+    phitter(data)

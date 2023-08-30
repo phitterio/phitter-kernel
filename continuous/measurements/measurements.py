@@ -17,7 +17,7 @@ class MEASUREMENTS_CONTINUOUS:
         self.kurtosis = scipy.stats.moment(data, 4) / pow(self.standard_deviation, 4)
         self.median = numpy.median(data)
         self.mode = self.calculate_mode()
-        self.num_bins = self.doanes_formula()
+        self.num_bins = self.num_bins_doane()
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -40,7 +40,7 @@ class MEASUREMENTS_CONTINUOUS:
         shgo_mode = calc_shgo_mode(distribution)
         return shgo_mode
 
-    def doanes_formula(self):
+    def num_bins_doane(self):
         """
         DONAE'S FORMULA
         https://en.wikipedia.org/wiki/Histogram#Doane's_formula

@@ -9,7 +9,7 @@ import random
 
 mpl.style.use("ggplot")
 
-def doanes_formula(data):
+def num_bins_doane(data):
     """
     DONAE'S FORMULA
     https://en.wikipedia.org/wiki/Histogram#Doane's_formula
@@ -113,7 +113,7 @@ def fit_data(data):
     
     
     ## Calculae Histogram
-    num_bins = doanes_formula(data)
+    num_bins = num_bins_doane(data)
     frequencies, bin_edges = numpy.histogram(data, num_bins, density=True)
     central_values = [(bin_edges[i] + bin_edges[i + 1]) / 2 for i in range(len(bin_edges) - 1)]
     

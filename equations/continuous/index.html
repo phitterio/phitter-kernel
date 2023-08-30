@@ -16,15 +16,13 @@
                     .slice(1, -1)
                     .split("\n\n")
                     .map(function (blockDistribution) {
-                        return blockDistribution
-                            .split("\n")
-                            .map(function (line) {
-                                if (line.slice(-2) === "\\\\") {
-                                    return line.slice(0, -2);
-                                } else {
-                                    return line;
-                                }
-                            });
+                        return blockDistribution.split("\n").map(function (line) {
+                            if (line.slice(-2) === "\\\\") {
+                                return line.slice(0, -2);
+                            } else {
+                                return line;
+                            }
+                        });
                     })
             );
 
@@ -55,9 +53,7 @@
                     const kurtosis = equations[11].trim();
                     const median = equations[12].trim();
                     const mode = equations[13].trim();
-                    const notes = equations
-                        .slice(14)
-                        .map((note) => note.trim());
+                    const notes = equations.slice(14).map((note) => note.trim());
                     EQUATIONS_OBJECT[nameDistribution] = {
                         notation: notation,
                         domain: domain,
@@ -83,16 +79,10 @@
                 const eqs = EQUATIONS_OBJECT[key]["parameters"].slice(0, n);
                 const parametersDomains = {};
                 eqs.forEach(function (eq, index) {
-                    parametersDomains[
-                        distributionsInfoContinious[key]["parametersNames"][
-                            index
-                        ]
-                    ] = eq;
+                    parametersDomains[distributionsInfoContinious[key]["parametersNames"][index]] = eq;
                 });
-                distributionsInfoContinious[key]["parametersDomains"] =
-                    parametersDomains;
-                distributionsInfoContinious[key]["equations"] =
-                    EQUATIONS_OBJECT[key];
+                distributionsInfoContinious[key]["parametersDomains"] = parametersDomains;
+                distributionsInfoContinious[key]["equations"] = EQUATIONS_OBJECT[key];
                 console.log(key, key in EQUATIONS_OBJECT, parametersDomains);
             });
             console.log(distributionsInfoContinious);

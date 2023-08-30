@@ -6,7 +6,7 @@ import math
 
 mpl.style.use("ggplot")
 
-def doanes_formula(data):
+def num_bins_doane(data):
     """
     DONAE'S FORMULA
     https://en.wikipedia.org/wiki/Histogram#Doane's_formula
@@ -20,7 +20,7 @@ def doanes_formula(data):
 
 def plot_histogram(data, distribution):
     plt.figure(figsize=(8, 4))
-    plt.hist(data, density=True, ec='white', bins=doanes_formula(data))
+    plt.hist(data, density=True, ec='white', bins=num_bins_doane(data))
     plt.title('HISTOGRAM')
     plt.xlabel('Values')
     plt.ylabel('Frequencies')
