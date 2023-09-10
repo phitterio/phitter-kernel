@@ -1,5 +1,5 @@
 import scipy.stats
-from measurements.measurements import MEASUREMENTS_CONTINUOUS
+from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 
 
 def test_kolmogorov_smirnov_continuous(data, distribution, measurements):

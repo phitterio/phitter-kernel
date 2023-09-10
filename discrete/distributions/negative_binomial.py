@@ -70,7 +70,7 @@ if __name__ == "__main__":
     ## Import function to get measurements
     import sys
     sys.path.append("../measurements")
-    from measurements import MEASUREMENTS_DISCRETE
+    from measurements_discrete import MEASUREMENTS_DISCRETE
 
     ## Import function to get measurements
     def get_data(direction):

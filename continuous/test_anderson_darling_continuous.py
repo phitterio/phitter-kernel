@@ -1,5 +1,5 @@
 import math
-from measurements.measurements import MEASUREMENTS_CONTINUOUS
+from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 import sys
 
 sys.path.append("../utilities")

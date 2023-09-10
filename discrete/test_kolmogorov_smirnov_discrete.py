@@ -1,5 +1,5 @@
 import scipy.stats
-from measurements.measurements import MEASUREMENTS_DISCRETE
+from measurements.measurements_discrete import MEASUREMENTS_DISCRETE
 
 
 def test_kolmogorov_smirnov_discrete(data, distribution, measurements):

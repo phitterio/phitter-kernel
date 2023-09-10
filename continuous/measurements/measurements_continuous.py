@@ -5,7 +5,7 @@ import math
 
 
 class MEASUREMENTS_CONTINUOUS:
-    def __init__(self, data):
+    def __init__(self, data: list[float | int], num_bins: int | None = None):
         self.data = data
         self.length = len(data)
         self.min = min(data)
@@ -17,7 +17,7 @@ class MEASUREMENTS_CONTINUOUS:
         self.kurtosis = scipy.stats.moment(data, 4) / pow(self.standard_deviation, 4)
         self.median = numpy.median(data)
         self.mode = self.calculate_mode()
-        self.num_bins = self.num_bins_doane()
+        self.num_bins = num_bins if num_bins != None else self.num_bins_doane()
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})

@@ -1,6 +1,6 @@
 import scipy.stats
 import math
-from measurements.measurements import MEASUREMENTS_DISCRETE
+from measurements.measurements_discrete import MEASUREMENTS_DISCRETE
 
 
 def test_chi_square_discrete(data, distribution, measurements):

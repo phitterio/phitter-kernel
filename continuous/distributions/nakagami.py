@@ -71,7 +71,7 @@ if __name__ == "__main__":
     ## Import function to get measurements
     import sys
     sys.path.append("../measurements")
-    from measurements import MEASUREMENTS_CONTINUOUS
+    from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
     ## Import function to get measurements
     def get_data(direction):

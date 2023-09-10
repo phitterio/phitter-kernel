@@ -1,6 +1,6 @@
 import scipy.stats
 import numpy
-from measurements.measurements import MEASUREMENTS_CONTINUOUS
+from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 
 
 def test_chi_square_continuous(data, distribution, measurements):

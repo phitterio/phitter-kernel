@@ -2724,7 +2724,7 @@ class WEIBULL_3P:
 
 
 class MEASUREMENTS_CONTINUOUS:
-    def __init__(self, data):
+    def __init__(self, data: list[float | int], num_bins: int | None = None):
         self.data = data
         self.length = len(data)
         self.min = min(data)
@@ -2736,7 +2736,7 @@ class MEASUREMENTS_CONTINUOUS:
         self.kurtosis = scipy.stats.moment(data, 4) / pow(self.standard_deviation, 4)
         self.median = numpy.median(data)
         self.mode = self.calculate_mode()
-        self.num_bins = self.num_bins_doane()
+        self.num_bins = num_bins if num_bins != None else self.num_bins_doane()
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -2866,7 +2866,8 @@ def test_anderson_darling_continuous(data, distribution, measurements):
     result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_ad
 
-def phitter(data):
+
+def phitter(data, num_bins=None):
     _all_distributions = [
         ALPHA,
         ARCSINE,
@@ -2942,7 +2943,7 @@ def phitter(data):
         WEIBULL,
         WEIBULL_3P,
     ]
-    measurements = MEASUREMENTS_CONTINUOUS(data)
+    measurements = MEASUREMENTS_CONTINUOUS(data, num_bins)
 
     ## Calculae Histogram
     num_bins = measurements.num_bins

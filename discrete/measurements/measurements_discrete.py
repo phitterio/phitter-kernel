@@ -5,7 +5,7 @@ import collections
 
 
 class MEASUREMENTS_DISCRETE:
-    def __init__(self, data):
+    def __init__(self, data: list[int]):
         self.data = data
         self.length = len(data)
         self.min = min(data)
