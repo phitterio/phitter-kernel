@@ -253,7 +253,7 @@ class UNIFORM:
 
 
 class MEASUREMENTS_DISCRETE:
-    def __init__(self, data):
+    def __init__(self, data: list[int]):
         self.data = data
         self.length = len(data)
         self.min = min(data)
@@ -322,11 +322,7 @@ def test_kolmogorov_smirnov_discrete(data, distribution, measurements):
     return result_test_ks
 
 
-if __name__ == "__main__":
-    path = "../../discrete/data/data_binomial.txt"
-    sample_distribution_file = open(path, "r")
-    data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
-
+def phitter_discrete(data):
     _all_distributions = [BERNOULLI, BINOMIAL, GEOMETRIC, HYPERGEOMETRIC, LOGARITHMIC, NEGATIVE_BINOMIAL, POISSON, UNIFORM]
     measurements = MEASUREMENTS_DISCRETE(data)
 
@@ -386,19 +382,23 @@ if __name__ == "__main__":
             if v1 or v2:
                 DISTRIBUTION_RESULTS["sse"] = sse
                 DISTRIBUTION_RESULTS["parameters"] = str(distribution.parameters)
-                DISTRIBUTION_RESULTS["n_test_passed"] = (
-                    int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == False)
-                    + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == False)
-                )
-                DISTRIBUTION_RESULTS["n_test_null"] = (
-                    int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == None)
-                    + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == None)
-                )
+                DISTRIBUTION_RESULTS["n_test_passed"] = int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == False) + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == False)
+                DISTRIBUTION_RESULTS["n_test_null"] = int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == None) + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == None)
 
                 RESPONSE[distribution_name] = DISTRIBUTION_RESULTS
 
     sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: x[1]["sse"])}
     aproved_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
+
+    return sorted_results_sse, aproved_results
+
+
+if __name__ == "__main__":
+    path = "../../discrete/data/data_binomial.txt"
+    sample_distribution_file = open(path, "r")
+    data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
+
+    sorted_results_sse, aproved_results = phitter_discrete(data)
 
     for distribution, results in aproved_results.items():
         print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")

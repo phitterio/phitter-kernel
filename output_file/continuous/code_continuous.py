@@ -2867,7 +2867,7 @@ def test_anderson_darling_continuous(data, distribution, measurements):
     return result_test_ad
 
 
-def phitter(data, num_bins=None):
+def phitter_continuous(data, num_bins=None):
     _all_distributions = [
         ALPHA,
         ARCSINE,
@@ -3036,8 +3036,7 @@ def phitter(data, num_bins=None):
     sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: x[1]["sse"])}
     aproved_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
 
-    for distribution, results in aproved_results.items():
-        print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")
+    return sorted_results_sse, aproved_results
 
 
 if __name__ == "__main__":
@@ -3045,4 +3044,7 @@ if __name__ == "__main__":
     sample_distribution_file = open(path, "r")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
-    phitter(data)
+    sorted_results_sse, aproved_results = phitter_continuous(data, 20)
+
+    for distribution, results in aproved_results.items():
+        print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")

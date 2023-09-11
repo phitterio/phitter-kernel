@@ -57,9 +57,8 @@ class MEASUREMENTS_CONTINUOUS:
         N = self.length
         skewness = scipy.stats.skew(self.data)
         sigma_g1 = math.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
-        num_bins = 1 + math.log(N, 2) + math.log(1 + abs(skewness) / sigma_g1, 2)
-        num_bins = round(num_bins)
-        return num_bins
+        num_bins = 1 + math.log2(N) + math.log2(1 + abs(skewness) / sigma_g1)
+        return math.ceil(num_bins)
 
 
 if __name__ == "__main__":
