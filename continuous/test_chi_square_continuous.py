@@ -3,7 +3,7 @@ import numpy
 from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 
 
-def test_chi_square_continuous(data, distribution, measurements):
+def test_chi_square_continuous(data, distribution, measurements, confidence_level=0.95):
     """
     Chi Square test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -53,7 +53,7 @@ def test_chi_square_continuous(data, distribution, measurements):
 
     ## Calculation of indicators
     statistic_chi2 = sum(errors)
-    critical_value = scipy.stats.chi2.ppf(0.95, freedom_degrees)
+    critical_value = scipy.stats.chi2.ppf(confidence_level, freedom_degrees)
     p_value = 1 - scipy.stats.chi2.cdf(statistic_chi2, freedom_degrees)
     rejected = statistic_chi2 >= critical_value
 

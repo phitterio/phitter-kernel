@@ -2,7 +2,7 @@ import scipy.stats
 from measurements.measurements_discrete import MEASUREMENTS_DISCRETE
 
 
-def test_kolmogorov_smirnov_discrete(data, distribution, measurements):
+def test_kolmogorov_smirnov_discrete(data, distribution, measurements, confidence_level=0.95):
     """
     Kolmogorov Smirnov test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -55,7 +55,7 @@ def test_kolmogorov_smirnov_discrete(data, distribution, measurements):
 
     ## Calculation of indicators
     statistic_ks = max(errors)
-    critical_value = scipy.stats.kstwo.ppf(0.95, N)
+    critical_value = scipy.stats.kstwo.ppf(confidence_level, N)
     p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
     rejected = statistic_ks >= critical_value
 

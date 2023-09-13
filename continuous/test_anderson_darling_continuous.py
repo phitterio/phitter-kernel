@@ -6,7 +6,7 @@ sys.path.append("../utilities")
 import ad_marsaglia as ad
 
 
-def test_anderson_darling_continuous(data, distribution, measurements):
+def test_anderson_darling_continuous(data, distribution, measurements, confidence_level=0.95):
     """
     Anderson Darling test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -66,7 +66,7 @@ def test_anderson_darling_continuous(data, distribution, measurements):
 
     ## Calculation of indicators
     A2 = -N - S
-    critical_value = ad.ad_critical_value(0.95, N)
+    critical_value = ad.ad_critical_value(confidence_level, N)
     p_value = ad.ad_p_value(N, A2)
     rejected = A2 >= critical_value
 
