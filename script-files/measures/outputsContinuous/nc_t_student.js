@@ -1,7 +1,7 @@
 jStat = require("../node_modules/jstat");
 
 dists = {
-    nc_t_student: {
+    non_central_t_student: {
         measurements: {
             nonCentralMoments: function (k, lambda, n, loc, scale) {
                 let result;
@@ -30,33 +30,33 @@ dists = {
             },
             stats: {
                 mean: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
                     return loc + scale * µ1;
                 },
                 variance: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = dists.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
                     return (scale ** 2) * (µ2 - µ1 ** 2);
                 },
                 standardDeviation: function (lambda, n, loc, scale) {
                     return Math.sqrt(this.variance(lambda, n, loc, scale));
                 },
                 skewness: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = dists.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ3 = dists.nc_t_student.measurements.centralMoments(3, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_µ3 = dists.NON_CENTRAL_T_STUDENT.measurements.centralMoments(3, lambda, n, loc, scale);
                     const std = Math.sqrt(µ2 - µ1 ** 2);
                     return central_µ3 / (std ** 3);
                 },
                 kurtosis: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = dists.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ4 = dists.nc_t_student.measurements.centralMoments(4, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_µ4 = dists.NON_CENTRAL_T_STUDENT.measurements.centralMoments(4, lambda, n, loc, scale);
                     const std = Math.sqrt(µ2 - µ1 ** 2);
                     return central_µ4 / (std ** 4);
                 },
                 median: function (lambda, n, loc, scale) {
-                    return dists.nc_t_student.measurements.ppf(0.5, lambda, n, loc, scale);
+                    return dists.NON_CENTRAL_T_STUDENT.measurements.ppf(0.5, lambda, n, loc, scale);
                 },
                 mode: function (lambda, n, loc, scale) {
                     return undefined;
@@ -65,13 +65,13 @@ dists = {
         }
     }
 }
-console.log(dists.nc_t_student.measurements.stats.mean(2, 15, 10, 2))
-console.log(dists.nc_t_student.measurements.stats.variance(2, 15, 10, 2))
-console.log(dists.nc_t_student.measurements.stats.standardDeviation(2, 15, 10, 2))
-console.log(dists.nc_t_student.measurements.stats.skewness(2, 15, 10, 2))
-console.log(dists.nc_t_student.measurements.stats.kurtosis(2, 15, 10, 2))
-// console.log(dists.nc_t_student.measurements.stats.median(2, 15, 10, 2))
-console.log(dists.nc_t_student.measurements.stats.mode(2, 15, 10, 2))
+console.log(dists.NON_CENTRAL_T_STUDENT.measurements.stats.mean(2, 15, 10, 2))
+console.log(dists.NON_CENTRAL_T_STUDENT.measurements.stats.variance(2, 15, 10, 2))
+console.log(dists.NON_CENTRAL_T_STUDENT.measurements.stats.standardDeviation(2, 15, 10, 2))
+console.log(dists.NON_CENTRAL_T_STUDENT.measurements.stats.skewness(2, 15, 10, 2))
+console.log(dists.NON_CENTRAL_T_STUDENT.measurements.stats.kurtosis(2, 15, 10, 2))
+// console.log(dists.NON_CENTRAL_T_STUDENT.measurements.stats.median(2, 15, 10, 2))
+console.log(dists.NON_CENTRAL_T_STUDENT.measurements.stats.mode(2, 15, 10, 2))
 
 // mean_value: 14.214929421210748
 // variance_value: 5.311293051135106

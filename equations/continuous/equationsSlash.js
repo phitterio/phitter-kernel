@@ -1128,7 +1128,7 @@ u:\\text{Uniform[0,1] random varible}\\\\
 P\\left(a,x\\right)=\\frac{\\gamma(a,x)}{\\Gamma(a)}:\\text{Regularized lower incomplete gamma function}\\\\
 P^{-1}\\left(a,u\\right):\\text{Inverse of regularized lower incomplete gamma function}\\\\
 
-NC_CHI_SQUARE
+NON_CENTRAL_CHI_SQUARE
 X\\sim\\mathrm{NoncentralChiSquare}\\left(\\lambda,n\\right)\\\\
 x\\in [0,+\\infty)\\\\
 \\lambda\\in\\mathbb{R}^{+},n\\in\\mathbb{R}^{+}\\\\
@@ -1171,7 +1171,7 @@ u_{i}:\\text{Uniform[0,1] random varible}\\\\
 P^{-1}\\left(a,u\\right):\\text{Inverse of regularized lower incomplete gamma function}\\\\
 Beta\\left(x,y\\right):\\text{Beta function}\\\\
 
-NC_T_STUDENT
+NON_CENTRAL_T_STUDENT
 X\\sim\\mathrm{NonCentralTStudent}\\left(\\lambda,n,L,S\\right)\\\\
 x\\in\\left(-\\infty,\\infty\\right)\\\\
 \\lambda\\in\\mathbb{R},n\\in\\mathbb{R}^{+},S\\in\\mathbb{R}^{+},L\\in\\mathbb{R}\\\\

@@ -1188,7 +1188,7 @@ const continuousDistributions: ContinuousDistributions = {
             return v1 && v2;
         },
     },
-    nc_chi_square: {
+    NON_CENTRAL_CHI_SQUARE: {
         cdf: function (x, lambda, n) {
             const pyodideStore = usePyodideStore();
             const result = pyodideStore.runPython(`
@@ -1223,7 +1223,7 @@ const continuousDistributions: ContinuousDistributions = {
             return v1 && v2;
         },
     },
-    nc_f: {
+    non_central_f: {
         cdf: function (x, lambda, n1, n2) {
             const pyodideStore = usePyodideStore();
             const result = pyodideStore.runPython(`
@@ -1264,7 +1264,7 @@ const continuousDistributions: ContinuousDistributions = {
             return v1 && v2 && v3;
         },
     },
-    nc_t_student: {
+    non_central_t_student: {
         cdf: function (x, lambda, n, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
             const pyodideStore = usePyodideStore();

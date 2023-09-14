@@ -4,7 +4,7 @@ import numpy
 import scipy.special as sc
 import scipy.integrate
 
-class NC_T_STUDENT:
+class NON_CENTRAL_T_STUDENT:
     """
     Non-Central T Student distribution
     https://en.wikipedia.org/wiki/Noncentral_t-distribution
@@ -140,13 +140,13 @@ if __name__ == "__main__":
         data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
         return data
 
-    path = "../data/data_nc_t_student.txt"
+    path = "../data/data_NON_CENTRAL_T_STUDENT.txt"
     
     ## Distribution class
-    path = "../data/data_nc_t_student.txt"
+    path = "../data/data_NON_CENTRAL_T_STUDENT.txt"
     data = get_data(path) 
     measurements = MEASUREMENTS_CONTINUOUS(data)
-    distribution = NC_T_STUDENT(measurements)
+    distribution = NON_CENTRAL_T_STUDENT(measurements)
     
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))

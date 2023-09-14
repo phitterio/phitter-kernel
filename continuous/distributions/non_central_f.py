@@ -4,7 +4,7 @@ import scipy.stats
 import scipy.special as sc
 import numpy
 
-class NC_F:
+class NON_CENTRAL_F:
     """
     Non-Central F distribution
     https://en.wikipedia.org/wiki/Noncentral_F-distribution
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     path = "../data/data_nc_f.txt"
     data = get_data(path) 
     measurements = MEASUREMENTS_CONTINUOUS(data)
-    distribution = NC_F(measurements)
+    distribution = NON_CENTRAL_F(measurements)
     
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))

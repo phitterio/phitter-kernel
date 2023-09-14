@@ -431,15 +431,15 @@ const distributionsInfoContinious = {
         parametersValues: [12, 28],
         numberParameters: 2,
     },
-    nc_chi_square: {
+    NON_CENTRAL_CHI_SQUARE: {
         type: "continious",
         name: "Non Central Chi Square",
-        id: "nc_chi_square",
+        id: "NON_CENTRAL_CHI_SQUARE",
         parametersNames: ["lambda", "n"],
         parametersValues: [100, 5],
         numberParameters: 2,
     },
-    nc_f: {
+    non_central_f: {
         type: "continious",
         name: "Non Central F",
         id: "nc_f",
@@ -447,10 +447,10 @@ const distributionsInfoContinious = {
         parametersValues: [200, 10, 500],
         numberParameters: 3,
     },
-    nc_t_student: {
+    non_central_t_student: {
         type: "continious",
         name: "Non Central T Student",
-        id: "nc_t_student",
+        id: "NON_CENTRAL_T_STUDENT",
         parametersNames: ["lambda", "n", "loc", "scale"],
         parametersValues: [3, 7, 500, 10],
         numberParameters: 4,

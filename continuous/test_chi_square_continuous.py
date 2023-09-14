@@ -118,9 +118,9 @@ if __name__ == "__main__":
     from distributions.maxwell import MAXWELL
     from distributions.moyal import MOYAL
     from distributions.nakagami import NAKAGAMI
-    from distributions.nc_chi_square import NC_CHI_SQUARE
-    from distributions.nc_f import NC_F
-    from distributions.nc_t_student import NC_T_STUDENT
+    from distributions.non_central_chi_square import NON_CENTRAL_CHI_SQUARE
+    from distributions.non_central_f import NON_CENTRAL_F
+    from distributions.non_central_t_student import NON_CENTRAL_T_STUDENT
     from distributions.normal import NORMAL
     from distributions.pareto_first_kind import PARETO_FIRST_KIND
     from distributions.pareto_second_kind import PARETO_SECOND_KIND
@@ -198,9 +198,9 @@ if __name__ == "__main__":
         MAXWELL,
         MOYAL,
         NAKAGAMI,
-        NC_CHI_SQUARE,
-        NC_F,
-        NC_T_STUDENT,
+        NON_CENTRAL_CHI_SQUARE,
+        NON_CENTRAL_F,
+        NON_CENTRAL_T_STUDENT,
         NORMAL,
         PARETO_FIRST_KIND,
         PARETO_SECOND_KIND,

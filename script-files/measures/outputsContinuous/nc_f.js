@@ -1,7 +1,7 @@
 jStat = require("../node_modules/jstat");
 
 dists = {
-    nc_f: {
+    non_central_f: {
         measurements: {
             nonCentralMoments: function (k, lambda, n1, n2) {
                 let result;

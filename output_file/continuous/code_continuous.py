@@ -1588,7 +1588,7 @@ class NAKAGAMI:
         parameters = {"m": m , "omega": omega}
         return parameters
 
-class NC_CHI_SQUARE:
+class NON_CENTRAL_CHI_SQUARE:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.lambda_ = self.parameters["lambda"]
@@ -1621,7 +1621,7 @@ class NC_CHI_SQUARE:
         parameters = {"lambda": lambda_, "n": n}
         return parameters
 
-class NC_F:
+class NON_CENTRAL_F:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.lambda_ = self.parameters["lambda"]
@@ -1660,7 +1660,7 @@ class NC_F:
         parameters = {"lambda": solution.x[0], "n1": solution.x[1], "n2": solution.x[2]}
         return parameters
 
-class NC_T_STUDENT:
+class NON_CENTRAL_T_STUDENT:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.lambda_ = self.parameters["lambda"]
@@ -2403,9 +2403,9 @@ def phitter_continuous(data, num_bins=None, confidence_level=0.95):
         MAXWELL,
         MOYAL,
         NAKAGAMI,
-        NC_CHI_SQUARE,
-        NC_F,
-        NC_T_STUDENT,
+        NON_CENTRAL_CHI_SQUARE,
+        NON_CENTRAL_F,
+        NON_CENTRAL_T_STUDENT,
         NORMAL,
         PARETO_FIRST_KIND,
         PARETO_SECOND_KIND,

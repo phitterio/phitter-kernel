@@ -1,7 +1,7 @@
 jStat = require("../node_modules/jstat");
 
 dists = {
-    nc_chi_square: {
+    NON_CENTRAL_CHI_SQUARE: {
         measurements: {
             nonCentralMoments: function (k, lambda, n) {
                 return undefined;
@@ -26,7 +26,7 @@ dists = {
                     return 3 + 12 * (n + 4 * lambda) / ((n + 2 * lambda) ** 2);
                 },
                 median: function (lambda, n) {
-                    return dists.nc_chi_square.measurements.ppf(0.5, lambda, n);
+                    return dists.NON_CENTRAL_CHI_SQUARE.measurements.ppf(0.5, lambda, n);
                 },
                 mode: function (lambda, n) {
                     return undefined;
@@ -35,13 +35,13 @@ dists = {
         }
     }
 }
-console.log(dists.nc_chi_square.measurements.stats.mean(100, 5))
-console.log(dists.nc_chi_square.measurements.stats.variance(100, 5))
-console.log(dists.nc_chi_square.measurements.stats.standardDeviation(100, 5))
-console.log(dists.nc_chi_square.measurements.stats.skewness(100, 5))
-console.log(dists.nc_chi_square.measurements.stats.kurtosis(100, 5))
-// console.log(dists.nc_chi_square.measurements.stats.median(100, 5))
-console.log(dists.nc_chi_square.measurements.stats.mode(100, 5))
+console.log(dists.NON_CENTRAL_CHI_SQUARE.measurements.stats.mean(100, 5))
+console.log(dists.NON_CENTRAL_CHI_SQUARE.measurements.stats.variance(100, 5))
+console.log(dists.NON_CENTRAL_CHI_SQUARE.measurements.stats.standardDeviation(100, 5))
+console.log(dists.NON_CENTRAL_CHI_SQUARE.measurements.stats.skewness(100, 5))
+console.log(dists.NON_CENTRAL_CHI_SQUARE.measurements.stats.kurtosis(100, 5))
+// console.log(dists.NON_CENTRAL_CHI_SQUARE.measurements.stats.median(100, 5))
+console.log(dists.NON_CENTRAL_CHI_SQUARE.measurements.stats.mode(100, 5))
 
 // mean_value: 105
 // variance_value: 410

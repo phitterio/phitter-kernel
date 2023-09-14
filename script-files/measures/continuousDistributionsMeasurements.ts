@@ -2452,7 +2452,7 @@ const continuousDistributionsMeasurements = {
             },
         },
     },
-    nc_chi_square: {
+    NON_CENTRAL_CHI_SQUARE: {
         measurements: {
             nonCentralMoments: function (k, lambda, n) {
                 return undefined;
@@ -2477,7 +2477,7 @@ const continuousDistributionsMeasurements = {
                     return 3 + (12 * (n + 4 * lambda)) / (n + 2 * lambda) ** 2;
                 },
                 median: function (lambda, n) {
-                    return continuousDistributions.nc_chi_square.ppf(0.5, lambda, n);
+                    return continuousdistributions.non_central_chi_sqaure.ppf(0.5, lambda, n);
                 },
                 mode: function (lambda, n) {
                     return undefined;
@@ -2485,7 +2485,7 @@ const continuousDistributionsMeasurements = {
             },
         },
     },
-    nc_f: {
+    non_central_f: {
         measurements: {
             nonCentralMoments: function (k, lambda, n1, n2) {
                 let result;
@@ -2553,7 +2553,7 @@ const continuousDistributionsMeasurements = {
                     return central_µ4! / this.standardDeviation(lambda, n1, n2)! ** 4;
                 },
                 median: function (lambda, n1, n2) {
-                    return continuousDistributions.nc_f.ppf(0.5, lambda, n1, n2);
+                    return continuousdistributions.non_central_f.ppf(0.5, lambda, n1, n2);
                 },
                 mode: function (lambda, n1, n2) {
                     return undefined;
@@ -2561,7 +2561,7 @@ const continuousDistributionsMeasurements = {
             },
         },
     },
-    nc_t_student: {
+    non_central_t_student: {
         measurements: {
             nonCentralMoments: function (k, lambda, n, loc, scale) {
                 let result;
@@ -2606,33 +2606,33 @@ const continuousDistributionsMeasurements = {
             },
             stats: {
                 mean: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
                     return loc + scale * µ1!;
                 },
                 variance: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
                     return scale ** 2 * (µ2! - µ1! ** 2);
                 },
                 standardDeviation: function (lambda, n, loc, scale) {
                     return this.variance(lambda, n, loc, scale) !== undefined ? Math.sqrt(this.variance(lambda, n, loc, scale)!) : undefined;
                 },
                 skewness: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ3 = continuousDistributionsMeasurements.nc_t_student.measurements.centralMoments(3, lambda, n, loc, scale);
+                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_µ3 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.centralMoments(3, lambda, n, loc, scale);
                     const std = Math.sqrt(µ2! - µ1! ** 2);
                     return central_µ3! / std ** 3;
                 },
                 kurtosis: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ4 = continuousDistributionsMeasurements.nc_t_student.measurements.centralMoments(4, lambda, n, loc, scale);
+                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_µ4 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.centralMoments(4, lambda, n, loc, scale);
                     const std = Math.sqrt(µ2! - µ1! ** 2);
                     return central_µ4! / std ** 4;
                 },
                 median: function (lambda, n, loc, scale) {
-                    return continuousDistributions.nc_t_student.ppf(0.5, lambda, n, loc, scale);
+                    return continuousdistributions.non_central_t_student.ppf(0.5, lambda, n, loc, scale);
                 },
                 mode: function (lambda, n, loc, scale) {
                     return undefined;

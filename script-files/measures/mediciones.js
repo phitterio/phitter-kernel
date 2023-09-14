@@ -2455,7 +2455,7 @@ const MEASUREMENTS = {
             },
         },
     },
-    nc_chi_square: {
+    NON_CENTRAL_CHI_SQUARE: {
         measurements: {
             nonCentralMoments: function (k, lambda, n) {
                 return undefined;
@@ -2480,7 +2480,7 @@ const MEASUREMENTS = {
                     return 3 + (12 * (n + 4 * lambda)) / (n + 2 * lambda) ** 2;
                 },
                 median: function (lambda, n) {
-                    return dists.nc_chi_square.measurements.ppf(0.5, lambda, n);
+                    return dists.NON_CENTRAL_CHI_SQUARE.measurements.ppf(0.5, lambda, n);
                 },
                 mode: function (lambda, n) {
                     return undefined;
@@ -2488,7 +2488,7 @@ const MEASUREMENTS = {
             },
         },
     },
-    nc_f: {
+    non_central_f: {
         measurements: {
             nonCentralMoments: function (k, lambda, n1, n2) {
                 let result;
@@ -2564,7 +2564,7 @@ const MEASUREMENTS = {
             },
         },
     },
-    nc_t_student: {
+    non_central_t_student: {
         measurements: {
             nonCentralMoments: function (k, lambda, n, loc, scale) {
                 let result;
@@ -2609,33 +2609,33 @@ const MEASUREMENTS = {
             },
             stats: {
                 mean: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
                     return loc + scale * µ1;
                 },
                 variance: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = dists.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
                     return scale ** 2 * (µ2 - µ1 ** 2);
                 },
                 standardDeviation: function (lambda, n, loc, scale) {
                     return Math.sqrt(this.variance(lambda, n, loc, scale));
                 },
                 skewness: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = dists.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ3 = dists.nc_t_student.measurements.centralMoments(3, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_µ3 = dists.NON_CENTRAL_T_STUDENT.measurements.centralMoments(3, lambda, n, loc, scale);
                     const std = Math.sqrt(µ2 - µ1 ** 2);
                     return central_µ3 / std ** 3;
                 },
                 kurtosis: function (lambda, n, loc, scale) {
-                    const µ1 = dists.nc_t_student.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = dists.nc_t_student.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ4 = dists.nc_t_student.measurements.centralMoments(4, lambda, n, loc, scale);
+                    const µ1 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const µ2 = dists.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_µ4 = dists.NON_CENTRAL_T_STUDENT.measurements.centralMoments(4, lambda, n, loc, scale);
                     const std = Math.sqrt(µ2 - µ1 ** 2);
                     return central_µ4 / std ** 4;
                 },
                 median: function (lambda, n, loc, scale) {
-                    return dists.nc_t_student.measurements.ppf(0.5, lambda, n, loc, scale);
+                    return dists.NON_CENTRAL_T_STUDENT.measurements.ppf(0.5, lambda, n, loc, scale);
                 },
                 mode: function (lambda, n, loc, scale) {
                     return undefined;

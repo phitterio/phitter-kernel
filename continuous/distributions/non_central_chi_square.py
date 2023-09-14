@@ -4,7 +4,7 @@ import scipy.stats
 import scipy.special as sc
 import numpy
 
-class NC_CHI_SQUARE:
+class NON_CENTRAL_CHI_SQUARE:
     """
     Non-Central Chi Square distribution
     https://en.wikipedia.org/wiki/Noncentral_chi-squared_distribution
@@ -123,10 +123,10 @@ if __name__ == "__main__":
         return data
     
     ## Distribution class
-    path = "../data/data_nc_chi_square.txt"
+    path = "../data/data_NON_CENTRAL_CHI_SQUARE.txt"
     data = get_data(path) 
     measurements = MEASUREMENTS_CONTINUOUS(data)
-    distribution = NC_CHI_SQUARE(measurements)
+    distribution = NON_CENTRAL_CHI_SQUARE(measurements)
     
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
