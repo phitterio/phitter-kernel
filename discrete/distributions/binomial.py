@@ -62,7 +62,7 @@ class BINOMIAL:
         """
         p = 1 - measurements.variance / measurements.mean
         n = int(round(measurements.mean / p, 0))
-        parameters = {"p": p, "n": n}
+        parameters = {"n": n, "p": p}
         return parameters
 
 if __name__ == "__main__":

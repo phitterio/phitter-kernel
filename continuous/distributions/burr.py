@@ -1,5 +1,4 @@
 import scipy.optimize
-import numpy
 import scipy.stats
 import scipy.special as sc
 

@@ -1,8 +1,5 @@
-import scipy.integrate
 import math
-import scipy.stats
 import scipy.special as sc
-import numpy
 
 class MAXWELL:
     """
@@ -46,10 +43,8 @@ class MAXWELL:
         """
         Check parameters restrictions
         """
-        v1 = self.lambda_ > 0
-        v2 = self.n1 > 0
-        v3 = self.n2 > 0
-        return v1 and v2 and v3
+        v1 = self.alpha > 0
+        return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         """
