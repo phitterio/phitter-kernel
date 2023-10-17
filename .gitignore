@@ -50,3 +50,5 @@ coverage.xml
 docs/_build/
 
 node_modules
+
+tests_production
