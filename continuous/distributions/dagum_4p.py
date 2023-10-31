@@ -2,18 +2,20 @@ import scipy.optimize
 import numpy
 import scipy.special
 
+
 class DAGUM_4P:
     """
     Dagum distribution
     https://en.wikipedia.org/wiki/Dagum_distribution
     """
+
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.a = self.parameters["a"]
         self.b = self.parameters["b"]
         self.p = self.parameters["p"]
         self.loc = self.parameters["loc"]
-        
+
     def cdf(self, x: float) -> float:
         """
         Cumulative distribution function
@@ -21,20 +23,20 @@ class DAGUM_4P:
         Alternative: quadrature integration method
         """
         return (1 + ((x - self.loc) / self.b) ** (-self.a)) ** (-self.p)
-    
+
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
         return (self.a * self.p / x) * ((((x - self.loc) / self.b) ** (self.a * self.p)) / (((((x - self.loc) / self.b) ** (self.a)) + 1) ** (self.p + 1)))
-        
+
     def get_num_parameters(self) -> int:
         """
         Number of parameters of the distribution
         """
         return len(self.parameters)
-    
+
     def parameter_restrictions(self) -> bool:
         """
         Check parameters restrictions
@@ -48,7 +50,7 @@ class DAGUM_4P:
         """
         Calculate proper parameters of the distribution from sample measurements.
         The parameters are calculated by formula.
-        
+
         Parameters
         ==========
         measurements: MEASUREMESTS
@@ -59,10 +61,13 @@ class DAGUM_4P:
         parameters : dict
             {"a": * , "b":  * , "c":  * }
         """
+
         def sse(parameters: dict) -> float:
             def __pdf(x: float, params: dict) -> float:
-                return (params["a"] * params["p"] / (x - params["loc"])) * ((((x - params["loc"]) / params["b"]) ** (params["a"] * params["p"])) / ((((x / params["b"]) ** (params["a"])) + 1) ** (params["p"] + 1)))
-        
+                return (params["a"] * params["p"] / (x - params["loc"])) * (
+                    (((x - params["loc"]) / params["b"]) ** (params["a"] * params["p"])) / ((((x / params["b"]) ** (params["a"])) + 1) ** (params["p"] + 1))
+                )
+
             ## Frequencies of histogram
             frequencies, bin_edges = numpy.histogram(measurements.data, density=True)
 
@@ -76,14 +81,14 @@ class DAGUM_4P:
             sse = numpy.sum(numpy.power(frequencies - pdf_values, 2))
 
             return sse
-        
+
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
             a, b, p, loc = initial_solution
-            
+
             ## Generatred moments function (not - centered)
-            miu = lambda k: (b ** k) * p * scipy.special.beta((a * p + k) / a, (a - k) / a)
-            
+            miu = lambda k: (b**k) * p * scipy.special.beta((a * p + k) / a, (a - k) / a)
+
             ## Parametric expected expressions
             parametric_mean = miu(1) + loc
             parametric_variance = -(miu(1) ** 2) + miu(2)
@@ -91,39 +96,41 @@ class DAGUM_4P:
             # parametric_kurtosis = (-3 * miu(1) ** 4 + 6 * miu(1) ** 2 * miu(2) -4 * miu(1) * miu(3) + miu(4)) / (-(miu(1) ** 2) + miu(2)) ** 2
             parametric_median = b * ((2 ** (1 / p)) - 1) ** (-1 / a) + loc
             parametric_mode = b * ((a * p - 1) / (a + 1)) ** (1 / a) + loc
-            
+
             ## System Equations
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
             eq3 = parametric_median - measurements.median
             eq4 = parametric_mode - measurements.mode
-            
+
             return (eq1, eq2, eq3, eq4)
-        
+
         ## Scipy Burr3 = Dagum parameter
         s0_burr3_sc = scipy.stats.burr.fit(measurements.data)
         parameters_sc = {"a": s0_burr3_sc[0], "b": s0_burr3_sc[3], "p": s0_burr3_sc[1], "loc": s0_burr3_sc[2]}
 
         if s0_burr3_sc[0] <= 2:
-            return(parameters_sc)
+            return parameters_sc
         else:
             a0 = s0_burr3_sc[0]
             x0 = [a0, 1, 1, measurements.mean]
             b = ((1e-5, 1e-5, 1e-5, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
-            solution = scipy.optimize.least_squares(equations, x0, bounds = b, args=([measurements]))
+            solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([measurements]))
             parameters_ls = {"a": solution.x[0], "b": solution.x[1], "p": solution.x[2], "loc": solution.x[3]}
-            
+
             sse_sc = sse(parameters_sc)
             sse_ls = sse(parameters_ls)
 
             if sse_sc < sse_ls:
-                return(parameters_sc)
+                return parameters_sc
             else:
-                return(parameters_ls)
+                return parameters_ls
+
 
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -132,10 +139,10 @@ if __name__ == "__main__":
         sample_distribution_file = open(direction, "r")
         data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
         return data
-    
+
     ## Distribution class
     path = "../data/data_dagum_4p.txt"
-    data = get_data(path) 
+    data = get_data(path)
     measurements = MEASUREMENTS_CONTINUOUS(data)
     distribution = DAGUM_4P(measurements)
 

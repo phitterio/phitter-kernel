@@ -1,17 +1,18 @@
 import math
 import scipy.special as sc
 
+
 class MAXWELL:
     """
     Maxwell distribution
-    https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#:~:text=Mathematically%2C%20the%20Maxwell%E2%80%93Boltzmann%20distribution,of%20temperature%20and%20particle%20mass).  
+    https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#:~:text=Mathematically%2C%20the%20Maxwell%E2%80%93Boltzmann%20distribution,of%20temperature%20and%20particle%20mass).
     """
+
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.alpha = self.parameters["alpha"]
         self.loc = self.parameters["loc"]
-       
-        
+
     def cdf(self, x: float) -> float:
         """
         Cumulative distribution function
@@ -22,7 +23,7 @@ class MAXWELL:
         z = lambda t: (x - self.loc) / self.alpha
         result = sc.erf(z(x) / (math.sqrt(2))) - math.sqrt(2 / math.pi) * z(x) * math.exp(-z(x) ** 2 / 2)
         return result
-    
+
     def pdf(self, x: float) -> float:
         """
         Probability density function
@@ -32,13 +33,13 @@ class MAXWELL:
         z = lambda t: (x - self.loc) / self.alpha
         result = 1 / self.alpha * math.sqrt(2 / math.pi) * z(x) ** 2 * math.exp(-z(x) ** 2 / 2)
         return result
-    
+
     def get_num_parameters(self) -> int:
         """
         Number of parameters of the distribution
         """
         return len(self.parameters)
-    
+
     def parameter_restrictions(self) -> bool:
         """
         Check parameters restrictions
@@ -50,7 +51,7 @@ class MAXWELL:
         """
         Calculate proper parameters of the distribution from sample measurements.
         The parameters are calculated by formula.
-        
+
         Parameters
         ==========
         measurements: MEASUREMESTS
@@ -63,36 +64,38 @@ class MAXWELL:
         """
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         #     alpha, loc = initial_solution
-            
+
         #     ## Parametric expected expressions
         #     parametric_mean = loc + 2 * alpha * math.sqrt(2 / math.pi)
         #     parametric_variance = alpha ** 2 * (3 * math.pi - 8) / math.pi
         #     parametric_median = loc + alpha * math.sqrt(2 * sc.gammaincinv(1.5, 0.5))
         #     # parametric_mode = loc + sigma * alpha * math.sqrt(2)
-            
+
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
         #     eq2 = parametric_variance - measurements.variance
         #     # eq3 = parametric_mode  - measurements.mode
         #     eq3 = parametric_median - measurements.median
-            
+
         #     return (eq1, eq2, eq3)
-        
+
         # bnds = ((0,  - numpy.inf), (numpy.inf, numpy.inf))
         # x0 = (1, measurements.mean)
         # args = ([measurements])
         # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
         # parameters = {"alpha": solution.x[0], "loc": solution.x[1]}
-        
+
         alpha = math.sqrt(measurements.variance * math.pi / (3 * math.pi - 8))
         loc = measurements.mean - 2 * alpha * math.sqrt(2 / math.pi)
         parameters = {"alpha": alpha, "loc": loc}
-        
+
         return parameters
+
 
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -104,12 +107,12 @@ if __name__ == "__main__":
 
     ## Distribution class
     path = "../data/data_maxwell.txt"
-    data = get_data(path) 
+    data = get_data(path)
     measurements = MEASUREMENTS_CONTINUOUS(data)
     distribution = MAXWELL(measurements)
-    
+
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
     print(distribution.pdf(measurements.mean))
-    
+
     # print(scipy.stats.ncf.fit(data))

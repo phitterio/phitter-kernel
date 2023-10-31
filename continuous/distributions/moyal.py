@@ -4,12 +4,14 @@ import math
 import scipy.optimize
 import numpy
 
+
 class MOYAL:
     """
     Moyal distribution
     Hand - book on Statistical Distributions (pag.93) ... Christian Walck
     https://reference.wolfram.com / language / ref / MoyalDistribution.html
     """
+
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.miu = self.parameters["miu"]
@@ -26,7 +28,7 @@ class MOYAL:
         # result = 1 - sc.gammainc(0.5, math.exp(-z(x)) / 2)
         result = sc.erfc(math.exp(-0.5 * z(x)) / math.sqrt(2))
         return result
-    
+
     def pdf(self, x: float) -> float:
         """
         Probability density function
@@ -36,13 +38,13 @@ class MOYAL:
         # result = scipy.stats.moyal.pdf(x, loc = self.miu, scale = self.sigma)
         result = math.exp(-0.5 * (z(x) + math.exp(-z(x)))) / (self.sigma * math.sqrt(2 * math.pi))
         return result
-    
+
     def get_num_parameters(self) -> int:
         """
         Number of parameters of the distribution
         """
         return len(self.parameters)
-    
+
     def parameter_restrictions(self) -> bool:
         """
         Check parameters restrictions
@@ -54,7 +56,7 @@ class MOYAL:
         """
         Calculate proper parameters of the distribution from sample measurements.
         The parameters are calculated by formula.
-        
+
         Parameters
         ==========
         measurements : dict
@@ -68,31 +70,33 @@ class MOYAL:
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         #     ## Variables declaration
         #     μ, σ = initial_solution
-            
+
         #     ## Parametric expected expressions
         #     parametric_mean = μ + σ * (math.log(2) + 0.577215664901532)
         #     parametric_variance = σ * σ * math.pi * math.pi / 2
-            
+
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
         #     eq2 = parametric_variance - measurements.variance
-            
+
         #     return (eq1, eq2)
-        
+
         # bnds = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
         # x0 = (measurements.mean, 1)
         # args = ([measurements])
         # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
-        
+
         σ = math.sqrt(2 * measurements.variance / (math.pi * math.pi))
         μ = measurements.mean - σ * (math.log(2) + 0.577215664901532)
-        
+
         parameters = {"miu": μ, "sigma": σ}
         return parameters
-    
+
+
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -101,13 +105,13 @@ if __name__ == "__main__":
         sample_distribution_file = open(direction, "r")
         data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
         return data
-    
+
     ## Distribution class
     path = "../data/data_moyal.txt"
-    data = get_data(path) 
+    data = get_data(path)
     measurements = MEASUREMENTS_CONTINUOUS(data)
     distribution = MOYAL(measurements)
-    
+
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
     print(distribution.pdf(measurements.mean))

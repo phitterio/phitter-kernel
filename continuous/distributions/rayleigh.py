@@ -5,12 +5,13 @@ import scipy.stats
 class RAYLEIGH:
     """
     Rayleigh distribution
-    https://en.wikipedia.org/wiki/Rayleigh_distribution    
+    https://en.wikipedia.org/wiki/Rayleigh_distribution
     """
+
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.loc = self.parameters["loc"]
-        self.scale = self.parameters["scale"]
+        self.gamma = self.parameters["gamma"]
+        self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
         """
@@ -18,7 +19,7 @@ class RAYLEIGH:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: (t - self.loc) / self.scale
+        z = lambda t: (t - self.gamma) / self.sigma
         return 1 - math.exp(-0.5 * (z(x) ** 2))
 
     def pdf(self, x: float) -> float:
@@ -26,8 +27,8 @@ class RAYLEIGH:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: (t - self.loc) / self.scale
-        return z(x) * math.exp(-0.5 * (z(x) ** 2)) / self.scale
+        z = lambda t: (t - self.gamma) / self.sigma
+        return z(x) * math.exp(-0.5 * (z(x) ** 2)) / self.sigma
 
     def get_num_parameters(self) -> int:
         """
@@ -39,14 +40,14 @@ class RAYLEIGH:
         """
         Check parameters restrictions
         """
-        v1 = self.scale > 0
+        v1 = self.sigma > 0
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         """
         Calculate proper parameters of the distribution from sample measurements.
-        The parameters are calculated by solving the equations of the measures expected 
-        for this distribution.The number of equations to consider is equal to the number 
+        The parameters are calculated by solving the equations of the measures expected
+        for this distribution.The number of equations to consider is equal to the number
         of parameters.
 
         Parameters
@@ -57,23 +58,24 @@ class RAYLEIGH:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"gamma":  * , "sigma":  * }
         """
         ## Scipy Rayleigh estimation
         # scipy_params = scipy.stats.rayleigh.fit(measurements.data)
-        # parameters = {"loc": scipy_params[0], "scale": scipy_params[1]}
+        # parameters = {"gamma": scipy_params[0], "sigma": scipy_params[1]}
 
-        ## Location and scale solve system
-        scale = math.sqrt(measurements.variance * 2 / (4 - math.pi))
-        loc = measurements.mean - scale * math.sqrt(math.pi / 2)
+        ## Location and sigma solve system
+        sigma = math.sqrt(measurements.variance * 2 / (4 - math.pi))
+        gamma = measurements.mean - sigma * math.sqrt(math.pi / 2)
 
-        parameters = {"loc": loc, "scale": scale}
+        parameters = {"gamma": gamma, "sigma": sigma}
         return parameters
 
 
 if __name__ == "__main__":
     # Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 

@@ -7,7 +7,7 @@ class PARETO_FIRST_KIND:
     """
     Pareto first kind distribution distribution
     https://en.wikipedia.org/wiki/Pareto_distribution
-    Compendium of Common Probability Distributions (pag.61) ... Michael P. McLaughlin  
+    Compendium of Common Probability Distributions (pag.61) ... Michael P. McLaughlin
     """
 
     def __init__(self, measurements):
@@ -22,16 +22,18 @@ class PARETO_FIRST_KIND:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # print(scipy.stats.pareto.cdf(x, self.alpha, scale=self.xm))
-        return 1 - (self.xm / (x - self.loc)) ** self.alpha
+        # result = 1 - (self.xm / (x - self.loc)) ** self.alpha
+        result = scipy.stats.pareto.cdf(x, self.alpha, loc=self.loc, scale=self.xm)
+        return result
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # print(scipy.stats.pareto.pdf(x, self.alpha, scale=self.xm))
-        return (self.alpha * self.xm ** self.alpha) / ((x - self.loc) ** (self.alpha + 1))
+        # result = (self.alpha * self.xm**self.alpha) / ((x - self.loc) ** (self.alpha + 1))
+        result = scipy.stats.pareto.pdf(x, self.alpha, loc=self.loc, scale=self.xm)
+        return result
 
     def get_num_parameters(self) -> int:
         """
@@ -62,37 +64,41 @@ class PARETO_FIRST_KIND:
         parameters : dict
             {"xm":  * , "alpha":  * }
         """
-        def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            ## Variables declaration
-            alpha, xm, loc = initial_solution
-            
-            ## Generatred moments function (not - centered)
-            E = lambda k: (alpha * xm ** k) / (alpha - k)
-            
-            ## Parametric expected expressions
-            parametric_mean = loc + E(1)
-            parametric_variance = (E(2) - E(1) ** 2)
-            # parametric_skewne1ss = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
-            # parametric_kurtosis = (E(4)-4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) /  ((E(2) - E(1) ** 2)) ** 2
-            # parametric_median = loc + xm * (2 ** (1 / alpha))
-            parametric_mode = loc + xm
-            
-            ## System Equations
-            eq1 = parametric_mean - measurements.mean
-            eq2 = parametric_variance - measurements.variance
-            # eq3 = parametric_skewness - measurements.skewness
-            # eq3 = parametric_kurtosis  - measurements.kurtosis
-            eq3 = parametric_mode - measurements.mode
-            # eq3 = parametric_median - measurements.median
-            
-            return (eq1, eq2, eq3)
-        
-        bnds = ((1, 0,  - numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
-        x0 = (1, measurements.mean, measurements.mean)
-        args = ([measurements])
-        solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
-        parameters = {"alpha": solution.x[0], "xm": solution.x[1], "loc": solution.x[2]}
-        
+
+        # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
+        #     ## Variables declaration
+        #     alpha, xm, loc = initial_solution
+
+        #     ## Generatred moments function (not - centered)
+        #     E = lambda k: (alpha * xm**k) / (alpha - k)
+
+        #     ## Parametric expected expressions
+        #     parametric_mean = loc + E(1)
+        #     parametric_variance = E(2) - E(1) ** 2
+        #     # parametric_skewne1ss = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
+        #     # parametric_kurtosis = (E(4)-4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) /  ((E(2) - E(1) ** 2)) ** 2
+        #     # parametric_median = loc + xm * (2 ** (1 / alpha))
+        #     parametric_mode = loc + xm
+
+        #     ## System Equations
+        #     eq1 = parametric_mean - measurements.mean
+        #     eq2 = parametric_variance - measurements.variance
+        #     # eq3 = parametric_skewness - measurements.skewness
+        #     # eq3 = parametric_kurtosis  - measurements.kurtosis
+        #     eq3 = parametric_mode - measurements.mode
+        #     # eq3 = parametric_median - measurements.median
+
+        #     return (eq1, eq2, eq3)
+
+        # bnds = ((1, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
+        # x0 = (1, measurements.mean, measurements.mean)
+        # args = [measurements]
+        # solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        # parameters = {"alpha": solution.x[0], "xm": solution.x[1], "loc": solution.x[2]}
+
+        scipy_params = scipy.stats.pareto.fit(measurements.data)
+        parameters = {"xm": scipy_params[2], "alpha": scipy_params[0], "loc": scipy_params[1]}
+
         # # Solve system
         # m = 112.5
         # me = measurements.median
@@ -114,6 +120,7 @@ class PARETO_FIRST_KIND:
 if __name__ == "__main__":
     # Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -135,6 +142,7 @@ if __name__ == "__main__":
 
     # Get parameters of distribution: SCIPY vs EQUATIONS
     import time
+
     ti = time.time()
     print(distribution.get_parameters(measurements))
     print("Solve equations time: ", time.time() - ti)

@@ -1,15 +1,17 @@
 import scipy.stats
 import math
 
+
 class POISSON:
     """
     Poisson distribution
     https://en.wikipedia.org/wiki/Poisson_distribution
     """
+
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.lambda_ = self.parameters["lambda"]
-                
+
     def cdf(self, x: float) -> float:
         """
         Probability density function
@@ -19,7 +21,6 @@ class POISSON:
         result = scipy.stats.poisson.cdf(x, self.lambda_)
         return result
 
-    
     def pmf(self, x: int) -> float:
         """
         Probability density function
@@ -27,15 +28,15 @@ class POISSON:
         """
         # result = scipy.stats.poisson.pmf(x, self.lambda_)
         # print(result)
-        result = (self.lambda_ ** x) * math.exp(-self.lambda_) / math.factorial(x)
+        result = (self.lambda_**x) * math.exp(-self.lambda_) / math.factorial(x)
         return result
-    
+
     def get_num_parameters(self) -> int:
         """
         Number of parameters of the distribution
         """
         return len(self.parameters)
-    
+
     def parameter_restrictions(self) -> bool:
         """
         Check parameters restrictions
@@ -47,7 +48,7 @@ class POISSON:
         """
         Calculate proper parameters of the distribution from sample measurements.
         The parameters are calculated by formula.
-        
+
         Parameters
         ==========
         measurements: MEASUREMESTS
@@ -62,9 +63,11 @@ class POISSON:
         parameters = {"lambda": λ}
         return parameters
 
+
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
 
@@ -79,7 +82,7 @@ if __name__ == "__main__":
     data = get_data(path)
     measurements = MEASUREMENTS_DISCRETE(data)
     distribution = POISSON(measurements)
-    
+
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(round(measurements.mean)))
     print(distribution.pmf(round(measurements.mean)))

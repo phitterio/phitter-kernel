@@ -1,11 +1,13 @@
 import math
 import scipy.special as sc
 
+
 class HALF_NORMAL:
     """
     Half Normal Distribution
-    https://en.wikipedia.org/wiki/Half-normal_distribution        
+    https://en.wikipedia.org/wiki/Half-normal_distribution
     """
+
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.miu = self.parameters["miu"]
@@ -20,7 +22,7 @@ class HALF_NORMAL:
         z = lambda t: (t - self.miu) / self.sigma
         result = sc.erf(z(x) / math.sqrt(2))
         return result
-    
+
     def pdf(self, x: float) -> float:
         """
         Probability density function
@@ -29,13 +31,13 @@ class HALF_NORMAL:
         z = lambda t: (t - self.miu) / self.sigma
         result = (1 / self.sigma) * math.sqrt(2 / math.pi) * math.exp(-(z(x) ** 2) / 2)
         return result
-    
+
     def get_num_parameters(self) -> int:
         """
         Number of parameters of the distribution
         """
         return len(self.parameters)
-    
+
     def parameter_restrictions(self) -> bool:
         """
         Check parameters restrictions
@@ -47,7 +49,7 @@ class HALF_NORMAL:
         """
         Calculate proper parameters of the distribution from sample measurements.
         The parameters are calculated by formula.
-        
+
         Parameters
         ==========
         measurements : dict
@@ -58,16 +60,18 @@ class HALF_NORMAL:
         parameters : dict
             {"miu":  * , "sigma":  * }
         """
-       
+
         σ = math.sqrt(measurements.variance / (1 - 2 / math.pi))
         μ = measurements.mean - σ * math.sqrt(2) / math.sqrt(math.pi)
         parameters = {"miu": μ, "sigma": σ}
-        
+
         return parameters
-    
+
+
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -76,13 +80,13 @@ if __name__ == "__main__":
         sample_distribution_file = open(direction, "r")
         data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
         return data
-    
+
     ## Distribution class
     path = "../data/data_half_normal.txt"
-    data = get_data(path) 
+    data = get_data(path)
     measurements = MEASUREMENTS_CONTINUOUS(data)
     distribution = HALF_NORMAL(measurements)
-    
+
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
     print(distribution.pdf(measurements.mean))

@@ -3,11 +3,12 @@ class UNIFORM:
     Uniform distribution
     https://en.wikipedia.org/wiki/Discrete_uniform_distribution
     """
+
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.a = self.parameters["a"]
         self.b = self.parameters["b"]
-        
+
     def cdf(self, x: float) -> float:
         """
         Probability density function
@@ -15,20 +16,20 @@ class UNIFORM:
         Alternative: scipy cdf method
         """
         return (x - self.a + 1) / (self.b - self.a + 1)
-    
+
     def pmf(self, x: int) -> float:
         """
         Probability density function
         Calculated using the definition of the function
         """
         return 1 / (self.b - self.a + 1)
-    
+
     def get_num_parameters(self) -> int:
         """
         Number of parameters of the distribution
         """
         return len(self.parameters)
-    
+
     def parameter_restrictions(self) -> bool:
         """
         Check parameters restrictions
@@ -42,7 +43,7 @@ class UNIFORM:
         """
         Calculate proper parameters of the distribution from sample measurements.
         The parameters are calculated by formula.
-        
+
         Parameters
         ==========
         measurements: MEASUREMESTS
@@ -57,10 +58,12 @@ class UNIFORM:
         b = round(measurements.max)
         parameters = {"a": a, "b": b}
         return parameters
-    
+
+
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
 
@@ -73,10 +76,10 @@ if __name__ == "__main__":
     path = "../data/data_uniform.txt"
 
     ## Distribution class
-    data = get_data(path) 
+    data = get_data(path)
     measurements = MEASUREMENTS_DISCRETE(data)
     distribution = UNIFORM(measurements)
-    
+
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
     print(distribution.pmf(measurements.mean))

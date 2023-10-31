@@ -387,7 +387,7 @@ def phitter_discrete(data, confidence_level=0.95):
 
                 RESPONSE[distribution_name] = DISTRIBUTION_RESULTS
 
-    sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: x[1]["sse"])}
+    sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
     aproved_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
 
     return sorted_results_sse, aproved_results

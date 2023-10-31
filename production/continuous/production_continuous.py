@@ -160,11 +160,11 @@ class BETA_PRIME:
         self.beta = self.parameters["beta"]
 
     def cdf(self, x: float) -> float:
-        result = sc.betainc(self.alpha, self.beta, x / (1 + x))
+        result = scipy.stats.betaprime.cdf(x, self.alpha, self.beta)
         return result
 
     def pdf(self, x: float) -> float:
-        result = (x ** (self.alpha - 1) * (1 + x) ** (-self.alpha - self.beta)) / (sc.beta(self.alpha, self.beta))
+        result = scipy.stats.betaprime.pdf(x, self.alpha, self.beta)
         return result
 
     def get_num_parameters(self) -> int:
@@ -201,17 +201,15 @@ class BETA_PRIME_4P:
         self.parameters = self.get_parameters(measurements)
         self.alpha = self.parameters["alpha"]
         self.beta = self.parameters["beta"]
-        self.scale = self.parameters["scale"]
         self.loc = self.parameters["loc"]
+        self.scale = self.parameters["scale"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.loc) / self.scale
-        result = sc.betainc(self.alpha, self.beta, z(x) / (1 + z(x)))
+        result = scipy.stats.betaprime.cdf(x, self.alpha, self.beta, loc=self.loc, scale=self.scale)
         return result
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.loc) / self.scale
-        result = (1 / self.scale) * (z(x) ** (self.alpha - 1) * (1 + z(x)) ** (-self.alpha - self.beta)) / (sc.beta(self.alpha, self.beta))
+        result = scipy.stats.betaprime.pdf(x, self.alpha, self.beta, loc=self.loc, scale=self.scale)
         return result
 
     def get_num_parameters(self) -> int:
@@ -242,9 +240,9 @@ class BETA_PRIME_4P:
             x0 = (measurements.mean, measurements.mean, scipy_params[3], measurements.mean)
             args = [measurements]
             solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
-            parameters = {"alpha": solution.x[0], "beta": solution.x[1], "scale": solution.x[2], "loc": solution.x[3]}
+            parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[3], "scale": solution.x[2]}
         except:
-            parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "scale": scipy_params[3], "loc": scipy_params[2]}
+            parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "loc": scipy_params[2], "scale": scipy_params[3]}
         return parameters
 
 
@@ -2129,10 +2127,12 @@ class PARETO_FIRST_KIND:
         self.loc = self.parameters["loc"]
 
     def cdf(self, x: float) -> float:
-        return 1 - (self.xm / (x - self.loc)) ** self.alpha
+        result = scipy.stats.pareto.cdf(x, self.alpha, loc=self.loc, scale=self.xm)
+        return result
 
     def pdf(self, x: float) -> float:
-        return (self.alpha * self.xm**self.alpha) / ((x - self.loc) ** (self.alpha + 1))
+        result = scipy.stats.pareto.pdf(x, self.alpha, loc=self.loc, scale=self.xm)
+        return result
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -2143,22 +2143,8 @@ class PARETO_FIRST_KIND:
         return v1 and v2
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            alpha, xm, loc = initial_solution
-            E = lambda k: (alpha * xm**k) / (alpha - k)
-            parametric_mean = loc + E(1)
-            parametric_variance = E(2) - E(1) ** 2
-            parametric_mode = loc + xm
-            eq1 = parametric_mean - measurements.mean
-            eq2 = parametric_variance - measurements.variance
-            eq3 = parametric_mode - measurements.mode
-            return (eq1, eq2, eq3)
-
-        bnds = ((1, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
-        x0 = (1, measurements.mean, measurements.mean)
-        args = [measurements]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
-        parameters = {"alpha": solution.x[0], "xm": solution.x[1], "loc": solution.x[2]}
+        scipy_params = scipy.stats.pareto.fit(measurements.data)
+        parameters = {"xm": scipy_params[2], "alpha": scipy_params[0], "loc": scipy_params[1]}
         return parameters
 
 
@@ -2170,7 +2156,7 @@ class PARETO_SECOND_KIND:
         self.loc = self.parameters["loc"]
 
     def cdf(self, x: float) -> float:
-        result = 1 - (self.xm / ((x - self.loc) + self.xm)) ** self.alpha
+        result = scipy.stats.lomax.cdf(x, self.alpha, scale=self.xm, loc=self.loc)
         return result
 
     def pdf(self, x: float) -> float:
@@ -2185,17 +2171,6 @@ class PARETO_SECOND_KIND:
         return v1 and v2
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            alpha, xm, loc = initial_solution
-            E = lambda k: (math.gamma(1 + k) * math.gamma(alpha - k) * xm**k) / math.gamma(alpha)
-            parametric_mean = loc + E(1)
-            parametric_variance = E(2) - E(1) ** 2
-            parametric_median = loc + xm * (2 ** (1 / alpha) - 1)
-            eq1 = parametric_mean - measurements.mean
-            eq2 = parametric_variance - measurements.variance
-            eq3 = parametric_median - measurements.median
-            return (eq1, eq2, eq3)
-
         m = measurements.mean
         v = measurements.variance
         loc = scipy.stats.lomax.fit(measurements.data)[1]
@@ -2301,28 +2276,28 @@ class POWER_FUNCTION:
 class RAYLEIGH:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.loc = self.parameters["loc"]
-        self.scale = self.parameters["scale"]
+        self.gamma = self.parameters["gamma"]
+        self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.loc) / self.scale
+        z = lambda t: (t - self.gamma) / self.sigma
         return 1 - math.exp(-0.5 * (z(x) ** 2))
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.loc) / self.scale
-        return z(x) * math.exp(-0.5 * (z(x) ** 2)) / self.scale
+        z = lambda t: (t - self.gamma) / self.sigma
+        return z(x) * math.exp(-0.5 * (z(x) ** 2)) / self.sigma
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
 
     def parameter_restrictions(self) -> bool:
-        v1 = self.scale > 0
+        v1 = self.sigma > 0
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        scale = math.sqrt(measurements.variance * 2 / (4 - math.pi))
-        loc = measurements.mean - scale * math.sqrt(math.pi / 2)
-        parameters = {"loc": loc, "scale": scale}
+        sigma = math.sqrt(measurements.variance * 2 / (4 - math.pi))
+        gamma = measurements.mean - sigma * math.sqrt(math.pi / 2)
+        parameters = {"gamma": gamma, "sigma": sigma}
         return parameters
 
 
@@ -3030,7 +3005,7 @@ def phitter_continuous(data, num_bins=None, confidence_level=0.95):
 
                 RESPONSE[distribution_name] = DISTRIBUTION_RESULTS
 
-    sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: x[1]["sse"])}
+    sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
     aproved_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
 
     return sorted_results_sse, aproved_results
