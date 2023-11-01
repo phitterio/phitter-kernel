@@ -12,7 +12,7 @@ class GENERALIZED_PARETO:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.c = self.parameters["c"]
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -22,8 +22,8 @@ class GENERALIZED_PARETO:
         Alternative: quadrature integration method
         """
 
-        # result = scipy.stats.genpareto.cdf(x, self.c, loc = self.miu, scale = self.sigma)
-        z = lambda t: (t - self.miu) / self.sigma
+        # result = scipy.stats.genpareto.cdf(x, self.c, loc = self.mu, scale = self.sigma)
+        z = lambda t: (t - self.mu) / self.sigma
         result = 1 - (1 + self.c * z(x)) ** (-1 / self.c)
         return result
 
@@ -32,8 +32,8 @@ class GENERALIZED_PARETO:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = scipy.stats.genpareto.pdf(x, self.c, loc = self.miu, scale = self.sigma)
-        z = lambda t: (t - self.miu) / self.sigma
+        # result = scipy.stats.genpareto.pdf(x, self.c, loc = self.mu, scale = self.sigma)
+        z = lambda t: (t - self.mu) / self.sigma
         result = (1 / self.sigma) * (1 + self.c * z(x)) ** (-1 / self.c - 1)
         return result
 
@@ -63,19 +63,19 @@ class GENERALIZED_PARETO:
         Returns
         =======
         parameters : dict
-            {"c":  * , "miu":  * , "sigma":  * }
+            {"c":  * , "mu":  * , "sigma":  * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            c, miu, sigma = initial_solution
+            c, mu, sigma = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = miu + sigma / (1 - c)
+            parametric_mean = mu + sigma / (1 - c)
             parametric_variance = sigma * sigma / ((1 - c) * (1 - c) * (1 - 2 * c))
             # parametric_skewness = 2 * (1 + c) * math.sqrt(1 - 2 * c) / (1 - 3 * c)
             # parametric_kurtosis = 3 * (1 - 2 * c) * (2 * c * c + c + 3) / ((1 -  3 * c) * (1 -  4 + c))
-            parametric_median = miu + sigma * (2**c - 1) / c
+            parametric_median = mu + sigma * (2**c - 1) / c
             # parametric_mode = loc
 
             # System Equations
@@ -93,7 +93,7 @@ class GENERALIZED_PARETO:
         ## The solution of system of equation is so good. The problem is that
         ## the measurements of genpareto distributions is not defined from c >  1 / 4 (kurtosis)
         scipy_params = scipy.stats.genpareto.fit(measurements.data)
-        parameters = {"c": scipy_params[0], "miu": scipy_params[1], "sigma": scipy_params[2]}
+        parameters = {"c": scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}
 
         if parameters["c"] < 0:
             scipy_params = scipy.stats.genpareto.fit(measurements.data)
@@ -101,14 +101,14 @@ class GENERALIZED_PARETO:
             x0 = [c0, measurements.min, 1]
             b = ((-numpy.inf, -numpy.inf, 0), (numpy.inf, measurements.min, numpy.inf))
             solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([measurements]))
-            parameters = {"c": solution.x[0], "miu": solution.x[1], "sigma": solution.x[2]}
+            parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
 
-            ## When c < 0 the domain of of x is [miu, miu - sigma / c]
-            ## Forthis reason miu < measurements.min and miu - sigma / c < measurements.max
-            parameters["miu"] = min(parameters["miu"], measurements.min - 1e-3)
-            delta_sigma = parameters["c"] * (parameters["miu"] - measurements.max) - parameters["sigma"]
+            ## When c < 0 the domain of of x is [mu, mu - sigma / c]
+            ## Forthis reason mu < measurements.min and mu - sigma / c < measurements.max
+            parameters["mu"] = min(parameters["mu"], measurements.min - 1e-3)
+            delta_sigma = parameters["c"] * (parameters["mu"] - measurements.max) - parameters["sigma"]
             parameters["sigma"] = parameters["sigma"] + delta_sigma + 1e-8
-            # print(parameters["miu"], parameters["miu"] - parameters["sigma"] / parameters["c"])
+            # print(parameters["mu"], parameters["mu"] - parameters["sigma"] / parameters["c"])
 
         return parameters
 

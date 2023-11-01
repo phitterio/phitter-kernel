@@ -3,33 +3,33 @@ jStat = require("../node_modules/jstat");
 dists = {
     generalized_pareto: {
         measurements: {
-            nonCentralMoments: function (k, c, miu, sigma) {
+            nonCentralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, c, miu, sigma) {
+            centralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (c, miu, sigma) {
-                    return miu + sigma / (1 - c);
+                mean: function (c, mu, sigma) {
+                    return mu + sigma / (1 - c);
                 },
-                variance: function (c, miu, sigma) {
+                variance: function (c, mu, sigma) {
                     return sigma * sigma / ((1 - c) * (1 - c) * (1 - 2 * c));
                 },
-                standardDeviation: function (c, miu, sigma) {
-                    return Math.sqrt(this.variance(c, miu, sigma));
+                standardDeviation: function (c, mu, sigma) {
+                    return Math.sqrt(this.variance(c, mu, sigma));
                 },
-                skewness: function (c, miu, sigma) {
+                skewness: function (c, mu, sigma) {
                     return (2 * (1 + c) * Math.sqrt(1 - 2 * c)) / (1 - 3 * c);
                 },
-                kurtosis: function (c, miu, sigma) {
+                kurtosis: function (c, mu, sigma) {
                     return (3 * (1 - 2 * c) * (2 * c * c + c + 3)) / ((1 - 3 * c) * (1 - 4 * c));
                 },
-                median: function (c, miu, sigma) {
-                    return dists.generalized_pareto.measurements.ppf(0.5, c, miu, sigma);
+                median: function (c, mu, sigma) {
+                    return dists.generalized_pareto.measurements.ppf(0.5, c, mu, sigma);
                 },
-                mode: function (c, miu, sigma) {
-                    return miu;
+                mode: function (c, mu, sigma) {
+                    return mu;
                 },
             },
         }

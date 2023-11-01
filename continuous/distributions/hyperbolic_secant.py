@@ -9,7 +9,7 @@ class HYPERBOLIC_SECANT:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -18,7 +18,7 @@ class HYPERBOLIC_SECANT:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: math.pi * (t - self.miu) / (2 * self.sigma)
+        z = lambda t: math.pi * (t - self.mu) / (2 * self.sigma)
         return (2 / math.pi) * math.atan(math.exp((z(x))))
 
     def pdf(self, x: float) -> float:
@@ -26,7 +26,7 @@ class HYPERBOLIC_SECANT:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: math.pi * (t - self.miu) / (2 * self.sigma)
+        z = lambda t: math.pi * (t - self.mu) / (2 * self.sigma)
         return (1 / math.cosh(z(x))) / (2 * self.sigma)
 
     def get_num_parameters(self) -> int:
@@ -50,18 +50,18 @@ class HYPERBOLIC_SECANT:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "sigma":  * }
+            {"mu":  * , "sigma":  * }
         """
 
-        miu = measurements.mean
+        mu = measurements.mean
         sigma = math.sqrt(measurements.variance)
 
-        parameters = {"miu": miu, "sigma": sigma}
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 

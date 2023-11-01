@@ -3,32 +3,32 @@ jStat = require("../node_modules/jstat");
 dists = {
     generalized_normal: {
         measurements: {
-            nonCentralMoments: function (k, miu, alpha, beta) {
+            nonCentralMoments: function (k, mu, alpha, beta) {
                 return undefined;
             },
-            centralMoments: function (k, miu, alpha, beta) {
+            centralMoments: function (k, mu, alpha, beta) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, alpha, beta) {
+                mean: function (mu, alpha, beta) {
                     return beta;
                 },
-                variance: function (miu, alpha, beta) {
-                    return ((miu) ** 2) * jStat.gammafn(3 / alpha) / jStat.gammafn(1 / alpha);
+                variance: function (mu, alpha, beta) {
+                    return ((mu) ** 2) * jStat.gammafn(3 / alpha) / jStat.gammafn(1 / alpha);
                 },
-                standardDeviation: function (miu, alpha, beta) {
-                    return Math.sqrt(this.variance(miu, alpha, beta));
+                standardDeviation: function (mu, alpha, beta) {
+                    return Math.sqrt(this.variance(mu, alpha, beta));
                 },
-                skewness: function (miu, alpha, beta) {
+                skewness: function (mu, alpha, beta) {
                     return 0;
                 },
-                kurtosis: function (miu, alpha, beta) {
+                kurtosis: function (mu, alpha, beta) {
                     return jStat.gammafn(5 / alpha) * jStat.gammafn(1 / alpha) / (jStat.gammafn(3 / alpha) ** 2);
                 },
-                median: function (miu, alpha, beta) {
-                    return dists.generalized_normal.measurements.ppf(0.5, miu, alpha, beta);
+                median: function (mu, alpha, beta) {
+                    return dists.generalized_normal.measurements.ppf(0.5, mu, alpha, beta);
                 },
-                mode: function (miu, alpha, beta) {
+                mode: function (mu, alpha, beta) {
                     return beta;
                 },
             },

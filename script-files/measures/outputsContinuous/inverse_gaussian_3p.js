@@ -3,33 +3,33 @@ jStat = require("../node_modules/jstat");
 dists = {
     inverse_gaussian_3p: {
         measurements: {
-            nonCentralMoments: function (k, miu, lambda, loc) {
+            nonCentralMoments: function (k, mu, lambda, loc) {
                 return undefined;
             },
-            centralMoments: function (k, miu, lambda, loc) {
+            centralMoments: function (k, mu, lambda, loc) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, lambda, loc) {
-                    return miu+loc;
+                mean: function (mu, lambda, loc) {
+                    return mu+loc;
                 },
-                variance: function (miu, lambda, loc) {
-                    return (miu**3/lambda);
+                variance: function (mu, lambda, loc) {
+                    return (mu**3/lambda);
                 },
-                standardDeviation: function (miu, lambda, loc) {
-                    return Math.sqrt(this.variance(miu, lambda, loc));
+                standardDeviation: function (mu, lambda, loc) {
+                    return Math.sqrt(this.variance(mu, lambda, loc));
                 },
-                skewness: function (miu, lambda, loc) {
-                    return 3*Math.sqrt(miu/lambda);
+                skewness: function (mu, lambda, loc) {
+                    return 3*Math.sqrt(mu/lambda);
                 },
-                kurtosis: function (miu, lambda, loc) {
-                    return 15*(miu/lambda)+3;
+                kurtosis: function (mu, lambda, loc) {
+                    return 15*(mu/lambda)+3;
                 },
-                median: function (miu, lambda, loc) {
-                    return dists.inverse_gaussian_3p.measurements.ppf(0.5, miu, lambda, loc);
+                median: function (mu, lambda, loc) {
+                    return dists.inverse_gaussian_3p.measurements.ppf(0.5, mu, lambda, loc);
                 },
-                mode: function (miu, lambda, loc) {
-                    return loc+miu*(Math.sqrt(1+9*miu*miu/(4*lambda*lambda))-3*miu/(2*lambda));
+                mode: function (mu, lambda, loc) {
+                    return loc+mu*(Math.sqrt(1+9*mu*mu/(4*lambda*lambda))-3*mu/(2*lambda));
                 },
             },
         }

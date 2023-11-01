@@ -3,61 +3,61 @@ jStat = require("../node_modules/jstat");
 dists = {
     generalized_extreme_value: {
         measurements: {
-            nonCentralMoments: function (k, ξ, miu, sigma) {
-                return jStat.gammafn(1 - ξ * k)
+            nonCentralMoments: function (k, xi, mu, sigma) {
+                return jStat.gammafn(1 - xi * k)
             },
-            centralMoments: function (k, ξ, miu, sigma) {
-                const µ1 = this.nonCentralMoments(1, ξ, miu, sigma);
-                const µ2 = this.nonCentralMoments(2, ξ, miu, sigma);
-                const µ3 = this.nonCentralMoments(3, ξ, miu, sigma);
-                const µ4 = this.nonCentralMoments(4, ξ, miu, sigma);
+            centralMoments: function (k, xi, mu, sigma) {
+                const miu1 = this.nonCentralMoments(1, xi, mu, sigma);
+                const miu2 = this.nonCentralMoments(2, xi, mu, sigma);
+                const miu3 = this.nonCentralMoments(3, xi, mu, sigma);
+                const miu4 = this.nonCentralMoments(4, xi, mu, sigma);
 
                 let result;
                 switch (k) {
                     case 1: result = 0; break;
-                    case 2: result = µ2 - µ1 ** 2; break;
-                    case 3: result = µ3 - 3 * µ1 * µ2 + 2 * µ1 ** 3; break;
-                    case 4: result = µ4 - 4 * µ1 * µ3 + 6 * (µ1 ** 2) * µ2 - 3 * (µ1 ** 4); break;
+                    case 2: result = miu2 - miu1 ** 2; break;
+                    case 3: result = miu3 - 3 * miu1 * miu2 + 2 * miu1 ** 3; break;
+                    case 4: result = miu4 - 4 * miu1 * miu3 + 6 * (miu1 ** 2) * miu2 - 3 * (miu1 ** 4); break;
                 };
                 return result
             },
             stats: {
-                mean: function (ξ, miu, sigma) {
-                    const µ1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    if (ξ == 0) { return miu + sigma * 0.5772156649 };
-                    return miu + sigma * (µ1 - 1) / ξ;
+                mean: function (xi, mu, sigma) {
+                    const miu1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    if (xi == 0) { return mu + sigma * 0.5772156649 };
+                    return mu + sigma * (miu1 - 1) / xi;
                 },
-                variance: function (ξ, miu, sigma) {
-                    const µ1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    const µ2 = dists.generalized_extreme_value.measurements.nonCentralMoments(2, ξ, miu, sigma);
-                    if (ξ == 0) { return (sigma ** 2) * ((Math.PI ** 2) / 6) };
-                    return (sigma ** 2) * (µ2 - µ1 ** 2) / (ξ ** 2);
+                variance: function (xi, mu, sigma) {
+                    const miu1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    const miu2 = dists.generalized_extreme_value.measurements.nonCentralMoments(2, xi, mu, sigma);
+                    if (xi == 0) { return (sigma ** 2) * ((Math.PI ** 2) / 6) };
+                    return (sigma ** 2) * (miu2 - miu1 ** 2) / (xi ** 2);
                 },
-                standardDeviation: function (ξ, miu, sigma) {
-                    return Math.sqrt(this.variance(ξ, miu, sigma));
+                standardDeviation: function (xi, mu, sigma) {
+                    return Math.sqrt(this.variance(xi, mu, sigma));
                 },
-                skewness: function (ξ, miu, sigma) {
-                    const central_µ3 = dists.generalized_extreme_value.measurements.centralMoments(3, ξ, miu, sigma);
-                    const µ1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    const µ2 = dists.generalized_extreme_value.measurements.nonCentralMoments(2, ξ, miu, sigma);
-                    const std = Math.sqrt(µ2 - µ1 ** 2);
-                    if (ξ == 0) { return 12 * Math.sqrt(6) * 1.20205690315959 / (Math.PI ** 3) };
-                    return central_µ3 / (std ** 3);
+                skewness: function (xi, mu, sigma) {
+                    const central_miu3 = dists.generalized_extreme_value.measurements.centralMoments(3, xi, mu, sigma);
+                    const miu1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    const miu2 = dists.generalized_extreme_value.measurements.nonCentralMoments(2, xi, mu, sigma);
+                    const std = Math.sqrt(miu2 - miu1 ** 2);
+                    if (xi == 0) { return 12 * Math.sqrt(6) * 1.20205690315959 / (Math.PI ** 3) };
+                    return central_miu3 / (std ** 3);
                 },
-                kurtosis: function (ξ, miu, sigma) {
-                    const central_µ4 = dists.generalized_extreme_value.measurements.centralMoments(4, ξ, miu, sigma);
-                    const µ1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    const µ2 = dists.generalized_extreme_value.measurements.nonCentralMoments(2, ξ, miu, sigma);
-                    const std = Math.sqrt(µ2 - µ1 ** 2);
-                    if (ξ == 0) { return 5.4 };
-                    return central_µ4 / (std ** 4);
+                kurtosis: function (xi, mu, sigma) {
+                    const central_miu4 = dists.generalized_extreme_value.measurements.centralMoments(4, xi, mu, sigma);
+                    const miu1 = dists.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    const miu2 = dists.generalized_extreme_value.measurements.nonCentralMoments(2, xi, mu, sigma);
+                    const std = Math.sqrt(miu2 - miu1 ** 2);
+                    if (xi == 0) { return 5.4 };
+                    return central_miu4 / (std ** 4);
                 },
-                median: function (ξ, miu, sigma) {
-                    return dists.generalized_extreme_value.measurements.ppf(0.5, ξ, miu, sigma);
+                median: function (xi, mu, sigma) {
+                    return dists.generalized_extreme_value.measurements.ppf(0.5, xi, mu, sigma);
                 },
-                mode: function (ξ, miu, sigma) {
-                    if (ξ == 0) { return miu };
-                    return miu + sigma * ((1 + ξ) ** (-ξ) - 1) / ξ;
+                mode: function (xi, mu, sigma) {
+                    if (xi == 0) { return mu };
+                    return mu + sigma * ((1 + xi) ** (-xi) - 1) / xi;
                 },
             },
         }

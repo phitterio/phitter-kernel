@@ -64,8 +64,8 @@ class ERLANG:
             {"m":  * , "beta":  * }
         """
         k = round(measurements.mean**2 / measurements.variance)
-        β = measurements.variance / measurements.mean
-        parameters = {"k": k, "beta": β}
+        beta = measurements.variance / measurements.mean
+        parameters = {"k": k, "beta": beta}
         return parameters
 
 

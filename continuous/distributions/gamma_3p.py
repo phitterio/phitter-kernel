@@ -70,10 +70,10 @@ class GAMMA_3P:
         parameters : dict
             {"alpha":  * , "beta":  * }
         """
-        α = (2 / measurements.skewness) ** 2
-        β = math.sqrt(measurements.variance / α)
-        loc = measurements.mean - α * β
-        parameters = {"alpha": α, "beta": β, "loc": loc}
+        alpha = (2 / measurements.skewness) ** 2
+        beta = math.sqrt(measurements.variance / alpha)
+        loc = measurements.mean - alpha * beta
+        parameters = {"alpha": alpha, "loc": loc, "beta": beta}
         return parameters
 
 

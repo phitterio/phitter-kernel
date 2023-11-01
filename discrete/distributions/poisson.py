@@ -59,8 +59,8 @@ class POISSON:
         parameters : dict
             {"alpha":  * , "beta":  * , "gamma":  * }
         """
-        λ = measurements.mean
-        parameters = {"lambda": λ}
+        lambda_ = measurements.mean
+        parameters = {"lambda": lambda_}
         return parameters
 
 

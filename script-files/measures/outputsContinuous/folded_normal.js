@@ -3,34 +3,34 @@ jStat = require("../node_modules/jstat");
 dists = {
     folded_normal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
+                mean: function (mu, sigma) {
                     const std_cdf = (t) => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-                    return sigma * Math.sqrt(2 / Math.PI) * Math.exp(-miu * miu / (2 * sigma * sigma)) - miu * (2 * std_cdf(-miu / sigma) - 1);
+                    return sigma * Math.sqrt(2 / Math.PI) * Math.exp(-mu * mu / (2 * sigma * sigma)) - mu * (2 * std_cdf(-mu / sigma) - 1);
                 },
-                variance: function (miu, sigma) {
-                    return miu * miu + sigma * sigma - this.mean(miu, sigma) ** 2;
+                variance: function (mu, sigma) {
+                    return mu * mu + sigma * sigma - this.mean(mu, sigma) ** 2;
                 },
-                standardDeviation: function (miu, sigma) {
-                    return Math.sqrt(this.variance(miu, sigma));
+                standardDeviation: function (mu, sigma) {
+                    return Math.sqrt(this.variance(mu, sigma));
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return undefined;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return undefined;
                 },
-                median: function (miu, sigma) {
-                    return dists.folded_normal.measurements.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return dists.folded_normal.measurements.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         }

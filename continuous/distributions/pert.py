@@ -21,12 +21,12 @@ class PERT:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        α1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
-        α2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
+        alpha1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
+        alpha2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
         z = lambda t: (t - self.a) / (self.c - self.a)
 
-        # result = scipy.stats.beta.cdf(z(x), α1, α2)
-        result = sc.betainc(α1, α2, z(x))
+        # result = scipy.stats.beta.cdf(z(x), alpha1, alpha2)
+        result = sc.betainc(alpha1, alpha2, z(x))
 
         return result
 
@@ -35,9 +35,9 @@ class PERT:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        α1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
-        α2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
-        return (x - self.a) ** (α1 - 1) * (self.c - x) ** (α2 - 1) / (sc.beta(α1, α2) * (self.c - self.a) ** (α1 + α2 - 1))
+        alpha1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
+        alpha2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
+        return (x - self.a) ** (alpha1 - 1) * (self.c - x) ** (alpha2 - 1) / (sc.beta(alpha1, alpha2) * (self.c - self.a) ** (alpha1 + alpha2 - 1))
 
     def get_num_parameters(self) -> int:
         """
@@ -74,15 +74,15 @@ class PERT:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             a, b, c = initial_solution
 
-            α1 = (4 * b + c - 5 * a) / (c - a)
-            α2 = (5 * c - a - 4 * b) / (c - a)
+            alpha1 = (4 * b + c - 5 * a) / (c - a)
+            alpha2 = (5 * c - a - 4 * b) / (c - a)
 
             parametric_mean = (a + 4 * b + c) / 6
             parametric_variance = ((parametric_mean - a) * (c - parametric_mean)) / 7
-            # parametric_skewness = 2 * (α2 - α1) * math.sqrt(α2 + α1 + 1) / ((α2 + α1 + 2) *  math.sqrt(α2 * α1))
-            # parametric_kurtosis = 3 + 6 * ((α2 - α1) ** 2 * (α2 + α1 + 1) - (α2 * α1) * (α2 + α1 + 2)) / ((α2 * α1) * (α2 + α1 + 2) * (α2 + α1 + 3))
+            # parametric_skewness = 2 * (alpha2 - alpha1) * math.sqrt(alpha2 + alpha1 + 1) / ((alpha2 + alpha1 + 2) *  math.sqrt(alpha2 * alpha1))
+            # parametric_kurtosis = 3 + 6 * ((alpha2 - alpha1) ** 2 * (alpha2 + alpha1 + 1) - (alpha2 * alpha1) * (alpha2 + alpha1 + 2)) / ((alpha2 * alpha1) * (alpha2 + alpha1 + 2) * (alpha2 + alpha1 + 3))
             # parametric_median = (a + 6 * b + c) / 8
-            parametric_median = sc.betaincinv(α1, α2, 0.5) * (c - a) + a
+            parametric_median = sc.betaincinv(alpha1, alpha2, 0.5) * (c - a) + a
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -135,13 +135,13 @@ if __name__ == "__main__":
     def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         a, c, b = initial_solution
 
-        # α1 = (4 * b + c - 5 * a) / (c - a)
-        # α2 = (5 * c - a-4 * b) / (c - a)
+        # alpha1 = (4 * b + c - 5 * a) / (c - a)
+        # alpha2 = (5 * c - a-4 * b) / (c - a)
 
         parametric_mean = (a + 4 * b + c) / 6
         parametric_variance = ((parametric_mean - a) * (c - parametric_mean)) / 7
-        # parametric_skewness = 2 * (α2 - α1) * math.sqrt(α2 + α1 + 1) / ((α2 + α1 + 2) *  math.sqrt(α2 * α1))
-        # parametric_kurtosis = 3 + 6 * ((α2 - α1) ** 2 * (α2 + α1 + 1) - (α2 * α1) * (α2 + α1 + 2)) / ((α2 * α1) * (α2 + α1 + 2) * (α2 + α1 + 3))
+        # parametric_skewness = 2 * (alpha2 - alpha1) * math.sqrt(alpha2 + alpha1 + 1) / ((alpha2 + alpha1 + 2) *  math.sqrt(alpha2 * alpha1))
+        # parametric_kurtosis = 3 + 6 * ((alpha2 - alpha1) ** 2 * (alpha2 + alpha1 + 1) - (alpha2 * alpha1) * (alpha2 + alpha1 + 2)) / ((alpha2 * alpha1) * (alpha2 + alpha1 + 2) * (alpha2 + alpha1 + 3))
         parametric_median = (a + 6 * b + c) / 8
 
         ## System Equations

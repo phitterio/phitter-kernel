@@ -7,40 +7,40 @@ dists = {
                 return (a ** k) * jStat.gammafn((d + k) / p) / jStat.gammafn((d) / p)
             },
             centralMoments: function (k, a, d, p, loc) {
-                const µ1 = this.nonCentralMoments(1, a, d, p, loc);
-                const µ2 = this.nonCentralMoments(2, a, d, p, loc);
-                const µ3 = this.nonCentralMoments(3, a, d, p, loc);
-                const µ4 = this.nonCentralMoments(4, a, d, p, loc);
+                const miu1 = this.nonCentralMoments(1, a, d, p, loc);
+                const miu2 = this.nonCentralMoments(2, a, d, p, loc);
+                const miu3 = this.nonCentralMoments(3, a, d, p, loc);
+                const miu4 = this.nonCentralMoments(4, a, d, p, loc);
 
                 let result;
                 switch (k) {
                     case 1: result = 0; break;
-                    case 2: result = µ2 - µ1 ** 2; break;
-                    case 3: result = µ3 - 3 * µ1 * µ2 + 2 * µ1 ** 3; break;
-                    case 4: result = µ4 - 4 * µ1 * µ3 + 6 * (µ1 ** 2) * µ2 - 3 * (µ1 ** 4); break;
+                    case 2: result = miu2 - miu1 ** 2; break;
+                    case 3: result = miu3 - 3 * miu1 * miu2 + 2 * miu1 ** 3; break;
+                    case 4: result = miu4 - 4 * miu1 * miu3 + 6 * (miu1 ** 2) * miu2 - 3 * (miu1 ** 4); break;
                 };
                 return result
             },
             stats: {
                 mean: function (a, d, p, loc) {
-                    const µ1 = dists.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
-                    return loc + µ1;
+                    const miu1 = dists.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
+                    return loc + miu1;
                 },
                 variance: function (a, d, p, loc) {
-                    const µ1 = dists.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
-                    const µ2 = dists.generalized_gamma_4p.measurements.nonCentralMoments(2, a, d, p, loc);
-                    return µ2 - µ1 ** 2;
+                    const miu1 = dists.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
+                    const miu2 = dists.generalized_gamma_4p.measurements.nonCentralMoments(2, a, d, p, loc);
+                    return miu2 - miu1 ** 2;
                 },
                 standardDeviation: function (a, d, p, loc) {
                     return Math.sqrt(this.variance(a, d, p, loc));
                 },
                 skewness: function (a, d, p, loc) {
-                    const central_µ3 = dists.generalized_gamma_4p.measurements.centralMoments(3, a, d, p, loc);
-                    return central_µ3 / (this.standardDeviation(a, d, p, loc) ** 3);
+                    const central_miu3 = dists.generalized_gamma_4p.measurements.centralMoments(3, a, d, p, loc);
+                    return central_miu3 / (this.standardDeviation(a, d, p, loc) ** 3);
                 },
                 kurtosis: function (a, d, p, loc) {
-                    const central_µ4 = dists.generalized_gamma_4p.measurements.centralMoments(4, a, d, p, loc);
-                    return central_µ4 / (this.standardDeviation(a, d, p, loc) ** 4);
+                    const central_miu4 = dists.generalized_gamma_4p.measurements.centralMoments(4, a, d, p, loc);
+                    return central_miu4 / (this.standardDeviation(a, d, p, loc) ** 4);
                 },
                 median: function (a, d, p, loc) {
                     return dists.generalized_gamma_4p.measurements.ppf(0.5, a, d, p, loc);

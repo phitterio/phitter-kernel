@@ -8,7 +8,7 @@ class LAPLACE:
     """
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.b = self.parameters["b"]
         
     def cdf(self, x: float) -> float:
@@ -17,14 +17,14 @@ class LAPLACE:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        return 0.5 + 0.5 * numpy.sign(x - self.miu) * (1 - math.exp(-abs(x - self.miu) / self.b))
+        return 0.5 + 0.5 * numpy.sign(x - self.mu) * (1 - math.exp(-abs(x - self.mu) / self.b))
     
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (1 / (2 * self.b)) * math.exp(-abs(x - self.miu) / self.b)
+        return (1 / (2 * self.b)) * math.exp(-abs(x - self.mu) / self.b)
     
     def get_num_parameters(self) -> int:
         """
@@ -52,13 +52,13 @@ class LAPLACE:
         Returns
         =======
         parameters : dict
-            {"miu":  * , "b":  * }
+            {"mu":  * , "b":  * }
         """
-        miu = measurements.mean
+        mu = measurements.mean
         b = math.sqrt(measurements.variance / 2)
     
         ## Results
-        parameters = {"miu": miu, "b": b}
+        parameters = {"mu": mu, "b": b}
 
         return parameters
     

@@ -3,33 +3,33 @@ jStat = require("../node_modules/jstat");
 dists = {
     lognormal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return Math.exp(miu + (sigma ** 2) / 2);
+                mean: function (mu, sigma) {
+                    return Math.exp(mu + (sigma ** 2) / 2);
                 },
-                variance: function (miu, sigma) {
-                    return (Math.exp(sigma ** 2) - 1) * Math.exp(2 * miu + sigma ** 2);
+                variance: function (mu, sigma) {
+                    return (Math.exp(sigma ** 2) - 1) * Math.exp(2 * mu + sigma ** 2);
                 },
-                standardDeviation: function (miu, sigma) {
-                    return Math.sqrt(this.variance(miu, sigma));
+                standardDeviation: function (mu, sigma) {
+                    return Math.sqrt(this.variance(mu, sigma));
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return (Math.exp(sigma * sigma) + 2) * Math.sqrt(Math.exp(sigma * sigma) - 1);
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return Math.exp(4 * sigma * sigma) + 2 * Math.exp(3 * sigma * sigma) + 3 * Math.exp(2 * sigma * sigma) - 3;
                 },
-                median: function (miu, sigma) {
-                    return dists.lognormal.measurements.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return dists.lognormal.measurements.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return Math.exp(miu - sigma * sigma);
+                mode: function (mu, sigma) {
+                    return Math.exp(mu - sigma * sigma);
                 },
             },
         }

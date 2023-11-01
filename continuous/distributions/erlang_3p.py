@@ -64,9 +64,9 @@ class ERLANG_3P:
             {"k":  * , "beta":  * }
         """
         k = round((2 / measurements.skewness) ** 2)
-        β = math.sqrt(measurements.variance / ((2 / measurements.skewness) ** 2))
-        loc = measurements.mean - ((2 / measurements.skewness) ** 2) * β
-        parameters = {"k": k, "beta": β, "loc": loc}
+        beta = math.sqrt(measurements.variance / ((2 / measurements.skewness) ** 2))
+        loc = measurements.mean - ((2 / measurements.skewness) ** 2) * beta
+        parameters = {"k": k, "beta": beta, "loc": loc}
         return parameters
 
 

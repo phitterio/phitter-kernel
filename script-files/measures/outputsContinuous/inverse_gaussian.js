@@ -3,33 +3,33 @@ jStat = require("../node_modules/jstat");
 dists = {
     inverse_gaussian: {
         measurements: {
-            nonCentralMoments: function (k, miu, lambda) {
+            nonCentralMoments: function (k, mu, lambda) {
                 return undefined;
             },
-            centralMoments: function (k, miu, lambda) {
+            centralMoments: function (k, mu, lambda) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, lambda) {
-                    return miu;
+                mean: function (mu, lambda) {
+                    return mu;
                 },
-                variance: function (miu, lambda) {
-                    return miu**3/lambda;
+                variance: function (mu, lambda) {
+                    return mu**3/lambda;
                 },
-                standardDeviation: function (miu, lambda) {
-                    return Math.sqrt(this.variance(miu, lambda));
+                standardDeviation: function (mu, lambda) {
+                    return Math.sqrt(this.variance(mu, lambda));
                 },
-                skewness: function (miu, lambda) {
-                    return 3*Math.sqrt(miu/lambda);
+                skewness: function (mu, lambda) {
+                    return 3*Math.sqrt(mu/lambda);
                 },
-                kurtosis: function (miu, lambda) {
-                    return 15*(miu/lambda)+3;
+                kurtosis: function (mu, lambda) {
+                    return 15*(mu/lambda)+3;
                 },
-                median: function (miu, lambda) {
-                    return dists.inverse_gaussian.measurements.ppf(0.5, miu, lambda);
+                median: function (mu, lambda) {
+                    return dists.inverse_gaussian.measurements.ppf(0.5, mu, lambda);
                 },
-                mode: function (miu, lambda) {
-                    return miu*(Math.sqrt(1+9*miu*miu/(4*lambda*lambda))-3*miu/(2*lambda));
+                mode: function (mu, lambda) {
+                    return mu*(Math.sqrt(1+9*mu*mu/(4*lambda*lambda))-3*mu/(2*lambda));
                 },
             },
         }

@@ -38,10 +38,10 @@ const continuousDistributionsMeasurements = {
                 return (jStat.gammafn(0.5) * jStat.gammafn(k + 0.5)) / (Math.PI * jStat.gammafn(k + 1));
             },
             centralMoments: function (k, a, b) {
-                const µ1 = this.nonCentralMoments(1, a, b);
-                const µ2 = this.nonCentralMoments(2, a, b);
-                const µ3 = this.nonCentralMoments(3, a, b);
-                const µ4 = this.nonCentralMoments(4, a, b);
+                const miu1 = this.nonCentralMoments(1, a, b);
+                const miu2 = this.nonCentralMoments(2, a, b);
+                const miu3 = this.nonCentralMoments(3, a, b);
+                const miu4 = this.nonCentralMoments(4, a, b);
 
                 let result;
                 switch (k) {
@@ -49,43 +49,43 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (a, b) {
-                    const µ1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
-                    return µ1! * (b - a) + a;
+                    const miu1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
+                    return miu1! * (b - a) + a;
                 },
                 variance: function (a, b) {
-                    const µ1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
-                    const µ2 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(2, a, b);
-                    return (µ2! - µ1! ** 2) * (b - a) ** 2;
+                    const miu1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
+                    const miu2 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(2, a, b);
+                    return (miu2! - miu1! ** 2) * (b - a) ** 2;
                 },
                 standardDeviation: function (a, b) {
                     return this.variance(a, b) !== undefined ? Math.sqrt(this.variance(a, b)!) : undefined;
                 },
                 skewness: function (a, b) {
-                    const central_µ3 = continuousDistributionsMeasurements.arcsine.measurements.centralMoments(3, a, b);
-                    const µ1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
-                    const µ2 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(2, a, b);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ3! / std ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.arcsine.measurements.centralMoments(3, a, b);
+                    const miu1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
+                    const miu2 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(2, a, b);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu3! / std ** 3;
                 },
                 kurtosis: function (a, b) {
-                    const central_µ4 = continuousDistributionsMeasurements.arcsine.measurements.centralMoments(4, a, b);
-                    const µ1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
-                    const µ2 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(2, a, b);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ4! / std ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.arcsine.measurements.centralMoments(4, a, b);
+                    const miu1 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(1, a, b);
+                    const miu2 = continuousDistributionsMeasurements.arcsine.measurements.nonCentralMoments(2, a, b);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu4! / std ** 4;
                 },
                 median: function (a, b) {
                     return continuousDistributions.arcsine.ppf(0.5, a, b);
@@ -174,10 +174,10 @@ const continuousDistributionsMeasurements = {
                 return (jStat.gammafn(k + alpha) * jStat.gammafn(beta - k)) / (jStat.gammafn(alpha) * jStat.gammafn(beta));
             },
             centralMoments: function (k, alpha, beta) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta);
-                const µ2 = this.nonCentralMoments(2, alpha, beta);
-                const µ3 = this.nonCentralMoments(3, alpha, beta);
-                const µ4 = this.nonCentralMoments(4, alpha, beta);
+                const miu1 = this.nonCentralMoments(1, alpha, beta);
+                const miu2 = this.nonCentralMoments(2, alpha, beta);
+                const miu3 = this.nonCentralMoments(3, alpha, beta);
+                const miu4 = this.nonCentralMoments(4, alpha, beta);
 
                 let result;
                 switch (k) {
@@ -185,37 +185,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.beta_prime.measurements.nonCentralMoments(1, alpha, beta);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.beta_prime.measurements.nonCentralMoments(1, alpha, beta);
+                    return miu1!;
                 },
                 variance: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.beta_prime.measurements.nonCentralMoments(1, alpha, beta);
-                    const µ2 = continuousDistributionsMeasurements.beta_prime.measurements.nonCentralMoments(2, alpha, beta);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.beta_prime.measurements.nonCentralMoments(1, alpha, beta);
+                    const miu2 = continuousDistributionsMeasurements.beta_prime.measurements.nonCentralMoments(2, alpha, beta);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta) {
                     return this.variance(alpha, beta) !== undefined ? Math.sqrt(this.variance(alpha, beta)!) : undefined;
                 },
                 skewness: function (alpha, beta) {
-                    const central_µ3 = continuousDistributionsMeasurements.beta_prime.measurements.centralMoments(3, alpha, beta);
-                    return central_µ3! / this.standardDeviation(alpha, beta)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.beta_prime.measurements.centralMoments(3, alpha, beta);
+                    return central_miu3! / this.standardDeviation(alpha, beta)! ** 3;
                 },
                 kurtosis: function (alpha, beta) {
-                    const central_µ4 = continuousDistributionsMeasurements.beta_prime.measurements.centralMoments(4, alpha, beta);
-                    return central_µ4! / this.standardDeviation(alpha, beta)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.beta_prime.measurements.centralMoments(4, alpha, beta);
+                    return central_miu4! / this.standardDeviation(alpha, beta)! ** 4;
                 },
                 median: function (alpha, beta) {
                     return continuousDistributions.beta_prime.ppf(0.5, alpha, beta);
@@ -232,10 +232,10 @@ const continuousDistributionsMeasurements = {
                 return (jStat.gammafn(k + alpha) * jStat.gammafn(beta - k)) / (jStat.gammafn(alpha) * jStat.gammafn(beta));
             },
             centralMoments: function (k, alpha, beta, loc, scale) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta, loc, scale);
-                const µ2 = this.nonCentralMoments(2, alpha, beta, loc, scale);
-                const µ3 = this.nonCentralMoments(3, alpha, beta, loc, scale);
-                const µ4 = this.nonCentralMoments(4, alpha, beta, loc, scale);
+                const miu1 = this.nonCentralMoments(1, alpha, beta, loc, scale);
+                const miu2 = this.nonCentralMoments(2, alpha, beta, loc, scale);
+                const miu3 = this.nonCentralMoments(3, alpha, beta, loc, scale);
+                const miu4 = this.nonCentralMoments(4, alpha, beta, loc, scale);
 
                 let result;
                 switch (k) {
@@ -243,43 +243,43 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    return loc + scale * µ1!;
+                    const miu1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    return loc + scale * miu1!;
                 },
                 variance: function (alpha, beta, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
-                    return scale ** 2 * (µ2! - µ1! ** 2);
+                    const miu1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
+                    return scale ** 2 * (miu2! - miu1! ** 2);
                 },
                 standardDeviation: function (alpha, beta, loc, scale) {
                     return this.variance(alpha, beta, loc, scale) !== undefined ? Math.sqrt(this.variance(alpha, beta, loc, scale)!) : undefined;
                 },
                 skewness: function (alpha, beta, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    const central_µ3 = continuousDistributionsMeasurements.beta_prime_4p.measurements.centralMoments(3, alpha, beta, loc, scale);
-                    return central_µ3! / std ** 3;
+                    const miu1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    const central_miu3 = continuousDistributionsMeasurements.beta_prime_4p.measurements.centralMoments(3, alpha, beta, loc, scale);
+                    return central_miu3! / std ** 3;
                 },
                 kurtosis: function (alpha, beta, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    const central_µ4 = continuousDistributionsMeasurements.beta_prime_4p.measurements.centralMoments(4, alpha, beta, loc, scale);
-                    return central_µ4! / std ** 4;
+                    const miu1 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    const central_miu4 = continuousDistributionsMeasurements.beta_prime_4p.measurements.centralMoments(4, alpha, beta, loc, scale);
+                    return central_miu4! / std ** 4;
                 },
                 median: function (alpha, beta, loc, scale) {
                     return continuousDistributions.beta_prime_4p.ppf(0.5, alpha, beta, loc, scale);
@@ -339,10 +339,10 @@ const continuousDistributionsMeasurements = {
                 return A ** k * C * ((jStat.gammafn((B * C - k) / B) * jStat.gammafn((B + k) / B)) / jStat.gammafn((B * C - k) / B + (B + k) / B));
             },
             centralMoments: function (k, A, B, C) {
-                const µ1 = this.nonCentralMoments(1, A, B, C);
-                const µ2 = this.nonCentralMoments(2, A, B, C);
-                const µ3 = this.nonCentralMoments(3, A, B, C);
-                const µ4 = this.nonCentralMoments(4, A, B, C);
+                const miu1 = this.nonCentralMoments(1, A, B, C);
+                const miu2 = this.nonCentralMoments(2, A, B, C);
+                const miu3 = this.nonCentralMoments(3, A, B, C);
+                const miu4 = this.nonCentralMoments(4, A, B, C);
 
                 let result;
                 switch (k) {
@@ -350,37 +350,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (A, B, C) {
-                    const µ1 = continuousDistributionsMeasurements.burr.measurements.nonCentralMoments(1, A, B, C);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.burr.measurements.nonCentralMoments(1, A, B, C);
+                    return miu1!;
                 },
                 variance: function (A, B, C) {
-                    const µ1 = continuousDistributionsMeasurements.burr.measurements.nonCentralMoments(1, A, B, C);
-                    const µ2 = continuousDistributionsMeasurements.burr.measurements.nonCentralMoments(2, A, B, C);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.burr.measurements.nonCentralMoments(1, A, B, C);
+                    const miu2 = continuousDistributionsMeasurements.burr.measurements.nonCentralMoments(2, A, B, C);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (A, B, C) {
                     return this.variance(A, B, C) !== undefined ? Math.sqrt(this.variance(A, B, C)!) : undefined;
                 },
                 skewness: function (A, B, C) {
-                    const central_µ3 = continuousDistributionsMeasurements.burr.measurements.centralMoments(3, A, B, C);
-                    return central_µ3! / this.standardDeviation(A, B, C)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.burr.measurements.centralMoments(3, A, B, C);
+                    return central_miu3! / this.standardDeviation(A, B, C)! ** 3;
                 },
                 kurtosis: function (A, B, C) {
-                    const central_µ4 = continuousDistributionsMeasurements.burr.measurements.centralMoments(4, A, B, C);
-                    return central_µ4! / this.standardDeviation(A, B, C)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.burr.measurements.centralMoments(4, A, B, C);
+                    return central_miu4! / this.standardDeviation(A, B, C)! ** 4;
                 },
                 median: function (A, B, C) {
                     return continuousDistributions.burr.ppf(0.5, A, B, C);
@@ -397,10 +397,10 @@ const continuousDistributionsMeasurements = {
                 return A ** k * C * ((jStat.gammafn((B * C - k) / B) * jStat.gammafn((B + k) / B)) / jStat.gammafn((B * C - k) / B + (B + k) / B));
             },
             centralMoments: function (k, A, B, C, loc) {
-                const µ1 = this.nonCentralMoments(1, A, B, C, loc);
-                const µ2 = this.nonCentralMoments(2, A, B, C, loc);
-                const µ3 = this.nonCentralMoments(3, A, B, C, loc);
-                const µ4 = this.nonCentralMoments(4, A, B, C, loc);
+                const miu1 = this.nonCentralMoments(1, A, B, C, loc);
+                const miu2 = this.nonCentralMoments(2, A, B, C, loc);
+                const miu3 = this.nonCentralMoments(3, A, B, C, loc);
+                const miu4 = this.nonCentralMoments(4, A, B, C, loc);
 
                 let result;
                 switch (k) {
@@ -408,37 +408,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (A, B, C, loc) {
-                    const µ1 = continuousDistributionsMeasurements.burr_4p.measurements.nonCentralMoments(1, A, B, C, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.burr_4p.measurements.nonCentralMoments(1, A, B, C, loc);
+                    return loc + miu1!;
                 },
                 variance: function (A, B, C, loc) {
-                    const µ1 = continuousDistributionsMeasurements.burr_4p.measurements.nonCentralMoments(1, A, B, C, loc);
-                    const µ2 = continuousDistributionsMeasurements.burr_4p.measurements.nonCentralMoments(2, A, B, C, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.burr_4p.measurements.nonCentralMoments(1, A, B, C, loc);
+                    const miu2 = continuousDistributionsMeasurements.burr_4p.measurements.nonCentralMoments(2, A, B, C, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (A, B, C, loc) {
                     return this.variance(A, B, C, loc) !== undefined ? Math.sqrt(this.variance(A, B, C, loc)!) : undefined;
                 },
                 skewness: function (A, B, C, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.burr_4p.measurements.centralMoments(3, A, B, C, loc);
-                    return central_µ3! / this.standardDeviation(A, B, C, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.burr_4p.measurements.centralMoments(3, A, B, C, loc);
+                    return central_miu3! / this.standardDeviation(A, B, C, loc)! ** 3;
                 },
                 kurtosis: function (A, B, C, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.burr_4p.measurements.centralMoments(4, A, B, C, loc);
-                    return central_µ4! / this.standardDeviation(A, B, C, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.burr_4p.measurements.centralMoments(4, A, B, C, loc);
+                    return central_miu4! / this.standardDeviation(A, B, C, loc)! ** 4;
                 },
                 median: function (A, B, C, loc) {
                     return continuousDistributions.burr_4p.ppf(0.5, A, B, C, loc);
@@ -554,10 +554,10 @@ const continuousDistributionsMeasurements = {
                 return b ** k * p * ((jStat.gammafn((a * p + k) / a) * jStat.gammafn((a - k) / a)) / jStat.gammafn((a * p + k) / a + (a - k) / a));
             },
             centralMoments: function (k, a, b, p) {
-                const µ1 = this.nonCentralMoments(1, a, b, p);
-                const µ2 = this.nonCentralMoments(2, a, b, p);
-                const µ3 = this.nonCentralMoments(3, a, b, p);
-                const µ4 = this.nonCentralMoments(4, a, b, p);
+                const miu1 = this.nonCentralMoments(1, a, b, p);
+                const miu2 = this.nonCentralMoments(2, a, b, p);
+                const miu3 = this.nonCentralMoments(3, a, b, p);
+                const miu4 = this.nonCentralMoments(4, a, b, p);
 
                 let result;
                 switch (k) {
@@ -565,37 +565,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (a, b, p) {
-                    const µ1 = continuousDistributionsMeasurements.dagum.measurements.nonCentralMoments(1, a, b, p);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.dagum.measurements.nonCentralMoments(1, a, b, p);
+                    return miu1!;
                 },
                 variance: function (a, b, p) {
-                    const µ1 = continuousDistributionsMeasurements.dagum.measurements.nonCentralMoments(1, a, b, p);
-                    const µ2 = continuousDistributionsMeasurements.dagum.measurements.nonCentralMoments(2, a, b, p);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.dagum.measurements.nonCentralMoments(1, a, b, p);
+                    const miu2 = continuousDistributionsMeasurements.dagum.measurements.nonCentralMoments(2, a, b, p);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (a, b, p) {
                     return this.variance(a, b, p) !== undefined ? Math.sqrt(this.variance(a, b, p)!) : undefined;
                 },
                 skewness: function (a, b, p) {
-                    const central_µ3 = continuousDistributionsMeasurements.dagum.measurements.centralMoments(3, a, b, p);
-                    return central_µ3! / this.standardDeviation(a, b, p)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.dagum.measurements.centralMoments(3, a, b, p);
+                    return central_miu3! / this.standardDeviation(a, b, p)! ** 3;
                 },
                 kurtosis: function (a, b, p) {
-                    const central_µ4 = continuousDistributionsMeasurements.dagum.measurements.centralMoments(4, a, b, p);
-                    return central_µ4! / this.standardDeviation(a, b, p)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.dagum.measurements.centralMoments(4, a, b, p);
+                    return central_miu4! / this.standardDeviation(a, b, p)! ** 4;
                 },
                 median: function (a, b, p) {
                     return continuousDistributions.dagum.ppf(0.5, a, b, p);
@@ -612,10 +612,10 @@ const continuousDistributionsMeasurements = {
                 return b ** k * p * ((jStat.gammafn((a * p + k) / a) * jStat.gammafn((a - k) / a)) / jStat.gammafn((a * p + k) / a + (a - k) / a));
             },
             centralMoments: function (k, a, b, p, loc) {
-                const µ1 = this.nonCentralMoments(1, a, b, p, loc);
-                const µ2 = this.nonCentralMoments(2, a, b, p, loc);
-                const µ3 = this.nonCentralMoments(3, a, b, p, loc);
-                const µ4 = this.nonCentralMoments(4, a, b, p, loc);
+                const miu1 = this.nonCentralMoments(1, a, b, p, loc);
+                const miu2 = this.nonCentralMoments(2, a, b, p, loc);
+                const miu3 = this.nonCentralMoments(3, a, b, p, loc);
+                const miu4 = this.nonCentralMoments(4, a, b, p, loc);
 
                 let result;
                 switch (k) {
@@ -623,37 +623,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (a, b, p, loc) {
-                    const µ1 = continuousDistributionsMeasurements.dagum_4p.measurements.nonCentralMoments(1, a, b, p, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.dagum_4p.measurements.nonCentralMoments(1, a, b, p, loc);
+                    return loc + miu1!;
                 },
                 variance: function (a, b, p, loc) {
-                    const µ1 = continuousDistributionsMeasurements.dagum_4p.measurements.nonCentralMoments(1, a, b, p, loc);
-                    const µ2 = continuousDistributionsMeasurements.dagum_4p.measurements.nonCentralMoments(2, a, b, p, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.dagum_4p.measurements.nonCentralMoments(1, a, b, p, loc);
+                    const miu2 = continuousDistributionsMeasurements.dagum_4p.measurements.nonCentralMoments(2, a, b, p, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (a, b, p, loc) {
                     return this.variance(a, b, p, loc) !== undefined ? Math.sqrt(this.variance(a, b, p, loc)!) : undefined;
                 },
                 skewness: function (a, b, p, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.dagum_4p.measurements.centralMoments(3, a, b, p, loc);
-                    return central_µ3! / this.standardDeviation(a, b, p, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.dagum_4p.measurements.centralMoments(3, a, b, p, loc);
+                    return central_miu3! / this.standardDeviation(a, b, p, loc)! ** 3;
                 },
                 kurtosis: function (a, b, p, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.dagum_4p.measurements.centralMoments(4, a, b, p, loc);
-                    return central_µ4! / this.standardDeviation(a, b, p, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.dagum_4p.measurements.centralMoments(4, a, b, p, loc);
+                    return central_miu4! / this.standardDeviation(a, b, p, loc)! ** 4;
                 },
                 median: function (a, b, p, loc) {
                     return continuousDistributions.dagum_4p.ppf(0.5, a, b, p, loc);
@@ -670,10 +670,10 @@ const continuousDistributionsMeasurements = {
                 return beta ** k * (jStat.gammafn(k + k_) / jStat.factorial(k_ - 1));
             },
             centralMoments: function (k, k, beta) {
-                const µ1 = this.nonCentralMoments(1, k, beta);
-                const µ2 = this.nonCentralMoments(2, k, beta);
-                const µ3 = this.nonCentralMoments(3, k, beta);
-                const µ4 = this.nonCentralMoments(4, k, beta);
+                const miu1 = this.nonCentralMoments(1, k, beta);
+                const miu2 = this.nonCentralMoments(2, k, beta);
+                const miu3 = this.nonCentralMoments(3, k, beta);
+                const miu4 = this.nonCentralMoments(4, k, beta);
 
                 let result;
                 switch (k) {
@@ -681,37 +681,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (k, beta) {
-                    const µ1 = continuousDistributionsMeasurements.erlang.measurements.nonCentralMoments(1, k, beta);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.erlang.measurements.nonCentralMoments(1, k, beta);
+                    return miu1!;
                 },
                 variance: function (k, beta) {
-                    const µ1 = continuousDistributionsMeasurements.erlang.measurements.nonCentralMoments(1, k, beta);
-                    const µ2 = continuousDistributionsMeasurements.erlang.measurements.nonCentralMoments(2, k, beta);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.erlang.measurements.nonCentralMoments(1, k, beta);
+                    const miu2 = continuousDistributionsMeasurements.erlang.measurements.nonCentralMoments(2, k, beta);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (k, beta) {
                     return this.variance(k, beta) !== undefined ? Math.sqrt(this.variance(k, beta)!) : undefined;
                 },
                 skewness: function (k, beta) {
-                    const central_µ3 = continuousDistributionsMeasurements.erlang.measurements.centralMoments(3, k, beta);
-                    return central_µ3! / this.standardDeviation(k, beta)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.erlang.measurements.centralMoments(3, k, beta);
+                    return central_miu3! / this.standardDeviation(k, beta)! ** 3;
                 },
                 kurtosis: function (k, beta) {
-                    const central_µ4 = continuousDistributionsMeasurements.erlang.measurements.centralMoments(4, k, beta);
-                    return central_µ4! / this.standardDeviation(k, beta)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.erlang.measurements.centralMoments(4, k, beta);
+                    return central_miu4! / this.standardDeviation(k, beta)! ** 4;
                 },
                 median: function (k, beta) {
                     return continuousDistributions.erlang.ppf(0.5, k, beta);
@@ -728,10 +728,10 @@ const continuousDistributionsMeasurements = {
                 return beta ** k * (jStat.gammafn(k_ + k) / jStat.factorial(k_ - 1));
             },
             centralMoments: function (k, k_, beta, loc) {
-                const µ1 = this.nonCentralMoments(1, k_, beta, loc);
-                const µ2 = this.nonCentralMoments(2, k_, beta, loc);
-                const µ3 = this.nonCentralMoments(3, k_, beta, loc);
-                const µ4 = this.nonCentralMoments(4, k_, beta, loc);
+                const miu1 = this.nonCentralMoments(1, k_, beta, loc);
+                const miu2 = this.nonCentralMoments(2, k_, beta, loc);
+                const miu3 = this.nonCentralMoments(3, k_, beta, loc);
+                const miu4 = this.nonCentralMoments(4, k_, beta, loc);
 
                 let result;
                 switch (k) {
@@ -739,37 +739,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (k, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.erlang_3p.measurements.nonCentralMoments(1, k, beta, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.erlang_3p.measurements.nonCentralMoments(1, k, beta, loc);
+                    return loc + miu1!;
                 },
                 variance: function (k, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.erlang_3p.measurements.nonCentralMoments(1, k, beta, loc);
-                    const µ2 = continuousDistributionsMeasurements.erlang_3p.measurements.nonCentralMoments(2, k, beta, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.erlang_3p.measurements.nonCentralMoments(1, k, beta, loc);
+                    const miu2 = continuousDistributionsMeasurements.erlang_3p.measurements.nonCentralMoments(2, k, beta, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (k, beta, loc) {
                     return this.variance(k, beta, loc) !== undefined ? Math.sqrt(this.variance(k, beta, loc)!) : undefined;
                 },
                 skewness: function (k, beta, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.erlang_3p.measurements.centralMoments(3, k, beta, loc);
-                    return central_µ3! / this.standardDeviation(k, beta, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.erlang_3p.measurements.centralMoments(3, k, beta, loc);
+                    return central_miu3! / this.standardDeviation(k, beta, loc)! ** 3;
                 },
                 kurtosis: function (k, beta, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.erlang_3p.measurements.centralMoments(4, k, beta, loc);
-                    return central_µ4! / this.standardDeviation(k, beta, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.erlang_3p.measurements.centralMoments(4, k, beta, loc);
+                    return central_miu4! / this.standardDeviation(k, beta, loc)! ** 4;
                 },
                 median: function (k, beta, loc) {
                     return continuousDistributions.erlang_3p.ppf(0.5, k, beta, loc);
@@ -885,10 +885,10 @@ const continuousDistributionsMeasurements = {
                 return (df2 / df1) ** k * (jStat.gammafn(df1 / 2 + k) / jStat.gammafn(df1 / 2)) * (jStat.gammafn(df2 / 2 - k) / jStat.gammafn(df2 / 2));
             },
             centralMoments: function (k, df1, df2) {
-                const µ1 = this.nonCentralMoments(1, df1, df2);
-                const µ2 = this.nonCentralMoments(2, df1, df2);
-                const µ3 = this.nonCentralMoments(3, df1, df2);
-                const µ4 = this.nonCentralMoments(4, df1, df2);
+                const miu1 = this.nonCentralMoments(1, df1, df2);
+                const miu2 = this.nonCentralMoments(2, df1, df2);
+                const miu3 = this.nonCentralMoments(3, df1, df2);
+                const miu4 = this.nonCentralMoments(4, df1, df2);
 
                 let result;
                 switch (k) {
@@ -896,37 +896,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (df1, df2) {
-                    const µ1 = continuousDistributionsMeasurements.f.measurements.nonCentralMoments(1, df1, df2);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.f.measurements.nonCentralMoments(1, df1, df2);
+                    return miu1!;
                 },
                 variance: function (df1, df2) {
-                    const µ1 = continuousDistributionsMeasurements.f.measurements.nonCentralMoments(1, df1, df2);
-                    const µ2 = continuousDistributionsMeasurements.f.measurements.nonCentralMoments(2, df1, df2);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.f.measurements.nonCentralMoments(1, df1, df2);
+                    const miu2 = continuousDistributionsMeasurements.f.measurements.nonCentralMoments(2, df1, df2);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (df1, df2) {
                     return this.variance(df1, df2) !== undefined ? Math.sqrt(this.variance(df1, df2)!) : undefined;
                 },
                 skewness: function (df1, df2) {
-                    const central_µ3 = continuousDistributionsMeasurements.f.measurements.centralMoments(3, df1, df2);
-                    return central_µ3! / this.standardDeviation(df1, df2)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.f.measurements.centralMoments(3, df1, df2);
+                    return central_miu3! / this.standardDeviation(df1, df2)! ** 3;
                 },
                 kurtosis: function (df1, df2) {
-                    const central_µ4 = continuousDistributionsMeasurements.f.measurements.centralMoments(4, df1, df2);
-                    return central_µ4! / this.standardDeviation(df1, df2)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.f.measurements.centralMoments(4, df1, df2);
+                    return central_miu4! / this.standardDeviation(df1, df2)! ** 4;
                 },
                 median: function (df1, df2) {
                     return continuousDistributions.f.ppf(0.5, df1, df2);
@@ -972,34 +972,34 @@ const continuousDistributionsMeasurements = {
     },
     folded_normal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
+                mean: function (mu, sigma) {
                     const std_cdf = (t: number) => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-                    return sigma * Math.sqrt(2 / Math.PI) * Math.exp((-miu * miu) / (2 * sigma * sigma)) - miu * (2 * std_cdf(-miu / sigma) - 1);
+                    return sigma * Math.sqrt(2 / Math.PI) * Math.exp((-mu * mu) / (2 * sigma * sigma)) - mu * (2 * std_cdf(-mu / sigma) - 1);
                 },
-                variance: function (miu, sigma) {
-                    return miu * miu + sigma * sigma - this.mean(miu, sigma) ** 2;
+                variance: function (mu, sigma) {
+                    return mu * mu + sigma * sigma - this.mean(mu, sigma) ** 2;
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return undefined;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return undefined;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.folded_normal.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.folded_normal.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
@@ -1010,10 +1010,10 @@ const continuousDistributionsMeasurements = {
                 return jStat.gammafn(1 - k / alpha);
             },
             centralMoments: function (k, alpha, loc, scale) {
-                const µ1 = this.nonCentralMoments(1, alpha, loc, scale);
-                const µ2 = this.nonCentralMoments(2, alpha, loc, scale);
-                const µ3 = this.nonCentralMoments(3, alpha, loc, scale);
-                const µ4 = this.nonCentralMoments(4, alpha, loc, scale);
+                const miu1 = this.nonCentralMoments(1, alpha, loc, scale);
+                const miu2 = this.nonCentralMoments(2, alpha, loc, scale);
+                const miu3 = this.nonCentralMoments(3, alpha, loc, scale);
+                const miu4 = this.nonCentralMoments(4, alpha, loc, scale);
 
                 let result;
                 switch (k) {
@@ -1021,43 +1021,43 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
-                    return loc + scale * µ1!;
+                    const miu1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
+                    return loc + scale * miu1!;
                 },
                 variance: function (alpha, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(2, alpha, loc, scale);
-                    return scale ** 2 * (µ2! - µ1! ** 2);
+                    const miu1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(2, alpha, loc, scale);
+                    return scale ** 2 * (miu2! - miu1! ** 2);
                 },
                 standardDeviation: function (alpha, loc, scale) {
                     return this.variance(alpha, loc, scale) !== undefined ? Math.sqrt(this.variance(alpha, loc, scale)!) : undefined;
                 },
                 skewness: function (alpha, loc, scale) {
-                    const central_µ3 = continuousDistributionsMeasurements.frechet.measurements.centralMoments(3, alpha, loc, scale);
-                    const µ1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(2, alpha, loc, scale);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ3! / std ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.frechet.measurements.centralMoments(3, alpha, loc, scale);
+                    const miu1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(2, alpha, loc, scale);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu3! / std ** 3;
                 },
                 kurtosis: function (alpha, loc, scale) {
-                    const central_µ4 = continuousDistributionsMeasurements.frechet.measurements.centralMoments(4, alpha, loc, scale);
-                    const µ1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(2, alpha, loc, scale);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ4! / std ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.frechet.measurements.centralMoments(4, alpha, loc, scale);
+                    const miu1 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(1, alpha, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.frechet.measurements.nonCentralMoments(2, alpha, loc, scale);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu4! / std ** 4;
                 },
                 median: function (alpha, loc, scale) {
                     return continuousDistributions.frechet.ppf(0.5, alpha, loc, scale);
@@ -1074,10 +1074,10 @@ const continuousDistributionsMeasurements = {
                 return (df2 / df1) ** k * (jStat.gammafn(df1 / 2 + k) / jStat.gammafn(df1 / 2)) * (jStat.gammafn(df2 / 2 - k) / jStat.gammafn(df2 / 2));
             },
             centralMoments: function (k, df1, df2, loc, scale) {
-                const µ1 = this.nonCentralMoments(1, df1, df2, loc, scale);
-                const µ2 = this.nonCentralMoments(2, df1, df2, loc, scale);
-                const µ3 = this.nonCentralMoments(3, df1, df2, loc, scale);
-                const µ4 = this.nonCentralMoments(4, df1, df2, loc, scale);
+                const miu1 = this.nonCentralMoments(1, df1, df2, loc, scale);
+                const miu2 = this.nonCentralMoments(2, df1, df2, loc, scale);
+                const miu3 = this.nonCentralMoments(3, df1, df2, loc, scale);
+                const miu4 = this.nonCentralMoments(4, df1, df2, loc, scale);
 
                 let result;
                 switch (k) {
@@ -1085,37 +1085,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (df1, df2, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.f_4p.measurements.nonCentralMoments(1, df1, df2, loc, scale);
-                    return loc + scale * µ1!;
+                    const miu1 = continuousDistributionsMeasurements.f_4p.measurements.nonCentralMoments(1, df1, df2, loc, scale);
+                    return loc + scale * miu1!;
                 },
                 variance: function (df1, df2, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.f_4p.measurements.nonCentralMoments(1, df1, df2, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.f_4p.measurements.nonCentralMoments(2, df1, df2, loc, scale);
-                    return scale ** 2 * (µ2! - µ1! ** 2);
+                    const miu1 = continuousDistributionsMeasurements.f_4p.measurements.nonCentralMoments(1, df1, df2, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.f_4p.measurements.nonCentralMoments(2, df1, df2, loc, scale);
+                    return scale ** 2 * (miu2! - miu1! ** 2);
                 },
                 standardDeviation: function (df1, df2, loc, scale) {
                     return this.variance(df1, df2, loc, scale) !== undefined ? Math.sqrt(this.variance(df1, df2, loc, scale)!) : undefined;
                 },
                 skewness: function (df1, df2, loc, scale) {
-                    const central_µ3 = continuousDistributionsMeasurements.f_4p.measurements.centralMoments(3, df1, df2, loc, scale);
-                    return central_µ3! / this.standardDeviation(df1, df2, loc, scale)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.f_4p.measurements.centralMoments(3, df1, df2, loc, scale);
+                    return central_miu3! / this.standardDeviation(df1, df2, loc, scale)! ** 3;
                 },
                 kurtosis: function (df1, df2, loc, scale) {
-                    const central_µ4 = continuousDistributionsMeasurements.f_4p.measurements.centralMoments(4, df1, df2, loc, scale);
-                    return central_µ4! / this.standardDeviation(df1, df2, loc, scale)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.f_4p.measurements.centralMoments(4, df1, df2, loc, scale);
+                    return central_miu4! / this.standardDeviation(df1, df2, loc, scale)! ** 4;
                 },
                 median: function (df1, df2, loc, scale) {
                     return continuousDistributions.f_4p.ppf(0.5, df1, df2, loc, scale);
@@ -1132,10 +1132,10 @@ const continuousDistributionsMeasurements = {
                 return beta ** k * (jStat.gammafn(k + alpha) / jStat.gammafn(alpha));
             },
             centralMoments: function (k, alpha, beta) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta);
-                const µ2 = this.nonCentralMoments(2, alpha, beta);
-                const µ3 = this.nonCentralMoments(3, alpha, beta);
-                const µ4 = this.nonCentralMoments(4, alpha, beta);
+                const miu1 = this.nonCentralMoments(1, alpha, beta);
+                const miu2 = this.nonCentralMoments(2, alpha, beta);
+                const miu3 = this.nonCentralMoments(3, alpha, beta);
+                const miu4 = this.nonCentralMoments(4, alpha, beta);
 
                 let result;
                 switch (k) {
@@ -1143,37 +1143,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.gamma.measurements.nonCentralMoments(1, alpha, beta);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.gamma.measurements.nonCentralMoments(1, alpha, beta);
+                    return miu1!;
                 },
                 variance: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.gamma.measurements.nonCentralMoments(1, alpha, beta);
-                    const µ2 = continuousDistributionsMeasurements.gamma.measurements.nonCentralMoments(2, alpha, beta);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.gamma.measurements.nonCentralMoments(1, alpha, beta);
+                    const miu2 = continuousDistributionsMeasurements.gamma.measurements.nonCentralMoments(2, alpha, beta);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta) {
                     return this.variance(alpha, beta) !== undefined ? Math.sqrt(this.variance(alpha, beta)!) : undefined;
                 },
                 skewness: function (alpha, beta) {
-                    const central_µ3 = continuousDistributionsMeasurements.gamma.measurements.centralMoments(3, alpha, beta);
-                    return central_µ3! / this.standardDeviation(alpha, beta)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.gamma.measurements.centralMoments(3, alpha, beta);
+                    return central_miu3! / this.standardDeviation(alpha, beta)! ** 3;
                 },
                 kurtosis: function (alpha, beta) {
-                    const central_µ4 = continuousDistributionsMeasurements.gamma.measurements.centralMoments(4, alpha, beta);
-                    return central_µ4! / this.standardDeviation(alpha, beta)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.gamma.measurements.centralMoments(4, alpha, beta);
+                    return central_miu4! / this.standardDeviation(alpha, beta)! ** 4;
                 },
                 median: function (alpha, beta) {
                     return continuousDistributions.gamma.ppf(0.5, alpha, beta);
@@ -1190,10 +1190,10 @@ const continuousDistributionsMeasurements = {
                 return beta ** k * (jStat.gammafn(k + alpha) / jStat.factorial(alpha - 1));
             },
             centralMoments: function (k, alpha, beta, loc) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta, loc);
-                const µ2 = this.nonCentralMoments(2, alpha, beta, loc);
-                const µ3 = this.nonCentralMoments(3, alpha, beta, loc);
-                const µ4 = this.nonCentralMoments(4, alpha, beta, loc);
+                const miu1 = this.nonCentralMoments(1, alpha, beta, loc);
+                const miu2 = this.nonCentralMoments(2, alpha, beta, loc);
+                const miu3 = this.nonCentralMoments(3, alpha, beta, loc);
+                const miu4 = this.nonCentralMoments(4, alpha, beta, loc);
 
                 let result;
                 switch (k) {
@@ -1201,37 +1201,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    return loc + miu1!;
                 },
                 variance: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    const µ2 = continuousDistributionsMeasurements.gamma_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    const miu2 = continuousDistributionsMeasurements.gamma_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta, loc) {
                     return this.variance(alpha, beta, loc) !== undefined ? Math.sqrt(this.variance(alpha, beta, loc)!) : undefined;
                 },
                 skewness: function (alpha, beta, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.gamma_3p.measurements.centralMoments(3, alpha, beta, loc);
-                    return central_µ3! / this.standardDeviation(alpha, beta, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.gamma_3p.measurements.centralMoments(3, alpha, beta, loc);
+                    return central_miu3! / this.standardDeviation(alpha, beta, loc)! ** 3;
                 },
                 kurtosis: function (alpha, beta, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.gamma_3p.measurements.centralMoments(4, alpha, beta, loc);
-                    return central_µ4! / this.standardDeviation(alpha, beta, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.gamma_3p.measurements.centralMoments(4, alpha, beta, loc);
+                    return central_miu4! / this.standardDeviation(alpha, beta, loc)! ** 4;
                 },
                 median: function (alpha, beta, loc) {
                     return continuousDistributions.gamma_3p.ppf(0.5, alpha, beta, loc);
@@ -1244,14 +1244,14 @@ const continuousDistributionsMeasurements = {
     },
     generalized_extreme_value: {
         measurements: {
-            nonCentralMoments: function (k, ξ, miu, sigma) {
-                return jStat.gammafn(1 - ξ * k);
+            nonCentralMoments: function (k, xi, mu, sigma) {
+                return jStat.gammafn(1 - xi * k);
             },
-            centralMoments: function (k, ξ, miu, sigma) {
-                const µ1 = this.nonCentralMoments(1, ξ, miu, sigma);
-                const µ2 = this.nonCentralMoments(2, ξ, miu, sigma);
-                const µ3 = this.nonCentralMoments(3, ξ, miu, sigma);
-                const µ4 = this.nonCentralMoments(4, ξ, miu, sigma);
+            centralMoments: function (k, xi, mu, sigma) {
+                const miu1 = this.nonCentralMoments(1, xi, mu, sigma);
+                const miu2 = this.nonCentralMoments(2, xi, mu, sigma);
+                const miu3 = this.nonCentralMoments(3, xi, mu, sigma);
+                const miu4 = this.nonCentralMoments(4, xi, mu, sigma);
 
                 let result;
                 switch (k) {
@@ -1259,64 +1259,64 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
-                mean: function (ξ, miu, sigma) {
-                    const µ1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    if (ξ == 0) {
-                        return miu + sigma * 0.5772156649;
+                mean: function (xi, mu, sigma) {
+                    const miu1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    if (xi == 0) {
+                        return mu + sigma * 0.5772156649;
                     }
-                    return miu + (sigma * (µ1! - 1)) / ξ;
+                    return mu + (sigma * (miu1! - 1)) / xi;
                 },
-                variance: function (ξ, miu, sigma) {
-                    const µ1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    const µ2 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(2, ξ, miu, sigma);
-                    if (ξ == 0) {
+                variance: function (xi, mu, sigma) {
+                    const miu1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    const miu2 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(2, xi, mu, sigma);
+                    if (xi == 0) {
                         return sigma ** 2 * (Math.PI ** 2 / 6);
                     }
-                    return (sigma ** 2 * (µ2! - µ1! ** 2)) / ξ ** 2;
+                    return (sigma ** 2 * (miu2! - miu1! ** 2)) / xi ** 2;
                 },
-                standardDeviation: function (ξ, miu, sigma) {
-                    return this.variance(ξ, miu, sigma) !== undefined ? Math.sqrt(this.variance(ξ, miu, sigma)!) : undefined;
+                standardDeviation: function (xi, mu, sigma) {
+                    return this.variance(xi, mu, sigma) !== undefined ? Math.sqrt(this.variance(xi, mu, sigma)!) : undefined;
                 },
-                skewness: function (ξ, miu, sigma) {
-                    const central_µ3 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.centralMoments(3, ξ, miu, sigma);
-                    const µ1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    const µ2 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(2, ξ, miu, sigma);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    if (ξ == 0) {
+                skewness: function (xi, mu, sigma) {
+                    const central_miu3 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.centralMoments(3, xi, mu, sigma);
+                    const miu1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    const miu2 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(2, xi, mu, sigma);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    if (xi == 0) {
                         return (12 * Math.sqrt(6) * 1.20205690315959) / Math.PI ** 3;
                     }
-                    return central_µ3! / std ** 3;
+                    return central_miu3! / std ** 3;
                 },
-                kurtosis: function (ξ, miu, sigma) {
-                    const central_µ4 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.centralMoments(4, ξ, miu, sigma);
-                    const µ1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, ξ, miu, sigma);
-                    const µ2 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(2, ξ, miu, sigma);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    if (ξ == 0) {
+                kurtosis: function (xi, mu, sigma) {
+                    const central_miu4 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.centralMoments(4, xi, mu, sigma);
+                    const miu1 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(1, xi, mu, sigma);
+                    const miu2 = continuousDistributionsMeasurements.generalized_extreme_value.measurements.nonCentralMoments(2, xi, mu, sigma);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    if (xi == 0) {
                         return 5.4;
                     }
-                    return central_µ4! / std ** 4;
+                    return central_miu4! / std ** 4;
                 },
-                median: function (ξ, miu, sigma) {
-                    return continuousDistributions.generalized_extreme_value.ppf(0.5, ξ, miu, sigma);
+                median: function (xi, mu, sigma) {
+                    return continuousDistributions.generalized_extreme_value.ppf(0.5, xi, mu, sigma);
                 },
-                mode: function (ξ, miu, sigma) {
-                    if (ξ == 0) {
-                        return miu;
+                mode: function (xi, mu, sigma) {
+                    if (xi == 0) {
+                        return mu;
                     }
-                    return miu + (sigma * ((1 + ξ) ** -ξ - 1)) / ξ;
+                    return mu + (sigma * ((1 + xi) ** -xi - 1)) / xi;
                 },
             },
         },
@@ -1327,10 +1327,10 @@ const continuousDistributionsMeasurements = {
                 return (a ** k * jStat.gammafn((d + k) / p)) / jStat.gammafn(d / p);
             },
             centralMoments: function (k, a, d, p) {
-                const µ1 = this.nonCentralMoments(1, a, d, p);
-                const µ2 = this.nonCentralMoments(2, a, d, p);
-                const µ3 = this.nonCentralMoments(3, a, d, p);
-                const µ4 = this.nonCentralMoments(4, a, d, p);
+                const miu1 = this.nonCentralMoments(1, a, d, p);
+                const miu2 = this.nonCentralMoments(2, a, d, p);
+                const miu3 = this.nonCentralMoments(3, a, d, p);
+                const miu4 = this.nonCentralMoments(4, a, d, p);
 
                 let result;
                 switch (k) {
@@ -1338,37 +1338,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (a, d, p) {
-                    const µ1 = continuousDistributionsMeasurements.generalized_gamma.measurements.nonCentralMoments(1, a, d, p);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.generalized_gamma.measurements.nonCentralMoments(1, a, d, p);
+                    return miu1!;
                 },
                 variance: function (a, d, p) {
-                    const µ1 = continuousDistributionsMeasurements.generalized_gamma.measurements.nonCentralMoments(1, a, d, p);
-                    const µ2 = continuousDistributionsMeasurements.generalized_gamma.measurements.nonCentralMoments(2, a, d, p);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.generalized_gamma.measurements.nonCentralMoments(1, a, d, p);
+                    const miu2 = continuousDistributionsMeasurements.generalized_gamma.measurements.nonCentralMoments(2, a, d, p);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (a, d, p) {
                     return this.variance(a, d, p) !== undefined ? Math.sqrt(this.variance(a, d, p)!) : undefined;
                 },
                 skewness: function (a, d, p) {
-                    const central_µ3 = continuousDistributionsMeasurements.generalized_gamma.measurements.centralMoments(3, a, d, p);
-                    return central_µ3! / this.standardDeviation(a, d, p)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.generalized_gamma.measurements.centralMoments(3, a, d, p);
+                    return central_miu3! / this.standardDeviation(a, d, p)! ** 3;
                 },
                 kurtosis: function (a, d, p) {
-                    const central_µ4 = continuousDistributionsMeasurements.generalized_gamma.measurements.centralMoments(4, a, d, p);
-                    return central_µ4! / this.standardDeviation(a, d, p)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.generalized_gamma.measurements.centralMoments(4, a, d, p);
+                    return central_miu4! / this.standardDeviation(a, d, p)! ** 4;
                 },
                 median: function (a, d, p) {
                     return continuousDistributions.generalized_gamma.ppf(0.5, a, d, p);
@@ -1385,10 +1385,10 @@ const continuousDistributionsMeasurements = {
                 return (a ** k * jStat.gammafn((d + k) / p)) / jStat.gammafn(d / p);
             },
             centralMoments: function (k, a, d, p, loc) {
-                const µ1 = this.nonCentralMoments(1, a, d, p, loc);
-                const µ2 = this.nonCentralMoments(2, a, d, p, loc);
-                const µ3 = this.nonCentralMoments(3, a, d, p, loc);
-                const µ4 = this.nonCentralMoments(4, a, d, p, loc);
+                const miu1 = this.nonCentralMoments(1, a, d, p, loc);
+                const miu2 = this.nonCentralMoments(2, a, d, p, loc);
+                const miu3 = this.nonCentralMoments(3, a, d, p, loc);
+                const miu4 = this.nonCentralMoments(4, a, d, p, loc);
 
                 let result;
                 switch (k) {
@@ -1396,37 +1396,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (a, d, p, loc) {
-                    const µ1 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
+                    return loc + miu1!;
                 },
                 variance: function (a, d, p, loc) {
-                    const µ1 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
-                    const µ2 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.nonCentralMoments(2, a, d, p, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.nonCentralMoments(1, a, d, p, loc);
+                    const miu2 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.nonCentralMoments(2, a, d, p, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (a, d, p, loc) {
                     return this.variance(a, d, p, loc) !== undefined ? Math.sqrt(this.variance(a, d, p, loc)!) : undefined;
                 },
                 skewness: function (a, d, p, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.centralMoments(3, a, d, p, loc);
-                    return central_µ3! / this.standardDeviation(a, d, p, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.centralMoments(3, a, d, p, loc);
+                    return central_miu3! / this.standardDeviation(a, d, p, loc)! ** 3;
                 },
                 kurtosis: function (a, d, p, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.centralMoments(4, a, d, p, loc);
-                    return central_µ4! / this.standardDeviation(a, d, p, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.generalized_gamma_4p.measurements.centralMoments(4, a, d, p, loc);
+                    return central_miu4! / this.standardDeviation(a, d, p, loc)! ** 4;
                 },
                 median: function (a, d, p, loc) {
                     return continuousDistributions.generalized_gamma_4p.ppf(0.5, a, d, p, loc);
@@ -1472,32 +1472,32 @@ const continuousDistributionsMeasurements = {
     },
     generalized_normal: {
         measurements: {
-            nonCentralMoments: function (k, miu, alpha, beta) {
+            nonCentralMoments: function (k, mu, alpha, beta) {
                 return undefined;
             },
-            centralMoments: function (k, miu, alpha, beta) {
+            centralMoments: function (k, mu, alpha, beta) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, alpha, beta) {
+                mean: function (mu, alpha, beta) {
                     return beta;
                 },
-                variance: function (miu, alpha, beta) {
-                    return (miu ** 2 * jStat.gammafn(3 / alpha)) / jStat.gammafn(1 / alpha);
+                variance: function (mu, alpha, beta) {
+                    return (mu ** 2 * jStat.gammafn(3 / alpha)) / jStat.gammafn(1 / alpha);
                 },
-                standardDeviation: function (miu, alpha, beta) {
-                    return this.variance(miu, alpha, beta) !== undefined ? Math.sqrt(this.variance(miu, alpha, beta)!) : undefined;
+                standardDeviation: function (mu, alpha, beta) {
+                    return this.variance(mu, alpha, beta) !== undefined ? Math.sqrt(this.variance(mu, alpha, beta)!) : undefined;
                 },
-                skewness: function (miu, alpha, beta) {
+                skewness: function (mu, alpha, beta) {
                     return 0;
                 },
-                kurtosis: function (miu, alpha, beta) {
+                kurtosis: function (mu, alpha, beta) {
                     return (jStat.gammafn(5 / alpha) * jStat.gammafn(1 / alpha)) / jStat.gammafn(3 / alpha) ** 2;
                 },
-                median: function (miu, alpha, beta) {
-                    return continuousDistributions.generalized_normal.ppf(0.5, miu, alpha, beta);
+                median: function (mu, alpha, beta) {
+                    return continuousDistributions.generalized_normal.ppf(0.5, mu, alpha, beta);
                 },
-                mode: function (miu, alpha, beta) {
+                mode: function (mu, alpha, beta) {
                     return beta;
                 },
             },
@@ -1505,33 +1505,33 @@ const continuousDistributionsMeasurements = {
     },
     generalized_pareto: {
         measurements: {
-            nonCentralMoments: function (k, c, miu, sigma) {
+            nonCentralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, c, miu, sigma) {
+            centralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (c, miu, sigma) {
-                    return miu + sigma / (1 - c);
+                mean: function (c, mu, sigma) {
+                    return mu + sigma / (1 - c);
                 },
-                variance: function (c, miu, sigma) {
+                variance: function (c, mu, sigma) {
                     return (sigma * sigma) / ((1 - c) * (1 - c) * (1 - 2 * c));
                 },
-                standardDeviation: function (c, miu, sigma) {
-                    return this.variance(c, miu, sigma) !== undefined ? Math.sqrt(this.variance(c, miu, sigma)!) : undefined;
+                standardDeviation: function (c, mu, sigma) {
+                    return this.variance(c, mu, sigma) !== undefined ? Math.sqrt(this.variance(c, mu, sigma)!) : undefined;
                 },
-                skewness: function (c, miu, sigma) {
+                skewness: function (c, mu, sigma) {
                     return (2 * (1 + c) * Math.sqrt(1 - 2 * c)) / (1 - 3 * c);
                 },
-                kurtosis: function (c, miu, sigma) {
+                kurtosis: function (c, mu, sigma) {
                     return (3 * (1 - 2 * c) * (2 * c * c + c + 3)) / ((1 - 3 * c) * (1 - 4 * c));
                 },
-                median: function (c, miu, sigma) {
-                    return continuousDistributions.generalized_pareto.ppf(0.5, c, miu, sigma);
+                median: function (c, mu, sigma) {
+                    return continuousDistributions.generalized_pareto.ppf(0.5, c, mu, sigma);
                 },
-                mode: function (c, miu, sigma) {
-                    return miu;
+                mode: function (c, mu, sigma) {
+                    return mu;
                 },
             },
         },
@@ -1571,132 +1571,132 @@ const continuousDistributionsMeasurements = {
     },
     gumbel_left: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu - 0.5772156649 * sigma;
+                mean: function (mu, sigma) {
+                    return mu - 0.5772156649 * sigma;
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return sigma ** 2 * (Math.PI ** 2 / 6);
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return (-12 * Math.sqrt(6) * 1.20205690315959) / Math.PI ** 3;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 3 + 12 / 5;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.gumbel_left.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.gumbel_left.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
     },
     gumbel_right: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu + 0.5772156649 * sigma;
+                mean: function (mu, sigma) {
+                    return mu + 0.5772156649 * sigma;
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return sigma ** 2 * (Math.PI ** 2 / 6);
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return (12 * Math.sqrt(6) * 1.20205690315959) / Math.PI ** 3;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 3 + 12 / 5;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.gumbel_right.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.gumbel_right.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
     },
     half_normal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu + sigma * Math.sqrt(2 / Math.PI);
+                mean: function (mu, sigma) {
+                    return mu + sigma * Math.sqrt(2 / Math.PI);
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return sigma * sigma * (1 - 2 / Math.PI);
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return (Math.sqrt(2) * (4 - Math.PI)) / (Math.PI - 2) ** 1.5;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 3 + (8 * (Math.PI - 3)) / (Math.PI - 2) ** 2;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.half_normal.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.half_normal.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
     },
     hyperbolic_secant: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu;
+                mean: function (mu, sigma) {
+                    return mu;
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return sigma ** 2;
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return 0;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 5;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.hyperbolic_secant.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.hyperbolic_secant.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
@@ -1722,10 +1722,10 @@ const continuousDistributionsMeasurements = {
                 return result;
             },
             centralMoments: function (k, alpha, beta) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta);
-                const µ2 = this.nonCentralMoments(2, alpha, beta);
-                const µ3 = this.nonCentralMoments(3, alpha, beta);
-                const µ4 = this.nonCentralMoments(4, alpha, beta);
+                const miu1 = this.nonCentralMoments(1, alpha, beta);
+                const miu2 = this.nonCentralMoments(2, alpha, beta);
+                const miu3 = this.nonCentralMoments(3, alpha, beta);
+                const miu4 = this.nonCentralMoments(4, alpha, beta);
 
                 let result;
                 switch (k) {
@@ -1733,37 +1733,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.inverse_gamma.measurements.nonCentralMoments(1, alpha, beta);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.inverse_gamma.measurements.nonCentralMoments(1, alpha, beta);
+                    return miu1!;
                 },
                 variance: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.inverse_gamma.measurements.nonCentralMoments(1, alpha, beta);
-                    const µ2 = continuousDistributionsMeasurements.inverse_gamma.measurements.nonCentralMoments(2, alpha, beta);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.inverse_gamma.measurements.nonCentralMoments(1, alpha, beta);
+                    const miu2 = continuousDistributionsMeasurements.inverse_gamma.measurements.nonCentralMoments(2, alpha, beta);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta) {
                     return this.variance(alpha, beta) !== undefined ? Math.sqrt(this.variance(alpha, beta)!) : undefined;
                 },
                 skewness: function (alpha, beta) {
-                    const central_µ3 = continuousDistributionsMeasurements.inverse_gamma.measurements.centralMoments(3, alpha, beta);
-                    return central_µ3! / this.standardDeviation(alpha, beta)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.inverse_gamma.measurements.centralMoments(3, alpha, beta);
+                    return central_miu3! / this.standardDeviation(alpha, beta)! ** 3;
                 },
                 kurtosis: function (alpha, beta) {
-                    const central_µ4 = continuousDistributionsMeasurements.inverse_gamma.measurements.centralMoments(4, alpha, beta);
-                    return central_µ4! / this.standardDeviation(alpha, beta) ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.inverse_gamma.measurements.centralMoments(4, alpha, beta);
+                    return central_miu4! / this.standardDeviation(alpha, beta) ** 4;
                 },
                 median: function (alpha, beta) {
                     return continuousDistributions.inverse_gamma.ppf(0.5, alpha, beta);
@@ -1795,10 +1795,10 @@ const continuousDistributionsMeasurements = {
                 return result;
             },
             centralMoments: function (k, alpha, beta, loc) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta, loc);
-                const µ2 = this.nonCentralMoments(2, alpha, beta, loc);
-                const µ3 = this.nonCentralMoments(3, alpha, beta, loc);
-                const µ4 = this.nonCentralMoments(4, alpha, beta, loc);
+                const miu1 = this.nonCentralMoments(1, alpha, beta, loc);
+                const miu2 = this.nonCentralMoments(2, alpha, beta, loc);
+                const miu3 = this.nonCentralMoments(3, alpha, beta, loc);
+                const miu4 = this.nonCentralMoments(4, alpha, beta, loc);
 
                 let result;
                 switch (k) {
@@ -1806,37 +1806,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    return loc + miu1!;
                 },
                 variance: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    const µ2 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    const miu2 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta, loc) {
                     return this.variance(alpha, beta, loc) !== undefined ? Math.sqrt(this.variance(alpha, beta, loc)!) : undefined;
                 },
                 skewness: function (alpha, beta, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.centralMoments(3, alpha, beta, loc);
-                    return central_µ3! / this.standardDeviation(alpha, beta, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.centralMoments(3, alpha, beta, loc);
+                    return central_miu3! / this.standardDeviation(alpha, beta, loc)! ** 3;
                 },
                 kurtosis: function (alpha, beta, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.centralMoments(4, alpha, beta, loc);
-                    return central_µ4! / this.standardDeviation(alpha, beta, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.inverse_gamma_3p.measurements.centralMoments(4, alpha, beta, loc);
+                    return central_miu4! / this.standardDeviation(alpha, beta, loc)! ** 4;
                 },
                 median: function (alpha, beta, loc) {
                     return continuousDistributions.inverse_gamma_3p.ppf(0.5, alpha, beta, loc);
@@ -1849,66 +1849,66 @@ const continuousDistributionsMeasurements = {
     },
     inverse_gaussian: {
         measurements: {
-            nonCentralMoments: function (k, miu, lambda) {
+            nonCentralMoments: function (k, mu, lambda) {
                 return undefined;
             },
-            centralMoments: function (k, miu, lambda) {
+            centralMoments: function (k, mu, lambda) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, lambda) {
-                    return miu;
+                mean: function (mu, lambda) {
+                    return mu;
                 },
-                variance: function (miu, lambda) {
-                    return miu ** 3 / lambda;
+                variance: function (mu, lambda) {
+                    return mu ** 3 / lambda;
                 },
-                standardDeviation: function (miu, lambda) {
-                    return this.variance(miu, lambda) !== undefined ? Math.sqrt(this.variance(miu, lambda)!) : undefined;
+                standardDeviation: function (mu, lambda) {
+                    return this.variance(mu, lambda) !== undefined ? Math.sqrt(this.variance(mu, lambda)!) : undefined;
                 },
-                skewness: function (miu, lambda) {
-                    return 3 * Math.sqrt(miu / lambda);
+                skewness: function (mu, lambda) {
+                    return 3 * Math.sqrt(mu / lambda);
                 },
-                kurtosis: function (miu, lambda) {
-                    return 15 * (miu / lambda) + 3;
+                kurtosis: function (mu, lambda) {
+                    return 15 * (mu / lambda) + 3;
                 },
-                median: function (miu, lambda) {
-                    return continuousDistributions.inverse_gaussian.ppf(0.5, miu, lambda);
+                median: function (mu, lambda) {
+                    return continuousDistributions.inverse_gaussian.ppf(0.5, mu, lambda);
                 },
-                mode: function (miu, lambda) {
-                    return miu * (Math.sqrt(1 + (9 * miu * miu) / (4 * lambda * lambda)) - (3 * miu) / (2 * lambda));
+                mode: function (mu, lambda) {
+                    return mu * (Math.sqrt(1 + (9 * mu * mu) / (4 * lambda * lambda)) - (3 * mu) / (2 * lambda));
                 },
             },
         },
     },
     inverse_gaussian_3p: {
         measurements: {
-            nonCentralMoments: function (k, miu, lambda, loc) {
+            nonCentralMoments: function (k, mu, lambda, loc) {
                 return undefined;
             },
-            centralMoments: function (k, miu, lambda, loc) {
+            centralMoments: function (k, mu, lambda, loc) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, lambda, loc) {
-                    return miu + loc;
+                mean: function (mu, lambda, loc) {
+                    return mu + loc;
                 },
-                variance: function (miu, lambda, loc) {
-                    return miu ** 3 / lambda;
+                variance: function (mu, lambda, loc) {
+                    return mu ** 3 / lambda;
                 },
-                standardDeviation: function (miu, lambda, loc) {
-                    return this.variance(miu, lambda, loc) !== undefined ? Math.sqrt(this.variance(miu, lambda, loc)!) : undefined;
+                standardDeviation: function (mu, lambda, loc) {
+                    return this.variance(mu, lambda, loc) !== undefined ? Math.sqrt(this.variance(mu, lambda, loc)!) : undefined;
                 },
-                skewness: function (miu, lambda, loc) {
-                    return 3 * Math.sqrt(miu / lambda);
+                skewness: function (mu, lambda, loc) {
+                    return 3 * Math.sqrt(mu / lambda);
                 },
-                kurtosis: function (miu, lambda, loc) {
-                    return 15 * (miu / lambda) + 3;
+                kurtosis: function (mu, lambda, loc) {
+                    return 15 * (mu / lambda) + 3;
                 },
-                median: function (miu, lambda, loc) {
-                    return continuousDistributions.inverse_gaussian_3p.ppf(0.5, miu, lambda, loc);
+                median: function (mu, lambda, loc) {
+                    return continuousDistributions.inverse_gaussian_3p.ppf(0.5, mu, lambda, loc);
                 },
-                mode: function (miu, lambda, loc) {
-                    return loc + miu * (Math.sqrt(1 + (9 * miu * miu) / (4 * lambda * lambda)) - (3 * miu) / (2 * lambda));
+                mode: function (mu, lambda, loc) {
+                    return loc + mu * (Math.sqrt(1 + (9 * mu * mu) / (4 * lambda * lambda)) - (3 * mu) / (2 * lambda));
                 },
             },
         },
@@ -2002,10 +2002,10 @@ const continuousDistributionsMeasurements = {
                 return (beta * jStat.gammafn(1 + k / alpha) * jStat.gammafn(beta)) / jStat.gammafn(1 + beta + k / alpha);
             },
             centralMoments: function (k, alpha, beta, min, max) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta, min, max);
-                const µ2 = this.nonCentralMoments(2, alpha, beta, min, max);
-                const µ3 = this.nonCentralMoments(3, alpha, beta, min, max);
-                const µ4 = this.nonCentralMoments(4, alpha, beta, min, max);
+                const miu1 = this.nonCentralMoments(1, alpha, beta, min, max);
+                const miu2 = this.nonCentralMoments(2, alpha, beta, min, max);
+                const miu3 = this.nonCentralMoments(3, alpha, beta, min, max);
+                const miu4 = this.nonCentralMoments(4, alpha, beta, min, max);
 
                 let result;
                 switch (k) {
@@ -2013,43 +2013,43 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta, min, max) {
-                    const µ1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
-                    return min + (max - min) * µ1!;
+                    const miu1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
+                    return min + (max - min) * miu1!;
                 },
                 variance: function (alpha, beta, min, max) {
-                    const µ1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
-                    const µ2 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(2, alpha, beta, min, max);
-                    return (max - min) ** 2 * (µ2! - µ1! ** 2);
+                    const miu1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
+                    const miu2 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(2, alpha, beta, min, max);
+                    return (max - min) ** 2 * (miu2! - miu1! ** 2);
                 },
                 standardDeviation: function (alpha, beta, min, max) {
                     return this.variance(alpha, beta, min, max) !== undefined ? Math.sqrt(this.variance(alpha, beta, min, max)!) : undefined;
                 },
                 skewness: function (alpha, beta, min, max) {
-                    const central_µ3 = continuousDistributionsMeasurements.kumaraswamy.measurements.centralMoments(3, alpha, beta, min, max);
-                    const µ1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
-                    const µ2 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(2, alpha, beta, min, max);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ3! / std ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.kumaraswamy.measurements.centralMoments(3, alpha, beta, min, max);
+                    const miu1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
+                    const miu2 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(2, alpha, beta, min, max);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu3! / std ** 3;
                 },
                 kurtosis: function (alpha, beta, min, max) {
-                    const central_µ4 = continuousDistributionsMeasurements.kumaraswamy.measurements.centralMoments(4, alpha, beta, min, max);
-                    const µ1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
-                    const µ2 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(2, alpha, beta, min, max);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ4! / std ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.kumaraswamy.measurements.centralMoments(4, alpha, beta, min, max);
+                    const miu1 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(1, alpha, beta, min, max);
+                    const miu2 = continuousDistributionsMeasurements.kumaraswamy.measurements.nonCentralMoments(2, alpha, beta, min, max);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu4! / std ** 4;
                 },
                 median: function (alpha, beta, min, max) {
                     return continuousDistributions.kumaraswamy.ppf(0.5, alpha, beta, min, max);
@@ -2062,132 +2062,132 @@ const continuousDistributionsMeasurements = {
     },
     laplace: {
         measurements: {
-            nonCentralMoments: function (k, miu, b) {
+            nonCentralMoments: function (k, mu, b) {
                 return undefined;
             },
-            centralMoments: function (k, miu, b) {
+            centralMoments: function (k, mu, b) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, b) {
-                    return miu;
+                mean: function (mu, b) {
+                    return mu;
                 },
-                variance: function (miu, b) {
+                variance: function (mu, b) {
                     return 2 * b ** 2;
                 },
-                standardDeviation: function (miu, b) {
-                    return this.variance(miu, b) !== undefined ? Math.sqrt(this.variance(miu, b)!) : undefined;
+                standardDeviation: function (mu, b) {
+                    return this.variance(mu, b) !== undefined ? Math.sqrt(this.variance(mu, b)!) : undefined;
                 },
-                skewness: function (miu, b) {
+                skewness: function (mu, b) {
                     return 0;
                 },
-                kurtosis: function (miu, b) {
+                kurtosis: function (mu, b) {
                     return 6;
                 },
-                median: function (miu, b) {
-                    return continuousDistributions.laplace.ppf(0.5, miu, b);
+                median: function (mu, b) {
+                    return continuousDistributions.laplace.ppf(0.5, mu, b);
                 },
-                mode: function (miu, b) {
-                    return miu;
+                mode: function (mu, b) {
+                    return mu;
                 },
             },
         },
     },
     levy: {
         measurements: {
-            nonCentralMoments: function (k, miu, c) {
+            nonCentralMoments: function (k, mu, c) {
                 return undefined;
             },
-            centralMoments: function (k, miu, c) {
+            centralMoments: function (k, mu, c) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, c) {
+                mean: function (mu, c) {
                     return Infinity;
                 },
-                variance: function (miu, c) {
+                variance: function (mu, c) {
                     return Infinity;
                 },
-                standardDeviation: function (miu, c) {
-                    return this.variance(miu, c) !== undefined ? Math.sqrt(this.variance(miu, c)!) : undefined;
+                standardDeviation: function (mu, c) {
+                    return this.variance(mu, c) !== undefined ? Math.sqrt(this.variance(mu, c)!) : undefined;
                 },
-                skewness: function (miu, c) {
+                skewness: function (mu, c) {
                     return undefined;
                 },
-                kurtosis: function (miu, c) {
+                kurtosis: function (mu, c) {
                     return undefined;
                 },
-                median: function (miu, c) {
-                    return continuousDistributions.levy.ppf(0.5, miu, c);
+                median: function (mu, c) {
+                    return continuousDistributions.levy.ppf(0.5, mu, c);
                 },
-                mode: function (miu, c) {
-                    return miu + c / 3;
+                mode: function (mu, c) {
+                    return mu + c / 3;
                 },
             },
         },
     },
     loggamma: {
         measurements: {
-            nonCentralMoments: function (k, c, miu, sigma) {
+            nonCentralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, c, miu, sigma) {
+            centralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (c, miu, sigma) {
-                    return digamma(c) * sigma + miu;
+                mean: function (c, mu, sigma) {
+                    return digamma(c) * sigma + mu;
                 },
-                variance: function (c, miu, sigma) {
+                variance: function (c, mu, sigma) {
                     return polygamma(1, c) * sigma * sigma;
                 },
-                standardDeviation: function (c, miu, sigma) {
-                    return this.variance(c, miu, sigma) !== undefined ? Math.sqrt(this.variance(c, miu, sigma)!) : undefined;
+                standardDeviation: function (c, mu, sigma) {
+                    return this.variance(c, mu, sigma) !== undefined ? Math.sqrt(this.variance(c, mu, sigma)!) : undefined;
                 },
-                skewness: function (c, miu, sigma) {
+                skewness: function (c, mu, sigma) {
                     return polygamma(2, c) / polygamma(1, c) ** 1.5;
                 },
-                kurtosis: function (c, miu, sigma) {
+                kurtosis: function (c, mu, sigma) {
                     return polygamma(3, c) / polygamma(1, c) ** 2 + 3;
                 },
-                median: function (c, miu, sigma) {
-                    return continuousDistributions.loggamma.ppf(0.5, c, miu, sigma);
+                median: function (c, mu, sigma) {
+                    return continuousDistributions.loggamma.ppf(0.5, c, mu, sigma);
                 },
-                mode: function (c, miu, sigma) {
-                    return miu + sigma * Math.log(c);
+                mode: function (c, mu, sigma) {
+                    return mu + sigma * Math.log(c);
                 },
             },
         },
     },
     logistic: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu;
+                mean: function (mu, sigma) {
+                    return mu;
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return (sigma * sigma * Math.PI * Math.PI) / 3;
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return 0;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 4.2;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.logistic.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.logistic.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
@@ -2198,10 +2198,10 @@ const continuousDistributionsMeasurements = {
                 return (alpha ** k * ((k * Math.PI) / beta)) / Math.sin((k * Math.PI) / beta);
             },
             centralMoments: function (k, alpha, beta) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta);
-                const µ2 = this.nonCentralMoments(2, alpha, beta);
-                const µ3 = this.nonCentralMoments(3, alpha, beta);
-                const µ4 = this.nonCentralMoments(4, alpha, beta);
+                const miu1 = this.nonCentralMoments(1, alpha, beta);
+                const miu2 = this.nonCentralMoments(2, alpha, beta);
+                const miu3 = this.nonCentralMoments(3, alpha, beta);
+                const miu4 = this.nonCentralMoments(4, alpha, beta);
 
                 let result;
                 switch (k) {
@@ -2209,37 +2209,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.loglogistic.measurements.nonCentralMoments(1, alpha, beta);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.loglogistic.measurements.nonCentralMoments(1, alpha, beta);
+                    return miu1!;
                 },
                 variance: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.loglogistic.measurements.nonCentralMoments(1, alpha, beta);
-                    const µ2 = continuousDistributionsMeasurements.loglogistic.measurements.nonCentralMoments(2, alpha, beta);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.loglogistic.measurements.nonCentralMoments(1, alpha, beta);
+                    const miu2 = continuousDistributionsMeasurements.loglogistic.measurements.nonCentralMoments(2, alpha, beta);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta) {
                     return this.variance(alpha, beta) !== undefined ? Math.sqrt(this.variance(alpha, beta)!) : undefined;
                 },
                 skewness: function (alpha, beta) {
-                    const central_µ3 = continuousDistributionsMeasurements.loglogistic.measurements.centralMoments(3, alpha, beta);
-                    return central_µ3! / this.standardDeviation(alpha, beta)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.loglogistic.measurements.centralMoments(3, alpha, beta);
+                    return central_miu3! / this.standardDeviation(alpha, beta)! ** 3;
                 },
                 kurtosis: function (alpha, beta) {
-                    const central_µ4 = continuousDistributionsMeasurements.loglogistic.measurements.centralMoments(4, alpha, beta);
-                    return central_µ4! / this.standardDeviation(alpha, beta)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.loglogistic.measurements.centralMoments(4, alpha, beta);
+                    return central_miu4! / this.standardDeviation(alpha, beta)! ** 4;
                 },
                 median: function (alpha, beta) {
                     return continuousDistributions.loglogistic.ppf(0.5, alpha, beta);
@@ -2256,10 +2256,10 @@ const continuousDistributionsMeasurements = {
                 return (alpha ** k * ((k * Math.PI) / beta)) / Math.sin((k * Math.PI) / beta);
             },
             centralMoments: function (k, alpha, beta, loc) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta, loc);
-                const µ2 = this.nonCentralMoments(2, alpha, beta, loc);
-                const µ3 = this.nonCentralMoments(3, alpha, beta, loc);
-                const µ4 = this.nonCentralMoments(4, alpha, beta, loc);
+                const miu1 = this.nonCentralMoments(1, alpha, beta, loc);
+                const miu2 = this.nonCentralMoments(2, alpha, beta, loc);
+                const miu3 = this.nonCentralMoments(3, alpha, beta, loc);
+                const miu4 = this.nonCentralMoments(4, alpha, beta, loc);
 
                 let result;
                 switch (k) {
@@ -2267,37 +2267,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.loglogistic_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.loglogistic_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    return loc + miu1!;
                 },
                 variance: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.loglogistic_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    const µ2 = continuousDistributionsMeasurements.loglogistic_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.loglogistic_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    const miu2 = continuousDistributionsMeasurements.loglogistic_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta, loc) {
                     return this.variance(alpha, beta, loc) !== undefined ? Math.sqrt(this.variance(alpha, beta, loc)!) : undefined;
                 },
                 skewness: function (alpha, beta, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.loglogistic_3p.measurements.centralMoments(3, alpha, beta, loc);
-                    return central_µ3! / this.standardDeviation(alpha, beta, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.loglogistic_3p.measurements.centralMoments(3, alpha, beta, loc);
+                    return central_miu3! / this.standardDeviation(alpha, beta, loc)! ** 3;
                 },
                 kurtosis: function (alpha, beta, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.loglogistic_3p.measurements.centralMoments(4, alpha, beta, loc);
-                    return central_µ4! / this.standardDeviation(alpha, beta, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.loglogistic_3p.measurements.centralMoments(4, alpha, beta, loc);
+                    return central_miu4! / this.standardDeviation(alpha, beta, loc)! ** 4;
                 },
                 median: function (alpha, beta, loc) {
                     return continuousDistributions.loglogistic_3p.ppf(0.5, alpha, beta, loc);
@@ -2310,33 +2310,33 @@ const continuousDistributionsMeasurements = {
     },
     lognormal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return Math.exp(miu + sigma ** 2 / 2);
+                mean: function (mu, sigma) {
+                    return Math.exp(mu + sigma ** 2 / 2);
                 },
-                variance: function (miu, sigma) {
-                    return (Math.exp(sigma ** 2) - 1) * Math.exp(2 * miu + sigma ** 2);
+                variance: function (mu, sigma) {
+                    return (Math.exp(sigma ** 2) - 1) * Math.exp(2 * mu + sigma ** 2);
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return (Math.exp(sigma * sigma) + 2) * Math.sqrt(Math.exp(sigma * sigma) - 1);
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return Math.exp(4 * sigma * sigma) + 2 * Math.exp(3 * sigma * sigma) + 3 * Math.exp(2 * sigma * sigma) - 3;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.lognormal.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.lognormal.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return Math.exp(miu - sigma * sigma);
+                mode: function (mu, sigma) {
+                    return Math.exp(mu - sigma * sigma);
                 },
             },
         },
@@ -2376,33 +2376,33 @@ const continuousDistributionsMeasurements = {
     },
     moyal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu + sigma * (Math.log(2) + 0.577215664901532);
+                mean: function (mu, sigma) {
+                    return mu + sigma * (Math.log(2) + 0.577215664901532);
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return (sigma * sigma * Math.PI * Math.PI) / 2;
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return 1.5351415907229;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 7;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.moyal.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.moyal.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
@@ -2509,10 +2509,10 @@ const continuousDistributionsMeasurements = {
                 return result;
             },
             centralMoments: function (k, lambda, n1, n2) {
-                const µ1 = this.nonCentralMoments(1, lambda, n1, n2);
-                const µ2 = this.nonCentralMoments(2, lambda, n1, n2);
-                const µ3 = this.nonCentralMoments(3, lambda, n1, n2);
-                const µ4 = this.nonCentralMoments(4, lambda, n1, n2);
+                const miu1 = this.nonCentralMoments(1, lambda, n1, n2);
+                const miu2 = this.nonCentralMoments(2, lambda, n1, n2);
+                const miu3 = this.nonCentralMoments(3, lambda, n1, n2);
+                const miu4 = this.nonCentralMoments(4, lambda, n1, n2);
 
                 let result;
                 switch (k) {
@@ -2520,37 +2520,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (lambda, n1, n2) {
-                    const µ1 = continuousDistributionsMeasurements.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
+                    return miu1!;
                 },
                 variance: function (lambda, n1, n2) {
-                    const µ1 = continuousDistributionsMeasurements.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
-                    const µ2 = continuousDistributionsMeasurements.nc_f.measurements.nonCentralMoments(2, lambda, n1, n2);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
+                    const miu2 = continuousDistributionsMeasurements.nc_f.measurements.nonCentralMoments(2, lambda, n1, n2);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (lambda, n1, n2) {
                     return this.variance(lambda, n1, n2) !== undefined ? Math.sqrt(this.variance(lambda, n1, n2)!) : undefined;
                 },
                 skewness: function (lambda, n1, n2) {
-                    const central_µ3 = continuousDistributionsMeasurements.nc_f.measurements.centralMoments(3, lambda, n1, n2);
-                    return central_µ3! / this.standardDeviation(lambda, n1, n2)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.nc_f.measurements.centralMoments(3, lambda, n1, n2);
+                    return central_miu3! / this.standardDeviation(lambda, n1, n2)! ** 3;
                 },
                 kurtosis: function (lambda, n1, n2) {
-                    const central_µ4 = continuousDistributionsMeasurements.nc_f.measurements.centralMoments(4, lambda, n1, n2);
-                    return central_µ4! / this.standardDeviation(lambda, n1, n2)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.nc_f.measurements.centralMoments(4, lambda, n1, n2);
+                    return central_miu4! / this.standardDeviation(lambda, n1, n2)! ** 4;
                 },
                 median: function (lambda, n1, n2) {
                     return continuousdistributions.non_central_f.ppf(0.5, lambda, n1, n2);
@@ -2582,10 +2582,10 @@ const continuousDistributionsMeasurements = {
                 return result;
             },
             centralMoments: function (k, lambda, n, loc, scale) {
-                const µ1 = this.nonCentralMoments(1, lambda, n, loc, scale);
-                const µ2 = this.nonCentralMoments(2, lambda, n, loc, scale);
-                const µ3 = this.nonCentralMoments(3, lambda, n, loc, scale);
-                const µ4 = this.nonCentralMoments(4, lambda, n, loc, scale);
+                const miu1 = this.nonCentralMoments(1, lambda, n, loc, scale);
+                const miu2 = this.nonCentralMoments(2, lambda, n, loc, scale);
+                const miu3 = this.nonCentralMoments(3, lambda, n, loc, scale);
+                const miu4 = this.nonCentralMoments(4, lambda, n, loc, scale);
 
                 let result;
                 switch (k) {
@@ -2593,43 +2593,43 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    return loc + scale * µ1!;
+                    const miu1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    return loc + scale * miu1!;
                 },
                 variance: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    return scale ** 2 * (µ2! - µ1! ** 2);
+                    const miu1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    return scale ** 2 * (miu2! - miu1! ** 2);
                 },
                 standardDeviation: function (lambda, n, loc, scale) {
                     return this.variance(lambda, n, loc, scale) !== undefined ? Math.sqrt(this.variance(lambda, n, loc, scale)!) : undefined;
                 },
                 skewness: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ3 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.centralMoments(3, lambda, n, loc, scale);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ3! / std ** 3;
+                    const miu1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_miu3 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.centralMoments(3, lambda, n, loc, scale);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu3! / std ** 3;
                 },
                 kurtosis: function (lambda, n, loc, scale) {
-                    const µ1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
-                    const µ2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
-                    const central_µ4 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.centralMoments(4, lambda, n, loc, scale);
-                    const std = Math.sqrt(µ2! - µ1! ** 2);
-                    return central_µ4! / std ** 4;
+                    const miu1 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(1, lambda, n, loc, scale);
+                    const miu2 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.nonCentralMoments(2, lambda, n, loc, scale);
+                    const central_miu4 = continuousDistributionsMeasurements.NON_CENTRAL_T_STUDENT.measurements.centralMoments(4, lambda, n, loc, scale);
+                    const std = Math.sqrt(miu2! - miu1! ** 2);
+                    return central_miu4! / std ** 4;
                 },
                 median: function (lambda, n, loc, scale) {
                     return continuousdistributions.non_central_t_student.ppf(0.5, lambda, n, loc, scale);
@@ -2642,33 +2642,33 @@ const continuousDistributionsMeasurements = {
     },
     normal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu;
+                mean: function (mu, sigma) {
+                    return mu;
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return sigma * 3;
                 },
-                standardDeviation: function (miu, sigma) {
-                    return this.variance(miu, sigma) !== undefined ? Math.sqrt(this.variance(miu, sigma)!) : undefined;
+                standardDeviation: function (mu, sigma) {
+                    return this.variance(mu, sigma) !== undefined ? Math.sqrt(this.variance(mu, sigma)!) : undefined;
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return 0;
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 3;
                 },
-                median: function (miu, sigma) {
-                    return continuousDistributions.normal.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return continuousDistributions.normal.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         },
@@ -2679,10 +2679,10 @@ const continuousDistributionsMeasurements = {
                 return (alpha * xm ** k) / (alpha - k);
             },
             centralMoments: function (k, xm, alpha, loc) {
-                const µ1 = this.nonCentralMoments(1, xm, alpha, loc);
-                const µ2 = this.nonCentralMoments(2, xm, alpha, loc);
-                const µ3 = this.nonCentralMoments(3, xm, alpha, loc);
-                const µ4 = this.nonCentralMoments(4, xm, alpha, loc);
+                const miu1 = this.nonCentralMoments(1, xm, alpha, loc);
+                const miu2 = this.nonCentralMoments(2, xm, alpha, loc);
+                const miu3 = this.nonCentralMoments(3, xm, alpha, loc);
+                const miu4 = this.nonCentralMoments(4, xm, alpha, loc);
 
                 let result;
                 switch (k) {
@@ -2690,37 +2690,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (xm, alpha, loc) {
-                    const µ1 = continuousDistributionsMeasurements.pareto_first_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.pareto_first_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
+                    return loc + miu1!;
                 },
                 variance: function (xm, alpha, loc) {
-                    const µ1 = continuousDistributionsMeasurements.pareto_first_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
-                    const µ2 = continuousDistributionsMeasurements.pareto_first_kind.measurements.nonCentralMoments(2, xm, alpha, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.pareto_first_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
+                    const miu2 = continuousDistributionsMeasurements.pareto_first_kind.measurements.nonCentralMoments(2, xm, alpha, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (xm, alpha, loc) {
                     return this.variance(xm, alpha, loc) !== undefined ? Math.sqrt(this.variance(xm, alpha, loc)!) : undefined;
                 },
                 skewness: function (xm, alpha, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.pareto_first_kind.measurements.centralMoments(3, xm, alpha, loc);
-                    return central_µ3! / this.standardDeviation(xm, alpha, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.pareto_first_kind.measurements.centralMoments(3, xm, alpha, loc);
+                    return central_miu3! / this.standardDeviation(xm, alpha, loc)! ** 3;
                 },
                 kurtosis: function (xm, alpha, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.pareto_first_kind.measurements.centralMoments(4, xm, alpha, loc);
-                    return central_µ4! / this.standardDeviation(xm, alpha, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.pareto_first_kind.measurements.centralMoments(4, xm, alpha, loc);
+                    return central_miu4! / this.standardDeviation(xm, alpha, loc)! ** 4;
                 },
                 median: function (xm, alpha, loc) {
                     return continuousDistributions.pareto_first_kind.ppf(0.5, xm, alpha, loc);
@@ -2737,10 +2737,10 @@ const continuousDistributionsMeasurements = {
                 return (xm ** k * jStat.gammafn(alpha - k) * jStat.gammafn(1 + k)) / jStat.gammafn(alpha);
             },
             centralMoments: function (k, xm, alpha, loc) {
-                const µ1 = this.nonCentralMoments(1, xm, alpha, loc);
-                const µ2 = this.nonCentralMoments(2, xm, alpha, loc);
-                const µ3 = this.nonCentralMoments(3, xm, alpha, loc);
-                const µ4 = this.nonCentralMoments(4, xm, alpha, loc);
+                const miu1 = this.nonCentralMoments(1, xm, alpha, loc);
+                const miu2 = this.nonCentralMoments(2, xm, alpha, loc);
+                const miu3 = this.nonCentralMoments(3, xm, alpha, loc);
+                const miu4 = this.nonCentralMoments(4, xm, alpha, loc);
 
                 let result;
                 switch (k) {
@@ -2748,37 +2748,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (xm, alpha, loc) {
-                    const µ1 = continuousDistributionsMeasurements.pareto_second_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.pareto_second_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
+                    return loc + miu1!;
                 },
                 variance: function (xm, alpha, loc) {
-                    const µ1 = continuousDistributionsMeasurements.pareto_second_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
-                    const µ2 = continuousDistributionsMeasurements.pareto_second_kind.measurements.nonCentralMoments(2, xm, alpha, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.pareto_second_kind.measurements.nonCentralMoments(1, xm, alpha, loc);
+                    const miu2 = continuousDistributionsMeasurements.pareto_second_kind.measurements.nonCentralMoments(2, xm, alpha, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (xm, alpha, loc) {
                     return this.variance(xm, alpha, loc) !== undefined ? Math.sqrt(this.variance(xm, alpha, loc)!) : undefined;
                 },
                 skewness: function (xm, alpha, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.pareto_second_kind.measurements.centralMoments(3, xm, alpha, loc);
-                    return central_µ3! / this.standardDeviation(xm, alpha, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.pareto_second_kind.measurements.centralMoments(3, xm, alpha, loc);
+                    return central_miu3! / this.standardDeviation(xm, alpha, loc)! ** 3;
                 },
                 kurtosis: function (xm, alpha, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.pareto_second_kind.measurements.centralMoments(4, xm, alpha, loc);
-                    return central_µ4! / this.standardDeviation(xm, alpha, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.pareto_second_kind.measurements.centralMoments(4, xm, alpha, loc);
+                    return central_miu4! / this.standardDeviation(xm, alpha, loc)! ** 4;
                 },
                 median: function (xm, alpha, loc) {
                     return continuousDistributions.pareto_second_kind.ppf(0.5, xm, alpha, loc);
@@ -2808,14 +2808,14 @@ const continuousDistributionsMeasurements = {
                     return this.variance(a, b, c) !== undefined ? Math.sqrt(this.variance(a, b, c)!) : undefined;
                 },
                 skewness: function (a, b, c) {
-                    const α1 = (4 * b + c - 5 * a) / (c - a);
-                    const α2 = (5 * c - a - 4 * b) / (c - a);
-                    return (2 * (α2 - α1) * Math.sqrt(α1 + α2 + 1)) / ((α1 + α2 + 2) * Math.sqrt(α1 * α2));
+                    const alpha1 = (4 * b + c - 5 * a) / (c - a);
+                    const alpha2 = (5 * c - a - 4 * b) / (c - a);
+                    return (2 * (alpha2 - alpha1) * Math.sqrt(alpha1 + alpha2 + 1)) / ((alpha1 + alpha2 + 2) * Math.sqrt(alpha1 * alpha2));
                 },
                 kurtosis: function (a, b, c) {
-                    const α1 = (4 * b + c - 5 * a) / (c - a);
-                    const α2 = (5 * c - a - 4 * b) / (c - a);
-                    return (6 * ((α2 - α1) ** 2 * (α1 + α2 + 1) - α1 * α2 * (α1 + α2 + 2))) / (α1 * α2 * (α1 + α2 + 2) * (α1 + α2 + 3)) + 3;
+                    const alpha1 = (4 * b + c - 5 * a) / (c - a);
+                    const alpha2 = (5 * c - a - 4 * b) / (c - a);
+                    return (6 * ((alpha2 - alpha1) ** 2 * (alpha1 + alpha2 + 1) - alpha1 * alpha2 * (alpha1 + alpha2 + 2))) / (alpha1 * alpha2 * (alpha1 + alpha2 + 2) * (alpha1 + alpha2 + 3)) + 3;
                 },
                 median: function (a, b, c) {
                     return continuousDistributions.pert.ppf(0.5, a, b, c);
@@ -2855,10 +2855,10 @@ const continuousDistributionsMeasurements = {
                 return result;
             },
             centralMoments: function (k, alpha, a, b) {
-                const µ1 = this.nonCentralMoments(1, alpha, a, b);
-                const µ2 = this.nonCentralMoments(2, alpha, a, b);
-                const µ3 = this.nonCentralMoments(3, alpha, a, b);
-                const µ4 = this.nonCentralMoments(4, alpha, a, b);
+                const miu1 = this.nonCentralMoments(1, alpha, a, b);
+                const miu2 = this.nonCentralMoments(2, alpha, a, b);
+                const miu3 = this.nonCentralMoments(3, alpha, a, b);
+                const miu4 = this.nonCentralMoments(4, alpha, a, b);
 
                 let result;
                 switch (k) {
@@ -2866,37 +2866,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, a, b) {
-                    const µ1 = continuousDistributionsMeasurements.power_function.measurements.nonCentralMoments(1, alpha, a, b);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.power_function.measurements.nonCentralMoments(1, alpha, a, b);
+                    return miu1!;
                 },
                 variance: function (alpha, a, b) {
-                    const µ1 = continuousDistributionsMeasurements.power_function.measurements.nonCentralMoments(1, alpha, a, b);
-                    const µ2 = continuousDistributionsMeasurements.power_function.measurements.nonCentralMoments(2, alpha, a, b);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.power_function.measurements.nonCentralMoments(1, alpha, a, b);
+                    const miu2 = continuousDistributionsMeasurements.power_function.measurements.nonCentralMoments(2, alpha, a, b);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, a, b) {
                     return this.variance(alpha, a, b) !== undefined ? Math.sqrt(this.variance(alpha, a, b)!) : undefined;
                 },
                 skewness: function (alpha, a, b) {
-                    const central_µ3 = continuousDistributionsMeasurements.power_function.measurements.centralMoments(3, alpha, a, b);
-                    return central_µ3! / this.standardDeviation(alpha, a, b)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.power_function.measurements.centralMoments(3, alpha, a, b);
+                    return central_miu3! / this.standardDeviation(alpha, a, b)! ** 3;
                 },
                 kurtosis: function (alpha, a, b) {
-                    const central_µ4 = continuousDistributionsMeasurements.power_function.measurements.centralMoments(4, alpha, a, b);
-                    return central_µ4! / this.standardDeviation(alpha, a, b)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.power_function.measurements.centralMoments(4, alpha, a, b);
+                    return central_miu4! / this.standardDeviation(alpha, a, b)! ** 4;
                 },
                 median: function (alpha, a, b) {
                     return continuousDistributions.power_function.ppf(0.5, alpha, a, b);
@@ -2946,10 +2946,10 @@ const continuousDistributionsMeasurements = {
                 return (b ** k - a ** k) / (k * (Math.log(b) - Math.log(a)));
             },
             centralMoments: function (k, a, b) {
-                const µ1 = this.nonCentralMoments(1, a, b);
-                const µ2 = this.nonCentralMoments(2, a, b);
-                const µ3 = this.nonCentralMoments(3, a, b);
-                const µ4 = this.nonCentralMoments(4, a, b);
+                const miu1 = this.nonCentralMoments(1, a, b);
+                const miu2 = this.nonCentralMoments(2, a, b);
+                const miu3 = this.nonCentralMoments(3, a, b);
+                const miu4 = this.nonCentralMoments(4, a, b);
 
                 let result;
                 switch (k) {
@@ -2957,37 +2957,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (a, b) {
-                    const µ1 = continuousDistributionsMeasurements.reciprocal.measurements.nonCentralMoments(1, a, b);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.reciprocal.measurements.nonCentralMoments(1, a, b);
+                    return miu1!;
                 },
                 variance: function (a, b) {
-                    const µ1 = continuousDistributionsMeasurements.reciprocal.measurements.nonCentralMoments(1, a, b);
-                    const µ2 = continuousDistributionsMeasurements.reciprocal.measurements.nonCentralMoments(2, a, b);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.reciprocal.measurements.nonCentralMoments(1, a, b);
+                    const miu2 = continuousDistributionsMeasurements.reciprocal.measurements.nonCentralMoments(2, a, b);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (a, b) {
                     return this.variance(a, b) !== undefined ? Math.sqrt(this.variance(a, b)!) : undefined;
                 },
                 skewness: function (a, b) {
-                    const central_µ3 = continuousDistributionsMeasurements.reciprocal.measurements.centralMoments(3, a, b);
-                    return central_µ3! / this.standardDeviation(a, b)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.reciprocal.measurements.centralMoments(3, a, b);
+                    return central_miu3! / this.standardDeviation(a, b)! ** 3;
                 },
                 kurtosis: function (a, b) {
-                    const central_µ4 = continuousDistributionsMeasurements.reciprocal.measurements.centralMoments(4, a, b);
-                    return central_µ4! / this.standardDeviation(a, b)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.reciprocal.measurements.centralMoments(4, a, b);
+                    return central_miu4! / this.standardDeviation(a, b)! ** 4;
                 },
                 median: function (a, b) {
                     return continuousDistributions.reciprocal.ppf(0.5, a, b);
@@ -3031,10 +3031,10 @@ const continuousDistributionsMeasurements = {
                 return result;
             },
             centralMoments: function (k, v, sigma) {
-                const µ1 = this.nonCentralMoments(1, v, sigma);
-                const µ2 = this.nonCentralMoments(2, v, sigma);
-                const µ3 = this.nonCentralMoments(3, v, sigma);
-                const µ4 = this.nonCentralMoments(4, v, sigma);
+                const miu1 = this.nonCentralMoments(1, v, sigma);
+                const miu2 = this.nonCentralMoments(2, v, sigma);
+                const miu3 = this.nonCentralMoments(3, v, sigma);
+                const miu4 = this.nonCentralMoments(4, v, sigma);
 
                 let result;
                 switch (k) {
@@ -3042,37 +3042,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (v, sigma) {
-                    const µ1 = continuousDistributionsMeasurements.rice.measurements.nonCentralMoments(1, v, sigma);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.rice.measurements.nonCentralMoments(1, v, sigma);
+                    return miu1!;
                 },
                 variance: function (v, sigma) {
-                    const µ1 = continuousDistributionsMeasurements.rice.measurements.nonCentralMoments(1, v, sigma);
-                    const µ2 = continuousDistributionsMeasurements.rice.measurements.nonCentralMoments(2, v, sigma);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.rice.measurements.nonCentralMoments(1, v, sigma);
+                    const miu2 = continuousDistributionsMeasurements.rice.measurements.nonCentralMoments(2, v, sigma);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (v, sigma) {
                     return this.variance(v, sigma) !== undefined ? Math.sqrt(this.variance(v, sigma)!) : undefined;
                 },
                 skewness: function (v, sigma) {
-                    const central_µ3 = continuousDistributionsMeasurements.rice.measurements.centralMoments(3, v, sigma);
-                    return central_µ3! / this.standardDeviation(v, sigma)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.rice.measurements.centralMoments(3, v, sigma);
+                    return central_miu3! / this.standardDeviation(v, sigma)! ** 3;
                 },
                 kurtosis: function (v, sigma) {
-                    const central_µ4 = continuousDistributionsMeasurements.rice.measurements.centralMoments(4, v, sigma);
-                    return central_µ4! / this.standardDeviation(v, sigma)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.rice.measurements.centralMoments(4, v, sigma);
+                    return central_miu4! / this.standardDeviation(v, sigma)! ** 4;
                 },
                 median: function (v, sigma) {
                     return continuousDistributions.rice.ppf(0.5, v, sigma);
@@ -3122,10 +3122,10 @@ const continuousDistributionsMeasurements = {
                 return (2 / (d + c - b - a)) * (1 / ((k + 1) * (k + 2))) * ((d ** (k + 2) - c ** (k + 2)) / (d - c) - (b ** (k + 2) - a ** (k + 2)) / (b - a));
             },
             centralMoments: function (k, a, b, c, d) {
-                const µ1 = this.nonCentralMoments(1, a, b, c, d);
-                const µ2 = this.nonCentralMoments(2, a, b, c, d);
-                const µ3 = this.nonCentralMoments(3, a, b, c, d);
-                const µ4 = this.nonCentralMoments(4, a, b, c, d);
+                const miu1 = this.nonCentralMoments(1, a, b, c, d);
+                const miu2 = this.nonCentralMoments(2, a, b, c, d);
+                const miu3 = this.nonCentralMoments(3, a, b, c, d);
+                const miu4 = this.nonCentralMoments(4, a, b, c, d);
 
                 let result;
                 switch (k) {
@@ -3133,37 +3133,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (a, b, c, d) {
-                    const µ1 = continuousDistributionsMeasurements.trapezoidal.measurements.nonCentralMoments(1, a, b, c, d);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.trapezoidal.measurements.nonCentralMoments(1, a, b, c, d);
+                    return miu1!;
                 },
                 variance: function (a, b, c, d) {
-                    const µ1 = continuousDistributionsMeasurements.trapezoidal.measurements.nonCentralMoments(1, a, b, c, d);
-                    const µ2 = continuousDistributionsMeasurements.trapezoidal.measurements.nonCentralMoments(2, a, b, c, d);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.trapezoidal.measurements.nonCentralMoments(1, a, b, c, d);
+                    const miu2 = continuousDistributionsMeasurements.trapezoidal.measurements.nonCentralMoments(2, a, b, c, d);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (a, b, c, d) {
                     return this.variance(a, b, c, d) !== undefined ? Math.sqrt(this.variance(a, b, c, d)!) : undefined;
                 },
                 skewness: function (a, b, c, d) {
-                    const central_µ3 = continuousDistributionsMeasurements.trapezoidal.measurements.centralMoments(3, a, b, c, d);
-                    return central_µ3! / this.standardDeviation(a, b, c, d)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.trapezoidal.measurements.centralMoments(3, a, b, c, d);
+                    return central_miu3! / this.standardDeviation(a, b, c, d)! ** 3;
                 },
                 kurtosis: function (a, b, c, d) {
-                    const central_µ4 = continuousDistributionsMeasurements.trapezoidal.measurements.centralMoments(4, a, b, c, d);
-                    return central_µ4! / this.standardDeviation(a, b, c, d)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.trapezoidal.measurements.centralMoments(4, a, b, c, d);
+                    return central_miu4! / this.standardDeviation(a, b, c, d)! ** 4;
                 },
                 median: function (a, b, c, d) {
                     return continuousDistributions.trapezoidal.ppf(0.5, a, b, c, d);
@@ -3312,10 +3312,10 @@ const continuousDistributionsMeasurements = {
                 return beta ** k * jStat.gammafn(1 + k / alpha);
             },
             centralMoments: function (k, alpha, beta) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta);
-                const µ2 = this.nonCentralMoments(2, alpha, beta);
-                const µ3 = this.nonCentralMoments(3, alpha, beta);
-                const µ4 = this.nonCentralMoments(4, alpha, beta);
+                const miu1 = this.nonCentralMoments(1, alpha, beta);
+                const miu2 = this.nonCentralMoments(2, alpha, beta);
+                const miu3 = this.nonCentralMoments(3, alpha, beta);
+                const miu4 = this.nonCentralMoments(4, alpha, beta);
 
                 let result;
                 switch (k) {
@@ -3323,37 +3323,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.weibull.measurements.nonCentralMoments(1, alpha, beta);
-                    return µ1!;
+                    const miu1 = continuousDistributionsMeasurements.weibull.measurements.nonCentralMoments(1, alpha, beta);
+                    return miu1!;
                 },
                 variance: function (alpha, beta) {
-                    const µ1 = continuousDistributionsMeasurements.weibull.measurements.nonCentralMoments(1, alpha, beta);
-                    const µ2 = continuousDistributionsMeasurements.weibull.measurements.nonCentralMoments(2, alpha, beta);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.weibull.measurements.nonCentralMoments(1, alpha, beta);
+                    const miu2 = continuousDistributionsMeasurements.weibull.measurements.nonCentralMoments(2, alpha, beta);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta) {
                     return this.variance(alpha, beta) !== undefined ? Math.sqrt(this.variance(alpha, beta)!) : undefined;
                 },
                 skewness: function (alpha, beta) {
-                    const central_µ3 = continuousDistributionsMeasurements.weibull.measurements.centralMoments(3, alpha, beta);
-                    return central_µ3! / this.standardDeviation(alpha, beta)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.weibull.measurements.centralMoments(3, alpha, beta);
+                    return central_miu3! / this.standardDeviation(alpha, beta)! ** 3;
                 },
                 kurtosis: function (alpha, beta) {
-                    const central_µ4 = continuousDistributionsMeasurements.weibull.measurements.centralMoments(4, alpha, beta);
-                    return central_µ4! / this.standardDeviation(alpha, beta)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.weibull.measurements.centralMoments(4, alpha, beta);
+                    return central_miu4! / this.standardDeviation(alpha, beta)! ** 4;
                 },
                 median: function (alpha, beta) {
                     return continuousDistributions.weibull.ppf(0.5, alpha, beta);
@@ -3370,10 +3370,10 @@ const continuousDistributionsMeasurements = {
                 return beta ** k * jStat.gammafn(1 + k / alpha);
             },
             centralMoments: function (k, alpha, beta, loc) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta, loc);
-                const µ2 = this.nonCentralMoments(2, alpha, beta, loc);
-                const µ3 = this.nonCentralMoments(3, alpha, beta, loc);
-                const µ4 = this.nonCentralMoments(4, alpha, beta, loc);
+                const miu1 = this.nonCentralMoments(1, alpha, beta, loc);
+                const miu2 = this.nonCentralMoments(2, alpha, beta, loc);
+                const miu3 = this.nonCentralMoments(3, alpha, beta, loc);
+                const miu4 = this.nonCentralMoments(4, alpha, beta, loc);
 
                 let result;
                 switch (k) {
@@ -3381,37 +3381,37 @@ const continuousDistributionsMeasurements = {
                         result = 0;
                         break;
                     case 2:
-                        result = µ2! - µ1! ** 2;
+                        result = miu2! - miu1! ** 2;
                         break;
                     case 3:
-                        result = µ3! - 3 * µ1! * µ2! + 2 * µ1! ** 3;
+                        result = miu3! - 3 * miu1! * miu2! + 2 * miu1! ** 3;
                         break;
                     case 4:
-                        result = µ4! - 4 * µ1! * µ3! + 6 * µ1! ** 2 * µ2! - 3 * µ1! ** 4;
+                        result = miu4! - 4 * miu1! * miu3! + 6 * miu1! ** 2 * miu2! - 3 * miu1! ** 4;
                         break;
                 }
                 return result;
             },
             stats: {
                 mean: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.weibull_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    return loc + µ1!;
+                    const miu1 = continuousDistributionsMeasurements.weibull_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    return loc + miu1!;
                 },
                 variance: function (alpha, beta, loc) {
-                    const µ1 = continuousDistributionsMeasurements.weibull_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
-                    const µ2 = continuousDistributionsMeasurements.weibull_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
-                    return µ2! - µ1! ** 2;
+                    const miu1 = continuousDistributionsMeasurements.weibull_3p.measurements.nonCentralMoments(1, alpha, beta, loc);
+                    const miu2 = continuousDistributionsMeasurements.weibull_3p.measurements.nonCentralMoments(2, alpha, beta, loc);
+                    return miu2! - miu1! ** 2;
                 },
                 standardDeviation: function (alpha, beta, loc) {
                     return this.variance(alpha, beta, loc) !== undefined ? Math.sqrt(this.variance(alpha, beta, loc)!) : undefined;
                 },
                 skewness: function (alpha, beta, loc) {
-                    const central_µ3 = continuousDistributionsMeasurements.weibull_3p.measurements.centralMoments(3, alpha, beta, loc);
-                    return central_µ3! / this.standardDeviation(alpha, beta, loc)! ** 3;
+                    const central_miu3 = continuousDistributionsMeasurements.weibull_3p.measurements.centralMoments(3, alpha, beta, loc);
+                    return central_miu3! / this.standardDeviation(alpha, beta, loc)! ** 3;
                 },
                 kurtosis: function (alpha, beta, loc) {
-                    const central_µ4 = continuousDistributionsMeasurements.weibull_3p.measurements.centralMoments(4, alpha, beta, loc);
-                    return central_µ4! / this.standardDeviation(alpha, beta, loc)! ** 4;
+                    const central_miu4 = continuousDistributionsMeasurements.weibull_3p.measurements.centralMoments(4, alpha, beta, loc);
+                    return central_miu4! / this.standardDeviation(alpha, beta, loc)! ** 4;
                 },
                 median: function (alpha, beta, loc) {
                     return continuousDistributions.weibull_3p.ppf(0.5, alpha, beta, loc);

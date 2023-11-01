@@ -57,10 +57,10 @@ class EXPONENTIAL_2P:
             {"lambda":  * }
         """
         ## Method: Solve system
-        λ = (1 - math.log(2)) / (measurements.mean - measurements.median)
+        lambda_ = (1 - math.log(2)) / (measurements.mean - measurements.median)
         # loc = (math.log(2) * measurements.mean - measurements.median) / (math.log(2) - 1)
         loc = measurements.min - 1e-4
-        parameters = {"lambda": λ, "loc": loc}
+        parameters = {"lambda": lambda_, "loc": loc}
         return parameters
 
 

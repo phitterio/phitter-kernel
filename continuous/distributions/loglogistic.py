@@ -62,9 +62,9 @@ class LOGLOGISTIC:
             {"alpha":  * , "beta":  * }
         """
         # def equations(initial_solution, data_mean, data_variance, data_skewness):
-        #     α, β = initial_solution
+        #     alpha, beta = initial_solution
 
-        #     E = lambda r: (α ** r) * (r * math.pi / β) / math.sin(r * math.pi / β)
+        #     E = lambda r: (alpha ** r) * (r * math.pi / beta) / math.sin(r * math.pi / beta)
 
         #     parametric_mean = E(1)
         #     parametric_variance = (E(2) - E(1) ** 2)
@@ -117,9 +117,9 @@ if __name__ == "__main__":
     import time
 
     def equations(initial_solution, data_mean, data_variance, data_skewness):
-        α, β = initial_solution
+        alpha, beta = initial_solution
 
-        E = lambda r: (α**r) * (r * math.pi / β) / math.sin(r * math.pi / β)
+        E = lambda r: (alpha**r) * (r * math.pi / beta) / math.sin(r * math.pi / beta)
 
         parametric_mean = E(1)
         parametric_variance = E(2) - E(1) ** 2

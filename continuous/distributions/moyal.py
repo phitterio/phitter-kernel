@@ -14,7 +14,7 @@ class MOYAL:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -23,8 +23,8 @@ class MOYAL:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: (t - self.miu) / self.sigma
-        # result = result = scipy.stats.moyal.cdf(x, loc = self.miu, scale = self.sigma)
+        z = lambda t: (t - self.mu) / self.sigma
+        # result = result = scipy.stats.moyal.cdf(x, loc = self.mu, scale = self.sigma)
         # result = 1 - sc.gammainc(0.5, math.exp(-z(x)) / 2)
         result = sc.erfc(math.exp(-0.5 * z(x)) / math.sqrt(2))
         return result
@@ -34,8 +34,8 @@ class MOYAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: (t - self.miu) / self.sigma
-        # result = scipy.stats.moyal.pdf(x, loc = self.miu, scale = self.sigma)
+        z = lambda t: (t - self.mu) / self.sigma
+        # result = scipy.stats.moyal.pdf(x, loc = self.mu, scale = self.sigma)
         result = math.exp(-0.5 * (z(x) + math.exp(-z(x)))) / (self.sigma * math.sqrt(2 * math.pi))
         return result
 
@@ -60,20 +60,20 @@ class MOYAL:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "sigma":  * }
+            {"mu":  * , "sigma":  * }
         """
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         #     ## Variables declaration
-        #     μ, σ = initial_solution
+        #     mu, sigma = initial_solution
 
         #     ## Parametric expected expressions
-        #     parametric_mean = μ + σ * (math.log(2) + 0.577215664901532)
-        #     parametric_variance = σ * σ * math.pi * math.pi / 2
+        #     parametric_mean = mu + sigma * (math.log(2) + 0.577215664901532)
+        #     parametric_variance = sigma * sigma * math.pi * math.pi / 2
 
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
@@ -86,10 +86,10 @@ class MOYAL:
         # args = ([measurements])
         # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
 
-        σ = math.sqrt(2 * measurements.variance / (math.pi * math.pi))
-        μ = measurements.mean - σ * (math.log(2) + 0.577215664901532)
+        sigma = math.sqrt(2 * measurements.variance / (math.pi * math.pi))
+        mu = measurements.mean - sigma * (math.log(2) + 0.577215664901532)
 
-        parameters = {"miu": μ, "sigma": σ}
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 

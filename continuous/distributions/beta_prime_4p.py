@@ -73,13 +73,13 @@ class BETA_PRIME_4P:
 
         ## In this distribution solve the system is best than scipy estimation.
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            α, β, scale, loc = initial_solution
+            alpha, beta, scale, loc = initial_solution
 
-            parametric_mean = scale * α / (β - 1) + loc
-            parametric_variance = (scale**2) * α * (α + β - 1) / ((β - 1) ** 2 * (β - 2))
-            # parametric_skewness = 2 * math.sqrt(((β - 2)) / (α * (α + β - 1))) * (((2 * α + β - 1)) / (β - 3))
-            parametric_median = loc + scale * scipy.stats.beta.ppf(0.5, α, β) / (1 - scipy.stats.beta.ppf(0.5, α, β))
-            parametric_mode = scale * (α - 1) / (β + 1) + loc
+            parametric_mean = scale * alpha / (beta - 1) + loc
+            parametric_variance = (scale**2) * alpha * (alpha + beta - 1) / ((beta - 1) ** 2 * (beta - 2))
+            # parametric_skewness = 2 * math.sqrt(((beta - 2)) / (alpha * (alpha + beta - 1))) * (((2 * alpha + beta - 1)) / (beta - 3))
+            parametric_median = loc + scale * scipy.stats.beta.ppf(0.5, alpha, beta) / (1 - scipy.stats.beta.ppf(0.5, alpha, beta))
+            parametric_mode = scale * (alpha - 1) / (beta + 1) + loc
 
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance

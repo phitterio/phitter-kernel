@@ -11,7 +11,7 @@ class INVERSE_GAUSSIAN:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.lambda_ = self.parameters["lambda"]
 
     def cdf(self, x: float) -> float:
@@ -20,9 +20,9 @@ class INVERSE_GAUSSIAN:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # result = scipy.stats.invgauss.cdf(x, self.miu/self.lambda_, scale=self.lambda_)
-        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / x) * ((x / self.miu) - 1)) + math.exp(2 * self.lambda_ / self.miu) * scipy.stats.norm.cdf(
-            -math.sqrt(self.lambda_ / x) * ((x / self.miu) + 1)
+        # result = scipy.stats.invgauss.cdf(x, self.mu/self.lambda_, scale=self.lambda_)
+        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / x) * ((x / self.mu) - 1)) + math.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
+            -math.sqrt(self.lambda_ / x) * ((x / self.mu) + 1)
         )
         return result
 
@@ -31,8 +31,8 @@ class INVERSE_GAUSSIAN:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = scipy.stats.invgauss.pdf(x, self.miu/self.lambda_, scale=self.lambda_)
-        result = math.sqrt(self.lambda_ / (2 * math.pi * x**3)) * math.exp(-(self.lambda_ * (x - self.miu) ** 2) / (2 * self.miu**2 * x))
+        # result = scipy.stats.invgauss.pdf(x, self.mu/self.lambda_, scale=self.lambda_)
+        result = math.sqrt(self.lambda_ / (2 * math.pi * x**3)) * math.exp(-(self.lambda_ * (x - self.mu) ** 2) / (2 * self.mu**2 * x))
         return result
 
     def get_num_parameters(self) -> int:
@@ -45,7 +45,7 @@ class INVERSE_GAUSSIAN:
         """
         Check parameters restrictions
         """
-        v1 = self.miu > 0
+        v1 = self.mu > 0
         v2 = self.lambda_ > 0
         return v1 and v2
 
@@ -57,17 +57,17 @@ class INVERSE_GAUSSIAN:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "lambda":  * }
+            {"mu":  * , "lambda":  * }
         """
-        μ = measurements.mean
-        λ = μ**3 / measurements.variance
+        mu = measurements.mean
+        lambda_ = mu**3 / measurements.variance
 
-        parameters = {"miu": μ, "lambda": λ}
+        parameters = {"mu": mu, "lambda": lambda_}
         return parameters
 
 

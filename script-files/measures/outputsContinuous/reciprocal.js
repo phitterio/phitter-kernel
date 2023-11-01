@@ -7,40 +7,40 @@ dists = {
                 return (b ** k - a ** k) / (k * (Math.log(b) - Math.log(a)))
             },
             centralMoments: function (k, a, b) {
-                const µ1 = this.nonCentralMoments(1, a, b);
-                const µ2 = this.nonCentralMoments(2, a, b);
-                const µ3 = this.nonCentralMoments(3, a, b);
-                const µ4 = this.nonCentralMoments(4, a, b);
+                const miu1 = this.nonCentralMoments(1, a, b);
+                const miu2 = this.nonCentralMoments(2, a, b);
+                const miu3 = this.nonCentralMoments(3, a, b);
+                const miu4 = this.nonCentralMoments(4, a, b);
 
                 let result;
                 switch (k) {
                     case 1: result = 0; break;
-                    case 2: result = µ2 - µ1 ** 2; break;
-                    case 3: result = µ3 - 3 * µ1 * µ2 + 2 * µ1 ** 3; break;
-                    case 4: result = µ4 - 4 * µ1 * µ3 + 6 * (µ1 ** 2) * µ2 - 3 * (µ1 ** 4); break;
+                    case 2: result = miu2 - miu1 ** 2; break;
+                    case 3: result = miu3 - 3 * miu1 * miu2 + 2 * miu1 ** 3; break;
+                    case 4: result = miu4 - 4 * miu1 * miu3 + 6 * (miu1 ** 2) * miu2 - 3 * (miu1 ** 4); break;
                 };
                 return result
             },
             stats: {
                 mean: function (a, b) {
-                    const µ1 = dists.reciprocal.measurements.nonCentralMoments(1, a, b);
-                    return µ1;
+                    const miu1 = dists.reciprocal.measurements.nonCentralMoments(1, a, b);
+                    return miu1;
                 },
                 variance: function (a, b) {
-                    const µ1 = dists.reciprocal.measurements.nonCentralMoments(1, a, b);
-                    const µ2 = dists.reciprocal.measurements.nonCentralMoments(2, a, b);
-                    return µ2 - µ1 ** 2;
+                    const miu1 = dists.reciprocal.measurements.nonCentralMoments(1, a, b);
+                    const miu2 = dists.reciprocal.measurements.nonCentralMoments(2, a, b);
+                    return miu2 - miu1 ** 2;
                 },
                 standardDeviation: function (a, b) {
                     return Math.sqrt(this.variance(a, b));
                 },
                 skewness: function (a, b) {
-                    const central_µ3 = dists.reciprocal.measurements.centralMoments(3, a, b);
-                    return central_µ3 / (this.standardDeviation(a, b) ** 3);
+                    const central_miu3 = dists.reciprocal.measurements.centralMoments(3, a, b);
+                    return central_miu3 / (this.standardDeviation(a, b) ** 3);
                 },
                 kurtosis: function (a, b) {
-                    const central_µ4 = dists.reciprocal.measurements.centralMoments(4, a, b);
-                    return central_µ4 / (this.standardDeviation(a, b) ** 4);
+                    const central_miu4 = dists.reciprocal.measurements.centralMoments(4, a, b);
+                    return central_miu4 / (this.standardDeviation(a, b) ** 4);
                 },
                 median: function (a, b) {
                     return dists.reciprocal.measurements.ppf(0.5, a, b);

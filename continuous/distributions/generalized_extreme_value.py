@@ -11,8 +11,8 @@ class GENERALIZED_EXTREME_VALUE:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
 
-        self.ξ = self.parameters["ξ"]
-        self.miu = self.parameters["miu"]
+        self.xi = self.parameters["xi"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -21,24 +21,24 @@ class GENERALIZED_EXTREME_VALUE:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: (t - self.miu) / self.sigma
-        if self.ξ == 0:
+        z = lambda t: (t - self.mu) / self.sigma
+        if self.xi == 0:
             return math.exp(-math.exp(-z(x)))
         else:
-            return math.exp(-((1 + self.ξ * z(x)) ** (-1 / self.ξ)))
-        # return scipy.stats.genextreme.cdf(x,  - self.ξ, loc=self.miu, scale=self.sigma)
+            return math.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi)))
+        # return scipy.stats.genextreme.cdf(x,  - self.xi, loc=self.mu, scale=self.sigma)
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # print(scipy.stats.genextreme.pdf(x,  - self.ξ, loc=self.miu, scale=self.sigma))
-        z = lambda t: (t - self.miu) / self.sigma
-        if self.ξ == 0:
+        # print(scipy.stats.genextreme.pdf(x,  - self.xi, loc=self.mu, scale=self.sigma))
+        z = lambda t: (t - self.mu) / self.sigma
+        if self.xi == 0:
             return (1 / self.sigma) * math.exp(-z(x) - math.exp(-z(x)))
         else:
-            return (1 / self.sigma) * math.exp(-((1 + self.ξ * z(x)) ** (-1 / self.ξ))) * (1 + self.ξ * z(x)) ** (-1 - 1 / self.ξ)
+            return (1 / self.sigma) * math.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi))) * (1 + self.xi * z(x)) ** (-1 - 1 / self.xi)
 
     def get_num_parameters(self) -> int:
         """
@@ -66,10 +66,10 @@ class GENERALIZED_EXTREME_VALUE:
         Returns
         =======
         parameters : dict
-            {"ξ":  * , "miu":  * , "sigma":  * }
+            {"xi":  * , "mu":  * , "sigma":  * }
         """
         scipy_params = scipy.stats.genextreme.fit(measurements.data)
-        parameters = {"ξ": -scipy_params[0], "miu": scipy_params[1], "sigma": scipy_params[2]}
+        parameters = {"xi": -scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}
         return parameters
 
 

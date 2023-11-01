@@ -70,15 +70,15 @@ class INVERSE_GAMMA_3P:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * }
+            {"alpha":  * , "loc": *, "beta":  * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            α, β, loc = initial_solution
+            alpha, beta, loc = initial_solution
 
             ## Generatred moments function (not - centered)
-            E = lambda k: (β**k) / numpy.prod(numpy.array([(α - i) for i in range(1, k + 1)]))
+            E = lambda k: (beta**k) / numpy.prod(numpy.array([(alpha - i) for i in range(1, k + 1)]))
 
             ## Parametric expected expressions
             parametric_mean = E(1) + loc
@@ -102,7 +102,7 @@ class INVERSE_GAMMA_3P:
             parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[2]}
         except:
             scipy_params = scipy.stats.invgamma.fit(measurements.data)
-            parameters = {"alpha": scipy_params[0], "beta": scipy_params[2], "loc": scipy_params[1]}
+            parameters = {"alpha": scipy_params[0], "loc": scipy_params[1], "beta": scipy_params[2]}
 
         return parameters
 

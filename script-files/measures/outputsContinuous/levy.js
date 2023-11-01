@@ -3,33 +3,33 @@ jStat = require("../node_modules/jstat");
 dists = {
     levy: {
         measurements: {
-            nonCentralMoments: function (k, miu, c) {
+            nonCentralMoments: function (k, mu, c) {
                 return undefined;
             },
-            centralMoments: function (k, miu, c) {
+            centralMoments: function (k, mu, c) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, c) {
+                mean: function (mu, c) {
                     return Infinity;
                 },
-                variance: function (miu, c) {
+                variance: function (mu, c) {
                     return Infinity;
                 },
-                standardDeviation: function (miu, c) {
-                    return Math.sqrt(this.variance(miu, c));
+                standardDeviation: function (mu, c) {
+                    return Math.sqrt(this.variance(mu, c));
                 },
-                skewness: function (miu, c) {
+                skewness: function (mu, c) {
                     return undefined;
                 },
-                kurtosis: function (miu, c) {
+                kurtosis: function (mu, c) {
                     return undefined;
                 },
-                median: function (miu, c) {
-                    return dists.levy.measurements.ppf(0.5, miu, c);
+                median: function (mu, c) {
+                    return dists.levy.measurements.ppf(0.5, mu, c);
                 },
-                mode: function (miu, c) {
-                    return miu + c / 3;
+                mode: function (mu, c) {
+                    return mu + c / 3;
                 },
             },
         }

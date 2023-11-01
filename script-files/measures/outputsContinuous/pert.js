@@ -20,14 +20,14 @@ dists = {
                     return Math.sqrt(this.variance(a, b, c));
                 },
                 skewness: function (a, b, c) {
-                    const α1 = (4 * b + c - 5 * a) / (c - a);
-                    const α2 = (5 * c - a - 4 * b) / (c - a);
-                    return 2 * (α2 - α1) * Math.sqrt(α1 + α2 + 1) / ((α1 + α2 + 2) * (Math.sqrt(α1 * α2)));
+                    const alpha1 = (4 * b + c - 5 * a) / (c - a);
+                    const alpha2 = (5 * c - a - 4 * b) / (c - a);
+                    return 2 * (alpha2 - alpha1) * Math.sqrt(alpha1 + alpha2 + 1) / ((alpha1 + alpha2 + 2) * (Math.sqrt(alpha1 * alpha2)));
                 },
                 kurtosis: function (a, b, c) {
-                    const α1 = (4 * b + c - 5 * a) / (c - a);
-                    const α2 = (5 * c - a - 4 * b) / (c - a);
-                    return 6 * (((α2 - α1) ** 2) * (α1 + α2 + 1) - α1 * α2 * (α1 + α2 + 2)) / (α1 * α2 * (α1 + α2 + 2) * (α1 + α2 + 3)) + 3;
+                    const alpha1 = (4 * b + c - 5 * a) / (c - a);
+                    const alpha2 = (5 * c - a - 4 * b) / (c - a);
+                    return 6 * (((alpha2 - alpha1) ** 2) * (alpha1 + alpha2 + 1) - alpha1 * alpha2 * (alpha1 + alpha2 + 2)) / (alpha1 * alpha2 * (alpha1 + alpha2 + 2) * (alpha1 + alpha2 + 3)) + 3;
                 },
                 median: function (a, b, c) {
                     return dists.pert.measurements.ppf(0.5, a, b, c);

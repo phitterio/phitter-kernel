@@ -70,18 +70,18 @@ class BETA_PRIME:
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            α, β = initial_solution
+            alpha, beta = initial_solution
 
             ## Generatred moments function (not - centered)
-            # E = lambda k: math.gamma(k - α) * math.gamma(β - k) / (math.gamma(α) * math.gamma(β))
+            # E = lambda k: math.gamma(k - alpha) * math.gamma(beta - k) / (math.gamma(alpha) * math.gamma(beta))
 
             ## Parametric expected expressions
-            parametric_mean = α / (β - 1)
-            parametric_variance = α * (α + β - 1) / ((β - 1) ** 2 * (β - 2))
-            # parametric_skewness = 2 * math.sqrt(((β - 2)) / (α * (α + β - 1))) * (((2 * α + β - 1)) / (β - 3))
+            parametric_mean = alpha / (beta - 1)
+            parametric_variance = alpha * (alpha + beta - 1) / ((beta - 1) ** 2 * (beta - 2))
+            # parametric_skewness = 2 * math.sqrt(((beta - 2)) / (alpha * (alpha + beta - 1))) * (((2 * alpha + beta - 1)) / (beta - 3))
             # parametric_kurtosis = (E(4)-4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) /  ((E(2) - E(1) ** 2)) ** 2
-            # parametric_median = sc.betaincinv(0.5, α, β)
-            # parametric_mode = (α - 1) / (β + 1)
+            # parametric_median = sc.betaincinv(0.5, alpha, beta)
+            # parametric_mode = (alpha - 1) / (beta + 1)
 
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance

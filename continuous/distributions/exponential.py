@@ -55,8 +55,8 @@ class EXPONENTIAL:
         parameters : dict
             {"lambda":  * }
         """
-        λ = 1 / measurements.mean
-        parameters = {"lambda": λ}
+        lambda_ = 1 / measurements.mean
+        parameters = {"lambda": lambda_}
         return parameters
 
 

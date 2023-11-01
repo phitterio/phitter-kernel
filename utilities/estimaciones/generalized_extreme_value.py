@@ -34,15 +34,15 @@ data = getData(path)
 measurements = MEASUREMENTS(data)
 
 def equations(initial_solution, data_mean, data_variance, data_median):
-    xi, miu, sigma = initial_solution
+    xi, mu, sigma = initial_solution
     
     g = lambda t: math.gamma(1 - t * xi)
     
-    parametric_mean = miu + sigma * (g(1) - 1)  / xi
+    parametric_mean = mu + sigma * (g(1) - 1)  / xi
     parametric_variance = (sigma ** 2) * (g(2) - g(1) ** 2)  / (xi ** 2)
     # parametric_skewness = math.copysign(1, xi) * (g(3) - 3 * g(2) * g(1) + 2 * g(1) ** 3) / ((g(2) - g(1) ** 2)) ** 1.5
     # parametric_kurtosis = (g(4)-4 * g(3) * g(1) - 3 * g(2) ** 2 + 12 * g(2) * g(1) ** 2 - 6 * g(1) ** 4) /  ((g(2) - g(1) ** 2)) ** 2
-    parametric_median = miu + sigma * (math.log(2) ** (-xi) - 1) / xi
+    parametric_median = mu + sigma * (math.log(2) ** (-xi) - 1) / xi
 
     ## System Equations
     eq1 = parametric_mean - data_mean

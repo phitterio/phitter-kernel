@@ -11,7 +11,7 @@ class NORMAL:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -20,8 +20,8 @@ class NORMAL:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # result = scipy.stats.norm.cdf((x - self.miu) / self.sigma)
-        z = lambda t: (t - self.miu) / self.sigma
+        # result = scipy.stats.norm.cdf((x - self.mu) / self.sigma)
+        z = lambda t: (t - self.mu) / self.sigma
         result = 0.5 * (1 + sc.erf(z(x) / math.sqrt(2)))
         return result
 
@@ -30,7 +30,7 @@ class NORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        result = (1 / (self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((x - self.miu) ** 2) / (2 * self.sigma**2)))
+        result = (1 / (self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((x - self.mu) ** 2) / (2 * self.sigma**2)))
         return result
 
     def get_num_parameters(self) -> int:
@@ -54,18 +54,18 @@ class NORMAL:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "sigma":  * }
+            {"mu":  * , "sigma":  * }
         """
 
-        μ = measurements.mean
-        σ = measurements.standard_deviation
+        mu = measurements.mean
+        sigma = measurements.standard_deviation
 
-        parameters = {"miu": μ, "sigma": σ}
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 

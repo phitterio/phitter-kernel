@@ -10,7 +10,7 @@ class LOGNORMAL:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -20,7 +20,7 @@ class LOGNORMAL:
         Alternative: quadrature integration method
         """
         # result, error = scipy.integrate.quad(self.pdf, 1e-15, x)
-        result = scipy.stats.norm.cdf((math.log(x) - self.miu) / self.sigma)
+        result = scipy.stats.norm.cdf((math.log(x) - self.mu) / self.sigma)
         return result
 
     def pdf(self, x: float) -> float:
@@ -28,7 +28,7 @@ class LOGNORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (1 / (x * self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((math.log(x) - self.miu) ** 2) / (2 * self.sigma**2)))
+        return (1 / (x * self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((math.log(x) - self.mu) ** 2) / (2 * self.sigma**2)))
 
     def get_num_parameters(self) -> int:
         """
@@ -40,7 +40,7 @@ class LOGNORMAL:
         """
         Check parameters restrictions
         """
-        v1 = self.miu > 0
+        v1 = self.mu > 0
         v2 = self.sigma > 0
         return v1 and v2
 
@@ -52,18 +52,18 @@ class LOGNORMAL:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "sigma":  * }
+            {"mu":  * , "sigma":  * }
         """
 
-        μ = math.log(measurements.mean**2 / math.sqrt(measurements.mean**2 + measurements.variance))
-        σ = math.sqrt(math.log((measurements.mean**2 + measurements.variance) / (measurements.mean**2)))
+        mu = math.log(measurements.mean**2 / math.sqrt(measurements.mean**2 + measurements.variance))
+        sigma = math.sqrt(math.log((measurements.mean**2 + measurements.variance) / (measurements.mean**2)))
 
-        parameters = {"miu": μ, "sigma": σ}
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 

@@ -61,10 +61,10 @@ class WEIBULL:
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            α, β = initial_solution
+            alpha, beta = initial_solution
 
             ## Generatred moments function (not - centered)
-            E = lambda k: (β**k) * math.gamma(1 + k / α)
+            E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
 
             ## Parametric expected expressions
             parametric_mean = E(1)
@@ -114,10 +114,10 @@ if __name__ == "__main__":
 
     def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         ## Variables declaration
-        α, β = initial_solution
+        alpha, beta = initial_solution
 
         ## Generatred moments function (not - centered)
-        E = lambda k: (β**k) / numpy.prod(numpy.array([(α - i) for i in range(1, k + 1)]))
+        E = lambda k: (beta**k) / numpy.prod(numpy.array([(alpha - i) for i in range(1, k + 1)]))
 
         ## Parametric expected expressions
         parametric_mean = E(1)

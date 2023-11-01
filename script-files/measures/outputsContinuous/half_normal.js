@@ -3,33 +3,33 @@ jStat = require("../node_modules/jstat");
 dists = {
     half_normal: {
         measurements: {
-            nonCentralMoments: function (k, miu, sigma) {
+            nonCentralMoments: function (k, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, miu, sigma) {
+            centralMoments: function (k, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, sigma) {
-                    return miu + sigma * Math.sqrt(2 / Math.PI);
+                mean: function (mu, sigma) {
+                    return mu + sigma * Math.sqrt(2 / Math.PI);
                 },
-                variance: function (miu, sigma) {
+                variance: function (mu, sigma) {
                     return sigma * sigma * (1 - 2 / Math.PI);
                 },
-                standardDeviation: function (miu, sigma) {
-                    return Math.sqrt(this.variance(miu, sigma));
+                standardDeviation: function (mu, sigma) {
+                    return Math.sqrt(this.variance(mu, sigma));
                 },
-                skewness: function (miu, sigma) {
+                skewness: function (mu, sigma) {
                     return Math.sqrt(2) * (4 - Math.PI) / ((Math.PI - 2) ** 1.5);
                 },
-                kurtosis: function (miu, sigma) {
+                kurtosis: function (mu, sigma) {
                     return 3 + 8 * (Math.PI - 3) / ((Math.PI - 2) ** 2);
                 },
-                median: function (miu, sigma) {
-                    return dists.half_normal.measurements.ppf(0.5, miu, sigma);
+                median: function (mu, sigma) {
+                    return dists.half_normal.measurements.ppf(0.5, mu, sigma);
                 },
-                mode: function (miu, sigma) {
-                    return miu;
+                mode: function (mu, sigma) {
+                    return mu;
                 },
             },
         }

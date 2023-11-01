@@ -219,8 +219,8 @@ class POISSON:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        λ = measurements.mean
-        parameters = {"lambda": λ}
+        lambda_ = measurements.mean
+        parameters = {"lambda": lambda_}
         return parameters
 
 

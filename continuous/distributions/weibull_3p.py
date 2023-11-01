@@ -64,10 +64,10 @@ class WEIBULL_3P:
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            α, β, loc = initial_solution
+            alpha, beta, loc = initial_solution
 
             ## Generatred moments function (not - centered)
-            E = lambda k: (β**k) * math.gamma(1 + k / α)
+            E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
 
             ## Parametric expected expressions
             parametric_mean = E(1) + loc
@@ -87,7 +87,7 @@ class WEIBULL_3P:
         x0 = (1, 1, measurements.mean)
         args = [measurements]
         solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
-        parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[2]}
+        parameters = {"alpha": solution.x[0], "loc": solution.x[2], "beta": solution.x[1]}
 
         return parameters
 
@@ -121,10 +121,10 @@ if __name__ == "__main__":
 
     def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         ## Variables declaration
-        α, β, loc = initial_solution
+        alpha, beta, loc = initial_solution
 
         ## Generatred moments function (not - centered)
-        E = lambda k: (β**k) * math.gamma(1 + k / α)
+        E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
 
         ## Parametric expected expressions
         parametric_mean = E(1) + loc

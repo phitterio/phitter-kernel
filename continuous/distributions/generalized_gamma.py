@@ -64,7 +64,7 @@ class GENERALIZED_GAMMA:
         Returns
         =======
         parameters : dict
-            {"a":  * , "c":  * , "miu":  * , "sigma":  * }
+            {"a":  * , "c":  * , "mu":  * , "sigma":  * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
@@ -99,7 +99,7 @@ class GENERALIZED_GAMMA:
             parameters = {"a": solution[0], "d": solution[1], "p": solution[2]}
         except:
             scipy_params = scipy.stats.gengamma.fit(measurements.data)
-            parameters = {"a": scipy_params[0], "c": scipy_params[1], "miu": scipy_params[2], "sigma": scipy_params[3]}
+            parameters = {"a": scipy_params[0], "c": scipy_params[1], "mu": scipy_params[2], "sigma": scipy_params[3]}
 
         return parameters
 

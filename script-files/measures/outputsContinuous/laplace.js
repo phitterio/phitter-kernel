@@ -3,33 +3,33 @@ jStat = require("../node_modules/jstat");
 dists = {
     laplace: {
         measurements: {
-            nonCentralMoments: function (k, miu, b) {
+            nonCentralMoments: function (k, mu, b) {
                 return undefined;
             },
-            centralMoments: function (k, miu, b) {
+            centralMoments: function (k, mu, b) {
                 return undefined;
             },
             stats: {
-                mean: function (miu, b) {
-                    return miu;
+                mean: function (mu, b) {
+                    return mu;
                 },
-                variance: function (miu, b) {
+                variance: function (mu, b) {
                     return 2 * b ** 2;
                 },
-                standardDeviation: function (miu, b) {
-                    return Math.sqrt(this.variance(miu, b));
+                standardDeviation: function (mu, b) {
+                    return Math.sqrt(this.variance(mu, b));
                 },
-                skewness: function (miu, b) {
+                skewness: function (mu, b) {
                     return 0;
                 },
-                kurtosis: function (miu, b) {
+                kurtosis: function (mu, b) {
                     return 6;
                 },
-                median: function (miu, b) {
-                    return dists.laplace.measurements.ppf(0.5, miu, b);
+                median: function (mu, b) {
+                    return dists.laplace.measurements.ppf(0.5, mu, b);
                 },
-                mode: function (miu, b) {
-                    return miu;
+                mode: function (mu, b) {
+                    return mu;
                 },
             },
         }

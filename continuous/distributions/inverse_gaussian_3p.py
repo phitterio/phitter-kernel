@@ -11,7 +11,7 @@ class INVERSE_GAUSSIAN_3P:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.lambda_ = self.parameters["lambda"]
         self.loc = self.parameters["loc"]
 
@@ -21,9 +21,9 @@ class INVERSE_GAUSSIAN_3P:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # result = scipy.stats.invgauss.cdf(x, self.miu/self.lambda_, loc=self.loc, scale=self.lambda_)
-        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.miu) - 1)) + math.exp(2 * self.lambda_ / self.miu) * scipy.stats.norm.cdf(
-            -math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.miu) + 1)
+        # result = scipy.stats.invgauss.cdf(x, self.mu/self.lambda_, loc=self.loc, scale=self.lambda_)
+        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) - 1)) + math.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
+            -math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) + 1)
         )
         return result
 
@@ -32,8 +32,8 @@ class INVERSE_GAUSSIAN_3P:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = scipy.stats.invgauss.pdf(x, self.miu/self.lambda_, loc=self.loc, scale=self.lambda_)
-        result = math.sqrt(self.lambda_ / (2 * math.pi * (x - self.loc) ** 3)) * math.exp(-(self.lambda_ * ((x - self.loc) - self.miu) ** 2) / (2 * self.miu**2 * (x - self.loc)))
+        # result = scipy.stats.invgauss.pdf(x, self.mu/self.lambda_, loc=self.loc, scale=self.lambda_)
+        result = math.sqrt(self.lambda_ / (2 * math.pi * (x - self.loc) ** 3)) * math.exp(-(self.lambda_ * ((x - self.loc) - self.mu) ** 2) / (2 * self.mu**2 * (x - self.loc)))
         return result
 
     def get_num_parameters(self) -> int:
@@ -46,7 +46,7 @@ class INVERSE_GAUSSIAN_3P:
         """
         Check parameters restrictions
         """
-        v1 = self.miu > 0
+        v1 = self.mu > 0
         v2 = self.lambda_ > 0
         return v1 and v2
 
@@ -58,21 +58,21 @@ class INVERSE_GAUSSIAN_3P:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "lambda":  * }
+            {"mu":  * , "lambda":  * }
         """
-        # Scipy not correct for miu parameter
+        # Scipy not correct for mu parameter
         # print(distribution.get_parameters(measurements))
 
-        μ = 3 * math.sqrt(measurements.variance / (measurements.skewness**2))
-        λ = μ**3 / measurements.variance
-        loc = measurements.mean - μ
+        mu = 3 * math.sqrt(measurements.variance / (measurements.skewness**2))
+        lambda_ = mu**3 / measurements.variance
+        loc = measurements.mean - mu
 
-        parameters = {"miu": μ, "lambda": λ, "loc": loc}
+        parameters = {"mu": mu, "lambda": lambda_, "loc": loc}
         return parameters
 
 

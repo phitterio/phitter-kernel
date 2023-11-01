@@ -13,7 +13,7 @@ class GUMBEL_LEFT:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
 
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -22,7 +22,7 @@ class GUMBEL_LEFT:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         return 1 - math.exp(-math.exp(z(x)))
 
     def pdf(self, x: float) -> float:
@@ -30,7 +30,7 @@ class GUMBEL_LEFT:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         return (1 / self.sigma) * math.exp(z(x) - math.exp(z(x)))
 
     def get_num_parameters(self) -> int:
@@ -59,15 +59,15 @@ class GUMBEL_LEFT:
         Returns
         =======
         parameters : dict
-            {"c":  * , "miu":  * , "sigma":  * }
+            {"c":  * , "mu":  * , "sigma":  * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            miu, sigma = initial_solution
+            mu, sigma = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = miu - sigma * 0.5772156649
+            parametric_mean = mu - sigma * 0.5772156649
             parametric_variance = (sigma**2) * (math.pi**2) / 6
 
             ## System Equations
@@ -77,7 +77,7 @@ class GUMBEL_LEFT:
             return (eq1, eq2)
 
         solution = scipy.optimize.fsolve(equations, (1, 1), measurements)
-        parameters = {"miu": solution[0], "sigma": solution[1]}
+        parameters = {"mu": solution[0], "sigma": solution[1]}
         return parameters
 
 

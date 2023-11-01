@@ -14,40 +14,40 @@ dists = {
                 return result
             },
             centralMoments: function (k, lambda, n1, n2) {
-                const µ1 = this.nonCentralMoments(1, lambda, n1, n2);
-                const µ2 = this.nonCentralMoments(2, lambda, n1, n2);
-                const µ3 = this.nonCentralMoments(3, lambda, n1, n2);
-                const µ4 = this.nonCentralMoments(4, lambda, n1, n2);
+                const miu1 = this.nonCentralMoments(1, lambda, n1, n2);
+                const miu2 = this.nonCentralMoments(2, lambda, n1, n2);
+                const miu3 = this.nonCentralMoments(3, lambda, n1, n2);
+                const miu4 = this.nonCentralMoments(4, lambda, n1, n2);
 
                 let result;
                 switch (k) {
                     case 1: result = 0; break;
-                    case 2: result = µ2 - µ1 ** 2; break;
-                    case 3: result = µ3 - 3 * µ1 * µ2 + 2 * µ1 ** 3; break;
-                    case 4: result = µ4 - 4 * µ1 * µ3 + 6 * (µ1 ** 2) * µ2 - 3 * (µ1 ** 4); break;
+                    case 2: result = miu2 - miu1 ** 2; break;
+                    case 3: result = miu3 - 3 * miu1 * miu2 + 2 * miu1 ** 3; break;
+                    case 4: result = miu4 - 4 * miu1 * miu3 + 6 * (miu1 ** 2) * miu2 - 3 * (miu1 ** 4); break;
                 };
                 return result
             },
             stats: {
                 mean: function (lambda, n1, n2) {
-                    const µ1 = dists.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
-                    return µ1;
+                    const miu1 = dists.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
+                    return miu1;
                 },
                 variance: function (lambda, n1, n2) {
-                    const µ1 = dists.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
-                    const µ2 = dists.nc_f.measurements.nonCentralMoments(2, lambda, n1, n2);
-                    return µ2 - µ1 ** 2;
+                    const miu1 = dists.nc_f.measurements.nonCentralMoments(1, lambda, n1, n2);
+                    const miu2 = dists.nc_f.measurements.nonCentralMoments(2, lambda, n1, n2);
+                    return miu2 - miu1 ** 2;
                 },
                 standardDeviation: function (lambda, n1, n2) {
                     return Math.sqrt(this.variance(lambda, n1, n2));
                 },
                 skewness: function (lambda, n1, n2) {
-                    const central_µ3 = dists.nc_f.measurements.centralMoments(3, lambda, n1, n2);
-                    return central_µ3 / (this.standardDeviation(lambda, n1, n2) ** 3);
+                    const central_miu3 = dists.nc_f.measurements.centralMoments(3, lambda, n1, n2);
+                    return central_miu3 / (this.standardDeviation(lambda, n1, n2) ** 3);
                 },
                 kurtosis: function (lambda, n1, n2) {
-                    const central_µ4 = dists.nc_f.measurements.centralMoments(4, lambda, n1, n2);
-                    return central_µ4 / (this.standardDeviation(lambda, n1, n2) ** 4);
+                    const central_miu4 = dists.nc_f.measurements.centralMoments(4, lambda, n1, n2);
+                    return central_miu4 / (this.standardDeviation(lambda, n1, n2) ** 4);
                 },
                 median: function (lambda, n1, n2) {
                     return dists.nc_f.measurements.ppf(0.5, lambda, n1, n2);

@@ -17,13 +17,13 @@ def objective(initial_solution, p):
 
 def constraint_mean(initial_solution, data_mean):
     A, B, C = initial_solution
-    miu = lambda r: (A ** r) * C * modificated_beta((B * C - r) / B, (B + r) / B, 1e7)
-    return miu(1) - data_mean
+    mu = lambda r: (A ** r) * C * modificated_beta((B * C - r) / B, (B + r) / B, 1e7)
+    return mu(1) - data_mean
 
 def constraint_variance(initial_solution, data_variance):
     A, B, C = initial_solution
-    miu = lambda r: (A ** r) * C * modificated_beta((B * C - r) / B, (B + r) / B, 1e7)
-    return  - (miu(1) ** 2) + miu(2) - data_variance
+    mu = lambda r: (A ** r) * C * modificated_beta((B * C - r) / B, (B + r) / B, 1e7)
+    return  - (mu(1) ** 2) + mu(2) - data_variance
 
 def constraint_median(initial_solution, data_median):
     A, B, C = initial_solution
@@ -65,13 +65,13 @@ print(parameters)
 def solution_error(parameters, measurements):
     A, B, C = parameters["A"], parameters["B"], parameters["C"]
 
-    miu = lambda r: (A ** r) * C * beta((B * C - r) / B, (B + r) / B)
+    mu = lambda r: (A ** r) * C * beta((B * C - r) / B, (B + r) / B)
     
     # Parametric expected expressions
-    parametric_mean = miu(1)
-    parametric_variance = -(miu(1) ** 2) + miu(2)
-    parametric_kurtosis = -3 * miu(1) ** 4 + 6 * miu(1) ** 2 * miu(2) -4 * miu(1) * miu(3) + miu(4)
-    parametric_skewness = 2 * miu(1) ** 3 - 3 * miu(1) * miu(2) + miu(3)
+    parametric_mean = mu(1)
+    parametric_variance = -(mu(1) ** 2) + mu(2)
+    parametric_kurtosis = -3 * mu(1) ** 4 + 6 * mu(1) ** 2 * mu(2) -4 * mu(1) * mu(3) + mu(4)
+    parametric_skewness = 2 * mu(1) ** 3 - 3 * mu(1) * mu(2) + mu(3)
     parametric_median = A * ((2 ** (1 / C)) - 1) ** (1 / B)
     print(parametric_mean, parametric_variance, parametric_median)
     print(measurements.mean, measurements.variance, measurements.median)

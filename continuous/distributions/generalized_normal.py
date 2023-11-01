@@ -20,7 +20,7 @@ class GENERALIZED_NORMAL:
         self.parameters = self.get_parameters(measurements)
 
         self.beta = self.parameters["beta"]
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.alpha = self.parameters["alpha"]
 
     def cdf(self, x: float) -> float:
@@ -29,16 +29,16 @@ class GENERALIZED_NORMAL:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # print(scipy.stats.gennorm.cdf(x , self.beta, loc=self.miu, scale=self.alpha))
-        return 0.5 + (numpy.sign(x - self.miu) / 2) * sc.gammainc(1 / self.beta, abs((x - self.miu) / self.alpha) ** self.beta)
+        # print(scipy.stats.gennorm.cdf(x , self.beta, loc=self.mu, scale=self.alpha))
+        return 0.5 + (numpy.sign(x - self.mu) / 2) * sc.gammainc(1 / self.beta, abs((x - self.mu) / self.alpha) ** self.beta)
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # print(scipy.stats.gennorm.pdf(x , self.beta, loc=self.miu, scale=self.alpha))
-        return self.beta / (2 * self.alpha * math.gamma(1 / self.beta)) * math.exp(-((abs(x - self.miu) / self.alpha) ** self.beta))
+        # print(scipy.stats.gennorm.pdf(x , self.beta, loc=self.mu, scale=self.alpha))
+        return self.beta / (2 * self.alpha * math.gamma(1 / self.beta)) * math.exp(-((abs(x - self.mu) / self.alpha) ** self.beta))
 
     def get_num_parameters(self) -> int:
         """
@@ -67,10 +67,10 @@ class GENERALIZED_NORMAL:
         Returns
         =======
         parameters : dict
-            {"beta":  * , "miu":  * , "alpha":  * }
+            {"beta":  * , "mu":  * , "alpha":  * }
         """
         scipy_params = scipy.stats.gennorm.fit(measurements.data)
-        parameters = {"beta": scipy_params[0], "miu": scipy_params[1], "alpha": scipy_params[2]}
+        parameters = {"beta": scipy_params[0], "mu": scipy_params[1], "alpha": scipy_params[2]}
         return parameters
 
 

@@ -14,7 +14,7 @@ class LOGGAMMA:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.c = self.parameters["c"]
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -23,10 +23,10 @@ class LOGGAMMA:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # result = scipy.stats.gamma.cdf(math.exp((x - self.miu) / self.sigma), a=self.c, scale=1)
-        # print(scipy.stats.loggamma.cdf(x, self.c, loc=self.miu, scale=self.sigma))
+        # result = scipy.stats.gamma.cdf(math.exp((x - self.mu) / self.sigma), a=self.c, scale=1)
+        # print(scipy.stats.loggamma.cdf(x, self.c, loc=self.mu, scale=self.sigma))
 
-        y = lambda x: (x - self.miu) / self.sigma
+        y = lambda x: (x - self.mu) / self.sigma
         result = sc.gammainc(self.c, math.exp(y(x)))
         return result
 
@@ -35,8 +35,8 @@ class LOGGAMMA:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # print(scipy.stats.loggamma.pdf(x, self.c, loc=self.miu, scale=self.sigma))
-        y = lambda x: (x - self.miu) / self.sigma
+        # print(scipy.stats.loggamma.pdf(x, self.c, loc=self.mu, scale=self.sigma))
+        y = lambda x: (x - self.mu) / self.sigma
         result = math.exp(self.c * y(x) - math.exp(y(x)) - sc.gammaln(self.c)) / self.sigma
 
         return result
@@ -68,14 +68,14 @@ class LOGGAMMA:
         Returns
         =======
         parameters : dict
-            {"c":  * , "miu":  * , "sigma":  * }
+            {"c":  * , "mu":  * , "sigma":  * }
         """
 
         def equations(initial_solution, data_mean, data_variance, data_skewness):
-            c, miu, sigma = initial_solution
+            c, mu, sigma = initial_solution
 
-            # parametric_mean, parametric_variance, parametric_skewness, parametric_kurtosis = scipy.stats.loggamma.stats(c, loc=miu, scale=sigma, moments='mvsk')
-            parametric_mean = sc.digamma(c) * sigma + miu
+            # parametric_mean, parametric_variance, parametric_skewness, parametric_kurtosis = scipy.stats.loggamma.stats(c, loc=mu, scale=sigma, moments='mvsk')
+            parametric_mean = sc.digamma(c) * sigma + mu
             parametric_variance = sc.polygamma(1, c) * (sigma**2)
             parametric_skewness = sc.polygamma(2, c) / (sc.polygamma(1, c) ** 1.5)
             # parametric_kurtosis = sc.polygamma(3, c) / (sc.polygamma(1, c) ** 2)
@@ -92,7 +92,7 @@ class LOGGAMMA:
         x0 = (1, 1, 1)
         args = (measurements.mean, measurements.variance, measurements.skewness)
         solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
-        parameters = {"c": solution.x[0], "miu": solution.x[1], "sigma": solution.x[2]}
+        parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
         return parameters
 
 
@@ -124,9 +124,9 @@ if __name__ == "__main__":
     import time
 
     def equations(initial_solution, data_mean, data_variance, data_skewness):
-        c, miu, sigma = initial_solution
-        parametric_mean, parametric_variance, parametric_skewness, parametric_kurtosis = scipy.stats.loggamma.stats(c, loc=miu, scale=sigma, moments="mvsk")
-        parametric_mean = sc.digamma(c) * sigma + miu
+        c, mu, sigma = initial_solution
+        parametric_mean, parametric_variance, parametric_skewness, parametric_kurtosis = scipy.stats.loggamma.stats(c, loc=mu, scale=sigma, moments="mvsk")
+        parametric_mean = sc.digamma(c) * sigma + mu
         parametric_variance = sc.polygamma(1, c) * (sigma**2)
         parametric_skewness = sc.polygamma(2, c) / (sc.polygamma(1, c) ** 1.5)
         # parametric_kurtosis = sc.polygamma(3, c) / (sc.polygamma(1, c) ** 2)
@@ -144,12 +144,12 @@ if __name__ == "__main__":
     x0 = (1, 1, 1)
     args = (measurements.mean, measurements.variance, measurements.skewness)
     solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
-    parameters = {"c": solution.x[0], "miu": solution.x[1], "sigma": solution.x[2]}
+    parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
     print(parameters)
     print("Solve equations time: ", time.time() - ti)
 
     ti = time.time()
     scipy_params = scipy.stats.loggamma.fit(data)
-    parameters = {"c": scipy_params[0], "miu": scipy_params[1], "sigma": scipy_params[2]}
+    parameters = {"c": scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}
     print(parameters)
     print("Scipy time get parameters: ", time.time() - ti)

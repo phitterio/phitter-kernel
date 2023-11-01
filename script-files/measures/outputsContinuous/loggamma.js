@@ -19,33 +19,33 @@ function polygamma(k, x) {
 dists = {
     loggamma: {
         measurements: {
-            nonCentralMoments: function (k, c, miu, sigma) {
+            nonCentralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
-            centralMoments: function (k, c, miu, sigma) {
+            centralMoments: function (k, c, mu, sigma) {
                 return undefined;
             },
             stats: {
-                mean: function (c, miu, sigma) {
-                    return digamma(c) * sigma + miu;
+                mean: function (c, mu, sigma) {
+                    return digamma(c) * sigma + mu;
                 },
-                variance: function (c, miu, sigma) {
+                variance: function (c, mu, sigma) {
                     return polygamma(1, c) * sigma * sigma;
                 },
-                standardDeviation: function (c, miu, sigma) {
-                    return Math.sqrt(this.variance(c, miu, sigma));
+                standardDeviation: function (c, mu, sigma) {
+                    return Math.sqrt(this.variance(c, mu, sigma));
                 },
-                skewness: function (c, miu, sigma) {
+                skewness: function (c, mu, sigma) {
                     return polygamma(2, c) / (polygamma(1, c) ** 1.5);
                 },
-                kurtosis: function (c, miu, sigma) {
+                kurtosis: function (c, mu, sigma) {
                     return polygamma(3, c) / (polygamma(1, c) ** 2) + 3;
                 },
-                median: function (c, miu, sigma) {
-                    return dists.loggamma.measurements.ppf(0.5, c, miu, sigma);
+                median: function (c, mu, sigma) {
+                    return dists.loggamma.measurements.ppf(0.5, c, mu, sigma);
                 },
-                mode: function (c, miu, sigma) {
-                    return miu + sigma * Math.log(c);
+                mode: function (c, mu, sigma) {
+                    return mu + sigma * Math.log(c);
                 },
             },
         }

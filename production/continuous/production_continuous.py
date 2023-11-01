@@ -177,9 +177,9 @@ class BETA_PRIME:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            α, β = initial_solution
-            parametric_mean = α / (β - 1)
-            parametric_variance = α * (α + β - 1) / ((β - 1) ** 2 * (β - 2))
+            alpha, beta = initial_solution
+            parametric_mean = alpha / (beta - 1)
+            parametric_variance = alpha * (alpha + beta - 1) / ((beta - 1) ** 2 * (beta - 2))
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
             return (eq1, eq2)
@@ -223,11 +223,11 @@ class BETA_PRIME_4P:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            α, β, scale, loc = initial_solution
-            parametric_mean = scale * α / (β - 1) + loc
-            parametric_variance = (scale**2) * α * (α + β - 1) / ((β - 1) ** 2 * (β - 2))
-            parametric_median = loc + scale * scipy.stats.beta.ppf(0.5, α, β) / (1 - scipy.stats.beta.ppf(0.5, α, β))
-            parametric_mode = scale * (α - 1) / (β + 1) + loc
+            alpha, beta, scale, loc = initial_solution
+            parametric_mean = scale * alpha / (beta - 1) + loc
+            parametric_variance = (scale**2) * alpha * (alpha + beta - 1) / ((beta - 1) ** 2 * (beta - 2))
+            parametric_median = loc + scale * scipy.stats.beta.ppf(0.5, alpha, beta) / (1 - scipy.stats.beta.ppf(0.5, alpha, beta))
+            parametric_mode = scale * (alpha - 1) / (beta + 1) + loc
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
             eq3 = parametric_median - measurements.median
@@ -312,8 +312,8 @@ class BURR:
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             A, B, C = initial_solution
-            miu = lambda r: (A**r) * C * sc.beta((B * C - r) / B, (B + r) / B)
-            parametric_mean = miu(1)
+            mu = lambda r: (A**r) * C * sc.beta((B * C - r) / B, (B + r) / B)
+            parametric_mean = mu(1)
             parametric_median = A * ((2 ** (1 / C)) - 1) ** (1 / B)
             parametric_mode = A * ((B - 1) / (B * C + 1)) ** (1 / B)
             eq1 = parametric_mean - measurements.mean
@@ -356,10 +356,10 @@ class BURR_4P:
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             A, B, C, loc = initial_solution
-            miu = lambda r: (A**r) * C * sc.beta((B * C - r) / B, (B + r) / B)
-            parametric_mean = miu(1) + loc
-            parametric_variance = -(miu(1) ** 2) + miu(2)
-            parametric_kurtosis = -3 * miu(1) ** 4 + 6 * miu(1) ** 2 * miu(2) - 4 * miu(1) * miu(3) + miu(4)
+            mu = lambda r: (A**r) * C * sc.beta((B * C - r) / B, (B + r) / B)
+            parametric_mean = mu(1) + loc
+            parametric_variance = -(mu(1) ** 2) + mu(2)
+            parametric_kurtosis = -3 * mu(1) ** 4 + 6 * mu(1) ** 2 * mu(2) - 4 * mu(1) * mu(3) + mu(4)
             parametric_mode = A * ((B - 1) / (B * C + 1)) ** (1 / B) + loc
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
@@ -489,9 +489,9 @@ class DAGUM:
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             a, b, p = initial_solution
-            miu = lambda k: (b**k) * p * scipy.special.beta((a * p + k) / a, (a - k) / a)
-            parametric_mean = miu(1)
-            parametric_variance = -(miu(1) ** 2) + miu(2)
+            mu = lambda k: (b**k) * p * scipy.special.beta((a * p + k) / a, (a - k) / a)
+            parametric_mean = mu(1)
+            parametric_variance = -(mu(1) ** 2) + mu(2)
             parametric_median = b * ((2 ** (1 / p)) - 1) ** (-1 / a)
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
@@ -555,9 +555,9 @@ class DAGUM_4P:
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             a, b, p, loc = initial_solution
-            miu = lambda k: (b**k) * p * scipy.special.beta((a * p + k) / a, (a - k) / a)
-            parametric_mean = miu(1) + loc
-            parametric_variance = -(miu(1) ** 2) + miu(2)
+            mu = lambda k: (b**k) * p * scipy.special.beta((a * p + k) / a, (a - k) / a)
+            parametric_mean = mu(1) + loc
+            parametric_variance = -(mu(1) ** 2) + mu(2)
             parametric_median = b * ((2 ** (1 / p)) - 1) ** (-1 / a) + loc
             parametric_mode = b * ((a * p - 1) / (a + 1)) ** (1 / a) + loc
             eq1 = parametric_mean - measurements.mean
@@ -609,8 +609,8 @@ class ERLANG:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         k = round(measurements.mean**2 / measurements.variance)
-        β = measurements.variance / measurements.mean
-        parameters = {"k": k, "beta": β}
+        beta = measurements.variance / measurements.mean
+        parameters = {"k": k, "beta": beta}
         return parameters
 
 
@@ -640,9 +640,9 @@ class ERLANG_3P:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         k = round((2 / measurements.skewness) ** 2)
-        β = math.sqrt(measurements.variance / ((2 / measurements.skewness) ** 2))
-        loc = measurements.mean - ((2 / measurements.skewness) ** 2) * β
-        parameters = {"k": k, "beta": β, "loc": loc}
+        beta = math.sqrt(measurements.variance / ((2 / measurements.skewness) ** 2))
+        loc = measurements.mean - ((2 / measurements.skewness) ** 2) * beta
+        parameters = {"k": k, "beta": beta, "loc": loc}
         return parameters
 
 
@@ -689,8 +689,8 @@ class EXPONENTIAL:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        λ = 1 / measurements.mean
-        parameters = {"lambda": λ}
+        lambda_ = 1 / measurements.mean
+        parameters = {"lambda": lambda_}
         return parameters
 
 
@@ -714,9 +714,9 @@ class EXPONENTIAL_2P:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        λ = (1 - math.log(2)) / (measurements.mean - measurements.median)
+        lambda_ = (1 - math.log(2)) / (measurements.mean - measurements.median)
         loc = measurements.min - 1e-4
-        parameters = {"lambda": λ, "loc": loc}
+        parameters = {"lambda": lambda_, "loc": loc}
         return parameters
 
 
@@ -780,17 +780,17 @@ class FATIGUE_LIFE:
 class FOLDED_NORMAL:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z1 = lambda t: (t + self.miu) / self.sigma
-        z2 = lambda t: (t - self.miu) / self.sigma
+        z1 = lambda t: (t + self.mu) / self.sigma
+        z2 = lambda t: (t - self.mu) / self.sigma
         result = 0.5 * (sc.erf(z1(x) / math.sqrt(2)) + sc.erf(z2(x) / math.sqrt(2)))
         return result
 
     def pdf(self, x: float) -> float:
-        result = math.sqrt(2 / (math.pi * self.sigma**2)) * math.exp(-(x**2 + self.miu**2) / (2 * self.sigma**2)) * math.cosh(self.miu * x / (self.sigma**2))
+        result = math.sqrt(2 / (math.pi * self.sigma**2)) * math.exp(-(x**2 + self.mu**2) / (2 * self.sigma**2)) * math.cosh(self.mu * x / (self.sigma**2))
         return result
 
     def get_num_parameters(self) -> int:
@@ -802,9 +802,9 @@ class FOLDED_NORMAL:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            miu, sigma = initial_solution
-            parametric_mean = sigma * math.sqrt(2 / math.pi) * math.exp(-(miu**2) / (2 * sigma**2)) + miu * sc.erf(miu / math.sqrt(2 * sigma**2))
-            parametric_variance = miu**2 + sigma**2 - parametric_mean**2
+            mu, sigma = initial_solution
+            parametric_mean = sigma * math.sqrt(2 / math.pi) * math.exp(-(mu**2) / (2 * sigma**2)) + mu * sc.erf(mu / math.sqrt(2 * sigma**2))
+            parametric_variance = mu**2 + sigma**2 - parametric_mean**2
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
             return (eq1, eq2)
@@ -812,7 +812,7 @@ class FOLDED_NORMAL:
         x0 = [measurements.mean, measurements.standard_deviation]
         b = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
         solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([measurements]))
-        parameters = {"miu": solution.x[0], "sigma": solution.x[1]}
+        parameters = {"mu": solution.x[0], "sigma": solution.x[1]}
         return parameters
 
 
@@ -957,33 +957,33 @@ class GAMMA_3P:
         return v1 and v2
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        α = (2 / measurements.skewness) ** 2
-        β = math.sqrt(measurements.variance / α)
-        loc = measurements.mean - α * β
-        parameters = {"alpha": α, "beta": β, "loc": loc}
+        alpha = (2 / measurements.skewness) ** 2
+        beta = math.sqrt(measurements.variance / alpha)
+        loc = measurements.mean - alpha * beta
+        parameters = {"alpha": alpha, "loc": loc, "beta": beta}
         return parameters
 
 
 class GENERALIZED_EXTREME_VALUE:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.ξ = self.parameters["ξ"]
-        self.miu = self.parameters["miu"]
+        self.xi = self.parameters["xi"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
-        if self.ξ == 0:
+        z = lambda t: (t - self.mu) / self.sigma
+        if self.xi == 0:
             return math.exp(-math.exp(-z(x)))
         else:
-            return math.exp(-((1 + self.ξ * z(x)) ** (-1 / self.ξ)))
+            return math.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi)))
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
-        if self.ξ == 0:
+        z = lambda t: (t - self.mu) / self.sigma
+        if self.xi == 0:
             return (1 / self.sigma) * math.exp(-z(x) - math.exp(-z(x)))
         else:
-            return (1 / self.sigma) * math.exp(-((1 + self.ξ * z(x)) ** (-1 / self.ξ))) * (1 + self.ξ * z(x)) ** (-1 - 1 / self.ξ)
+            return (1 / self.sigma) * math.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi))) * (1 + self.xi * z(x)) ** (-1 - 1 / self.xi)
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -994,7 +994,7 @@ class GENERALIZED_EXTREME_VALUE:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         scipy_params = scipy.stats.genextreme.fit(measurements.data)
-        parameters = {"ξ": -scipy_params[0], "miu": scipy_params[1], "sigma": scipy_params[2]}
+        parameters = {"xi": -scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}
         return parameters
 
 
@@ -1044,7 +1044,7 @@ class GENERALIZED_GAMMA:
             parameters = {"a": solution[0], "d": solution[1], "p": solution[2]}
         except:
             scipy_params = scipy.stats.gengamma.fit(measurements.data)
-            parameters = {"a": scipy_params[0], "c": scipy_params[1], "miu": scipy_params[2], "sigma": scipy_params[3]}
+            parameters = {"a": scipy_params[0], "c": scipy_params[1], "mu": scipy_params[2], "sigma": scipy_params[3]}
         return parameters
 
 
@@ -1148,14 +1148,14 @@ class GENERALIZED_NORMAL:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.beta = self.parameters["beta"]
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.alpha = self.parameters["alpha"]
 
     def cdf(self, x: float) -> float:
-        return 0.5 + (numpy.sign(x - self.miu) / 2) * sc.gammainc(1 / self.beta, abs((x - self.miu) / self.alpha) ** self.beta)
+        return 0.5 + (numpy.sign(x - self.mu) / 2) * sc.gammainc(1 / self.beta, abs((x - self.mu) / self.alpha) ** self.beta)
 
     def pdf(self, x: float) -> float:
-        return self.beta / (2 * self.alpha * math.gamma(1 / self.beta)) * math.exp(-((abs(x - self.miu) / self.alpha) ** self.beta))
+        return self.beta / (2 * self.alpha * math.gamma(1 / self.beta)) * math.exp(-((abs(x - self.mu) / self.alpha) ** self.beta))
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -1167,7 +1167,7 @@ class GENERALIZED_NORMAL:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         scipy_params = scipy.stats.gennorm.fit(measurements.data)
-        parameters = {"beta": scipy_params[0], "miu": scipy_params[1], "alpha": scipy_params[2]}
+        parameters = {"beta": scipy_params[0], "mu": scipy_params[1], "alpha": scipy_params[2]}
         return parameters
 
 
@@ -1175,16 +1175,16 @@ class GENERALIZED_PARETO:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.c = self.parameters["c"]
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = 1 - (1 + self.c * z(x)) ** (-1 / self.c)
         return result
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = (1 / self.sigma) * (1 + self.c * z(x)) ** (-1 / self.c - 1)
         return result
 
@@ -1197,26 +1197,26 @@ class GENERALIZED_PARETO:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            c, miu, sigma = initial_solution
-            parametric_mean = miu + sigma / (1 - c)
+            c, mu, sigma = initial_solution
+            parametric_mean = mu + sigma / (1 - c)
             parametric_variance = sigma * sigma / ((1 - c) * (1 - c) * (1 - 2 * c))
-            parametric_median = miu + sigma * (2**c - 1) / c
+            parametric_median = mu + sigma * (2**c - 1) / c
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
             eq3 = parametric_median - numpy.percentile(measurements.data, 50)
             return (eq1, eq2, eq3)
 
         scipy_params = scipy.stats.genpareto.fit(measurements.data)
-        parameters = {"c": scipy_params[0], "miu": scipy_params[1], "sigma": scipy_params[2]}
+        parameters = {"c": scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}
         if parameters["c"] < 0:
             scipy_params = scipy.stats.genpareto.fit(measurements.data)
             c0 = scipy_params[0]
             x0 = [c0, measurements.min, 1]
             b = ((-numpy.inf, -numpy.inf, 0), (numpy.inf, measurements.min, numpy.inf))
             solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([measurements]))
-            parameters = {"c": solution.x[0], "miu": solution.x[1], "sigma": solution.x[2]}
-            parameters["miu"] = min(parameters["miu"], measurements.min - 1e-3)
-            delta_sigma = parameters["c"] * (parameters["miu"] - measurements.max) - parameters["sigma"]
+            parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
+            parameters["mu"] = min(parameters["mu"], measurements.min - 1e-3)
+            delta_sigma = parameters["c"] * (parameters["mu"] - measurements.max) - parameters["sigma"]
             parameters["sigma"] = parameters["sigma"] + delta_sigma + 1e-8
         return parameters
 
@@ -1253,15 +1253,15 @@ class GIBRAT:
 class GUMBEL_LEFT:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         return 1 - math.exp(-math.exp(z(x)))
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         return (1 / self.sigma) * math.exp(z(x) - math.exp(z(x)))
 
     def get_num_parameters(self) -> int:
@@ -1273,30 +1273,30 @@ class GUMBEL_LEFT:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            miu, sigma = initial_solution
-            parametric_mean = miu - sigma * 0.5772156649
+            mu, sigma = initial_solution
+            parametric_mean = mu - sigma * 0.5772156649
             parametric_variance = (sigma**2) * (math.pi**2) / 6
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
             return (eq1, eq2)
 
         solution = scipy.optimize.fsolve(equations, (1, 1), measurements)
-        parameters = {"miu": solution[0], "sigma": solution[1]}
+        parameters = {"mu": solution[0], "sigma": solution[1]}
         return parameters
 
 
 class GUMBEL_RIGHT:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         return math.exp(-math.exp(-z(x)))
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         return (1 / self.sigma) * math.exp(-z(x) - math.exp(-z(x)))
 
     def get_num_parameters(self) -> int:
@@ -1308,8 +1308,8 @@ class GUMBEL_RIGHT:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            miu, sigma = initial_solution
-            parametric_mean = miu + sigma * 0.5772156649
+            mu, sigma = initial_solution
+            parametric_mean = mu + sigma * 0.5772156649
             parametric_variance = (sigma**2) * (math.pi**2) / 6
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
@@ -1319,23 +1319,23 @@ class GUMBEL_RIGHT:
             )
 
         solution = scipy.optimize.fsolve(equations, (1, 1), measurements)
-        parameters = {"miu": solution[0], "sigma": solution[1]}
+        parameters = {"mu": solution[0], "sigma": solution[1]}
         return parameters
 
 
 class HALF_NORMAL:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = sc.erf(z(x) / math.sqrt(2))
         return result
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = (1 / self.sigma) * math.sqrt(2 / math.pi) * math.exp(-(z(x) ** 2) / 2)
         return result
 
@@ -1347,24 +1347,24 @@ class HALF_NORMAL:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        σ = math.sqrt(measurements.variance / (1 - 2 / math.pi))
-        μ = measurements.mean - σ * math.sqrt(2) / math.sqrt(math.pi)
-        parameters = {"miu": μ, "sigma": σ}
+        sigma = math.sqrt(measurements.variance / (1 - 2 / math.pi))
+        mu = measurements.mean - sigma * math.sqrt(2) / math.sqrt(math.pi)
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 
 class HYPERBOLIC_SECANT:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: math.pi * (t - self.miu) / (2 * self.sigma)
+        z = lambda t: math.pi * (t - self.mu) / (2 * self.sigma)
         return (2 / math.pi) * math.atan(math.exp((z(x))))
 
     def pdf(self, x: float) -> float:
-        z = lambda t: math.pi * (t - self.miu) / (2 * self.sigma)
+        z = lambda t: math.pi * (t - self.mu) / (2 * self.sigma)
         return (1 / math.cosh(z(x))) / (2 * self.sigma)
 
     def get_num_parameters(self) -> int:
@@ -1375,9 +1375,9 @@ class HYPERBOLIC_SECANT:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        miu = measurements.mean
+        mu = measurements.mean
         sigma = math.sqrt(measurements.variance)
-        parameters = {"miu": miu, "sigma": sigma}
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 
@@ -1434,8 +1434,8 @@ class INVERSE_GAMMA_3P:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            α, β, loc = initial_solution
-            E = lambda k: (β**k) / numpy.prod(numpy.array([(α - i) for i in range(1, k + 1)]))
+            alpha, beta, loc = initial_solution
+            E = lambda k: (beta**k) / numpy.prod(numpy.array([(alpha - i) for i in range(1, k + 1)]))
             parametric_mean = E(1) + loc
             parametric_variance = E(2) - E(1) ** 2
             parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
@@ -1452,71 +1452,71 @@ class INVERSE_GAMMA_3P:
             parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[2]}
         except:
             scipy_params = scipy.stats.invgamma.fit(measurements.data)
-            parameters = {"alpha": scipy_params[0], "beta": scipy_params[2], "loc": scipy_params[1]}
+            parameters = {"alpha": scipy_params[0], "loc": scipy_params[1], "beta": scipy_params[2]}
         return parameters
 
 
 class INVERSE_GAUSSIAN:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.lambda_ = self.parameters["lambda"]
 
     def cdf(self, x: float) -> float:
-        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / x) * ((x / self.miu) - 1)) + math.exp(2 * self.lambda_ / self.miu) * scipy.stats.norm.cdf(
-            -math.sqrt(self.lambda_ / x) * ((x / self.miu) + 1)
+        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / x) * ((x / self.mu) - 1)) + math.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
+            -math.sqrt(self.lambda_ / x) * ((x / self.mu) + 1)
         )
         return result
 
     def pdf(self, x: float) -> float:
-        result = math.sqrt(self.lambda_ / (2 * math.pi * x**3)) * math.exp(-(self.lambda_ * (x - self.miu) ** 2) / (2 * self.miu**2 * x))
+        result = math.sqrt(self.lambda_ / (2 * math.pi * x**3)) * math.exp(-(self.lambda_ * (x - self.mu) ** 2) / (2 * self.mu**2 * x))
         return result
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
 
     def parameter_restrictions(self) -> bool:
-        v1 = self.miu > 0
+        v1 = self.mu > 0
         v2 = self.lambda_ > 0
         return v1 and v2
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        μ = measurements.mean
-        λ = μ**3 / measurements.variance
-        parameters = {"miu": μ, "lambda": λ}
+        mu = measurements.mean
+        lambda_ = mu**3 / measurements.variance
+        parameters = {"mu": mu, "lambda": lambda_}
         return parameters
 
 
 class INVERSE_GAUSSIAN_3P:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.lambda_ = self.parameters["lambda"]
         self.loc = self.parameters["loc"]
 
     def cdf(self, x: float) -> float:
-        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.miu) - 1)) + math.exp(2 * self.lambda_ / self.miu) * scipy.stats.norm.cdf(
-            -math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.miu) + 1)
+        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) - 1)) + math.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
+            -math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) + 1)
         )
         return result
 
     def pdf(self, x: float) -> float:
-        result = math.sqrt(self.lambda_ / (2 * math.pi * (x - self.loc) ** 3)) * math.exp(-(self.lambda_ * ((x - self.loc) - self.miu) ** 2) / (2 * self.miu**2 * (x - self.loc)))
+        result = math.sqrt(self.lambda_ / (2 * math.pi * (x - self.loc) ** 3)) * math.exp(-(self.lambda_ * ((x - self.loc) - self.mu) ** 2) / (2 * self.mu**2 * (x - self.loc)))
         return result
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
 
     def parameter_restrictions(self) -> bool:
-        v1 = self.miu > 0
+        v1 = self.mu > 0
         v2 = self.lambda_ > 0
         return v1 and v2
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        μ = 3 * math.sqrt(measurements.variance / (measurements.skewness**2))
-        λ = μ**3 / measurements.variance
-        loc = measurements.mean - μ
-        parameters = {"miu": μ, "lambda": λ, "loc": loc}
+        mu = 3 * math.sqrt(measurements.variance / (measurements.skewness**2))
+        lambda_ = mu**3 / measurements.variance
+        loc = measurements.mean - mu
+        parameters = {"mu": mu, "lambda": lambda_, "loc": loc}
         return parameters
 
 
@@ -1652,14 +1652,14 @@ class KUMARASWAMY:
 class LAPLACE:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.b = self.parameters["b"]
 
     def cdf(self, x: float) -> float:
-        return 0.5 + 0.5 * numpy.sign(x - self.miu) * (1 - math.exp(-abs(x - self.miu) / self.b))
+        return 0.5 + 0.5 * numpy.sign(x - self.mu) * (1 - math.exp(-abs(x - self.mu) / self.b))
 
     def pdf(self, x: float) -> float:
-        return (1 / (2 * self.b)) * math.exp(-abs(x - self.miu) / self.b)
+        return (1 / (2 * self.b)) * math.exp(-abs(x - self.mu) / self.b)
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -1669,25 +1669,25 @@ class LAPLACE:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        miu = measurements.mean
+        mu = measurements.mean
         b = math.sqrt(measurements.variance / 2)
-        parameters = {"miu": miu, "b": b}
+        parameters = {"mu": mu, "b": b}
         return parameters
 
 
 class LEVY:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.c = self.parameters["c"]
 
     def cdf(self, x: float) -> float:
-        y = lambda x: math.sqrt(self.c / ((x - self.miu)))
+        y = lambda x: math.sqrt(self.c / ((x - self.mu)))
         result = 2 - 2 * scipy.stats.norm.cdf(y(x))
         return result
 
     def pdf(self, x: float) -> float:
-        result = math.sqrt(self.c / (2 * math.pi)) * math.exp(-self.c / (2 * (x - self.miu))) / ((x - self.miu) ** 1.5)
+        result = math.sqrt(self.c / (2 * math.pi)) * math.exp(-self.c / (2 * (x - self.mu))) / ((x - self.mu) ** 1.5)
         return result
 
     def get_num_parameters(self) -> int:
@@ -1699,7 +1699,7 @@ class LEVY:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         scipy_params = scipy.stats.levy.fit(measurements.data)
-        parameters = {"miu": scipy_params[0], "c": scipy_params[1]}
+        parameters = {"mu": scipy_params[0], "c": scipy_params[1]}
         return parameters
 
 
@@ -1707,16 +1707,16 @@ class LOGGAMMA:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.c = self.parameters["c"]
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        y = lambda x: (x - self.miu) / self.sigma
+        y = lambda x: (x - self.mu) / self.sigma
         result = sc.gammainc(self.c, math.exp(y(x)))
         return result
 
     def pdf(self, x: float) -> float:
-        y = lambda x: (x - self.miu) / self.sigma
+        y = lambda x: (x - self.mu) / self.sigma
         result = math.exp(self.c * y(x) - math.exp(y(x)) - sc.gammaln(self.c)) / self.sigma
         return result
 
@@ -1730,8 +1730,8 @@ class LOGGAMMA:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution, data_mean, data_variance, data_skewness):
-            c, miu, sigma = initial_solution
-            parametric_mean = sc.digamma(c) * sigma + miu
+            c, mu, sigma = initial_solution
+            parametric_mean = sc.digamma(c) * sigma + mu
             parametric_variance = sc.polygamma(1, c) * (sigma**2)
             parametric_skewness = sc.polygamma(2, c) / (sc.polygamma(1, c) ** 1.5)
             eq1 = parametric_mean - data_mean
@@ -1743,23 +1743,23 @@ class LOGGAMMA:
         x0 = (1, 1, 1)
         args = (measurements.mean, measurements.variance, measurements.skewness)
         solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
-        parameters = {"c": solution.x[0], "miu": solution.x[1], "sigma": solution.x[2]}
+        parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
         return parameters
 
 
 class LOGISTIC:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: math.exp(-(t - self.miu) / self.sigma)
+        z = lambda t: math.exp(-(t - self.mu) / self.sigma)
         result = 1 / (1 + z(x))
         return result
 
     def pdf(self, x: float) -> float:
-        z = lambda t: math.exp(-(t - self.miu) / self.sigma)
+        z = lambda t: math.exp(-(t - self.mu) / self.sigma)
         result = z(x) / (self.sigma * (1 + z(x)) ** 2)
         return result
 
@@ -1771,9 +1771,9 @@ class LOGISTIC:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        μ = measurements.mean
-        σ = math.sqrt(3 * measurements.variance / (math.pi**2))
-        parameters = {"miu": μ, "sigma": σ}
+        mu = measurements.mean
+        sigma = math.sqrt(3 * measurements.variance / (math.pi**2))
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 
@@ -1830,35 +1830,35 @@ class LOGLOGISTIC_3P:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         scipy_params = scipy.stats.fisk.fit(measurements.data)
-        parameters = {"alpha": scipy_params[2], "beta": scipy_params[0], "loc": scipy_params[1]}
+        parameters = {"loc": scipy_params[1], "alpha": scipy_params[2], "beta": scipy_params[0]}
         return parameters
 
 
 class LOGNORMAL:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        result = scipy.stats.norm.cdf((math.log(x) - self.miu) / self.sigma)
+        result = scipy.stats.norm.cdf((math.log(x) - self.mu) / self.sigma)
         return result
 
     def pdf(self, x: float) -> float:
-        return (1 / (x * self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((math.log(x) - self.miu) ** 2) / (2 * self.sigma**2)))
+        return (1 / (x * self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((math.log(x) - self.mu) ** 2) / (2 * self.sigma**2)))
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
 
     def parameter_restrictions(self) -> bool:
-        v1 = self.miu > 0
+        v1 = self.mu > 0
         v2 = self.sigma > 0
         return v1 and v2
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        μ = math.log(measurements.mean**2 / math.sqrt(measurements.mean**2 + measurements.variance))
-        σ = math.sqrt(math.log((measurements.mean**2 + measurements.variance) / (measurements.mean**2)))
-        parameters = {"miu": μ, "sigma": σ}
+        mu = math.log(measurements.mean**2 / math.sqrt(measurements.mean**2 + measurements.variance))
+        sigma = math.sqrt(math.log((measurements.mean**2 + measurements.variance) / (measurements.mean**2)))
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 
@@ -1895,16 +1895,16 @@ class MAXWELL:
 class MOYAL:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = sc.erfc(math.exp(-0.5 * z(x)) / math.sqrt(2))
         return result
 
     def pdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = math.exp(-0.5 * (z(x) + math.exp(-z(x)))) / (self.sigma * math.sqrt(2 * math.pi))
         return result
 
@@ -1916,9 +1916,9 @@ class MOYAL:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        σ = math.sqrt(2 * measurements.variance / (math.pi * math.pi))
-        μ = measurements.mean - σ * (math.log(2) + 0.577215664901532)
-        parameters = {"miu": μ, "sigma": σ}
+        sigma = math.sqrt(2 * measurements.variance / (math.pi * math.pi))
+        mu = measurements.mean - sigma * (math.log(2) + 0.577215664901532)
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 
@@ -2093,16 +2093,16 @@ class NON_CENTRAL_T_STUDENT:
 class NORMAL:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = 0.5 * (1 + sc.erf(z(x) / math.sqrt(2)))
         return result
 
     def pdf(self, x: float) -> float:
-        result = (1 / (self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((x - self.miu) ** 2) / (2 * self.sigma**2)))
+        result = (1 / (self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((x - self.mu) ** 2) / (2 * self.sigma**2)))
         return result
 
     def get_num_parameters(self) -> int:
@@ -2113,9 +2113,9 @@ class NORMAL:
         return v1
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
-        μ = measurements.mean
-        σ = measurements.standard_deviation
-        parameters = {"miu": μ, "sigma": σ}
+        mu = measurements.mean
+        sigma = measurements.standard_deviation
+        parameters = {"mu": mu, "sigma": sigma}
         return parameters
 
 
@@ -2188,16 +2188,16 @@ class PERT:
         self.c = self.parameters["c"]
 
     def cdf(self, x: float) -> float:
-        α1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
-        α2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
+        alpha1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
+        alpha2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
         z = lambda t: (t - self.a) / (self.c - self.a)
-        result = sc.betainc(α1, α2, z(x))
+        result = sc.betainc(alpha1, alpha2, z(x))
         return result
 
     def pdf(self, x: float) -> float:
-        α1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
-        α2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
-        return (x - self.a) ** (α1 - 1) * (self.c - x) ** (α2 - 1) / (sc.beta(α1, α2) * (self.c - self.a) ** (α1 + α2 - 1))
+        alpha1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
+        alpha2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
+        return (x - self.a) ** (alpha1 - 1) * (self.c - x) ** (alpha2 - 1) / (sc.beta(alpha1, alpha2) * (self.c - self.a) ** (alpha1 + alpha2 - 1))
 
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -2210,11 +2210,11 @@ class PERT:
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             a, b, c = initial_solution
-            α1 = (4 * b + c - 5 * a) / (c - a)
-            α2 = (5 * c - a - 4 * b) / (c - a)
+            alpha1 = (4 * b + c - 5 * a) / (c - a)
+            alpha2 = (5 * c - a - 4 * b) / (c - a)
             parametric_mean = (a + 4 * b + c) / 6
             parametric_variance = ((parametric_mean - a) * (c - parametric_mean)) / 7
-            parametric_median = sc.betaincinv(α1, α2, 0.5) * (c - a) + a
+            parametric_median = sc.betaincinv(alpha1, alpha2, 0.5) * (c - a) + a
             eq1 = parametric_mean - measurements.mean
             eq2 = parametric_variance - measurements.variance
             eq5 = parametric_median - measurements.median
@@ -2253,10 +2253,10 @@ class POWER_FUNCTION:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            α, a, b = initial_solution
-            E1 = (a + b * α) / (1 + α)
-            E2 = (2 * a**2 + 2 * a * b * α + b**2 * α * (1 + α)) / ((1 + α) * (2 + α))
-            E3 = (6 * a**3 + 6 * a**2 * b * α + 3 * a * b**2 * α * (1 + α) + b**3 * α * (1 + α) * (2 + α)) / ((1 + α) * (2 + α) * (3 + α))
+            alpha, a, b = initial_solution
+            E1 = (a + b * alpha) / (1 + alpha)
+            E2 = (2 * a**2 + 2 * a * b * alpha + b**2 * alpha * (1 + alpha)) / ((1 + alpha) * (2 + alpha))
+            E3 = (6 * a**3 + 6 * a**2 * b * alpha + 3 * a * b**2 * alpha * (1 + alpha) + b**3 * alpha * (1 + alpha) * (2 + alpha)) / ((1 + alpha) * (2 + alpha) * (3 + alpha))
             parametric_mean = E1
             parametric_variance = E2 - E1**2
             parametric_skewness = (E3 - 3 * E2 * E1 + 2 * E1**3) / ((E2 - E1**2)) ** 1.5
@@ -2640,8 +2640,8 @@ class WEIBULL:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            α, β = initial_solution
-            E = lambda k: (β**k) * math.gamma(1 + k / α)
+            alpha, beta = initial_solution
+            E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
             parametric_mean = E(1)
             parametric_variance = E(2) - E(1) ** 2
             eq1 = parametric_mean - measurements.mean
@@ -2678,8 +2678,8 @@ class WEIBULL_3P:
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            α, β, loc = initial_solution
-            E = lambda k: (β**k) * math.gamma(1 + k / α)
+            alpha, beta, loc = initial_solution
+            E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
             parametric_mean = E(1) + loc
             parametric_variance = E(2) - E(1) ** 2
             parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
@@ -2692,7 +2692,7 @@ class WEIBULL_3P:
         x0 = (1, 1, measurements.mean)
         args = [measurements]
         solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
-        parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[2]}
+        parameters = {"alpha": solution.x[0], "loc": solution.x[2], "beta": solution.x[1]}
         return parameters
 
 

@@ -71,13 +71,13 @@ class BURR:
             A, B, C = initial_solution
 
             ## Moments Burr Distribution
-            miu = lambda r: (A**r) * C * sc.beta((B * C - r) / B, (B + r) / B)
+            mu = lambda r: (A**r) * C * sc.beta((B * C - r) / B, (B + r) / B)
 
             ## Parametric expected expressions
-            parametric_mean = miu(1)
-            # parametric_variance = -(miu(1) ** 2) + miu(2)
-            # parametric_skewness = 2 * miu(1) ** 3 - 3 * miu(1) * miu(2) + miu(3)
-            # parametric_kurtosis = -3 * miu(1) ** 4 + 6 * miu(1) ** 2 * miu(2) -4 * miu(1) * miu(3) + miu(4)
+            parametric_mean = mu(1)
+            # parametric_variance = -(mu(1) ** 2) + mu(2)
+            # parametric_skewness = 2 * mu(1) ** 3 - 3 * mu(1) * mu(2) + mu(3)
+            # parametric_kurtosis = -3 * mu(1) ** 4 + 6 * mu(1) ** 2 * mu(2) -4 * mu(1) * mu(3) + mu(4)
             parametric_median = A * ((2 ** (1 / C)) - 1) ** (1 / B)
             parametric_mode = A * ((B - 1) / (B * C + 1)) ** (1 / B)
 

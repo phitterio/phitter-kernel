@@ -12,7 +12,7 @@ class FOLDED_NORMAL:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -21,8 +21,8 @@ class FOLDED_NORMAL:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z1 = lambda t: (t + self.miu) / self.sigma
-        z2 = lambda t: (t - self.miu) / self.sigma
+        z1 = lambda t: (t + self.mu) / self.sigma
+        z2 = lambda t: (t - self.mu) / self.sigma
         result = 0.5 * (sc.erf(z1(x) / math.sqrt(2)) + sc.erf(z2(x) / math.sqrt(2)))
         return result
 
@@ -31,7 +31,7 @@ class FOLDED_NORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        result = math.sqrt(2 / (math.pi * self.sigma**2)) * math.exp(-(x**2 + self.miu**2) / (2 * self.sigma**2)) * math.cosh(self.miu * x / (self.sigma**2))
+        result = math.sqrt(2 / (math.pi * self.sigma**2)) * math.exp(-(x**2 + self.mu**2) / (2 * self.sigma**2)) * math.cosh(self.mu * x / (self.sigma**2))
         return result
 
     def get_num_parameters(self) -> int:
@@ -55,21 +55,21 @@ class FOLDED_NORMAL:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "sigma":  * }
+            {"mu":  * , "sigma":  * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            miu, sigma = initial_solution
+            mu, sigma = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = sigma * math.sqrt(2 / math.pi) * math.exp(-(miu**2) / (2 * sigma**2)) + miu * sc.erf(miu / math.sqrt(2 * sigma**2))
-            parametric_variance = miu**2 + sigma**2 - parametric_mean**2
+            parametric_mean = sigma * math.sqrt(2 / math.pi) * math.exp(-(mu**2) / (2 * sigma**2)) + mu * sc.erf(mu / math.sqrt(2 * sigma**2))
+            parametric_variance = mu**2 + sigma**2 - parametric_mean**2
 
             # System Equations
             eq1 = parametric_mean - measurements.mean
@@ -80,7 +80,7 @@ class FOLDED_NORMAL:
         x0 = [measurements.mean, measurements.standard_deviation]
         b = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
         solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([measurements]))
-        parameters = {"miu": solution.x[0], "sigma": solution.x[1]}
+        parameters = {"mu": solution.x[0], "sigma": solution.x[1]}
 
         return parameters
 

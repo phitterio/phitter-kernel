@@ -7,46 +7,46 @@ dists = {
                 return jStat.gammafn(k + alpha) * jStat.gammafn(beta - k) / (jStat.gammafn(alpha) * jStat.gammafn(beta))
             },
             centralMoments: function (k, alpha, beta, loc, scale) {
-                const µ1 = this.nonCentralMoments(1, alpha, beta, loc, scale);
-                const µ2 = this.nonCentralMoments(2, alpha, beta, loc, scale);
-                const µ3 = this.nonCentralMoments(3, alpha, beta, loc, scale);
-                const µ4 = this.nonCentralMoments(4, alpha, beta, loc, scale);
+                const miu1 = this.nonCentralMoments(1, alpha, beta, loc, scale);
+                const miu2 = this.nonCentralMoments(2, alpha, beta, loc, scale);
+                const miu3 = this.nonCentralMoments(3, alpha, beta, loc, scale);
+                const miu4 = this.nonCentralMoments(4, alpha, beta, loc, scale);
 
                 let result;
                 switch (k) {
                     case 1: result = 0; break;
-                    case 2: result = µ2 - µ1 ** 2; break;
-                    case 3: result = µ3 - 3 * µ1 * µ2 + 2 * µ1 ** 3; break;
-                    case 4: result = µ4 - 4 * µ1 * µ3 + 6 * (µ1 ** 2) * µ2 - 3 * (µ1 ** 4); break;
+                    case 2: result = miu2 - miu1 ** 2; break;
+                    case 3: result = miu3 - 3 * miu1 * miu2 + 2 * miu1 ** 3; break;
+                    case 4: result = miu4 - 4 * miu1 * miu3 + 6 * (miu1 ** 2) * miu2 - 3 * (miu1 ** 4); break;
                 };
                 return result
             },
             stats: {
                 mean: function (alpha, beta, loc, scale) {
-                    const µ1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    return loc + scale * µ1;
+                    const miu1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    return loc + scale * miu1;
                 },
                 variance: function (alpha, beta, loc, scale) {
-                    const µ1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    const µ2 = dists.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
-                    return (scale ** 2) * (µ2 - µ1 ** 2);
+                    const miu1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    const miu2 = dists.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
+                    return (scale ** 2) * (miu2 - miu1 ** 2);
                 },
                 standardDeviation: function (alpha, beta, loc, scale) {
                     return Math.sqrt(this.variance(alpha, beta, loc, scale));
                 },
                 skewness: function (alpha, beta, loc, scale) {
-                    const µ1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    const µ2 = dists.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
-                    const std = Math.sqrt(µ2 - µ1 ** 2);
-                    const central_µ3 = dists.beta_prime_4p.measurements.centralMoments(3, alpha, beta, loc, scale);
-                    return central_µ3 / (std ** 3);
+                    const miu1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    const miu2 = dists.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
+                    const std = Math.sqrt(miu2 - miu1 ** 2);
+                    const central_miu3 = dists.beta_prime_4p.measurements.centralMoments(3, alpha, beta, loc, scale);
+                    return central_miu3 / (std ** 3);
                 },
                 kurtosis: function (alpha, beta, loc, scale) {
-                    const µ1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
-                    const µ2 = dists.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
-                    const std = Math.sqrt(µ2 - µ1 ** 2);
-                    const central_µ4 = dists.beta_prime_4p.measurements.centralMoments(4, alpha, beta, loc, scale);
-                    return central_µ4 / (std ** 4);
+                    const miu1 = dists.beta_prime_4p.measurements.nonCentralMoments(1, alpha, beta, loc, scale);
+                    const miu2 = dists.beta_prime_4p.measurements.nonCentralMoments(2, alpha, beta, loc, scale);
+                    const std = Math.sqrt(miu2 - miu1 ** 2);
+                    const central_miu4 = dists.beta_prime_4p.measurements.centralMoments(4, alpha, beta, loc, scale);
+                    return central_miu4 / (std ** 4);
                 },
                 median: function (alpha, beta, loc, scale) {
                     return dists.beta_prime_4p.measurements.ppf(0.5, alpha, beta, loc, scale);

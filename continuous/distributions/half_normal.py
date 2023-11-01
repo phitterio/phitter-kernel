@@ -10,7 +10,7 @@ class HALF_NORMAL:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.miu = self.parameters["miu"]
+        self.mu = self.parameters["mu"]
         self.sigma = self.parameters["sigma"]
 
     def cdf(self, x: float) -> float:
@@ -19,7 +19,7 @@ class HALF_NORMAL:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = sc.erf(z(x) / math.sqrt(2))
         return result
 
@@ -28,7 +28,7 @@ class HALF_NORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: (t - self.miu) / self.sigma
+        z = lambda t: (t - self.mu) / self.sigma
         result = (1 / self.sigma) * math.sqrt(2 / math.pi) * math.exp(-(z(x) ** 2) / 2)
         return result
 
@@ -53,17 +53,17 @@ class HALF_NORMAL:
         Parameters
         ==========
         measurements : dict
-            {"miu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
 
         Returns
         =======
         parameters : dict
-            {"miu":  * , "sigma":  * }
+            {"mu":  * , "sigma":  * }
         """
 
-        σ = math.sqrt(measurements.variance / (1 - 2 / math.pi))
-        μ = measurements.mean - σ * math.sqrt(2) / math.sqrt(math.pi)
-        parameters = {"miu": μ, "sigma": σ}
+        sigma = math.sqrt(measurements.variance / (1 - 2 / math.pi))
+        mu = measurements.mean - sigma * math.sqrt(2) / math.sqrt(math.pi)
+        parameters = {"mu": mu, "sigma": sigma}
 
         return parameters
 

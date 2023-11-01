@@ -63,7 +63,7 @@ class LOGLOGISTIC_3P:
             {"alpha":  * , "beta":  * }
         """
         scipy_params = scipy.stats.fisk.fit(measurements.data)
-        parameters = {"alpha": scipy_params[2], "beta": scipy_params[0], "loc": scipy_params[1]}
+        parameters = {"loc": scipy_params[1], "alpha": scipy_params[2], "beta": scipy_params[0]}
 
         return parameters
 
@@ -96,15 +96,15 @@ if __name__ == "__main__":
     import time
 
     def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-        α, β, loc = initial_solution
+        alpha, beta, loc = initial_solution
 
-        E = lambda r: (α**r) * (r * math.pi / β) / math.sin(r * math.pi / β)
+        E = lambda r: (alpha**r) * (r * math.pi / beta) / math.sin(r * math.pi / beta)
 
         parametric_mean = E(1) + loc
         parametric_variance = E(2) - E(1) ** 2
         parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
         parametric_kurtosis = (E(4) - 4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) / ((E(2) - E(1) ** 2)) ** 2
-        parametric_median = α + loc
+        parametric_median = alpha + loc
 
         ## System Equations
         eq1 = parametric_mean - measurements.mean
