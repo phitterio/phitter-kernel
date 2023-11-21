@@ -2338,7 +2338,7 @@ def test_anderson_darling_continuous(data, distribution, measurements, confidenc
     return result_test_ad
 
 
-def phitter_continuous(data, num_bins=None, confidence_level=0.95):
+def phitter_continuous(data, num_bins=None, confidence_level=0.95, minimum_sse=float("inf")):
     _all_distributions = [
         ALPHA,
         ARCSINE,
@@ -2443,7 +2443,7 @@ def phitter_continuous(data, num_bins=None, confidence_level=0.95):
 
         DISTRIBUTION_RESULTS = {}
         v1, v2, v3 = False, False, False
-        if validate_estimation and distribution.parameter_restrictions() and not math.isnan(sse) and not math.isinf(sse):
+        if validate_estimation and distribution.parameter_restrictions() and not math.isnan(sse) and not math.isinf(sse) and sse < minimum_sse:
             try:
                 chi2_test = test_chi_square_continuous(data, distribution, measurements, confidence_level=confidence_level)
                 if numpy.isnan(chi2_test["test_statistic"]) == False and math.isinf(chi2_test["test_statistic"]) == False and chi2_test["test_statistic"] > 0:
@@ -2514,7 +2514,7 @@ if __name__ == "__main__":
     sample_distribution_file = open(path, "r")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
-    sorted_results_sse, aproved_results = phitter_continuous(data, 20, confidence_level=0.99)
+    sorted_results_sse, aproved_results = phitter_continuous(data, 20, confidence_level=0.99, minimum_sse=1e-3)
 
     for distribution, results in aproved_results.items():
         print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")
