@@ -50,7 +50,7 @@ class UNIFORM:
         Returns
         =======
         parameters : dict
-            {"a":  * , "b":  * }
+            {"a": * , "b": * }
         """
 
         a = measurements.min - 1e-8

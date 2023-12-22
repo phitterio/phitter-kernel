@@ -63,7 +63,7 @@ class CHI_SQUARE_3P:
         Returns
         =======
         parameters : dict
-            {"df":  * }
+            {"df": * }
         """
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         #     ## Variables declaration

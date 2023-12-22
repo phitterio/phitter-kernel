@@ -60,7 +60,7 @@ class MAXWELL:
         Returns
         =======
         parameters : dict
-            {"df":  * }
+            {"df": * }
         """
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         #     alpha, loc = initial_solution

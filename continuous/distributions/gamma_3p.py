@@ -68,7 +68,7 @@ class GAMMA_3P:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * }
+            {"alpha": * , "beta": * }
         """
         alpha = (2 / measurements.skewness) ** 2
         beta = math.sqrt(measurements.variance / alpha)

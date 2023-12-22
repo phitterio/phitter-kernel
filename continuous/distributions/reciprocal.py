@@ -53,7 +53,7 @@ class RECIPROCAL:
         Returns
         =======
         parameters : dict
-            {"min":  * , "max":  * }
+            {"min": * , "max": * }
         """
 
         a = measurements.min - 1e-8

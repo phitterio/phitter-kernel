@@ -3,7 +3,7 @@ import math
 from measurements.measurements_discrete import MEASUREMENTS_DISCRETE
 
 
-def test_chi_square_discrete(data, distribution, measurements, confidence_level=0.95):
+def test_chi_square_discrete(distribution, measurements, confidence_level=0.95):
     """
     Chi Square test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -83,4 +83,4 @@ if __name__ == "__main__":
         ## Init a instance of class
         measurements = MEASUREMENTS_DISCRETE(data)
         distribution = distribution_class(measurements)
-        print(test_chi_square_discrete(data, distribution, measurements))
+        print(test_chi_square_discrete(distribution, measurements))

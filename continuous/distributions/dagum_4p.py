@@ -59,7 +59,7 @@ class DAGUM_4P:
         Returns
         =======
         parameters : dict
-            {"a": * , "b":  * , "c":  * }
+            {"a": * , "b": * , "c": * }
         """
 
         def sse(parameters: dict) -> float:

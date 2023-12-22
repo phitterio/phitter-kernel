@@ -61,7 +61,7 @@ class ERLANG:
         Returns
         =======
         parameters : dict
-            {"m":  * , "beta":  * }
+            {"m": * , "beta": * }
         """
         k = round(measurements.mean**2 / measurements.variance)
         beta = measurements.variance / measurements.mean

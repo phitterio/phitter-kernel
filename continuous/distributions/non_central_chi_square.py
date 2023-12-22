@@ -83,7 +83,7 @@ class NON_CENTRAL_CHI_SQUARE:
         Returns
         =======
         parameters : dict
-            {"df":  * }
+            {"df": * }
         """
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         #     lambda_, n = initial_solution

@@ -63,12 +63,12 @@ class PERT:
         Parameters
         ==========
         measurements : dict
-            {"mean":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "median":  * , "b":  * }
+            {"mean": * , "variance": * , "skewness": * , "kurtosis": * , "median": * , "b": * }
 
         Returns
         =======
         parameters : dict
-            {"a":  * , "b":  * , "c":  * }
+            {"a": * , "b": * , "c": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

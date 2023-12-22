@@ -6,7 +6,7 @@ import scipy.special as sc
 class GIBRAT:
     """
     Gibrat distribution
-    https://mathworld.wolfram.com / GibratsDistribution.html
+    https://mathworld.wolfram.com/GibratsDistribution.html
     """
 
     def __init__(self, measurements):
@@ -20,9 +20,9 @@ class GIBRAT:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # result = scipy.stats.gilbrat.cdf(x, self.loc, self.scale)
-        z = lambda t: (t - self.loc) / self.scale
-        result = 0.5 * (1 + sc.erf(math.log(z(x)) / math.sqrt(2)))
+        # z = lambda t: (t - self.loc) / self.scale
+        # result = 0.5 * (1 + sc.erf(math.log(z(x)) / math.sqrt(2)))
+        result = scipy.stats.gibrat.cdf(x, self.loc, self.scale)
         return result
 
     def pdf(self, x: float) -> float:
@@ -30,9 +30,9 @@ class GIBRAT:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = scipy.stats.gilbrat.pdf(x, self.loc, self.scale)
-        z = lambda t: (t - self.loc) / self.scale
-        result = 1 / (self.scale * z(x) * math.sqrt(2 * math.pi)) * math.exp(-0.5 * math.log(z(x)) ** 2)
+        # z = lambda t: (t - self.loc) / self.scale
+        # result = 1 / (self.scale * z(x) * math.sqrt(2 * math.pi)) * math.exp(-0.5 * math.log(z(x)) ** 2)
+        result = scipy.stats.gibrat.pdf(x, self.loc, self.scale)
         return result
 
     def get_num_parameters(self) -> int:
@@ -63,11 +63,11 @@ class GIBRAT:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"loc": * , "scale": *}
         """
         # loc = measurements.min - 1e-3
         # scale = (measurements.mean - loc) / math.sqrt(math.e)
-        scipy_params = scipy.stats.gilbrat.fit(measurements.data)
+        scipy_params = scipy.stats.gibrat.fit(measurements.data)
         parameters = {"loc": scipy_params[0], "scale": scipy_params[1]}
         return parameters
 

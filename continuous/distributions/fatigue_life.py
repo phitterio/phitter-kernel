@@ -65,7 +65,7 @@ class FATIGUE_LIFE:
         Returns
         =======
         parameters : dict
-            {"gamma":  * , "loc":  * , "scale":  * }
+            {"gamma": * , "loc": * , "scale": * }
         """
         ## NO SE ESTÁN RESOLVIENDO LAS ECUACIONES PARA GAMMA = 5, scale = 10, loc = 5
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

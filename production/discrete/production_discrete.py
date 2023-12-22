@@ -1,8 +1,8 @@
 import collections
+import joblib
 import math
 import numpy
 import scipy.optimize
-import scipy.special as sc
 import scipy.stats
 
 class BERNOULLI:
@@ -39,7 +39,7 @@ class BINOMIAL:
         result = scipy.stats.binom.cdf(x, self.n, self.p)
         return result
     def pmf(self, x: int) -> float:
-        result = sc.comb(self.n, x) * (self.p**x) * ((1 - self.p) ** (self.n - x))
+        result = scipy.stats.binom.pmf(x, self.n, self.p)
         return result
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -84,7 +84,7 @@ class HYPERGEOMETRIC:
         result = scipy.stats.hypergeom.cdf(x, self.N, self.n, self.K)
         return result
     def pmf(self, x: int) -> float:
-        result = sc.comb(self.K, x) * sc.comb(self.N - self.K, self.n - x) / sc.comb(self.N, self.n)
+        result = scipy.stats.hypergeom.pmf(x, self.N, self.n, self.K)
         return result
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -138,13 +138,13 @@ class LOGARITHMIC:
 class NEGATIVE_BINOMIAL:
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.p = self.parameters["p"]
         self.r = self.parameters["r"]
+        self.p = self.parameters["p"]
     def cdf(self, x: float) -> float:
         result = scipy.stats.beta.cdf(self.p, self.r, x + 1)
         return result
     def pmf(self, x: int) -> float:
-        result = sc.comb(self.r + x - 1, x) * (self.p**self.r) * ((1 - self.p) ** x)
+        result = scipy.stats.nbinom.pmf(x, self.r, self.p)
         return result
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -156,7 +156,7 @@ class NEGATIVE_BINOMIAL:
     def get_parameters(self, measurements) -> dict[str, float | int]:
         p = measurements.mean / measurements.variance
         r = round(measurements.mean * p / (1 - p))
-        parameters = {"p": p, "r": r}
+        parameters = {"r": r, "p": p}
         return parameters
 
 class POISSON:
@@ -167,7 +167,7 @@ class POISSON:
         result = scipy.stats.poisson.cdf(x, self.lambda_)
         return result
     def pmf(self, x: int) -> float:
-        result = (self.lambda_**x) * math.exp(-self.lambda_) / math.factorial(x)
+        result = scipy.stats.poisson.pmf(x, self.lambda_)
         return result
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -203,7 +203,7 @@ class UNIFORM:
 
 class MEASUREMENTS_DISCRETE:
     def __init__(self, data: list[int]):
-        self.data = data
+        self.data = sorted(data)
         self.length = len(data)
         self.min = min(data)
         self.max = max(data)
@@ -228,7 +228,7 @@ class MEASUREMENTS_DISCRETE:
         histogram = collections.Counter(self.data)
         return {k: v for k, v in sorted(histogram.items(), key=lambda item: item[0])}
 
-def test_chi_square_discrete(data, distribution, measurements, confidence_level=0.95):
+def test_chi_square_discrete(distribution, measurements, confidence_level=0.95):
     N = measurements.length
     freedom_degrees = len(measurements.histogram.items()) - 1
     errors = []
@@ -242,20 +242,19 @@ def test_chi_square_discrete(data, distribution, measurements, confidence_level=
     result_test_chi2 = {"test_statistic": statistic_chi2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_chi2
 
-def test_kolmogorov_smirnov_discrete(data, distribution, measurements, confidence_level=0.95):
+def test_kolmogorov_smirnov_discrete(distribution, measurements, confidence_level=0.95):
     N = measurements.length
-    data.sort()
     errors = []
     for i in range(N):
         Sn = (i + 1) / N
         if i < N - 1:
-            if data[i] != data[i + 1]:
-                Fn = distribution.cdf(data[i])
+            if measurements.data[i] != measurements.data[i + 1]:
+                Fn = distribution.cdf(measurements.data[i])
                 errors.append(abs(Sn - Fn))
             else:
                 Fn = 0
         else:
-            Fn = distribution.cdf(data[i])
+            Fn = distribution.cdf(measurements.data[i])
             errors.append(abs(Sn - Fn))
     statistic_ks = max(errors)
     critical_value = scipy.stats.kstwo.ppf(confidence_level, N)
@@ -264,73 +263,67 @@ def test_kolmogorov_smirnov_discrete(data, distribution, measurements, confidenc
     result_test_ks = {"test_statistic": statistic_ks, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_ks
 
-
-def phitter_discrete(data, confidence_level=0.95, minimum_sse=float("inf")):
-    _all_distributions = [BERNOULLI, BINOMIAL, GEOMETRIC, HYPERGEOMETRIC, LOGARITHMIC, NEGATIVE_BINOMIAL, POISSON, UNIFORM]
-    measurements = MEASUREMENTS_DISCRETE(data)
-
-    NONE_RESULTS = {
-        "test_statistic": None,
-        "critical_value": None,
-        "p_value": None,
-        "rejected": None,
-    }
-
-    RESPONSE = {}
-    for distribution_class in _all_distributions:
+class PHITTER_DISCRETE:
+    def __init__(
+        self,
+        data: list[int | float],
+        confidence_level=0.95,
+        minimum_sse=float("inf"),
+    ):
+        self.data = data
+        self.measurements = MEASUREMENTS_DISCRETE(self.data)
+        self.confidence_level = confidence_level
+        self.minimum_sse = minimum_sse
+        self.distribution_results = {}
+        self.none_results = {"test_statistic": None, "critical_value": None, "p_value": None, "rejected": None}
+    def test(self, test_function, label: str, distribution):
+        validation_test = False
+        try:
+            test = test_function(distribution, self.measurements, confidence_level=self.confidence_level)
+            if numpy.isnan(test["test_statistic"]) == False and math.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
+                self.distribution_results[label] = {
+                    "test_statistic": test["test_statistic"],
+                    "critical_value": test["critical_value"],
+                    "p_value": test["p-value"],
+                    "rejected": test["rejected"],
+                }
+                validation_test = True
+            else:
+                self.distribution_results[label] = self.none_results
+        except:
+            self.distribution_results[label] = self.none_results
+        return validation_test
+    def process_distribution(self, distribution_class):
         distribution_name = distribution_class.__name__.lower()
-
         validate_estimation = True
         sse = 0
         try:
-            distribution = distribution_class(measurements)
-            pmf_values = [distribution.pmf(d) for d in measurements.domain]
-            sse = numpy.sum(numpy.power(numpy.array(pmf_values) - numpy.array(measurements.frequencies_pmf), 2.0))
+            distribution = distribution_class(self.measurements)
+            pmf_values = [distribution.pmf(d) for d in self.measurements.domain]
+            sse = numpy.sum(numpy.power(numpy.array(pmf_values) - numpy.array(self.measurements.frequencies_pmf), 2.0))
         except:
             validate_estimation = False
-
-        DISTRIBUTION_RESULTS = {}
-        v1, v2 = False, False
-        if validate_estimation and distribution.parameter_restrictions() and not math.isnan(sse) and not math.isinf(sse) and sse < minimum_sse:
-            try:
-                chi2_test = test_chi_square_discrete(data, distribution, measurements, confidence_level=confidence_level)
-                if numpy.isnan(chi2_test["test_statistic"]) == False and math.isinf(chi2_test["test_statistic"]) == False and chi2_test["test_statistic"] > 0:
-                    DISTRIBUTION_RESULTS["chi_square"] = {
-                        "test_statistic": chi2_test["test_statistic"],
-                        "critical_value": chi2_test["critical_value"],
-                        "p_value": chi2_test["p-value"],
-                        "rejected": chi2_test["rejected"],
-                    }
-                    v1 = True
-                else:
-                    DISTRIBUTION_RESULTS["chi_square"] = NONE_RESULTS
-            except:
-                DISTRIBUTION_RESULTS["chi_square"] = NONE_RESULTS
-
-            try:
-                ks_test = test_kolmogorov_smirnov_discrete(data, distribution, measurements, confidence_level=confidence_level)
-                if numpy.isnan(ks_test["test_statistic"]) == False and math.isinf(ks_test["test_statistic"]) == False and ks_test["test_statistic"] > 0:
-                    DISTRIBUTION_RESULTS["kolmogorov_smirnov"] = {
-                        "test_statistic": ks_test["test_statistic"],
-                        "critical_value": ks_test["critical_value"],
-                        "p_value": ks_test["p-value"],
-                        "rejected": ks_test["rejected"],
-                    }
-                    v2 = True
-                else:
-                    DISTRIBUTION_RESULTS["anderson_darling"] = NONE_RESULTS
-            except:
-                DISTRIBUTION_RESULTS["kolmogorov_smirnov"] = NONE_RESULTS
-
+        self.distribution_results = {}
+        if validate_estimation and distribution.parameter_restrictions() and not math.isnan(sse) and not math.isinf(sse) and sse < self.minimum_sse:
+            v1 = self.test(test_chi_square_discrete, "chi_square", distribution)
+            v2 = self.test(test_kolmogorov_smirnov_discrete, "kolmogorov_smirnov", distribution)
             if v1 or v2:
-                DISTRIBUTION_RESULTS["sse"] = sse
-                DISTRIBUTION_RESULTS["parameters"] = str(distribution.parameters)
-                DISTRIBUTION_RESULTS["n_test_passed"] = int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == False) + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == False)
-                DISTRIBUTION_RESULTS["n_test_null"] = int(DISTRIBUTION_RESULTS["chi_square"]["rejected"] == None) + int(DISTRIBUTION_RESULTS["kolmogorov_smirnov"]["rejected"] == None)
+                self.distribution_results["sse"] = sse
+                self.distribution_results["parameters"] = str(distribution.parameters)
+                self.distribution_results["n_test_passed"] = int(self.distribution_results["chi_square"]["rejected"] == False) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == False)
+                self.distribution_results["n_test_null"] = int(self.distribution_results["chi_square"]["rejected"] == None) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == None)
+                return distribution_name, self.distribution_results
+        return None
+    def fit(self, n_jobs: int = 1):
+        if n_jobs <= 0:
+            raise Exception("n_jobs must be greater than 1")
+        _ALL_DISCRETE_DISTRIBUTIONS = [BERNOULLI, BINOMIAL, GEOMETRIC, HYPERGEOMETRIC, LOGARITHMIC, NEGATIVE_BINOMIAL, POISSON, UNIFORM]
+        if n_jobs == 1:
+            processing_results = [self.process_distribution(distribution_class) for distribution_class in _ALL_DISCRETE_DISTRIBUTIONS]
+        else:
+            processing_results = joblib.Parallel(n_jobs=n_jobs)(joblib.delayed(self.process_distribution)(distribution_class) for distribution_class in _ALL_DISCRETE_DISTRIBUTIONS)
+        processing_results = [r for r in processing_results if r is not None]
+        sorted_results_sse = {distribution: results for distribution, results in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
+        not_rejected_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
+        return sorted_results_sse, not_rejected_results
 
-                RESPONSE[distribution_name] = DISTRIBUTION_RESULTS
-
-    sorted_results_sse = {distribution: results for distribution, results in sorted(RESPONSE.items(), key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
-    aproved_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
-
-    return sorted_results_sse, aproved_results

@@ -99,7 +99,7 @@ class NON_CENTRAL_F:
         Returns
         =======
         parameters : dict
-            {"df":  * }
+            {"df": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

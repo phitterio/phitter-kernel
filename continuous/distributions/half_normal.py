@@ -53,12 +53,12 @@ class HALF_NORMAL:
         Parameters
         ==========
         measurements : dict
-            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
 
         Returns
         =======
         parameters : dict
-            {"mu":  * , "sigma":  * }
+            {"mu": * , "sigma": * }
         """
 
         sigma = math.sqrt(measurements.variance / (1 - 2 / math.pi))

@@ -62,7 +62,7 @@ class CHI_SQUARE:
         Returns
         =======
         parameters : dict
-            {"df":  * }
+            {"df": * }
         """
         parameters = {"df": round(measurements.mean)}
         return parameters

@@ -58,7 +58,7 @@ class F:
         Returns
         =======
         parameters : dict
-            {"df1":  * , "df2":  * }
+            {"df1": * , "df2": * }
         """
         ## Scipy parameters of distribution
         scipy_params = scipy.stats.f.fit(measurements.data)

@@ -52,7 +52,7 @@ class UNIFORM:
         Returns
         =======
         parameters : dict
-            {"a":  * , "b":  * }
+            {"a": * , "b": * }
         """
         a = round(measurements.min)
         b = round(measurements.max)

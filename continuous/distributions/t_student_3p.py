@@ -75,7 +75,7 @@ class T_STUDENT_3P:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"alpha": * , "beta": * , "min": * , "max": * }
         """
 
         scipy_params = scipy.stats.t.fit(measurements.data)

@@ -1,5 +1,4 @@
 import scipy.stats
-import scipy.special as sc
 
 
 class BINOMIAL:
@@ -27,8 +26,8 @@ class BINOMIAL:
         Probability density function
         Calculated using the definition of the function
         """
-        # result = scipy.stats.binom.pmf(x, self.n, self.p)
-        result = sc.comb(self.n, x) * (self.p**x) * ((1 - self.p) ** (self.n - x))
+        # result = sc.comb(self.n, x) * (self.p**x) * ((1 - self.p) ** (self.n - x))
+        result = scipy.stats.binom.pmf(x, self.n, self.p)
         return result
 
     def get_num_parameters(self) -> int:
@@ -59,7 +58,7 @@ class BINOMIAL:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "gamma":  * }
+            {"alpha": * , "beta": * , "gamma": * }
         """
         p = 1 - measurements.variance / measurements.mean
         n = int(round(measurements.mean / p, 0))

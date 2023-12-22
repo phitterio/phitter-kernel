@@ -67,7 +67,7 @@ class GENERALIZED_NORMAL:
         Returns
         =======
         parameters : dict
-            {"beta":  * , "mu":  * , "alpha":  * }
+            {"beta": * , "mu": * , "alpha": * }
         """
         scipy_params = scipy.stats.gennorm.fit(measurements.data)
         parameters = {"beta": scipy_params[0], "mu": scipy_params[1], "alpha": scipy_params[2]}

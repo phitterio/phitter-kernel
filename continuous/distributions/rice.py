@@ -38,9 +38,9 @@ class RICE:
             res = acum * math.exp(-(a**2 + b**2) / 2)
             return res
 
-        # result = scipy.stats.rice.cdf(x, self.v / self.sigma, scale = self.sigma)
         # result, error = scipy.integrate.quad(self.pdf, 0, x)
-        result = 1 - Q(1, self.v / self.sigma, x / self.sigma)
+        # result = 1 - Q(1, self.v / self.sigma, x / self.sigma)
+        result = scipy.stats.rice.cdf(x, self.v / self.sigma, scale = self.sigma)
         return result
 
     def pdf(self, x: float) -> float:
@@ -48,8 +48,8 @@ class RICE:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = scipy.stats.rice.pdf(x, self.v / self.sigma, scale = self.sigma)
-        result = (x / (self.sigma**2)) * math.exp(-(x**2 + self.v**2) / (2 * self.sigma**2)) * sc.i0(x * self.v / (self.sigma**2))
+        # result = (x / (self.sigma**2)) * math.exp(-(x**2 + self.v**2) / (2 * self.sigma**2)) * sc.i0(x * self.v / (self.sigma**2))
+        result = scipy.stats.rice.pdf(x, self.v / self.sigma, scale = self.sigma)
         return result
 
     def get_num_parameters(self) -> int:
@@ -81,7 +81,7 @@ class RICE:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"alpha": * , "beta": * , "min": * , "max": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

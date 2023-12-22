@@ -65,7 +65,7 @@ class GENERALIZED_LOGISTIC:
         Returns
         =======
         parameters : dict
-            {"loc":  * , "scale":  * , "c":  * }
+            {"loc": * , "scale": * , "c": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

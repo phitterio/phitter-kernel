@@ -70,7 +70,7 @@ class T_STUDENT:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"alpha": * , "beta": * , "min": * , "max": * }
         """
 
         df = 2 * measurements.variance / (measurements.variance - 1)

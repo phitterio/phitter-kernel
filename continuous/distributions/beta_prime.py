@@ -65,7 +65,7 @@ class BETA_PRIME:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"alpha": * , "beta": * , "min": * , "max": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

@@ -53,7 +53,7 @@ class ERROR_FUNCTION:
         Returns
         =======
         parameters : dict
-            {"h":  * }
+            {"h": * }
         """
         h = math.sqrt(1 / (2 * measurements.variance))
 

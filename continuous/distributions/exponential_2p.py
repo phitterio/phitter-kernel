@@ -54,7 +54,7 @@ class EXPONENTIAL_2P:
         Returns
         =======
         parameters : dict
-            {"lambda":  * }
+            {"lambda": * }
         """
         ## Method: Solve system
         lambda_ = (1 - math.log(2)) / (measurements.mean - measurements.median)

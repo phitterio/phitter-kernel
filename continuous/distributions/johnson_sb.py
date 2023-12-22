@@ -62,7 +62,7 @@ class JOHNSON_SB:
         Returns
         =======
         parameters : dict
-            {"xi":  * , "lambda":  * , "gamma":  * , "delta":  * }
+            {"xi": * , "lambda": * , "gamma": * , "delta": * }
 
         References
         ==========

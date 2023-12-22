@@ -60,7 +60,7 @@ class LOGLOGISTIC_3P:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * }
+            {"alpha": * , "beta": * }
         """
         scipy_params = scipy.stats.fisk.fit(measurements.data)
         parameters = {"loc": scipy_params[1], "alpha": scipy_params[2], "beta": scipy_params[0]}

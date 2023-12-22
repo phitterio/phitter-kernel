@@ -59,7 +59,7 @@ class LOGLOGISTIC:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * }
+            {"alpha": * , "beta": * }
         """
         # def equations(initial_solution, data_mean, data_variance, data_skewness):
         #     alpha, beta = initial_solution

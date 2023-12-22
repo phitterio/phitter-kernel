@@ -56,7 +56,7 @@ class BERNOULLI:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "gamma":  * }
+            {"alpha": * , "beta": * , "gamma": * }
         """
         p = measurements.mean
         parameters = {"p": p}

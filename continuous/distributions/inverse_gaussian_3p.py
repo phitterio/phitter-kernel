@@ -58,12 +58,12 @@ class INVERSE_GAUSSIAN_3P:
         Parameters
         ==========
         measurements : dict
-            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
 
         Returns
         =======
         parameters : dict
-            {"mu":  * , "lambda":  * }
+            {"mu": * , "lambda": * }
         """
         # Scipy not correct for mu parameter
         # print(distribution.get_parameters(measurements))

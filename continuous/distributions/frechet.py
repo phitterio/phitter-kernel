@@ -63,7 +63,7 @@ class FRECHET:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "m":  * , "s":  * }
+            {"alpha": * , "m": * , "s": * }
         """
         scipy_params = scipy.stats.invweibull.fit(measurements.data)
         parameters = {"alpha": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}

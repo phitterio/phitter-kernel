@@ -59,7 +59,7 @@ class WEIBULL_3P:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * }
+            {"alpha": * , "beta": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

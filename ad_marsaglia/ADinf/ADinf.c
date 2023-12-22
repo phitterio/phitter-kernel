@@ -69,7 +69,7 @@ double ADinf(double z)
 int main()
 {
 	double z;
-	while (1) /*  try a few values for z:  */
+	while (1) /*  try a few values for z: */
 	{
 		printf("Enter value for z:");
 		scanf("%lf", &z);

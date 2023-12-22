@@ -72,7 +72,7 @@ class TRIANGULAR:
         Returns
         =======
         parameters : dict
-            {"a": * , "b":  * , "c":  * }
+            {"a": * , "b": * , "c": * }
         """
         ## Solve equations for estimation parameters
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

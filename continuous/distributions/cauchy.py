@@ -55,7 +55,7 @@ class CAUCHY:
         Returns
         =======
         parameters : dict
-            {"x0":  * , "gamma":  * }
+            {"x0": * , "gamma": * }
         """
         # ## First estimation
         # x0_ini = measurements.median

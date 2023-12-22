@@ -64,7 +64,7 @@ class GENERALIZED_GAMMA:
         Returns
         =======
         parameters : dict
-            {"a":  * , "c":  * , "mu":  * , "sigma":  * }
+            {"a": * , "c": * , "mu": * , "sigma": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

@@ -6,7 +6,7 @@ import collections
 
 class MEASUREMENTS_DISCRETE:
     def __init__(self, data: list[int]):
-        self.data = data
+        self.data = sorted(data)
         self.length = len(data)
         self.min = min(data)
         self.max = max(data)

@@ -63,7 +63,7 @@ class GENERALIZED_PARETO:
         Returns
         =======
         parameters : dict
-            {"c":  * , "mu":  * , "sigma":  * }
+            {"c": * , "mu": * , "sigma": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

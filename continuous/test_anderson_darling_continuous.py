@@ -6,7 +6,7 @@ sys.path.append("../utilities")
 import ad_marsaglia as ad
 
 
-def test_anderson_darling_continuous(data, distribution, measurements, confidence_level=0.95):
+def test_anderson_darling_continuous(distribution, measurements, confidence_level=0.95):
     """
     Anderson Darling test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -40,7 +40,7 @@ def test_anderson_darling_continuous(data, distribution, measurements, confidenc
             distribution. If it's true, no.
 
     References
-     -  -  -  -  -  -  -  -  -  -
+    ==========
     .. [1] Marsaglia, G., & Marsaglia, J. (2004).
            Evaluating the anderson - darling distribution.
            Journal of Statistical Software, 9(2), 1 - 5.
@@ -54,13 +54,12 @@ def test_anderson_darling_continuous(data, distribution, measurements, confidenc
 
     ## Parameters and preparations
     N = measurements.length
-    data.sort()
 
     ## Calculation S
     S = 0
     for k in range(N):
-        c1 = math.log(distribution.cdf(data[k]))
-        c2 = math.log(1 - distribution.cdf(data[N - k - 1]))
+        c1 = math.log(distribution.cdf(measurements.data[k]))
+        c2 = math.log(1 - distribution.cdf(measurements.data[N - k - 1]))
         c3 = (2 * (k + 1) - 1) / N
         S += c3 * (c1 + c2)
 
@@ -234,7 +233,7 @@ if __name__ == "__main__":
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
     _my_distributions = [PARETO_FIRST_KIND]
-    for distribution_class in _my_distributions:
+    for distribution_class in _all_distributions:
         print(distribution_class.__name__)
         path = f"./data/data_{distribution_class.__name__.lower()}.txt"
         data = get_data(path)
@@ -242,5 +241,6 @@ if __name__ == "__main__":
         ## Init a instance of class
         measurements = MEASUREMENTS_CONTINUOUS(data)
         distribution = distribution_class(measurements)
+        # print(distribution.cdf(measurements.data))
         # print(distribution_class.__name__, "_", list(distribution.parameters.keys()))
-        print(test_anderson_darling_continuous(data, distribution, measurements))
+        print(test_anderson_darling_continuous(distribution, measurements))

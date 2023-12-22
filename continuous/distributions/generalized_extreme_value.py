@@ -66,7 +66,7 @@ class GENERALIZED_EXTREME_VALUE:
         Returns
         =======
         parameters : dict
-            {"xi":  * , "mu":  * , "sigma":  * }
+            {"xi": * , "mu": * , "sigma": * }
         """
         scipy_params = scipy.stats.genextreme.fit(measurements.data)
         parameters = {"xi": -scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}

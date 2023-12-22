@@ -64,7 +64,7 @@ class LEVY:
         Returns
         =======
         parameters : dict
-            {"mu":  * , "c":  * }
+            {"mu": * , "c": * }
         """
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         #     ## Variables declaration

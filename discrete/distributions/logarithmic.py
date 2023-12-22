@@ -56,7 +56,7 @@ class LOGARITHMIC:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "gamma":  * }
+            {"alpha": * , "beta": * , "gamma": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

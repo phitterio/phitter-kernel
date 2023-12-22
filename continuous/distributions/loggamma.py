@@ -68,7 +68,7 @@ class LOGGAMMA:
         Returns
         =======
         parameters : dict
-            {"c":  * , "mu":  * , "sigma":  * }
+            {"c": * , "mu": * , "sigma": * }
         """
 
         def equations(initial_solution, data_mean, data_variance, data_skewness):

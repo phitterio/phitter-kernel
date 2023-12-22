@@ -58,7 +58,7 @@ class DAGUM:
         Returns
         =======
         parameters : dict
-            {"a": * , "b":  * , "c":  * }
+            {"a": * , "b": * , "c": * }
         """
         def sse(parameters: dict) -> float:
             def __pdf(x: float, params: dict) -> float:

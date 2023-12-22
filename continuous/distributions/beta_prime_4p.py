@@ -68,7 +68,7 @@ class BETA_PRIME_4P:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "scale":  * , "min":  * , "max":  * }
+            {"alpha": * , "scale": * , "min": * , "max": * }
         """
 
         ## In this distribution solve the system is best than scipy estimation.

@@ -68,7 +68,7 @@ class ARGUS:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"alpha": * , "beta": * , "min": * , "max": * }
         """
         scipy_params = scipy.stats.argus.fit(measurements.data)
         parameters = {"chi": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}

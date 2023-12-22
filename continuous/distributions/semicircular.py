@@ -54,12 +54,12 @@ class SEMICIRCULAR:
         Parameters
         ==========
         measurements : dict
-            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
 
         Returns
         =======
         parameters : dict
-            {"mu":  * , "sigma":  * }
+            {"mu": * , "sigma": * }
         """
         loc = measurements.mean
         R = math.sqrt(4 * measurements.variance)

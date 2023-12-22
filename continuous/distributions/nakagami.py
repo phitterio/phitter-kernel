@@ -57,7 +57,7 @@ class NAKAGAMI:
         Returns
         =======
         parameters : dict
-            {"m":  * , "omega":  * }
+            {"m": * , "omega": * }
         """
         d = numpy.array(measurements.data)
         E_x2 = sum(d * d) / len(d)

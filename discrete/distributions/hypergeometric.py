@@ -1,8 +1,8 @@
-import scipy.stats
 import math
+
 import numpy
 import scipy.optimize
-import scipy.special as sc
+import scipy.stats
 
 
 class HYPERGEOMETRIC:
@@ -31,8 +31,8 @@ class HYPERGEOMETRIC:
         Probability density function
         Calculated using the definition of the function
         """
-        # result = scipy.stats.hypergeom.pmf(x, self.N, self.n, self.K)
-        result = sc.comb(self.K, x) * sc.comb(self.N - self.K, self.n - x) / sc.comb(self.N, self.n)
+        # result = sc.comb(self.K, x) * sc.comb(self.N - self.K, self.n - x) / sc.comb(self.N, self.n)
+        result = scipy.stats.hypergeom.pmf(x, self.N, self.n, self.K)
         return result
 
     def get_num_parameters(self) -> int:
@@ -63,7 +63,7 @@ class HYPERGEOMETRIC:
         Returns
         =======
         parameters : dict
-            {"N":  * , "K":  * , "n":  * }
+            {"N": * , "K": * , "n": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

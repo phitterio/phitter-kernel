@@ -3,7 +3,7 @@ import numpy
 from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 
 
-def test_chi_square_continuous(data, distribution, measurements, confidence_level=0.95):
+def test_chi_square_continuous(distribution, measurements, confidence_level=0.95):
     """
     Chi Square test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -39,15 +39,14 @@ def test_chi_square_continuous(data, distribution, measurements, confidence_leve
 
     ## Parameters and preparations
     N = measurements.length
-    num_bins = measurements.num_bins
-    frequencies, bin_edges = numpy.histogram(data, num_bins)
-    freedom_degrees = num_bins - 1 - distribution.get_num_parameters()
+    freedom_degrees = measurements.num_bins - 1 - distribution.get_num_parameters()
+
 
     ## Calculation of errors
     errors = []
-    for i, observed in enumerate(frequencies):
-        lower = bin_edges[i]
-        upper = bin_edges[i + 1]
+    for i, observed in enumerate(measurements.absolutes_frequencies):
+        lower = measurements.bin_edges[i]
+        upper = measurements.bin_edges[i + 1]
         expected = N * (distribution.cdf(upper) - distribution.cdf(lower))
         errors.append(((observed - expected) ** 2) / expected)
 
@@ -59,7 +58,6 @@ def test_chi_square_continuous(data, distribution, measurements, confidence_leve
 
     ## Construction of answer
     result_test_chi2 = {"test_statistic": statistic_chi2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
-
     return result_test_chi2
 
 
@@ -220,7 +218,7 @@ if __name__ == "__main__":
     ]
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
-    _my_distributions = [PARETO_FIRST_KIND]
+    # _my_distributions = [BETA]
     # for distribution_class in _my_distributions:
     #     print(distribution_class.__name__)
     #     path = f"./data/data_{distribution_class.__name__.lower()}.txt"
@@ -235,4 +233,4 @@ if __name__ == "__main__":
         ## Init a instance of class
         measurements = MEASUREMENTS_CONTINUOUS(data)
         distribution = distribution_class(measurements)
-        print(test_chi_square_continuous(data, distribution, measurements))
+        print(test_chi_square_continuous(distribution, measurements))

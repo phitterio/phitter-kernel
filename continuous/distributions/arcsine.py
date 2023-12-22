@@ -54,7 +54,7 @@ class ARCSINE:
         Returns
         =======
         parameters : dict
-            {"a":  * , "b":  * }
+            {"a": * , "b": * }
         """
 
         _a = measurements.min - 1e-3

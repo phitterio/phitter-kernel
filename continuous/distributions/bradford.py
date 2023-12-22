@@ -56,7 +56,7 @@ class BRADFORD:
         Returns
         =======
         parameters : dict
-            {"min":  * , "max":  * }
+            {"min": * , "max": * }
         """
 
         _min = measurements.min - 1e-3

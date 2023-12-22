@@ -55,12 +55,12 @@ class FOLDED_NORMAL:
         Parameters
         ==========
         measurements : dict
-            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
 
         Returns
         =======
         parameters : dict
-            {"mu":  * , "sigma":  * }
+            {"mu": * , "sigma": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

@@ -52,12 +52,12 @@ class LOGNORMAL:
         Parameters
         ==========
         measurements : dict
-            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
 
         Returns
         =======
         parameters : dict
-            {"mu":  * , "sigma":  * }
+            {"mu": * , "sigma": * }
         """
 
         mu = math.log(measurements.mean**2 / math.sqrt(measurements.mean**2 + measurements.variance))

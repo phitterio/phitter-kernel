@@ -2,7 +2,7 @@ import scipy.stats
 from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 
 
-def test_kolmogorov_smirnov_continuous(data, distribution, measurements, confidence_level=0.95):
+def test_kolmogorov_smirnov_continuous(distribution, measurements, confidence_level=0.95):
     """
     Kolmogorov Smirnov test to evaluate that a sample is distributed according to a probability
     distribution.
@@ -38,20 +38,19 @@ def test_kolmogorov_smirnov_continuous(data, distribution, measurements, confide
 
     ## Parameters and preparations
     N = measurements.length
-    data.sort()
 
     ## Calculation of errors
     errors = []
     for i in range(N):
         Sn = (i + 1) / N
         if i < N - 1:
-            if data[i] != data[i + 1]:
-                Fn = distribution.cdf(data[i])
+            if measurements.data[i] != measurements.data[i + 1]:
+                Fn = distribution.cdf(measurements.data[i])
                 errors.append(abs(Sn - Fn))
             else:
                 Fn = 0
         else:
-            Fn = distribution.cdf(data[i])
+            Fn = distribution.cdf(measurements.data[i])
             errors.append(abs(Sn - Fn))
 
     ## Calculation of indicators
@@ -223,7 +222,7 @@ if __name__ == "__main__":
     ]
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
-    _my_distributions = [PARETO_FIRST_KIND]
+    # _my_distributions = [PARETO_FIRST_KIND]
     for distribution_class in _my_distributions:
         print(distribution_class.__name__)
         path = f"./data/data_{distribution_class.__name__.lower()}.txt"
@@ -232,4 +231,4 @@ if __name__ == "__main__":
         ## Init a instance of class
         measurements = MEASUREMENTS_CONTINUOUS(data)
         distribution = distribution_class(measurements)
-        print(test_kolmogorov_smirnov_continuous(data, distribution, measurements))
+        print(test_kolmogorov_smirnov_continuous(distribution, measurements))

@@ -57,12 +57,12 @@ class INVERSE_GAUSSIAN:
         Parameters
         ==========
         measurements : dict
-            {"mu":  * , "variance":  * , "skewness":  * , "kurtosis":  * , "data":  * }
+            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
 
         Returns
         =======
         parameters : dict
-            {"mu":  * , "lambda":  * }
+            {"mu": * , "lambda": * }
         """
         mu = measurements.mean
         lambda_ = mu**3 / measurements.variance

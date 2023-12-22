@@ -62,7 +62,7 @@ class PARETO_FIRST_KIND:
         Returns
         =======
         parameters : dict
-            {"xm":  * , "alpha":  * }
+            {"xm": * , "alpha": * }
         """
 
         # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

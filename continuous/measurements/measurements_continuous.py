@@ -6,7 +6,7 @@ import math
 
 class MEASUREMENTS_CONTINUOUS:
     def __init__(self, data: list[float | int], num_bins: int | None = None):
-        self.data = data
+        self.data = sorted(data)
         self.length = len(data)
         self.min = min(data)
         self.max = max(data)
@@ -16,8 +16,11 @@ class MEASUREMENTS_CONTINUOUS:
         self.skewness = scipy.stats.moment(data, 3) / pow(self.standard_deviation, 3)
         self.kurtosis = scipy.stats.moment(data, 4) / pow(self.standard_deviation, 4)
         self.median = numpy.median(data)
-        self.mode = self.calculate_mode()
-        self.num_bins = num_bins if num_bins != None else self.num_bins_doane()
+        self.mode = self.calculate_mode(data)
+        self.num_bins = num_bins if num_bins != None else self.num_bins_doane(data)
+        self.absolutes_frequencies, self.bin_edges = numpy.histogram(data, self.num_bins)
+        self.densities_frequencies, _ = numpy.histogram(data, self.num_bins, density=True)
+        self.central_values = [(self.bin_edges[i] + self.bin_edges[i + 1]) / 2 for i in range(len(self.bin_edges) - 1)]
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -28,7 +31,7 @@ class MEASUREMENTS_CONTINUOUS:
     def get_dict(self) -> str:
         return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
 
-    def calculate_mode(self) -> float:
+    def calculate_mode(self, data) -> float:
         def calc_shgo_mode(distribution):
             objective = lambda x: -distribution.pdf(x)[0]
             bnds = [[self.min, self.max]]
@@ -36,11 +39,11 @@ class MEASUREMENTS_CONTINUOUS:
             return solution.x[0]
 
         ## KDE
-        distribution = scipy.stats.gaussian_kde(self.data)
+        distribution = scipy.stats.gaussian_kde(data)
         shgo_mode = calc_shgo_mode(distribution)
         return shgo_mode
 
-    def num_bins_doane(self):
+    def num_bins_doane(self, data):
         """
         DONAE'S FORMULA
         https://en.wikipedia.org/wiki/Histogram#Doane's_formula
@@ -55,7 +58,7 @@ class MEASUREMENTS_CONTINUOUS:
             Cumulative distribution function evaluated at x
         """
         N = self.length
-        skewness = scipy.stats.skew(self.data)
+        skewness = scipy.stats.skew(data)
         sigma_g1 = math.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
         num_bins = 1 + math.log2(N) + math.log2(1 + abs(skewness) / sigma_g1)
         return math.ceil(num_bins)
@@ -69,7 +72,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "./data/data_generalized_pareto.txt"
+    path = "../data/data_generalized_pareto.txt"
     data = get_data(path)
 
     measurements = MEASUREMENTS_CONTINUOUS(data)
@@ -83,3 +86,5 @@ if __name__ == "__main__":
     print("Kurtosis: ", measurements.kurtosis)
     print("Median: ", measurements.median)
     print("Mode: ", measurements.mode)
+    print("Num bins", measurements.num_bins)
+    print("Central Values", measurements.central_values)

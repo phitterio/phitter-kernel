@@ -61,7 +61,7 @@ class ERLANG_3P:
         Returns
         =======
         parameters : dict
-            {"k":  * , "beta":  * }
+            {"k": * , "beta": * }
         """
         k = round((2 / measurements.skewness) ** 2)
         beta = math.sqrt(measurements.variance / ((2 / measurements.skewness) ** 2))

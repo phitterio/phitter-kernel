@@ -52,7 +52,7 @@ class LAPLACE:
         Returns
         =======
         parameters : dict
-            {"mu":  * , "b":  * }
+            {"mu": * , "b": * }
         """
         mu = measurements.mean
         b = math.sqrt(measurements.variance / 2)

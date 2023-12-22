@@ -70,7 +70,7 @@ class INVERSE_GAMMA_3P:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "loc": *, "beta":  * }
+            {"alpha": * , "loc": *, "beta": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

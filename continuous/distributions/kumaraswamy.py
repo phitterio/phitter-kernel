@@ -63,7 +63,7 @@ class KUMARASWAMY:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "min":  * , "max":  * }
+            {"alpha": * , "beta": * , "min": * , "max": * }
         """
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration

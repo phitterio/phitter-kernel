@@ -1,5 +1,4 @@
 import scipy.stats
-import math
 
 
 class POISSON:
@@ -26,9 +25,8 @@ class POISSON:
         Probability density function
         Calculated using the definition of the function
         """
-        # result = scipy.stats.poisson.pmf(x, self.lambda_)
-        # print(result)
-        result = (self.lambda_**x) * math.exp(-self.lambda_) / math.factorial(x)
+        # result = (self.lambda_**x) * math.exp(-self.lambda_) / math.factorial(x)
+        result = scipy.stats.poisson.pmf(x, self.lambda_)
         return result
 
     def get_num_parameters(self) -> int:
@@ -57,7 +55,7 @@ class POISSON:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "gamma":  * }
+            {"alpha": * , "beta": * , "gamma": * }
         """
         lambda_ = measurements.mean
         parameters = {"lambda": lambda_}

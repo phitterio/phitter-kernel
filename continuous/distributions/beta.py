@@ -8,16 +8,16 @@ import scipy.stats
 class BETA:
     """
     Beta distribution
-    https://en.wikipedia.org/wiki/Beta_distribution
+    https://en.wikipedia.org/wiki/betadistribution
     Compendium of Common Probability Distributions (pag.23) ... Michael P. McLaughlin
     """
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.alpha_ = self.parameters["alpha"]
-        self.beta_ = self.parameters["beta"]
+        self.alpha = self.parameters["alpha"]
+        self.beta = self.parameters["beta"]
         self.A = self.parameters["A"]
-        self.B_ = self.parameters["B"]
+        self.B = self.parameters["B"]
 
     def cdf(self, x: float) -> float:
         """
@@ -25,10 +25,10 @@ class BETA:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: (t - self.A) / (self.B_ - self.A)
-        # result = scipy.stats.beta.cdf(z(x), self.alpha_, self.beta_)
+        z = lambda t: (t - self.A) / (self.B - self.A)
+        # result = scipy.stats.beta.cdf(z(x), self.alpha, self.beta)
         # result = print(result, error = scipy.integrate.quad(self.pdf, self.A, x)
-        result = sc.betainc(self.alpha_, self.beta_, z(x))
+        result = sc.betainc(self.alpha, self.beta, z(x))
 
         return result
 
@@ -37,8 +37,8 @@ class BETA:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: (t - self.A) / (self.B_ - self.A)
-        return (1 / (self.B_ - self.A)) * (math.gamma(self.alpha_ + self.beta_) / (math.gamma(self.alpha_) * math.gamma(self.beta_))) * (z(x) ** (self.alpha_ - 1)) * ((1 - z(x)) ** (self.beta_ - 1))
+        z = lambda t: (t - self.A) / (self.B - self.A)
+        return (1 / (self.B - self.A)) * (math.gamma(self.alpha + self.beta) / (math.gamma(self.alpha) * math.gamma(self.beta))) * (z(x) ** (self.alpha - 1)) * ((1 - z(x)) ** (self.beta - 1))
 
     def get_num_parameters(self) -> int:
         """
@@ -50,9 +50,9 @@ class BETA:
         """
         Check parameters restrictions
         """
-        v1 = self.alpha_ > 0
-        v2 = self.beta_ > 0
-        v3 = self.A < self.B_
+        v1 = self.alpha > 0
+        v2 = self.beta > 0
+        v3 = self.A < self.B
         return v1 and v2 and v3
 
     def get_parameters(self, measurements) -> dict[str, float | int]:
@@ -70,20 +70,18 @@ class BETA:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "A":  * , "B":  * }
+            {"alpha": * , "beta": * , "A": * , "B": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             ## Variables declaration
-            alpha_, beta_, A, B_ = initial_solution
+            alpha, beta, A, B = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = A + (alpha_ / (alpha_ + beta_)) * (B_ - A)
-            parametric_variance = ((alpha_ * beta_) / ((alpha_ + beta_) ** 2 * (alpha_ + beta_ + 1))) * (B_ - A) ** 2
-            parametric_skewness = 2 * ((beta_ - alpha_) / (alpha_ + beta_ + 2)) * math.sqrt((alpha_ + beta_ + 1) / (alpha_ * beta_))
-            parametric_kurtosis = 3 * (
-                ((alpha_ + beta_ + 1) * (2 * (alpha_ + beta_) ** 2 + (alpha_ * beta_) * (alpha_ + beta_ - 6))) / ((alpha_ * beta_) * (alpha_ + beta_ + 2) * (alpha_ + beta_ + 3))
-            )
+            parametric_mean = A + (alpha / (alpha + beta)) * (B - A)
+            parametric_variance = ((alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1))) * (B - A) ** 2
+            parametric_skewness = 2 * ((beta - alpha) / (alpha + beta + 2)) * math.sqrt((alpha + beta + 1) / (alpha * beta))
+            parametric_kurtosis = 3 * (((alpha + beta + 1) * (2 * (alpha + beta) ** 2 + (alpha * beta) * (alpha + beta - 6))) / ((alpha * beta) * (alpha + beta + 2) * (alpha + beta + 3)))
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -133,13 +131,13 @@ if __name__ == "__main__":
 
     # def equations(initial_solution: list[float], measurements) -> tuple[float]:
     #     ## Variables declaration
-    #     alpha_, beta_, A, B_ = initial_solution
+    #     alpha, beta, A, B = initial_solution
 
     #     ## Parametric expected expressions
-    #     parametric_mean = A + (alpha_ / ( alpha_ + beta_ )) * (B_ - A)
-    #     parametric_variance = ((alpha_ * beta_) / ((alpha_ + beta_) ** 2 * (alpha_ + beta_ + 1))) * (B_ - A) ** 2
-    #     parametric_skewness = 2 * ((beta_ - alpha_) / (alpha_ + beta_ + 2)) * math.sqrt((alpha_ + beta_ + 1) / (alpha_ * beta_))
-    #     parametric_kurtosis = 3 * (((alpha_ + beta_ + 1) * (2 * (alpha_ + beta_) ** 2  + (alpha_ * beta_) * (alpha_ + beta_ - 6))) / ((alpha_ * beta_) * (alpha_ + beta_ + 2) * (alpha_ + beta_ + 3)))
+    #     parametric_mean = A + (alpha / ( alpha + beta )) * (B - A)
+    #     parametric_variance = ((alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1))) * (B - A) ** 2
+    #     parametric_skewness = 2 * ((beta - alpha) / (alpha + beta + 2)) * math.sqrt((alpha + beta + 1) / (alpha * beta))
+    #     parametric_kurtosis = 3 * (((alpha + beta + 1) * (2 * (alpha + beta) ** 2  + (alpha * beta) * (alpha + beta - 6))) / ((alpha * beta) * (alpha + beta + 2) * (alpha + beta + 3)))
 
     #     ## System Equations
     #     eq1 = parametric_mean - measurements.mean

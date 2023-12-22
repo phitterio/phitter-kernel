@@ -67,7 +67,7 @@ class GAMMA:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * }
+            {"alpha": * , "beta": * }
         """
         mean = measurements.mean
         variance = measurements.variance

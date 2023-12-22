@@ -59,7 +59,7 @@ class LOGISTIC:
         Returns
         =======
         parameters : dict
-            {"mu":  * , "sigma":  * }
+            {"mu": * , "sigma": * }
         """
         mu = measurements.mean
         sigma = math.sqrt(3 * measurements.variance / (math.pi**2))

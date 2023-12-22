@@ -65,7 +65,7 @@ class BURR_4P:
         Returns
         =======
         parameters : dict
-            {"A": * , "B":  * , "C":  * }
+            {"A": * , "B": * , "C": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:

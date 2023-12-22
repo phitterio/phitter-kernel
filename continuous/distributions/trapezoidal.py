@@ -75,7 +75,7 @@ class TRAPEZOIDAL:
         Returns
         =======
         parameters : dict
-            {"a": * , "b":  * , "c":  * }
+            {"a": * , "b": * , "c": * }
         """
 
         a = measurements.min - 1e-3

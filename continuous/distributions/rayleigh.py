@@ -58,7 +58,7 @@ class RAYLEIGH:
         Returns
         =======
         parameters : dict
-            {"gamma":  * , "sigma":  * }
+            {"gamma": * , "sigma": * }
         """
         ## Scipy Rayleigh estimation
         # scipy_params = scipy.stats.rayleigh.fit(measurements.data)

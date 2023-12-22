@@ -1,5 +1,4 @@
 import scipy.stats
-import scipy.special as sc
 
 
 class NEGATIVE_BINOMIAL:
@@ -10,8 +9,8 @@ class NEGATIVE_BINOMIAL:
 
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
-        self.p = self.parameters["p"]
         self.r = self.parameters["r"]
+        self.p = self.parameters["p"]
 
     def cdf(self, x: float) -> float:
         """
@@ -28,8 +27,8 @@ class NEGATIVE_BINOMIAL:
         Probability density function
         Calculated using the definition of the function
         """
-        # result = scipy.stats.nbinom.pmf(x, self.r, self.p)
-        result = sc.comb(self.r + x - 1, x) * (self.p**self.r) * ((1 - self.p) ** x)
+        # result = sc.comb(self.r + x - 1, x) * (self.p**self.r) * ((1 - self.p) ** x)
+        result = scipy.stats.nbinom.pmf(x, self.r, self.p)
         return result
 
     def get_num_parameters(self) -> int:
@@ -60,11 +59,11 @@ class NEGATIVE_BINOMIAL:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "gamma":  * }
+            {"r": * , "p": * }
         """
         p = measurements.mean / measurements.variance
         r = round(measurements.mean * p / (1 - p))
-        parameters = {"p": p, "r": r}
+        parameters = {"r": r, "p": p}
         return parameters
 
 

@@ -51,7 +51,7 @@ class GEOMETRIC:
         Returns
         =======
         parameters : dict
-            {"alpha":  * , "beta":  * , "gamma":  * }
+            {"alpha": * , "beta": * , "gamma": * }
         """
         p = 1 / measurements.mean
         parameters = {"p": p}

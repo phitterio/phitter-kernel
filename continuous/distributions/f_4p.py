@@ -71,7 +71,7 @@ class F_4P:
         Returns
         =======
         parameters : dict
-            {"df1":  * , "df2":  * }
+            {"df1": * , "df2": * }
         """
 
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
