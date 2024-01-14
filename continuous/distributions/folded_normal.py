@@ -1,6 +1,6 @@
 import numpy
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 import scipy.optimize
 
 
@@ -23,7 +23,7 @@ class FOLDED_NORMAL:
         """
         z1 = lambda t: (t + self.mu) / self.sigma
         z2 = lambda t: (t - self.mu) / self.sigma
-        result = 0.5 * (sc.erf(z1(x) / math.sqrt(2)) + sc.erf(z2(x) / math.sqrt(2)))
+        result = 0.5 * (scipy.special.erf(z1(x) / numpy.sqrt(2)) + scipy.special.erf(z2(x) / numpy.sqrt(2)))
         return result
 
     def pdf(self, x: float) -> float:
@@ -31,7 +31,7 @@ class FOLDED_NORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        result = math.sqrt(2 / (math.pi * self.sigma**2)) * math.exp(-(x**2 + self.mu**2) / (2 * self.sigma**2)) * math.cosh(self.mu * x / (self.sigma**2))
+        result = numpy.sqrt(2 / (numpy.pi * self.sigma**2)) * numpy.exp(-(x**2 + self.mu**2) / (2 * self.sigma**2)) * numpy.cosh(self.mu * x / (self.sigma**2))
         return result
 
     def get_num_parameters(self) -> int:
@@ -68,7 +68,7 @@ class FOLDED_NORMAL:
             mu, sigma = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = sigma * math.sqrt(2 / math.pi) * math.exp(-(mu**2) / (2 * sigma**2)) + mu * sc.erf(mu / math.sqrt(2 * sigma**2))
+            parametric_mean = sigma * numpy.sqrt(2 / numpy.pi) * numpy.exp(-(mu**2) / (2 * sigma**2)) + mu * scipy.special.erf(mu / numpy.sqrt(2 * sigma**2))
             parametric_variance = mu**2 + sigma**2 - parametric_mean**2
 
             # System Equations
@@ -88,6 +88,7 @@ class FOLDED_NORMAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -106,4 +107,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

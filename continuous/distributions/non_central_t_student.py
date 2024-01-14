@@ -1,7 +1,7 @@
 import scipy.stats
-import math
 import numpy
-import scipy.special as sc
+import numpy
+import scipy.special
 import scipy.integrate
 
 
@@ -26,11 +26,12 @@ class NON_CENTRAL_T_STUDENT:
         Alternative: quadrature integration method
         """
         ##  Method 1
-        z = lambda x: (x - self.loc) / self.scale
-        result = sc.nctdtr(self.n, self.lambda_, z(x))
+        # z = lambda x: (x - self.loc) / self.scale
+        # result = scipy.special.nctdtr(self.n, self.lambda_, z(x))
 
         ## Method 2
-        # result = scipy.stats.nct.cdf(z(x), self.n, self.lambda_)
+        z = lambda x: (x - self.loc) / self.scale
+        result = scipy.stats.nct.cdf(z(x), self.n, self.lambda_)
 
         ## Method 3
         # k = 0
@@ -38,10 +39,10 @@ class NON_CENTRAL_T_STUDENT:
         # r0 = -1
         # while(acum - r0 > 1e-20):
         #     r0 = acum
-        #     t1 = math.exp(-self.lambda_ ** 2 / 2) * (self.lambda_ ** 2 / 2) ** k / math.factorial(k)
-        #     t2 = math.exp(-self.lambda_ ** 2 / 2) * (self.lambda_ ** 2 / 2) ** k * self.lambda_ / (math.sqrt(2) * math.gamma(k + 1.5))
+        #     t1 = numpy.exp(-self.lambda_ ** 2 / 2) * (self.lambda_ ** 2 / 2) ** k / scipy.special.factorial(k)
+        #     t2 = numpy.exp(-self.lambda_ ** 2 / 2) * (self.lambda_ ** 2 / 2) ** k * self.lambda_ / (numpy.sqrt(2) * scipy.special.gamma(k + 1.5))
         #     y = (z(x) ** 2) / (z(x) ** 2 + self.n)
-        #     s = t1 * sc.betainc(k + 0.5, self.n / 2, y) + t2 * sc.betainc(k + 1, self.n / 2, y)
+        #     s = t1 * scipy.special.betainc(k + 0.5, self.n / 2, y) + t2 * scipy.special.betainc(k + 1, self.n / 2, y)
         #     acum += s
         #     k += 1
         # result = scipy.stats.norm.cdf(-self.lambda_) + 0.5 * acum
@@ -61,12 +62,12 @@ class NON_CENTRAL_T_STUDENT:
         result = scipy.stats.nct.pdf(z(x), self.n, self.lambda_) / self.scale
 
         ## Method 2
-        # t1 = self.n ** (self.n / 2) * math.gamma(self.n + 1)
-        # t2 = 2 ** self.n * math.exp(self.lambda_ ** 2 / 2) * (self.n + z(x) ** 2) ** (self.n / 2) * math.gamma(self.n / 2)
-        # t3 = math.sqrt(2) * self.lambda_ * z(x) * sc.hyp1f1(1 + self.n / 2, 1.5, (self.lambda_ ** 2 * z(x) ** 2) / (2 * (self.n + z(x) ** 2)))
-        # t4 = (self.n + z(x) ** 2) * math.gamma(0.5 * (self.n + 1))
-        # t5 = sc.hyp1f1((1 + self.n) / 2, 0.5, (self.lambda_ ** 2 * z(x) ** 2) / (2 * (self.n + z(x) ** 2)))
-        # t6 = math.sqrt(self.n + z(x) ** 2) * math.gamma(1 + self.n / 2)
+        # t1 = self.n ** (self.n / 2) * scipy.special.gamma(self.n + 1)
+        # t2 = 2 ** self.n * numpy.exp(self.lambda_ ** 2 / 2) * (self.n + z(x) ** 2) ** (self.n / 2) * scipy.special.gamma(self.n / 2)
+        # t3 = numpy.sqrt(2) * self.lambda_ * z(x) * scipy.special.hyp1f1(1 + self.n / 2, 1.5, (self.lambda_ ** 2 * z(x) ** 2) / (2 * (self.n + z(x) ** 2)))
+        # t4 = (self.n + z(x) ** 2) * scipy.special.gamma(0.5 * (self.n + 1))
+        # t5 = scipy.special.hyp1f1((1 + self.n) / 2, 0.5, (self.lambda_ ** 2 * z(x) ** 2) / (2 * (self.n + z(x) ** 2)))
+        # t6 = numpy.sqrt(self.n + z(x) ** 2) * scipy.special.gamma(1 + self.n / 2)
         # result = (t1 / t2 * (t3 / t4 + t5 / t6)) / self.scale
 
         return result
@@ -105,9 +106,9 @@ class NON_CENTRAL_T_STUDENT:
             lambda_, n, loc, scale = initial_solution
 
             ## Generatred moments function (not - centered)
-            E_1 = lambda_ * math.sqrt(n / 2) * math.gamma((n - 1) / 2) / math.gamma(n / 2)
+            E_1 = lambda_ * numpy.sqrt(n / 2) * scipy.special.gamma((n - 1) / 2) / scipy.special.gamma(n / 2)
             E_2 = (1 + lambda_**2) * n / (n - 2)
-            E_3 = lambda_ * (3 + lambda_**2) * n**1.5 * math.sqrt(2) * math.gamma((n - 3) / 2) / (4 * math.gamma(n / 2))
+            E_3 = lambda_ * (3 + lambda_**2) * n**1.5 * numpy.sqrt(2) * scipy.special.gamma((n - 3) / 2) / (4 * scipy.special.gamma(n / 2))
             E_4 = (lambda_**4 + 6 * lambda_**2 + 3) * n**2 / ((n - 2) * (n - 4))
 
             ## Parametric expected expressions
@@ -135,6 +136,7 @@ class NON_CENTRAL_T_STUDENT:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -155,6 +157,8 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     # print(scipy.stats.nct.fit(data))

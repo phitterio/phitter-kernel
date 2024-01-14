@@ -1,5 +1,5 @@
 import scipy.stats
-import math
+import numpy
 
 
 class ERROR_FUNCTION:
@@ -25,7 +25,7 @@ class ERROR_FUNCTION:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return self.h * math.exp(-((self.h * x) ** 2)) / math.sqrt(math.pi)
+        return self.h * numpy.exp(-((self.h * x) ** 2)) / numpy.sqrt(numpy.pi)
 
     def get_num_parameters(self) -> int:
         """
@@ -55,7 +55,7 @@ class ERROR_FUNCTION:
         parameters : dict
             {"h": * }
         """
-        h = math.sqrt(1 / (2 * measurements.variance))
+        h = numpy.sqrt(1 / (2 * measurements.variance))
 
         ## Results
         parameters = {"h": h}
@@ -66,6 +66,7 @@ class ERROR_FUNCTION:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -84,4 +85,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

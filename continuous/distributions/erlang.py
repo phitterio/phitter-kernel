@@ -1,6 +1,6 @@
 import scipy.integrate
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 import scipy.stats
 
 
@@ -21,7 +21,7 @@ class ERLANG:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        result = sc.gammainc(self.k, x / self.beta)
+        result = scipy.special.gammainc(self.k, x / self.beta)
         return result
 
     def pdf(self, x: float) -> float:
@@ -29,7 +29,7 @@ class ERLANG:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = ((self.beta**-self.k) * (x ** (self.k - 1)) * math.exp(-(x / self.beta))) / math.factorial(self.k - 1)
+        # result = ((self.beta**-self.k) * (x ** (self.k - 1)) * numpy.exp(-(x / self.beta))) / scipy.special.factorial(self.k - 1)
         result = scipy.stats.erlang.pdf(x, self.k, scale=self.beta)
         return result
 
@@ -72,6 +72,7 @@ class ERLANG:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -90,4 +91,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

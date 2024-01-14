@@ -20,30 +20,34 @@ class TRIANGULAR:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        if x <= self.a:
-            return 0
-        if self.a < x and x <= self.c:
-            return (x - self.a) ** 2 / ((self.b - self.a) * (self.c - self.a))
-        if self.c < x and x < self.b:
-            return 1 - ((self.b - x) ** 2 / ((self.b - self.a) * (self.b - self.c)))
-        if x > self.b:
-            return 1
+        # if x <= self.a:
+        #     return 0
+        # if self.a < x and x <= self.c:
+        #     return (x - self.a) ** 2 / ((self.b - self.a) * (self.c - self.a))
+        # if self.c < x and x < self.b:
+        #     return 1 - ((self.b - x) ** 2 / ((self.b - self.a) * (self.b - self.c)))
+        # if x > self.b:
+        #     return 1
+        result = scipy.stats.triang.cdf(x, (self.c - self.a) / (self.b - self.a), loc=self.a, scale=self.b - self.a)
+        return result
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        if x <= self.a:
-            return 0
-        if self.a <= x and x < self.c:
-            return 2 * (x - self.a) / ((self.b - self.a) * (self.c - self.a))
-        if x == self.c:
-            return 2 / (self.b - self.a)
-        if x > self.c and x <= self.b:
-            return 2 * (self.b - x) / ((self.b - self.a) * (self.b - self.c))
-        if x > self.b:
-            return 0
+        # if x <= self.a:
+        #     return 0
+        # if self.a <= x and x < self.c:
+        #     return 2 * (x - self.a) / ((self.b - self.a) * (self.c - self.a))
+        # if x == self.c:
+        #     return 2 / (self.b - self.a)
+        # if x > self.c and x <= self.b:
+        #     return 2 * (self.b - x) / ((self.b - self.a) * (self.b - self.c))
+        # if x > self.b:
+        #     return 0
+        result = scipy.stats.triang.pdf(x, (self.c - self.a) / (self.b - self.a), loc=self.a, scale=self.b - self.a)
+        return result
 
     def get_num_parameters(self) -> int:
         """
@@ -82,7 +86,7 @@ class TRIANGULAR:
         #     ## Parametric expected expressions
         #     parametric_mean = (a + b + c) / 3
         #     parametric_variance = (a ** 2 + b ** 2 + c ** 2 - a * b - a * c - b * c) / 18
-        #     parametric_skewness = math.sqrt(2) * (a + b - 2 * c) * (2 * a - b - c) * (a - 2 * b  + c) / (5 * (a ** 2 + b ** 2 + c ** 2 - a * b - a * c - b * c) ** (3 / 2))
+        #     parametric_skewness = numpy.sqrt(2) * (a + b - 2 * c) * (2 * a - b - c) * (a - 2 * b  + c) / (5 * (a ** 2 + b ** 2 + c ** 2 - a * b - a * c - b * c) ** (3 / 2))
 
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
@@ -123,6 +127,7 @@ class TRIANGULAR:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -141,4 +146,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

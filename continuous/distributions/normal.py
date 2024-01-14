@@ -1,6 +1,6 @@
-import scipy.special as sc
+import scipy.special
 import scipy.stats
-import math
+import numpy
 
 
 class NORMAL:
@@ -22,7 +22,7 @@ class NORMAL:
         """
         # result = scipy.stats.norm.cdf((x - self.mu) / self.sigma)
         z = lambda t: (t - self.mu) / self.sigma
-        result = 0.5 * (1 + sc.erf(z(x) / math.sqrt(2)))
+        result = 0.5 * (1 + scipy.special.erf(z(x) / numpy.sqrt(2)))
         return result
 
     def pdf(self, x: float) -> float:
@@ -30,7 +30,7 @@ class NORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        result = (1 / (self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((x - self.mu) ** 2) / (2 * self.sigma**2)))
+        result = (1 / (self.sigma * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-(((x - self.mu) ** 2) / (2 * self.sigma**2)))
         return result
 
     def get_num_parameters(self) -> int:
@@ -72,6 +72,7 @@ class NORMAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -90,4 +91,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

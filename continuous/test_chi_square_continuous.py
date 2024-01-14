@@ -41,17 +41,12 @@ def test_chi_square_continuous(distribution, measurements, confidence_level=0.95
     N = measurements.length
     freedom_degrees = measurements.num_bins - 1 - distribution.get_num_parameters()
 
-
     ## Calculation of errors
-    errors = []
-    for i, observed in enumerate(measurements.absolutes_frequencies):
-        lower = measurements.bin_edges[i]
-        upper = measurements.bin_edges[i + 1]
-        expected = N * (distribution.cdf(upper) - distribution.cdf(lower))
-        errors.append(((observed - expected) ** 2) / expected)
+    expected_values = N * (distribution.cdf(measurements.bin_edges[1:]) - distribution.cdf(measurements.bin_edges[:-1]))
+    errors = ((measurements.absolutes_frequencies - expected_values) ** 2) / expected_values
 
     ## Calculation of indicators
-    statistic_chi2 = sum(errors)
+    statistic_chi2 = numpy.sum(errors)
     critical_value = scipy.stats.chi2.ppf(confidence_level, freedom_degrees)
     p_value = 1 - scipy.stats.chi2.cdf(statistic_chi2, freedom_degrees)
     rejected = statistic_chi2 >= critical_value
@@ -218,14 +213,14 @@ if __name__ == "__main__":
     ]
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
-    # _my_distributions = [BETA]
+    _my_distributions = [ALPHA]
     # for distribution_class in _my_distributions:
     #     print(distribution_class.__name__)
     #     path = f"./data/data_{distribution_class.__name__.lower()}.txt"
     #     data = get_data(path)
     #     print(test_chi_square_continuous(data, distribution_class))
 
-    for distribution_class in _my_distributions:
+    for distribution_class in _all_distributions:
         print(distribution_class.__name__)
         path = f"./data/data_{distribution_class.__name__.lower()}.txt"
         data = get_data(path)

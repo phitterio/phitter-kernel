@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.optimize
 
 
@@ -19,7 +19,7 @@ class BRADFORD:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        result = math.log(1 + self.c * (x - self.min_) / (self.max_ - self.min_)) / math.log(self.c + 1)
+        result = numpy.log(1 + self.c * (x - self.min_) / (self.max_ - self.min_)) / numpy.log(self.c + 1)
         return result
 
     def pdf(self, x: float) -> float:
@@ -27,7 +27,7 @@ class BRADFORD:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        result = self.c / ((self.c * (x - self.min_) + self.max_ - self.min_) * math.log(self.c + 1))
+        result = self.c / ((self.c * (x - self.min_) + self.max_ - self.min_) * numpy.log(self.c + 1))
         return result
 
     def get_num_parameters(self) -> int:
@@ -67,7 +67,7 @@ class BRADFORD:
             c = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = (c * (_max - _min) + math.log(c + 1) * (_min * (c + 1) - _max)) / (c * math.log(c + 1))
+            parametric_mean = (c * (_max - _min) + numpy.log(c + 1) * (_min * (c + 1) - _max)) / (c * numpy.log(c + 1))
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -84,6 +84,7 @@ class BRADFORD:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -103,4 +104,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

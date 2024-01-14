@@ -1,4 +1,4 @@
-import math
+import numpy
 
 
 class HYPERBOLIC_SECANT:
@@ -18,16 +18,16 @@ class HYPERBOLIC_SECANT:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: math.pi * (t - self.mu) / (2 * self.sigma)
-        return (2 / math.pi) * math.atan(math.exp((z(x))))
+        z = lambda t: numpy.pi * (t - self.mu) / (2 * self.sigma)
+        return (2 / numpy.pi) * numpy.arctan(numpy.exp((z(x))))
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: math.pi * (t - self.mu) / (2 * self.sigma)
-        return (1 / math.cosh(z(x))) / (2 * self.sigma)
+        z = lambda t: numpy.pi * (t - self.mu) / (2 * self.sigma)
+        return (1 / numpy.cosh(z(x))) / (2 * self.sigma)
 
     def get_num_parameters(self) -> int:
         """
@@ -59,7 +59,7 @@ class HYPERBOLIC_SECANT:
         """
 
         mu = measurements.mean
-        sigma = math.sqrt(measurements.variance)
+        sigma = numpy.sqrt(measurements.variance)
 
         parameters = {"mu": mu, "sigma": sigma}
         return parameters
@@ -68,6 +68,7 @@ class HYPERBOLIC_SECANT:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -86,4 +87,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

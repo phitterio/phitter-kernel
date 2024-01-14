@@ -1,5 +1,5 @@
 import scipy.integrate
-import math
+import numpy
 import scipy.optimize
 import numpy
 
@@ -70,7 +70,7 @@ class KUMARASWAMY:
             alpha_, beta_, min_, max_ = initial_solution
             
             ## Generatred moments function (not - centered)
-            E = lambda r: beta_ * math.gamma(1 + r / alpha_) * math.gamma(beta_) / math.gamma(1 + beta_ + r / alpha_)
+            E = lambda r: beta_ * scipy.special.gamma(1 + r / alpha_) * scipy.special.gamma(beta_) / scipy.special.gamma(1 + beta_ + r / alpha_)
             
             ## Parametric expected expressions
             parametric_mean = E(1) * (max_ - min_) + min_
@@ -101,6 +101,7 @@ class KUMARASWAMY:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -118,5 +119,7 @@ if __name__ == "__main__":
     
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
     

@@ -1,5 +1,5 @@
 import scipy.optimize
-
+import scipy.stats
 
 class TRAPEZOIDAL:
     """
@@ -20,32 +20,36 @@ class TRAPEZOIDAL:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        if x <= self.a:
-            return 0
-        if self.a <= x and x < self.b:
-            return (1 / (self.d + self.c - self.b - self.a)) * (1 / (self.b - self.a)) * (x - self.a) ** 2
-        if self.b <= x and x < self.c:
-            return (1 / (self.d + self.c - self.b - self.a)) * (2 * x - self.a - self.b)
-        if self.c <= x and x <= self.d:
-            return 1 - (1 / (self.d + self.c - self.b - self.a)) * (1 / (self.d - self.c)) * (self.d - x) ** 2
-        if x >= self.d:
-            return 1
+        # if x <= self.a:
+        #     return 0
+        # if self.a <= x and x < self.b:
+        #     return (1 / (self.d + self.c - self.b - self.a)) * (1 / (self.b - self.a)) * (x - self.a) ** 2
+        # if self.b <= x and x < self.c:
+        #     return (1 / (self.d + self.c - self.b - self.a)) * (2 * x - self.a - self.b)
+        # if self.c <= x and x <= self.d:
+        #     return 1 - (1 / (self.d + self.c - self.b - self.a)) * (1 / (self.d - self.c)) * (self.d - x) ** 2
+        # if x >= self.d:
+        #     return 1
+        result = scipy.stats.trapezoid.cdf(x, (self.b - self.a) / (self.d - self.a), (self.c - self.a) / (self.d - self.a), loc=self.a, scale=self.d - self.a)
+        return result
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        if x <= self.a:
-            return 0
-        if self.a <= x and x < self.b:
-            return (2 / (self.d + self.c - self.b - self.a)) * ((x - self.a) / (self.b - self.a))
-        if self.b <= x and x < self.c:
-            return 2 / (self.d + self.c - self.b - self.a)
-        if self.c <= x and x <= self.d:
-            return (2 / (self.d + self.c - self.b - self.a)) * ((self.d - x) / (self.d - self.c))
-        if x >= self.d:
-            return 0
+        # if x <= self.a:
+        #     return 0
+        # if self.a <= x and x < self.b:
+        #     return (2 / (self.d + self.c - self.b - self.a)) * ((x - self.a) / (self.b - self.a))
+        # if self.b <= x and x < self.c:
+        #     return 2 / (self.d + self.c - self.b - self.a)
+        # if self.c <= x and x <= self.d:
+        #     return (2 / (self.d + self.c - self.b - self.a)) * ((self.d - x) / (self.d - self.c))
+        # if x >= self.d:
+        #     return 0
+        result = scipy.stats.trapezoid.pdf(x, (self.b - self.a) / (self.d - self.a), (self.c - self.a) / (self.d - self.a), loc=self.a, scale=self.d - self.a)
+        return result
 
     def get_num_parameters(self) -> int:
         """
@@ -75,12 +79,8 @@ class TRAPEZOIDAL:
         Returns
         =======
         parameters : dict
-            {"a": * , "b": * , "c": * }
+            {"a": * , "b": * , "c": *, "d": *}
         """
-
-        a = measurements.min - 1e-3
-        d = measurements.max + 1e-3
-
         def equations(initial_solution, measurements, a, d):
             ## Variables declaration
             b, c = initial_solution
@@ -97,6 +97,9 @@ class TRAPEZOIDAL:
 
             return (eq1, eq2)
 
+        a = measurements.min - 1e-3
+        d = measurements.max + 1e-3
+
         x0 = [(d + a) * 0.25, (d + a) * 0.75]
         bnds = ((a, a), (d, d))
         solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=([measurements, a, d]))
@@ -108,6 +111,7 @@ class TRAPEZOIDAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -126,4 +130,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

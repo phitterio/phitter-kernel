@@ -1,5 +1,5 @@
-import scipy.special as sc
-import math
+import scipy.special
+import numpy
 import scipy.stats
 import numpy
 import scipy.optimize
@@ -23,24 +23,24 @@ class RICE:
         Alternative: quadrature integration method
         """
 
-        def Q(M: float, a: float, b: float) -> float:
-            """
-            Marcum Q - function
-            https://en.wikipedia.org/wiki/Marcum_Q - function
-            """
-            k = 1 - M
-            x = (a / b) ** k * sc.iv(k, a * b)
-            acum = 0
-            while x > 1e-20:
-                acum += x
-                k += 1
-                x = (a / b) ** k * sc.iv(k, a * b)
-            res = acum * math.exp(-(a**2 + b**2) / 2)
-            return res
+        # def Q(M: float, a: float, b: float) -> float:
+        #     """
+        #     Marcum Q - function
+        #     https://en.wikipedia.org/wiki/Marcum_Q - function
+        #     """
+        #     k = 1 - M
+        #     x = (a / b) ** k * scipy.special.iv(k, a * b)
+        #     acum = 0
+        #     while x > 1e-20:
+        #         acum += x
+        #         k += 1
+        #         x = (a / b) ** k * scipy.special.iv(k, a * b)
+        #     res = acum * numpy.exp(-(a**2 + b**2) / 2)
+        #     return res
 
         # result, error = scipy.integrate.quad(self.pdf, 0, x)
         # result = 1 - Q(1, self.v / self.sigma, x / self.sigma)
-        result = scipy.stats.rice.cdf(x, self.v / self.sigma, scale = self.sigma)
+        result = scipy.stats.rice.cdf(x, self.v / self.sigma, scale=self.sigma)
         return result
 
     def pdf(self, x: float) -> float:
@@ -48,8 +48,8 @@ class RICE:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = (x / (self.sigma**2)) * math.exp(-(x**2 + self.v**2) / (2 * self.sigma**2)) * sc.i0(x * self.v / (self.sigma**2))
-        result = scipy.stats.rice.pdf(x, self.v / self.sigma, scale = self.sigma)
+        # result = (x / (self.sigma**2)) * numpy.exp(-(x**2 + self.v**2) / (2 * self.sigma**2)) * scipy.special.i0(x * self.v / (self.sigma**2))
+        result = scipy.stats.rice.pdf(x, self.v / self.sigma, scale=self.sigma)
         return result
 
     def get_num_parameters(self) -> int:
@@ -87,7 +87,7 @@ class RICE:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             v, sigma = initial_solution
 
-            E = lambda k: sigma**k * 2 ** (k / 2) * math.gamma(1 + k / 2) * sc.eval_laguerre(k / 2, -v * v / (2 * sigma * sigma))
+            E = lambda k: sigma**k * 2 ** (k / 2) * scipy.special.gamma(1 + k / 2) * scipy.special.eval_laguerre(k / 2, -v * v / (2 * sigma * sigma))
 
             ## Parametric expected expressions
             parametric_mean = E(1)
@@ -104,7 +104,7 @@ class RICE:
             return (eq1, eq2)
 
         bnds = ((0, 0), (numpy.inf, numpy.inf))
-        x0 = (measurements.mean, math.sqrt(measurements.variance))
+        x0 = (measurements.mean, numpy.sqrt(measurements.variance))
         args = [measurements]
         solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
         parameters = {"v": solution.x[0], "sigma": solution.x[1]}
@@ -115,6 +115,7 @@ class RICE:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -133,4 +134,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

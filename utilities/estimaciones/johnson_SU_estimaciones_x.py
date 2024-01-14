@@ -1,7 +1,7 @@
 import scipy.stats
-import math
+import numpy
 
-def get_measurements(data: list)  - > dict:
+def get_measurements(data: list)  -> dict:
     import scipy.stats
     import numpy
     measurements = {}
@@ -37,10 +37,10 @@ def get_parameters(measurements):
     p = x3 - x2
     
     ## Calculation distribution parameters
-    lambda_ = (2 * p * math.sqrt((m / p) * (n / p) - 1)) / ((m / p + n / p - 2) * math.sqrt(m / p + n / p + 2))
+    lambda_ = (2 * p * numpy.sqrt((m / p) * (n / p) - 1)) / ((m / p + n / p - 2) * numpy.sqrt(m / p + n / p + 2))
     xi_ = 0.5 * (x3 + x2) + p * (n / p - m / p) / (2 * (m / p + n / p - 2))
     delta_ = 2 * z / math.acosh(0.5 * (m / p + n / p))
-    gamma_ = delta_ * math.asinh((n / p - m / p) / (2 * math.sqrt((m / p) * (n / p) - 1)))
+    gamma_ = delta_ * math.asinh((n / p - m / p) / (2 * numpy.sqrt((m / p) * (n / p) - 1)))
     
     parameters = {"xi": xi_, "lambda": lambda_, "gamma": gamma_, "delta": delta_}
     return parameters

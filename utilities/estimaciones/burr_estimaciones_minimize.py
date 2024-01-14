@@ -1,5 +1,5 @@
 from scipy.optimize import minimize
-import math
+import numpy
 from scipy.special import beta
 
 def modificated_beta(x, y, infinite):
@@ -32,6 +32,7 @@ def constraint_median(initial_solution, data_median):
 #############################################################################
 ## Import function to get measurements
 import sys
+    import numpy
 sys.path.append("C: / Users / USUARIO / Desktop / Fitter / utilities")
 from measurements.measurements import MEASUREMENTS
 

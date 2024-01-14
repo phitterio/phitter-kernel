@@ -1,3 +1,5 @@
+import scipy.stats
+
 class BERNOULLI:
     """
     Bernoulli distribution
@@ -14,12 +16,7 @@ class BERNOULLI:
         Calculated using the definition of the function
         Alternative: scipy cdf method
         """
-        if x < 0:
-            result = 0
-        elif x >= 0 and x < 1:
-            result = 1 - self.p
-        else:
-            result = 1
+        result = scipy.stats.bernoulli.cdf(x, self.p)
         return result
 
     def pmf(self, x: int) -> float:
@@ -66,6 +63,7 @@ class BERNOULLI:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
@@ -84,4 +82,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(round(measurements.mean)))
+    print(distribution.cdf(numpy.array([round(measurements.mean), round(measurements.mean)])))
     print(distribution.pmf(round(measurements.mean)))
+    print(distribution.pmf(numpy.array([round(measurements.mean), round(measurements.mean)])))

@@ -1,7 +1,7 @@
 import numpy
 import scipy.stats
 import matplotlib.pyplot as plt
-import math
+import numpy
 
 def getData(direction):
     sample_distribution_file = open(direction, "r")
@@ -21,10 +21,10 @@ n = x2 - x1
 p = x3 - x2
 print(m,n,p)
 
-lambda_ = (p * math.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2-4))) / (p ** 2 / (m * n) - 1)
+lambda_ = (p * numpy.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2-4))) / (p ** 2 / (m * n) - 1)
 xi_ = 0.5 * (x3 + x2)-0.5 * lambda_ + p * (p / n - p / m) / (2 * (p ** 2 / (m * n) - 1))
-delta_ = z / math.acosh(0.5 *  math.sqrt((1 + p / m) * (1 + p / n)))
-gamma_ = delta_ * math.asinh((p / n - p / m) * math.sqrt((1 + p / m) * (1 + p / n)-4) / (2 * (p ** 2 / (m * n) - 1)))
+delta_ = z / math.acosh(0.5 *  numpy.sqrt((1 + p / m) * (1 + p / n)))
+gamma_ = delta_ * math.asinh((p / n - p / m) * numpy.sqrt((1 + p / m) * (1 + p / n)-4) / (2 * (p ** 2 / (m * n) - 1)))
 
 
 print(lambda_)

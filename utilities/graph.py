@@ -4,7 +4,7 @@ import scipy.stats as st
 import statsmodels.api as sm
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import math
+import numpy
 import random
 
 mpl.style.use("ggplot")
@@ -16,8 +16,8 @@ def num_bins_doane(data):
     """
     N = len(data)
     skewness = st.skew(data)
-    sigma_g1 = math.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
-    num_bins = 1 + math.log(N,2) + math.log(1 + abs(skewness) / sigma_g1,2)
+    sigma_g1 = numpy.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
+    num_bins = 1 + numpy.log(N,2) + numpy.log(1 + abs(skewness) / sigma_g1,2)
     num_bins = round(num_bins)
     return num_bins
 
@@ -127,7 +127,7 @@ def fit_data(data):
             # response = test_kolmogorov_smirnov(data, distribution)
             # p_value = response["p-value"]
             
-            # if not math.isnan(p_value):
+            # if not numpy.isnan(p_value):
             #     results[distribution] = p_value
             
             
@@ -138,7 +138,7 @@ def fit_data(data):
             ## Calculate SSE (sum of squared estimate of errors)
             sse = numpy.sum(numpy.power(frequencies - pdf_values, 2.0))
             
-            if not math.isnan(sse):
+            if not numpy.isnan(sse):
                 results[distribution] = sse
             
         except:

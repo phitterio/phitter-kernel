@@ -63,6 +63,7 @@ class UNIFORM:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE

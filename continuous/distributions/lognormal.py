@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.stats
 
 
@@ -20,7 +20,7 @@ class LOGNORMAL:
         Alternative: quadrature integration method
         """
         # result, error = scipy.integrate.quad(self.pdf, 1e-15, x)
-        result = scipy.stats.norm.cdf((math.log(x) - self.mu) / self.sigma)
+        result = scipy.stats.norm.cdf((numpy.log(x) - self.mu) / self.sigma)
         return result
 
     def pdf(self, x: float) -> float:
@@ -28,7 +28,7 @@ class LOGNORMAL:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (1 / (x * self.sigma * math.sqrt(2 * math.pi))) * math.exp(-(((math.log(x) - self.mu) ** 2) / (2 * self.sigma**2)))
+        return (1 / (x * self.sigma * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-(((numpy.log(x) - self.mu) ** 2) / (2 * self.sigma**2)))
 
     def get_num_parameters(self) -> int:
         """
@@ -60,8 +60,8 @@ class LOGNORMAL:
             {"mu": * , "sigma": * }
         """
 
-        mu = math.log(measurements.mean**2 / math.sqrt(measurements.mean**2 + measurements.variance))
-        sigma = math.sqrt(math.log((measurements.mean**2 + measurements.variance) / (measurements.mean**2)))
+        mu = numpy.log(measurements.mean**2 / numpy.sqrt(measurements.mean**2 + measurements.variance))
+        sigma = numpy.sqrt(numpy.log((measurements.mean**2 + measurements.variance) / (measurements.mean**2)))
 
         parameters = {"mu": mu, "sigma": sigma}
         return parameters
@@ -70,6 +70,7 @@ class LOGNORMAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -88,4 +89,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

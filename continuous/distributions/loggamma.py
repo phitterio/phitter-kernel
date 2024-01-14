@@ -1,8 +1,8 @@
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 import scipy.optimize
 import numpy
-import math
+import numpy
 
 
 class LOGGAMMA:
@@ -23,11 +23,11 @@ class LOGGAMMA:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        # result = scipy.stats.gamma.cdf(math.exp((x - self.mu) / self.sigma), a=self.c, scale=1)
+        # result = scipy.stats.gamma.cdf(numpy.exp((x - self.mu) / self.sigma), a=self.c, scale=1)
         # print(scipy.stats.loggamma.cdf(x, self.c, loc=self.mu, scale=self.sigma))
 
         y = lambda x: (x - self.mu) / self.sigma
-        result = sc.gammainc(self.c, math.exp(y(x)))
+        result = scipy.special.gammainc(self.c, numpy.exp(y(x)))
         return result
 
     def pdf(self, x: float) -> float:
@@ -37,7 +37,7 @@ class LOGGAMMA:
         """
         # print(scipy.stats.loggamma.pdf(x, self.c, loc=self.mu, scale=self.sigma))
         y = lambda x: (x - self.mu) / self.sigma
-        result = math.exp(self.c * y(x) - math.exp(y(x)) - sc.gammaln(self.c)) / self.sigma
+        result = numpy.exp(self.c * y(x) - numpy.exp(y(x)) - scipy.special.gammaln(self.c)) / self.sigma
 
         return result
 
@@ -75,10 +75,10 @@ class LOGGAMMA:
             c, mu, sigma = initial_solution
 
             # parametric_mean, parametric_variance, parametric_skewness, parametric_kurtosis = scipy.stats.loggamma.stats(c, loc=mu, scale=sigma, moments='mvsk')
-            parametric_mean = sc.digamma(c) * sigma + mu
-            parametric_variance = sc.polygamma(1, c) * (sigma**2)
-            parametric_skewness = sc.polygamma(2, c) / (sc.polygamma(1, c) ** 1.5)
-            # parametric_kurtosis = sc.polygamma(3, c) / (sc.polygamma(1, c) ** 2)
+            parametric_mean = scipy.special.digamma(c) * sigma + mu
+            parametric_variance = scipy.special.polygamma(1, c) * (sigma**2)
+            parametric_skewness = scipy.special.polygamma(2, c) / (scipy.special.polygamma(1, c) ** 1.5)
+            # parametric_kurtosis = scipy.special.polygamma(3, c) / (scipy.special.polygamma(1, c) ** 2)
 
             ## System Equations
             eq1 = parametric_mean - data_mean
@@ -99,6 +99,7 @@ class LOGGAMMA:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -117,7 +118,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     print("========= Time parameter estimation analisys ========")
 
@@ -126,10 +129,10 @@ if __name__ == "__main__":
     def equations(initial_solution, data_mean, data_variance, data_skewness):
         c, mu, sigma = initial_solution
         parametric_mean, parametric_variance, parametric_skewness, parametric_kurtosis = scipy.stats.loggamma.stats(c, loc=mu, scale=sigma, moments="mvsk")
-        parametric_mean = sc.digamma(c) * sigma + mu
-        parametric_variance = sc.polygamma(1, c) * (sigma**2)
-        parametric_skewness = sc.polygamma(2, c) / (sc.polygamma(1, c) ** 1.5)
-        # parametric_kurtosis = sc.polygamma(3, c) / (sc.polygamma(1, c) ** 2)
+        parametric_mean = scipy.special.digamma(c) * sigma + mu
+        parametric_variance = scipy.special.polygamma(1, c) * (sigma**2)
+        parametric_skewness = scipy.special.polygamma(2, c) / (scipy.special.polygamma(1, c) ** 1.5)
+        # parametric_kurtosis = scipy.special.polygamma(3, c) / (scipy.special.polygamma(1, c) ** 2)
 
         ## System Equations
         eq1 = parametric_mean - data_mean

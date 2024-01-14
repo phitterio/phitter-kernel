@@ -110,8 +110,8 @@ class PARETO_FIRST_KIND:
         # alpha = -(2 * v) / (m ** 2 - 2 * m * mo + mo ** 2 - v)
 
         # parameters = {"xm": xm, "alpha": alpha, "loc": loc}
-        # # xm = (m ** 2 + v - math.sqrt(v * (m ** 2 + v))) / m
-        # # alpha = (v + math.sqrt(v * (m ** 2 + v))) / v
+        # # xm = (m ** 2 + v - numpy.sqrt(v * (m ** 2 + v))) / m
+        # # alpha = (v + numpy.sqrt(v * (m ** 2 + v))) / v
         # # parameters = {"xm": xm , "alpha": alpha}
 
         return parameters
@@ -120,6 +120,7 @@ class PARETO_FIRST_KIND:
 if __name__ == "__main__":
     # Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -138,7 +139,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     # Get parameters of distribution: SCIPY vs EQUATIONS
     import time

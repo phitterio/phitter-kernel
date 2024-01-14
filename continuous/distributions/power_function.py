@@ -1,6 +1,6 @@
 import scipy.optimize
 import numpy
-import math
+import numpy
 import scipy.stats
 
 
@@ -97,6 +97,7 @@ class POWER_FUNCTION:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -115,6 +116,8 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     print(scipy.stats.powerlaw.fit(measurements.data))

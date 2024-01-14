@@ -1,7 +1,7 @@
 import scipy.integrate
-import math
+import numpy
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 import numpy
 
 
@@ -25,10 +25,10 @@ class NON_CENTRAL_F:
         Alternative: quadrature integration method
         """
         ## Method 1
-        # result = scipy.stats.ncf.cdf(x, self.n1, self.n2, self.lambda_)
+        result = scipy.stats.ncf.cdf(x, self.n1, self.n2, self.lambda_)
 
         ## Method 2
-        result = sc.ncfdtr(self.n1, self.n2, self.lambda_, x)
+        # result = scipy.special.ncfdtr(self.n1, self.n2, self.lambda_, x)
 
         ## Method 3
         # k = 0
@@ -36,13 +36,13 @@ class NON_CENTRAL_F:
         # r0 = -1
         # while(acum - r0 > 1e-10):
         #     r0 = acum
-        #     t1 = ((self.lambda_ / 2) ** k) / math.factorial(k)
+        #     t1 = ((self.lambda_ / 2) ** k) / scipy.special.factorial(k)
         #     q = x * self.n1 / (self.n2 + x * self.n1)
-        #     t2 = sc.betainc(k + self.n1 / 2, self.n2 / 2, q)
+        #     t2 = scipy.special.betainc(k + self.n1 / 2, self.n2 / 2, q)
         #     s = t1 * t2
         #     acum += s
         #     k += 1
-        # result = math.exp(-self.lambda_ / 2) * acum
+        # result = numpy.exp(-self.lambda_ / 2) * acum
         return result
 
     def pdf(self, x: float) -> float:
@@ -59,16 +59,16 @@ class NON_CENTRAL_F:
         # r0 = -1
         # while(acum - r0 > 1e-10):
         #     r0 = acum
-        #     t1 = 1 / math.factorial(k)
+        #     t1 = 1 / scipy.special.factorial(k)
         #     t2 = (self.lambda_ / 2) ** k
-        #     t3 = 1 / sc.beta(k + self.n1 / 2, self.n2 / 2)
+        #     t3 = 1 / scipy.special.beta(k + self.n1 / 2, self.n2 / 2)
         #     t4 = (self.n1 / self.n2) ** (k + self.n1 / 2)
         #     t5 = (self.n2 / (self.n2 + self.n1 * x)) ** (k + (self.n1 + self.n2) / 2)
         #     t6 = x ** (k - 1 + self.n1 / 2)
         #     s = t1 * t2 * t3 * t4 * t5 * t6
         #     acum += s
         #     k += 1
-        # result = math.exp(-self.lambda_ / 2) * acum
+        # result = numpy.exp(-self.lambda_ / 2) * acum
         return result
 
     def get_num_parameters(self) -> int:
@@ -137,6 +137,7 @@ class NON_CENTRAL_F:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -148,11 +149,13 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../data/data_nc_f.txt"
+    path = "../data/data_non_central_f.txt"
     data = get_data(path)
     measurements = MEASUREMENTS_CONTINUOUS(data)
     distribution = NON_CENTRAL_F(measurements)
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

@@ -1,4 +1,4 @@
-import math
+import numpy
 import numpy
 
 class LAPLACE:
@@ -17,14 +17,14 @@ class LAPLACE:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        return 0.5 + 0.5 * numpy.sign(x - self.mu) * (1 - math.exp(-abs(x - self.mu) / self.b))
+        return 0.5 + 0.5 * numpy.sign(x - self.mu) * (1 - numpy.exp(-abs(x - self.mu) / self.b))
     
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (1 / (2 * self.b)) * math.exp(-abs(x - self.mu) / self.b)
+        return (1 / (2 * self.b)) * numpy.exp(-abs(x - self.mu) / self.b)
     
     def get_num_parameters(self) -> int:
         """
@@ -55,7 +55,7 @@ class LAPLACE:
             {"mu": * , "b": * }
         """
         mu = measurements.mean
-        b = math.sqrt(measurements.variance / 2)
+        b = numpy.sqrt(measurements.variance / 2)
     
         ## Results
         parameters = {"mu": mu, "b": b}
@@ -65,6 +65,7 @@ class LAPLACE:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -82,4 +83,6 @@ if __name__ == "__main__":
     
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

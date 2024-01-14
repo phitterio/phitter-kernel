@@ -1,4 +1,4 @@
-import math
+import numpy
 import numpy
 import scipy.optimize
 import scipy.stats
@@ -22,7 +22,7 @@ class WEIBULL_3P:
         Calculated with known formula.
         """
         z = lambda t: (t - self.loc) / self.beta
-        return 1 - math.exp(-(z(x) ** self.alpha))
+        return 1 - numpy.exp(-(z(x) ** self.alpha))
 
     def pdf(self, x: float) -> float:
         """
@@ -30,7 +30,7 @@ class WEIBULL_3P:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.loc) / self.beta
-        return (self.alpha / self.beta) * (z(x) ** (self.alpha - 1)) * math.exp(-z(x) ** self.alpha)
+        return (self.alpha / self.beta) * (z(x) ** (self.alpha - 1)) * numpy.exp(-z(x) ** self.alpha)
 
     def get_num_parameters(self) -> int:
         """
@@ -67,7 +67,7 @@ class WEIBULL_3P:
             alpha, beta, loc = initial_solution
 
             ## Generatred moments function (not - centered)
-            E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
+            E = lambda k: (beta**k) * scipy.special.gamma(1 + k / alpha)
 
             ## Parametric expected expressions
             parametric_mean = E(1) + loc
@@ -95,6 +95,7 @@ class WEIBULL_3P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -113,7 +114,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     print("\n========= Time parameter estimation analisys ========")
 
@@ -124,7 +127,7 @@ if __name__ == "__main__":
         alpha, beta, loc = initial_solution
 
         ## Generatred moments function (not - centered)
-        E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
+        E = lambda k: (beta**k) * scipy.special.gamma(1 + k / alpha)
 
         ## Parametric expected expressions
         parametric_mean = E(1) + loc

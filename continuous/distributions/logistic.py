@@ -1,6 +1,6 @@
-import scipy.special as sc
+import scipy.special
 import scipy.stats
-import math
+import numpy
 
 
 class LOGISTIC:
@@ -20,7 +20,7 @@ class LOGISTIC:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: math.exp(-(t - self.mu) / self.sigma)
+        z = lambda t: numpy.exp(-(t - self.mu) / self.sigma)
         result = 1 / (1 + z(x))
         return result
 
@@ -29,7 +29,7 @@ class LOGISTIC:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: math.exp(-(t - self.mu) / self.sigma)
+        z = lambda t: numpy.exp(-(t - self.mu) / self.sigma)
         result = z(x) / (self.sigma * (1 + z(x)) ** 2)
         return result
 
@@ -62,7 +62,7 @@ class LOGISTIC:
             {"mu": * , "sigma": * }
         """
         mu = measurements.mean
-        sigma = math.sqrt(3 * measurements.variance / (math.pi**2))
+        sigma = numpy.sqrt(3 * measurements.variance / (numpy.pi**2))
 
         ## Results
         parameters = {"mu": mu, "sigma": sigma}
@@ -73,6 +73,7 @@ class LOGISTIC:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -91,4 +92,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

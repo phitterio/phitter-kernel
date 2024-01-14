@@ -1,5 +1,5 @@
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 
 
 class HALF_NORMAL:
@@ -20,7 +20,7 @@ class HALF_NORMAL:
         Alternative: quadrature integration method
         """
         z = lambda t: (t - self.mu) / self.sigma
-        result = sc.erf(z(x) / math.sqrt(2))
+        result = scipy.special.erf(z(x) / numpy.sqrt(2))
         return result
 
     def pdf(self, x: float) -> float:
@@ -29,7 +29,7 @@ class HALF_NORMAL:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.mu) / self.sigma
-        result = (1 / self.sigma) * math.sqrt(2 / math.pi) * math.exp(-(z(x) ** 2) / 2)
+        result = (1 / self.sigma) * numpy.sqrt(2 / numpy.pi) * numpy.exp(-(z(x) ** 2) / 2)
         return result
 
     def get_num_parameters(self) -> int:
@@ -61,8 +61,8 @@ class HALF_NORMAL:
             {"mu": * , "sigma": * }
         """
 
-        sigma = math.sqrt(measurements.variance / (1 - 2 / math.pi))
-        mu = measurements.mean - sigma * math.sqrt(2) / math.sqrt(math.pi)
+        sigma = numpy.sqrt(measurements.variance / (1 - 2 / numpy.pi))
+        mu = measurements.mean - sigma * numpy.sqrt(2) / numpy.sqrt(numpy.pi)
         parameters = {"mu": mu, "sigma": sigma}
 
         return parameters
@@ -71,6 +71,7 @@ class HALF_NORMAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -89,4 +90,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

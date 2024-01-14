@@ -1,6 +1,6 @@
 import scipy.stats
-import scipy.special as sc
-import math
+import scipy.special
+import numpy
 import numpy
 
 
@@ -10,7 +10,6 @@ class F_4P:
     https://en.wikipedia.org/wiki/F-distribution
     http://atomic.phys.uni-sofia.bg/local/nist-e-handbook/e-handbook/eda/section3/eda366a.htm
     """
-
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.df1 = self.parameters["df1"]
@@ -24,24 +23,26 @@ class F_4P:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        z = lambda t: (t - self.loc) / self.scale
-        # print(scipy.stats.f.cdf(z(x), self.df1, self.df2))
-        return sc.betainc(self.df1 / 2, self.df2 / 2, z(x) * self.df1 / (self.df1 * z(x) + self.df2))
+        # z = lambda t: (t - self.loc) / self.scale
+        # result = scipy.special.betainc(self.df1 / 2, self.df2 / 2, z(x) * self.df1 / (self.df1 * z(x) + self.df2))
+        result = scipy.stats.f.cdf(x, self.df1, self.df2, self.loc, self.scale)
+        return result
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        z = lambda t: (t - self.loc) / self.scale
-        # print(scipy.stats.f.pdf(x, self.df1, self.df2, self.loc, self.scale))
-        return (
-            (1 / self.scale)
-            * (1 / sc.beta(self.df1 / 2, self.df2 / 2))
-            * ((self.df1 / self.df2) ** (self.df1 / 2))
-            * (z(x) ** (self.df1 / 2 - 1))
-            * ((1 + z(x) * self.df1 / self.df2) ** (-1 * (self.df1 + self.df2) / 2))
-        )
+        # z = lambda t: (t - self.loc) / self.scale
+        # result = (
+        #     (1 / self.scale)
+        #     * (1 / scipy.special.beta(self.df1 / 2, self.df2 / 2))
+        #     * ((self.df1 / self.df2) ** (self.df1 / 2))
+        #     * (z(x) ** (self.df1 / 2 - 1))
+        #     * ((1 + z(x) * self.df1 / self.df2) ** (-1 * (self.df1 + self.df2) / 2))
+        # )
+        result = scipy.stats.f.pdf(x, self.df1, self.df2, self.loc, self.scale)
+        return result
 
     def get_num_parameters(self) -> int:
         """
@@ -79,7 +80,7 @@ class F_4P:
             df1, df2, loc, scale = initial_solution
 
             ## Generatred moments function (not - centered)
-            E = lambda k: (df2 / df1) ** k * (math.gamma(df1 / 2 + k) * math.gamma(df2 / 2 - k)) / (math.gamma(df1 / 2) * math.gamma(df2 / 2))
+            E = lambda k: (df2 / df1) ** k * (scipy.special.gamma(df1 / 2 + k) * scipy.special.gamma(df2 / 2 - k)) / (scipy.special.gamma(df1 / 2) * scipy.special.gamma(df2 / 2))
 
             ## Parametric expected expressions
             parametric_mean = E(1) * scale + loc
@@ -118,6 +119,7 @@ class F_4P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -136,4 +138,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

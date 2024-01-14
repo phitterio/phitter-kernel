@@ -1,4 +1,5 @@
 import scipy.stats
+import numpy
 from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 
 
@@ -40,21 +41,26 @@ def test_kolmogorov_smirnov_continuous(distribution, measurements, confidence_le
     N = measurements.length
 
     ## Calculation of errors
-    errors = []
-    for i in range(N):
-        Sn = (i + 1) / N
-        if i < N - 1:
-            if measurements.data[i] != measurements.data[i + 1]:
-                Fn = distribution.cdf(measurements.data[i])
-                errors.append(abs(Sn - Fn))
-            else:
-                Fn = 0
-        else:
-            Fn = distribution.cdf(measurements.data[i])
-            errors.append(abs(Sn - Fn))
+    # errors = []
+    # for i in range(N):
+    #     Sn = (i + 1) / N
+    #     if i < N - 1:
+    #         if measurements.data[i] != measurements.data[i + 1]:
+    #             Fn = distribution.cdf(measurements.data[i])
+    #             errors.append(abs(Sn - Fn))
+    #         else:
+    #             Fn = 0
+    #     else:
+    #         Fn = distribution.cdf(measurements.data[i])
+    #         errors.append(abs(Sn - Fn))
+
+    idx = numpy.concatenate([numpy.where(measurements.data[:-1] != measurements.data[1:])[0], [N - 1]])
+    Sn = (numpy.arange(N) + 1) / N
+    Fn = distribution.cdf(measurements.data)
+    errors = numpy.abs(Sn[idx] - Fn[idx])
 
     ## Calculation of indicators
-    statistic_ks = max(errors)
+    statistic_ks = numpy.max(errors)
     critical_value = scipy.stats.kstwo.ppf(confidence_level, N)
     p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
     rejected = statistic_ks >= critical_value
@@ -223,7 +229,7 @@ if __name__ == "__main__":
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
     # _my_distributions = [PARETO_FIRST_KIND]
-    for distribution_class in _my_distributions:
+    for distribution_class in _all_distributions:
         print(distribution_class.__name__)
         path = f"./data/data_{distribution_class.__name__.lower()}.txt"
         data = get_data(path)

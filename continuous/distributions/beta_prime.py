@@ -1,7 +1,7 @@
 import scipy.optimize
 import scipy.stats
 import numpy
-import scipy.special as sc
+import scipy.special
 
 
 class BETA_PRIME:
@@ -23,7 +23,7 @@ class BETA_PRIME:
         """
         result = scipy.stats.betaprime.cdf(x, self.alpha, self.beta)
         # print(result)
-        # result = sc.betainc(self.alpha, self.beta, x / (1 + x))
+        # result = scipy.special.betainc(self.alpha, self.beta, x / (1 + x))
         return result
 
     def pdf(self, x: float) -> float:
@@ -33,7 +33,7 @@ class BETA_PRIME:
         """
         result = scipy.stats.betaprime.pdf(x, self.alpha, self.beta)
         # print(result)
-        # result = (x ** (self.alpha - 1) * (1 + x) ** (-self.alpha - self.beta)) / (sc.beta(self.alpha,self.beta))
+        # result = (x ** (self.alpha - 1) * (1 + x) ** (-self.alpha - self.beta)) / (scipy.special.beta(self.alpha,self.beta))
         return result
 
     def get_num_parameters(self) -> int:
@@ -73,14 +73,14 @@ class BETA_PRIME:
             alpha, beta = initial_solution
 
             ## Generatred moments function (not - centered)
-            # E = lambda k: math.gamma(k - alpha) * math.gamma(beta - k) / (math.gamma(alpha) * math.gamma(beta))
+            # E = lambda k: scipy.special.gamma(k - alpha) * scipy.special.gamma(beta - k) / (scipy.special.gamma(alpha) * scipy.special.gamma(beta))
 
             ## Parametric expected expressions
             parametric_mean = alpha / (beta - 1)
             parametric_variance = alpha * (alpha + beta - 1) / ((beta - 1) ** 2 * (beta - 2))
-            # parametric_skewness = 2 * math.sqrt(((beta - 2)) / (alpha * (alpha + beta - 1))) * (((2 * alpha + beta - 1)) / (beta - 3))
+            # parametric_skewness = 2 * numpy.sqrt(((beta - 2)) / (alpha * (alpha + beta - 1))) * (((2 * alpha + beta - 1)) / (beta - 3))
             # parametric_kurtosis = (E(4)-4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) /  ((E(2) - E(1) ** 2)) ** 2
-            # parametric_median = sc.betaincinv(0.5, alpha, beta)
+            # parametric_median = scipy.special.betaincinv(0.5, alpha, beta)
             # parametric_mode = (alpha - 1) / (beta + 1)
 
             eq1 = parametric_mean - measurements.mean
@@ -107,6 +107,7 @@ class BETA_PRIME:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -125,4 +126,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

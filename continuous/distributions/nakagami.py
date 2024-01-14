@@ -1,5 +1,5 @@
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 import numpy
 
 
@@ -20,7 +20,7 @@ class NAKAGAMI:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        result = sc.gammainc(self.m, (self.m / self.omega) * x**2)
+        result = scipy.special.gammainc(self.m, (self.m / self.omega) * x**2)
         return result
 
     def pdf(self, x: float) -> float:
@@ -28,7 +28,7 @@ class NAKAGAMI:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (2 * self.m**self.m) / (math.gamma(self.m) * self.omega**self.m) * (x ** (2 * self.m - 1) * math.exp(-(self.m / self.omega) * x**2))
+        return (2 * self.m**self.m) / (scipy.special.gamma(self.m) * self.omega**self.m) * (x ** (2 * self.m - 1) * numpy.exp(-(self.m / self.omega) * x**2))
 
     def get_num_parameters(self) -> int:
         """
@@ -73,6 +73,7 @@ class NAKAGAMI:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -91,4 +92,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

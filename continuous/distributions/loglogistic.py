@@ -1,5 +1,5 @@
 import scipy.stats
-import math
+import numpy
 import scipy.optimize
 import numpy
 
@@ -64,7 +64,7 @@ class LOGLOGISTIC:
         # def equations(initial_solution, data_mean, data_variance, data_skewness):
         #     alpha, beta = initial_solution
 
-        #     E = lambda r: (alpha ** r) * (r * math.pi / beta) / math.sin(r * math.pi / beta)
+        #     E = lambda r: (alpha ** r) * (r * numpy.pi / beta) / numpy.sin(r * numpy.pi / beta)
 
         #     parametric_mean = E(1)
         #     parametric_variance = (E(2) - E(1) ** 2)
@@ -92,6 +92,7 @@ class LOGLOGISTIC:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -110,7 +111,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     print("========= Time parameter estimation analisys ========")
 
@@ -119,7 +122,7 @@ if __name__ == "__main__":
     def equations(initial_solution, data_mean, data_variance, data_skewness):
         alpha, beta = initial_solution
 
-        E = lambda r: (alpha**r) * (r * math.pi / beta) / math.sin(r * math.pi / beta)
+        E = lambda r: (alpha**r) * (r * numpy.pi / beta) / numpy.sin(r * numpy.pi / beta)
 
         parametric_mean = E(1)
         parametric_variance = E(2) - E(1) ** 2

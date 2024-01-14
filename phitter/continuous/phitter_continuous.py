@@ -1,8 +1,7 @@
-import math
 import sys
 
-import numpy
 import joblib
+import numpy
 
 sys.path.append("../../continuous")
 sys.path.append("../../continuous/measurements")
@@ -84,7 +83,8 @@ from distributions.weibull_3p import WEIBULL_3P
 from measurements_continuous import MEASUREMENTS_CONTINUOUS
 from test_anderson_darling_continuous import test_anderson_darling_continuous
 from test_chi_square_continuous import test_chi_square_continuous
-from test_kolmogorov_smirnov_continuous import test_kolmogorov_smirnov_continuous
+from test_kolmogorov_smirnov_continuous import \
+    test_kolmogorov_smirnov_continuous
 
 
 class PHITTER_CONTINUOUS:
@@ -106,7 +106,7 @@ class PHITTER_CONTINUOUS:
         validation_test = False
         try:
             test = test_function(distribution, self.measurements, confidence_level=self.confidence_level)
-            if numpy.isnan(test["test_statistic"]) == False and math.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
+            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
                 self.distribution_results[label] = {
                     "test_statistic": test["test_statistic"],
                     "critical_value": test["critical_value"],
@@ -134,7 +134,7 @@ class PHITTER_CONTINUOUS:
             
 
         self.distribution_results = {}
-        if validate_estimation and distribution.parameter_restrictions() and not math.isnan(sse) and not math.isinf(sse) and sse < self.minimum_sse:
+        if validate_estimation and distribution.parameter_restrictions() and not numpy.isnan(sse) and not numpy.isinf(sse) and sse < self.minimum_sse:
             v1 = self.test(test_chi_square_continuous, "chi_square", distribution)
             v2 = self.test(test_kolmogorov_smirnov_continuous, "kolmogorov_smirnov", distribution)
             v3 = self.test(test_anderson_darling_continuous, "anderson_darling", distribution)

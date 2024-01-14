@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.stats
 
 
@@ -22,8 +22,8 @@ class INVERSE_GAUSSIAN_3P:
         Alternative: quadrature integration method
         """
         # result = scipy.stats.invgauss.cdf(x, self.mu/self.lambda_, loc=self.loc, scale=self.lambda_)
-        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) - 1)) + math.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
-            -math.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) + 1)
+        result = scipy.stats.norm.cdf(numpy.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) - 1)) + numpy.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
+            -numpy.sqrt(self.lambda_ / (x - self.loc)) * (((x - self.loc) / self.mu) + 1)
         )
         return result
 
@@ -33,7 +33,7 @@ class INVERSE_GAUSSIAN_3P:
         Calculated using definition of the function in the documentation
         """
         # result = scipy.stats.invgauss.pdf(x, self.mu/self.lambda_, loc=self.loc, scale=self.lambda_)
-        result = math.sqrt(self.lambda_ / (2 * math.pi * (x - self.loc) ** 3)) * math.exp(-(self.lambda_ * ((x - self.loc) - self.mu) ** 2) / (2 * self.mu**2 * (x - self.loc)))
+        result = numpy.sqrt(self.lambda_ / (2 * numpy.pi * (x - self.loc) ** 3)) * numpy.exp(-(self.lambda_ * ((x - self.loc) - self.mu) ** 2) / (2 * self.mu**2 * (x - self.loc)))
         return result
 
     def get_num_parameters(self) -> int:
@@ -68,7 +68,7 @@ class INVERSE_GAUSSIAN_3P:
         # Scipy not correct for mu parameter
         # print(distribution.get_parameters(measurements))
 
-        mu = 3 * math.sqrt(measurements.variance / (measurements.skewness**2))
+        mu = 3 * numpy.sqrt(measurements.variance / (measurements.skewness**2))
         lambda_ = mu**3 / measurements.variance
         loc = measurements.mean - mu
 
@@ -79,6 +79,7 @@ class INVERSE_GAUSSIAN_3P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -98,4 +99,6 @@ if __name__ == "__main__":
     print(scipy.stats.invgauss.fit(data))
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

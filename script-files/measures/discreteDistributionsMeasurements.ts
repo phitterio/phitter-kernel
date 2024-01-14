@@ -15,10 +15,10 @@ const discreteDistributionsMeasurements = {
                     return p * (1 - p);
                 },
                 standardDeviation: function (p) {
-                    return this.variance(p) !== undefined ? Math.sqrt(this.variance(p)!) : undefined;
+                    return this.variance(p) !== undefined ? numpy.sqrt(this.variance(p)!) : undefined;
                 },
                 skewness: function (p) {
-                    return (1 - 2 * p) / Math.sqrt(p * (1 - p));
+                    return (1 - 2 * p) / numpy.sqrt(p * (1 - p));
                 },
                 kurtosis: function (p) {
                     return (6 * p * p - 6 * p + 1) / (p * (1 - p)) + 3;
@@ -48,10 +48,10 @@ const discreteDistributionsMeasurements = {
                     return n * p * (1 - p);
                 },
                 standardDeviation: function (n, p) {
-                    return this.variance(n, p) !== undefined ? Math.sqrt(this.variance(n, p)!) : undefined;
+                    return this.variance(n, p) !== undefined ? numpy.sqrt(this.variance(n, p)!) : undefined;
                 },
                 skewness: function (n, p) {
-                    return (1 - p - p) / Math.sqrt(n * p * (1 - p));
+                    return (1 - p - p) / numpy.sqrt(n * p * (1 - p));
                 },
                 kurtosis: function (n, p) {
                     return (1 - 6 * p * (1 - p)) / (n * p * (1 - p)) + 3;
@@ -81,10 +81,10 @@ const discreteDistributionsMeasurements = {
                     return (1 - p) / (p * p);
                 },
                 standardDeviation: function (p) {
-                    return this.variance(p) !== undefined ? Math.sqrt(this.variance(p)!) : undefined;
+                    return this.variance(p) !== undefined ? numpy.sqrt(this.variance(p)!) : undefined;
                 },
                 skewness: function (p) {
-                    return (2 - p) / Math.sqrt(1 - p);
+                    return (2 - p) / numpy.sqrt(1 - p);
                 },
                 kurtosis: function (p) {
                     return 3 + 6 + (p * p) / (1 - p);
@@ -114,10 +114,10 @@ const discreteDistributionsMeasurements = {
                     return ((n * K) / N) * ((N - K) / N) * ((N - n) / (N - 1));
                 },
                 standardDeviation: function (N, K, n) {
-                    return this.variance(N, K, n) !== undefined ? Math.sqrt(this.variance(N, K, n)!) : undefined;
+                    return this.variance(N, K, n) !== undefined ? numpy.sqrt(this.variance(N, K, n)!) : undefined;
                 },
                 skewness: function (N, K, n) {
-                    return ((N - 2 * K) * Math.sqrt(N - 1) * (N - 2 * n)) / (Math.sqrt(n * K * (N - K) * (N - n)) * (N - 2));
+                    return ((N - 2 * K) * numpy.sqrt(N - 1) * (N - 2 * n)) / (numpy.sqrt(n * K * (N - K) * (N - n)) * (N - 2));
                 },
                 kurtosis: function (N, K, n) {
                     return (
@@ -145,25 +145,25 @@ const discreteDistributionsMeasurements = {
             },
             stats: {
                 mean: function (p) {
-                    return -p / ((1 - p) * Math.log(1 - p));
+                    return -p / ((1 - p) * numpy.log(1 - p));
                 },
                 variance: function (p) {
-                    return (-p * (p + Math.log(1 - p))) / ((1 - p) ** 2 * Math.log(1 - p) ** 2);
+                    return (-p * (p + numpy.log(1 - p))) / ((1 - p) ** 2 * numpy.log(1 - p) ** 2);
                 },
                 standardDeviation: function (p) {
-                    return this.variance(p) !== undefined ? Math.sqrt(this.variance(p)!) : undefined;
+                    return this.variance(p) !== undefined ? numpy.sqrt(this.variance(p)!) : undefined;
                 },
                 skewness: function (p) {
                     return (
-                        (-(2 * p ** 2 + 3 * p * Math.log(1 - p) + (1 + p) * Math.log(1 - p) ** 2) /
-                            (Math.log(1 - p) * (p + Math.log(1 - p)) * Math.sqrt(-p * (p + Math.log(1 - p))))) *
-                        Math.log(1 - p)
+                        (-(2 * p ** 2 + 3 * p * numpy.log(1 - p) + (1 + p) * numpy.log(1 - p) ** 2) /
+                            (numpy.log(1 - p) * (p + numpy.log(1 - p)) * numpy.sqrt(-p * (p + numpy.log(1 - p))))) *
+                        numpy.log(1 - p)
                     );
                 },
                 kurtosis: function (p) {
                     return (
-                        -(6 * p ** 3 + 12 * p ** 2 * Math.log(1 - p) + p * (4 * p + 7) * Math.log(1 - p) ** 2 + (p ** 2 + 4 * p + 1) * Math.log(1 - p) ** 3) /
-                        (p * (p + Math.log(1 - p)) ** 2)
+                        -(6 * p ** 3 + 12 * p ** 2 * numpy.log(1 - p) + p * (4 * p + 7) * numpy.log(1 - p) ** 2 + (p ** 2 + 4 * p + 1) * numpy.log(1 - p) ** 3) /
+                        (p * (p + numpy.log(1 - p)) ** 2)
                     );
                 },
                 median: function (p) {
@@ -191,10 +191,10 @@ const discreteDistributionsMeasurements = {
                     return (r * (1 - p)) / (p * p);
                 },
                 standardDeviation: function (r, p) {
-                    return this.variance(r, p) !== undefined ? Math.sqrt(this.variance(r, p)!) : undefined;
+                    return this.variance(r, p) !== undefined ? numpy.sqrt(this.variance(r, p)!) : undefined;
                 },
                 skewness: function (r, p) {
-                    return (2 - p) / Math.sqrt(r * (1 - p));
+                    return (2 - p) / numpy.sqrt(r * (1 - p));
                 },
                 kurtosis: function (r, p) {
                     return 6 / r + (p * p) / (r * (1 - p)) + 3;
@@ -224,7 +224,7 @@ const discreteDistributionsMeasurements = {
                     return lambda;
                 },
                 standardDeviation: function (lambda) {
-                    return this.variance(lambda) !== undefined ? Math.sqrt(this.variance(lambda)!) : undefined;
+                    return this.variance(lambda) !== undefined ? numpy.sqrt(this.variance(lambda)!) : undefined;
                 },
                 skewness: function (lambda) {
                     return lambda ** -0.5;
@@ -257,7 +257,7 @@ const discreteDistributionsMeasurements = {
                     return ((b - a + 1) * (b - a + 1) - 1) / 12;
                 },
                 standardDeviation: function (a, b) {
-                    return this.variance(a, b) !== undefined ? Math.sqrt(this.variance(a, b)!) : undefined;
+                    return this.variance(a, b) !== undefined ? numpy.sqrt(this.variance(a, b)!) : undefined;
                 },
                 skewness: function (a, b) {
                     return 0;

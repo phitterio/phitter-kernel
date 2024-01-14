@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.stats
 
 
@@ -20,7 +20,7 @@ class RAYLEIGH:
         Alternative: quadrature integration method
         """
         z = lambda t: (t - self.gamma) / self.sigma
-        return 1 - math.exp(-0.5 * (z(x) ** 2))
+        return 1 - numpy.exp(-0.5 * (z(x) ** 2))
 
     def pdf(self, x: float) -> float:
         """
@@ -28,7 +28,7 @@ class RAYLEIGH:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.gamma) / self.sigma
-        return z(x) * math.exp(-0.5 * (z(x) ** 2)) / self.sigma
+        return z(x) * numpy.exp(-0.5 * (z(x) ** 2)) / self.sigma
 
     def get_num_parameters(self) -> int:
         """
@@ -65,8 +65,8 @@ class RAYLEIGH:
         # parameters = {"gamma": scipy_params[0], "sigma": scipy_params[1]}
 
         ## Location and sigma solve system
-        sigma = math.sqrt(measurements.variance * 2 / (4 - math.pi))
-        gamma = measurements.mean - sigma * math.sqrt(math.pi / 2)
+        sigma = numpy.sqrt(measurements.variance * 2 / (4 - numpy.pi))
+        gamma = measurements.mean - sigma * numpy.sqrt(numpy.pi / 2)
 
         parameters = {"gamma": gamma, "sigma": sigma}
         return parameters
@@ -75,6 +75,7 @@ class RAYLEIGH:
 if __name__ == "__main__":
     # Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -93,4 +94,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.stats
 import scipy.optimize
 
@@ -20,14 +20,14 @@ class CAUCHY:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        return (1 / math.pi) * math.atan(((x - self.x0) / self.gamma)) + (1 / 2)
+        return (1 / numpy.pi) * numpy.arctan(((x - self.x0) / self.gamma)) + (1 / 2)
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return 1 / (math.pi * self.gamma * (1 + ((x - self.x0) / self.gamma) ** 2))
+        return 1 / (numpy.pi * self.gamma * (1 + ((x - self.x0) / self.gamma) ** 2))
 
     def get_num_parameters(self) -> int:
         """
@@ -66,7 +66,7 @@ class CAUCHY:
         # ## Maximum Likelihood Estimation Cauchy distribution
         # def objective(x):
         #     x0, gamma = x
-        #     return - sum([math.log(1 / (math.pi * gamma * (1 + ((d - x0) / gamma) ** 2))) for d in measurements.data])
+        #     return - sum([numpy.log(1 / (numpy.pi * gamma * (1 + ((d - x0) / gamma) ** 2))) for d in measurements.data])
         # solution = scipy.optimize.minimize(objective, [x0_ini, gamma_ini], method="SLSQP", bounds = [(-numpy.inf, numpy.inf),(0,numpy.inf)])
         # print(solution)
 
@@ -81,6 +81,7 @@ class CAUCHY:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -99,6 +100,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
+    print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     # import time
     # ti = time.time()

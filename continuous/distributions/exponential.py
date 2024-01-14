@@ -1,4 +1,4 @@
-import math
+import numpy
 
 
 class EXPONENTIAL:
@@ -16,14 +16,14 @@ class EXPONENTIAL:
         Cumulative distribution function.
         Calculated with known formula.
         """
-        return 1 - math.exp(-self.lambda_ * x)
+        return 1 - numpy.exp(-self.lambda_ * x)
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return self.lambda_ * math.exp(-self.lambda_ * x)
+        return self.lambda_ * numpy.exp(-self.lambda_ * x)
 
     def get_num_parameters(self) -> int:
         """
@@ -63,6 +63,7 @@ class EXPONENTIAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -81,4 +82,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

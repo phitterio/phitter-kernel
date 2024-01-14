@@ -1,5 +1,5 @@
 import scipy.stats
-import math
+import numpy
 from measurements.measurements_discrete import MEASUREMENTS_DISCRETE
 
 
@@ -40,14 +40,17 @@ def test_chi_square_discrete(distribution, measurements, confidence_level=0.95):
     N = measurements.length
     freedom_degrees = len(measurements.histogram.items()) - 1
 
-    ## Calculation of errors
-    errors = []
-    for i, observed in measurements.histogram.items():
-        expected = math.ceil(N * (distribution.pmf(i)))
-        errors.append(((observed - expected) ** 2) / expected)
+    # ## Calculation of errors
+    # errors = []
+    # for i, observed in measurements.histogram.items():
+    #     expected = numpy.ceil(N * (distribution.pmf(i)))
+    #     errors.append(((observed - expected) ** 2) / expected)
+
+    expected_values = numpy.ceil(N * (distribution.pmf(measurements.domain)))
+    errors = ((measurements.frequencies - expected_values) ** 2) / expected_values
 
     ## Calculation of indicators
-    statistic_chi2 = sum(errors)
+    statistic_chi2 = numpy.sum(errors)
     critical_value = scipy.stats.chi2.ppf(confidence_level, freedom_degrees)
     p_value = 1 - scipy.stats.chi2.cdf(statistic_chi2, freedom_degrees)
     rejected = statistic_chi2 >= critical_value

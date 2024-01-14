@@ -1,8 +1,8 @@
-import math
+import numpy
 import scipy.optimize
 import numpy
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 
 
 class GENERALIZED_GAMMA_4P:
@@ -26,7 +26,7 @@ class GENERALIZED_GAMMA_4P:
         Alternative: quadrature integration method
         """
         # result = scipy.stats.gamma.cdf(((x - self.loc) / self.a) ** self.p, a=self.d / self.p, scale=1)
-        result = sc.gammainc(self.d / self.p, ((x - self.loc) / self.a) ** self.p)
+        result = scipy.special.gammainc(self.d / self.p, ((x - self.loc) / self.a) ** self.p)
         return result
 
     def pdf(self, x: float) -> float:
@@ -34,7 +34,7 @@ class GENERALIZED_GAMMA_4P:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (self.p / (self.a**self.d)) * ((x - self.loc) ** (self.d - 1)) * math.exp(-(((x - self.loc) / self.a) ** self.p)) / math.gamma(self.d / self.p)
+        return (self.p / (self.a**self.d)) * ((x - self.loc) ** (self.d - 1)) * numpy.exp(-(((x - self.loc) / self.a) ** self.p)) / scipy.special.gamma(self.d / self.p)
 
     def get_num_parameters(self) -> int:
         """
@@ -70,7 +70,7 @@ class GENERALIZED_GAMMA_4P:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             a, d, p, loc = initial_solution
 
-            E = lambda r: a**r * (math.gamma((d + r) / p) / math.gamma(d / p))
+            E = lambda r: a**r * (scipy.special.gamma((d + r) / p) / scipy.special.gamma(d / p))
 
             parametric_mean = E(1) + loc
             parametric_variance = E(2) - E(1) ** 2
@@ -113,6 +113,7 @@ class GENERALIZED_GAMMA_4P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -131,7 +132,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     scipy_params = scipy.stats.gengamma.fit(measurements.data)
     parameters = {"a": scipy_params[3], "d": scipy_params[0], "p": scipy_params[1], "loc": scipy_params[2]}

@@ -1,4 +1,3 @@
-import math
 import sys
 
 import joblib
@@ -38,7 +37,7 @@ class PHITTER_DISCRETE:
         validation_test = False
         try:
             test = test_function(distribution, self.measurements, confidence_level=self.confidence_level)
-            if numpy.isnan(test["test_statistic"]) == False and math.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
+            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
                 self.distribution_results[label] = {
                     "test_statistic": test["test_statistic"],
                     "critical_value": test["critical_value"],
@@ -65,7 +64,7 @@ class PHITTER_DISCRETE:
             validate_estimation = False
 
         self.distribution_results = {}
-        if validate_estimation and distribution.parameter_restrictions() and not math.isnan(sse) and not math.isinf(sse) and sse < self.minimum_sse:
+        if validate_estimation and distribution.parameter_restrictions() and not numpy.isnan(sse) and not numpy.isinf(sse) and sse < self.minimum_sse:
             v1 = self.test(test_chi_square_discrete, "chi_square", distribution)
             v2 = self.test(test_kolmogorov_smirnov_discrete, "kolmogorov_smirnov", distribution)
 

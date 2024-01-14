@@ -1,5 +1,5 @@
 import scipy.stats
-import math
+import numpy
 import scipy.optimize
 import numpy
 
@@ -71,7 +71,7 @@ class PARETO_SECOND_KIND:
 
         #     ## Generatred moments function (not - centered)
 
-        #     E = lambda k: (math.gamma(1 + k) * math.gamma(alpha - k) * xm**k) / math.gamma(alpha)
+        #     E = lambda k: (scipy.special.gamma(1 + k) * scipy.special.gamma(alpha - k) * xm**k) / scipy.special.gamma(alpha)
 
         #     ## Parametric expected expressions
         #     parametric_mean = loc + E(1)
@@ -116,6 +116,7 @@ class PARETO_SECOND_KIND:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -134,7 +135,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     ## Get parameters of distribution: SCIPY vs EQUATIONS
     import time

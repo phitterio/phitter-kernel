@@ -1,5 +1,5 @@
 import scipy.stats
-import math
+import numpy
 import scipy.optimize
 
 
@@ -25,7 +25,7 @@ class FRECHET:
         """
         z = lambda t: (t - self.loc) / self.scale
         # result = scipy.stats.invweibull.pdf(x, self.c, loc = self.loc, scale = self.scale)
-        result = (1 / self.scale) * self.alpha * z(x) ** (-self.alpha - 1) * math.exp(-z(x) ** -self.alpha)
+        result = (1 / self.scale) * self.alpha * z(x) ** (-self.alpha - 1) * numpy.exp(-z(x) ** -self.alpha)
         return result
 
     def pdf(self, x: float) -> float:
@@ -34,7 +34,7 @@ class FRECHET:
         Calculated using definition of the function in the documentation
         """
         # print(scipy.stats.invweibull.pdf(40.89022608, self.alpha, loc = self.loc, scale = self.scale))
-        return (self.alpha / self.scale) * (((x - self.loc) / self.scale) ** (-1 - self.alpha)) * math.exp(-(((x - self.loc) / self.scale) ** (-self.alpha)))
+        return (self.alpha / self.scale) * (((x - self.loc) / self.scale) ** (-1 - self.alpha)) * numpy.exp(-(((x - self.loc) / self.scale) ** (-self.alpha)))
 
     def get_num_parameters(self) -> int:
         """
@@ -73,6 +73,7 @@ class FRECHET:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -91,4 +92,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

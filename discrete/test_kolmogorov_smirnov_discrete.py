@@ -1,4 +1,5 @@
 import scipy.stats
+import numpy
 from measurements.measurements_discrete import MEASUREMENTS_DISCRETE
 
 
@@ -39,21 +40,26 @@ def test_kolmogorov_smirnov_discrete(distribution, measurements, confidence_leve
     N = measurements.length
 
     ## Calculation of errors
-    errors = []
-    for i in range(N):
-        Sn = (i + 1) / N
-        if i < N - 1:
-            if measurements.data[i] != measurements.data[i + 1]:
-                Fn = distribution.cdf(measurements.data[i])
-                errors.append(abs(Sn - Fn))
-            else:
-                Fn = 0
-        else:
-            Fn = distribution.cdf(measurements.data[i])
-            errors.append(abs(Sn - Fn))
+    # errors = []
+    # for i in range(N):
+    #     Sn = (i + 1) / N
+    #     if i < N - 1:
+    #         if measurements.data[i] != measurements.data[i + 1]:
+    #             Fn = distribution.cdf(measurements.data[i])
+    #             errors.append(abs(Sn - Fn))
+    #         else:
+    #             Fn = 0
+    #     else:
+    #         Fn = distribution.cdf(measurements.data[i])
+    #         errors.append(abs(Sn - Fn))
+
+    idx = numpy.concatenate([numpy.where(measurements.data[:-1] != measurements.data[1:])[0], [N - 1]])
+    Sn = (numpy.arange(N) + 1) / N
+    Fn = distribution.cdf(measurements.data)
+    errors = numpy.abs(Sn[idx] - Fn[idx])
 
     ## Calculation of indicators
-    statistic_ks = max(errors)
+    statistic_ks = numpy.max(errors)
     critical_value = scipy.stats.kstwo.ppf(confidence_level, N)
     p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
     rejected = statistic_ks >= critical_value
@@ -80,6 +86,8 @@ if __name__ == "__main__":
         return data
 
     _all_distributions = [BERNOULLI, BINOMIAL, GEOMETRIC, HYPERGEOMETRIC, LOGARITHMIC, NEGATIVE_BINOMIAL, POISSON, UNIFORM]
+    _my_distributions = [BINOMIAL]
+
 
     for distribution_class in _all_distributions:
         print(distribution_class.__name__)

@@ -1,4 +1,4 @@
-import math
+import numpy
 from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
 import sys
 
@@ -56,12 +56,14 @@ def test_anderson_darling_continuous(distribution, measurements, confidence_leve
     N = measurements.length
 
     ## Calculation S
-    S = 0
-    for k in range(N):
-        c1 = math.log(distribution.cdf(measurements.data[k]))
-        c2 = math.log(1 - distribution.cdf(measurements.data[N - k - 1]))
-        c3 = (2 * (k + 1) - 1) / N
-        S += c3 * (c1 + c2)
+    # S = 0
+    # for k in range(N):
+    #     c1 = numpy.log(distribution.cdf(measurements.data[k]))
+    #     c2 = numpy.log(1 - distribution.cdf(measurements.data[N - k - 1]))
+    #     c3 = (2 * (k + 1) - 1) / N
+    #     S += c3 * (c1 + c2)
+
+    S = numpy.sum(((2 * (numpy.arange(N) + 1) - 1) / N) * (numpy.log(distribution.cdf(measurements.data)) + numpy.log(1 - distribution.cdf(measurements.data[::-1]))))
 
     ## Calculation of indicators
     A2 = -N - S
@@ -232,7 +234,7 @@ if __name__ == "__main__":
     ]
 
     _my_distributions = [DAGUM, DAGUM_4P, POWER_FUNCTION, RICE, RAYLEIGH, RECIPROCAL, T_STUDENT, GENERALIZED_GAMMA_4P]
-    _my_distributions = [PARETO_FIRST_KIND]
+    _my_distributions = [TRIANGULAR, TRAPEZOIDAL]
     for distribution_class in _all_distributions:
         print(distribution_class.__name__)
         path = f"./data/data_{distribution_class.__name__.lower()}.txt"

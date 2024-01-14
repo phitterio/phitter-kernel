@@ -1,6 +1,6 @@
 import scipy.stats
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 import numpy
 import scipy.optimize
 
@@ -31,8 +31,8 @@ class INVERSE_GAMMA:
         # result = scipy.stats.invgamma.cdf(x, a=self.alpha, scale=self.beta)
         # print(result)
 
-        upper_inc_gamma = lambda a, x: sc.gammaincc(a, x) * math.gamma(a)
-        result = upper_inc_gamma(self.alpha, self.beta / x) / math.gamma(self.alpha)
+        upper_inc_gamma = lambda a, x: scipy.special.gammaincc(a, x) * scipy.special.gamma(a)
+        result = upper_inc_gamma(self.alpha, self.beta / x) / scipy.special.gamma(self.alpha)
         return result
 
     def pdf(self, x: float) -> float:
@@ -40,7 +40,7 @@ class INVERSE_GAMMA:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return ((self.beta**self.alpha) * (x ** (-self.alpha - 1)) * math.exp(-(self.beta / x))) / math.gamma(self.alpha)
+        return ((self.beta**self.alpha) * (x ** (-self.alpha - 1)) * numpy.exp(-(self.beta / x))) / scipy.special.gamma(self.alpha)
 
     def get_num_parameters(self) -> int:
         """
@@ -106,6 +106,7 @@ class INVERSE_GAMMA:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -124,7 +125,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
     print(scipy.stats.invgamma.cdf(0.4954563682682342, a=5, scale=1))
 
     print("\n========= Time parameter estimation analisys ========")

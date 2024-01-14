@@ -1,5 +1,5 @@
 import scipy.stats
-import math
+import numpy
 import scipy.optimize
 
 
@@ -24,7 +24,7 @@ class FATIGUE_LIFE:
         Alternative: quadrature integration method
         """
         # result = scipy.stats.fatiguelife.cdf(x, self.gamma, loc=self.loc, scale=self.scale)
-        z = lambda t: math.sqrt((t - self.loc) / self.scale)
+        z = lambda t: numpy.sqrt((t - self.loc) / self.scale)
         result = scipy.stats.norm.cdf((z(x) - 1 / z(x)) / (self.gamma))
         return result
 
@@ -34,7 +34,7 @@ class FATIGUE_LIFE:
         Calculated using definition of the function in the documentation
         """
         # result = scipy.stats.fatiguelife.pdf(x, self.gamma, loc=self.loc, scale=self.scale)
-        z = lambda t: math.sqrt((t - self.loc) / self.scale)
+        z = lambda t: numpy.sqrt((t - self.loc) / self.scale)
         result = (z(x) + 1 / z(x)) / (2 * self.gamma * (x - self.loc)) * scipy.stats.norm.pdf((z(x) - 1 / z(x)) / (self.gamma))
         return result
 
@@ -75,7 +75,7 @@ class FATIGUE_LIFE:
         #     ## Parametric expected expressions
         #     parametric_mean = loc + scale * (1 + gamma ** 2 / 2)
         #     parametric_variance = scale ** 2 * gamma ** 2 * (1 + 5 * gamma ** 2 / 4)
-        #     parametric_skewness = 4 * gamma ** 2 * (11 * gamma ** 2 + 6) / ((4 + 5 * gamma ** 2) * math.sqrt(gamma ** 2 * (4 + 5 * gamma ** 2)))
+        #     parametric_skewness = 4 * gamma ** 2 * (11 * gamma ** 2 + 6) / ((4 + 5 * gamma ** 2) * numpy.sqrt(gamma ** 2 * (4 + 5 * gamma ** 2)))
 
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
@@ -94,6 +94,7 @@ class FATIGUE_LIFE:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -112,4 +113,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

@@ -1,16 +1,16 @@
-import math
+import numpy
 import scipy.optimize
 
 
 def adinf(z):
     if z < 2:
-        return (z**-0.5) * math.exp(-1.2337141 / z) * (2.00012 + (0.247105 - (0.0649821 - (0.0347962 - (0.011672 - 0.00168691 * z) * z) * z) * z) * z)
-    return math.exp(-math.exp(1.0776 - (2.30695 - (0.43424 - (0.082433 - (0.008056 - 0.0003146 * z) * z) * z) * z) * z))
+        return (z**-0.5) * numpy.exp(-1.2337141 / z) * (2.00012 + (0.247105 - (0.0649821 - (0.0347962 - (0.011672 - 0.00168691 * z) * z) * z) * z) * z)
+    return numpy.exp(-numpy.exp(1.0776 - (2.30695 - (0.43424 - (0.082433 - (0.008056 - 0.0003146 * z) * z) * z) * z) * z))
 
 
 def errfix(n, x):
     def g1(t):
-        return math.sqrt(t) * (1 - t) * (49 * t - 102)
+        return numpy.sqrt(t) * (1 - t) * (49 * t - 102)
 
     def g2(t):
         return -0.00022633 + (6.54034 - (14.6538 - (14.458 - (8.259 - 1.91864 * t) * t) * t) * t) * t

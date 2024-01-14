@@ -1,5 +1,5 @@
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 import scipy.stats
 
 
@@ -28,7 +28,7 @@ class GAMMA:
         ## Method 2: Scipy Gamma Distribution class
         # result = scipy.stats.gamma.cdf(x, a=self.alpha, scale=self.beta)
         # print(result)
-        result = sc.gammainc(self.alpha, x / self.beta)
+        result = scipy.special.gammainc(self.alpha, x / self.beta)
         return result
 
     def pdf(self, x: float) -> float:
@@ -36,7 +36,7 @@ class GAMMA:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = ((self.beta**-self.alpha) * (x ** (self.alpha - 1)) * math.exp(-(x / self.beta))) / math.gamma(self.alpha)
+        # result = ((self.beta**-self.alpha) * (x ** (self.alpha - 1)) * numpy.exp(-(x / self.beta))) / scipy.special.gamma(self.alpha)
         result = scipy.stats.gamma.pdf(x, self.alpha, scale=self.beta)
         return result
 
@@ -81,6 +81,7 @@ class GAMMA:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -99,4 +100,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

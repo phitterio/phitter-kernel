@@ -1,7 +1,7 @@
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 import numpy
-import math
+import numpy
 
 
 class GENERALIZED_NORMAL:
@@ -30,7 +30,7 @@ class GENERALIZED_NORMAL:
         Alternative: quadrature integration method
         """
         # print(scipy.stats.gennorm.cdf(x , self.beta, loc=self.mu, scale=self.alpha))
-        return 0.5 + (numpy.sign(x - self.mu) / 2) * sc.gammainc(1 / self.beta, abs((x - self.mu) / self.alpha) ** self.beta)
+        return 0.5 + (numpy.sign(x - self.mu) / 2) * scipy.special.gammainc(1 / self.beta, abs((x - self.mu) / self.alpha) ** self.beta)
 
     def pdf(self, x: float) -> float:
         """
@@ -38,7 +38,7 @@ class GENERALIZED_NORMAL:
         Calculated using definition of the function in the documentation
         """
         # print(scipy.stats.gennorm.pdf(x , self.beta, loc=self.mu, scale=self.alpha))
-        return self.beta / (2 * self.alpha * math.gamma(1 / self.beta)) * math.exp(-((abs(x - self.mu) / self.alpha) ** self.beta))
+        return self.beta / (2 * self.alpha * scipy.special.gamma(1 / self.beta)) * numpy.exp(-((abs(x - self.mu) / self.alpha) ** self.beta))
 
     def get_num_parameters(self) -> int:
         """
@@ -77,6 +77,7 @@ class GENERALIZED_NORMAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -95,4 +96,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

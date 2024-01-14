@@ -1,5 +1,5 @@
 from scipy.optimize import fsolve
-import math
+import numpy
 
 def equations(initial_solution, p):
     alpha, beta, min_, max_ = initial_solution
@@ -10,7 +10,7 @@ def equations(initial_solution, p):
     ## Variance
     f2 = ((alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1))) * (max_ - min_) ** 2 - _variance
     ## Skewness
-    f3 = 2 * ((beta - alpha) / (alpha + beta + 2)) * math.sqrt((alpha + beta + 1) / (alpha * beta)) - _skewness
+    f3 = 2 * ((beta - alpha) / (alpha + beta + 2)) * numpy.sqrt((alpha + beta + 1) / (alpha * beta)) - _skewness
     ## Kurtosis
     f4 = 3 * (((alpha + beta + 1) * (2 * (alpha + beta) ** 2  + (alpha * beta) * (alpha + beta - 6))) / ((alpha * beta) * (alpha + beta + 2) * (alpha + beta + 3))) - _kurtosis
     return (f1, f2, f3, f4)

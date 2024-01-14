@@ -1,9 +1,9 @@
-import scipy.optimize
-import numpy
-import scipy.stats
-import scipy.special as sc
-
 import warnings
+
+import numpy
+import scipy.optimize
+import scipy.special
+import scipy.stats
 
 warnings.filterwarnings("ignore")
 
@@ -27,7 +27,8 @@ class BURR_4P:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        result = 1 - ((1 + ((x - self.loc) / self.A) ** (self.B)) ** (-self.C))
+        # result = 1 - ((1 + ((x - self.loc) / self.A) ** (self.B)) ** (-self.C))
+        result = scipy.stats.burr12.cdf(x, self.B, self.C, loc=self.loc, scale=self.A)
         return result
 
     def pdf(self, x: float) -> float:
@@ -35,7 +36,8 @@ class BURR_4P:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        result = ((self.B * self.C) / self.A) * (((x - self.loc) / self.A) ** (self.B - 1)) * ((1 + ((x - self.loc) / self.A) ** (self.B)) ** (-self.C - 1))
+        # result = ((self.B * self.C) / self.A) * (((x - self.loc) / self.A) ** (self.B - 1)) * ((1 + ((x - self.loc) / self.A) ** (self.B)) ** (-self.C - 1))
+        result = scipy.stats.burr12.pdf(x, self.B, self.C, loc=self.loc, scale=self.A)
         return result
 
     def get_num_parameters(self) -> int:
@@ -67,29 +69,28 @@ class BURR_4P:
         parameters : dict
             {"A": * , "B": * , "C": * }
         """
+        # def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
+        #     ## Variables declaration
+        #     A, B, C, loc = initial_solution
 
-        def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
-            ## Variables declaration
-            A, B, C, loc = initial_solution
+        #     ## Moments Burr Distribution
+        #     mu = lambda r: (A**r) * C * scipy.special.beta((B * C - r) / B, (B + r) / B)
 
-            ## Moments Burr Distribution
-            mu = lambda r: (A**r) * C * sc.beta((B * C - r) / B, (B + r) / B)
+        #     ## Parametric expected expressions
+        #     parametric_mean = mu(1) + loc
+        #     parametric_variance = -(mu(1) ** 2) + mu(2)
+        #     # parametric_skewness = 2 * mu(1) ** 3 - 3 * mu(1) * mu(2) + mu(3)
+        #     parametric_kurtosis = -3 * mu(1) ** 4 + 6 * mu(1) ** 2 * mu(2) - 4 * mu(1) * mu(3) + mu(4)
+        #     # parametric_median = A * ((2 ** (1 / C)) - 1) ** (1 / B) + loc
+        #     parametric_mode = A * ((B - 1) / (B * C + 1)) ** (1 / B) + loc
 
-            ## Parametric expected expressions
-            parametric_mean = mu(1) + loc
-            parametric_variance = -(mu(1) ** 2) + mu(2)
-            # parametric_skewness = 2 * mu(1) ** 3 - 3 * mu(1) * mu(2) + mu(3)
-            parametric_kurtosis = -3 * mu(1) ** 4 + 6 * mu(1) ** 2 * mu(2) - 4 * mu(1) * mu(3) + mu(4)
-            # parametric_median = A * ((2 ** (1 / C)) - 1) ** (1 / B) + loc
-            parametric_mode = A * ((B - 1) / (B * C + 1)) ** (1 / B) + loc
+        #     ## System Equations
+        #     eq1 = parametric_mean - measurements.mean
+        #     eq2 = parametric_variance - measurements.variance
+        #     eq3 = parametric_kurtosis - measurements.kurtosis
+        #     eq4 = parametric_mode - measurements.mode
 
-            ## System Equations
-            eq1 = parametric_mean - measurements.mean
-            eq2 = parametric_variance - measurements.variance
-            eq3 = parametric_kurtosis - measurements.kurtosis
-            eq4 = parametric_mode - measurements.mode
-
-            return (eq1, eq2, eq3, eq4)
+        #     return (eq1, eq2, eq3, eq4)
 
         # ## Solve equations system
         # x0 = [measurements.mean, measurements.mean, measurements.mean, measurements.mean]
@@ -101,13 +102,14 @@ class BURR_4P:
         ## Scipy class
         scipy_params = scipy.stats.burr12.fit(measurements.data)
         parameters = {"A": scipy_params[3], "B": scipy_params[0], "C": scipy_params[1], "loc": scipy_params[2]}
-
         return parameters
 
 
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -125,5 +127,8 @@ if __name__ == "__main__":
     distribution = BURR_4P(measurements)
     print(distribution.get_parameters(measurements))
 
+    print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

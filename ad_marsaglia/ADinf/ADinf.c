@@ -8,7 +8,7 @@ A procedure for evaluating the limiting distribution of the
 			Anderson - Darling statistic A_n=
 - n - (1 / n)[ln(x_1(1 - x_n) + 3ln(x_2(1 - x_{n - 1}) + 5ln(x_3(1 - x_{n - 2}) + ... + (2n - 1)ln(x_n(1 - x_1))]
    where x_1<x_2<...<x_n is an ordered set of purported uniform [0,1) variates.
-The function is ADinf(z)=lim_{n - >infty} Pr[A_n<z]. About 15 digit accuracy.
+The function is ADinf(z)=lim_{n ->infty} Pr[A_n<z]. About 15 digit accuracy.
 If you don't need that much accuracy, use the quick - and - easy adinf(z).
 ADinf uses a two - term recursion for coefficients in series for which initial values
 require the complementary normal integral, included as cPhi(z).
@@ -73,7 +73,7 @@ int main()
 	{
 		printf("Enter value for z:");
 		scanf("%lf", &z);
-		printf("     lim n - >infty Prob(A_n < %f) = %18.16f\n", z, ADinf(z));
+		printf("     lim n ->infty Prob(A_n < %f) = %18.16f\n", z, ADinf(z));
 	}
 }
 

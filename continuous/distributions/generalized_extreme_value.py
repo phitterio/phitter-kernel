@@ -1,5 +1,5 @@
 import scipy.stats
-import math
+import numpy
 
 
 class GENERALIZED_EXTREME_VALUE:
@@ -23,9 +23,9 @@ class GENERALIZED_EXTREME_VALUE:
         """
         z = lambda t: (t - self.mu) / self.sigma
         if self.xi == 0:
-            return math.exp(-math.exp(-z(x)))
+            return numpy.exp(-numpy.exp(-z(x)))
         else:
-            return math.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi)))
+            return numpy.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi)))
         # return scipy.stats.genextreme.cdf(x,  - self.xi, loc=self.mu, scale=self.sigma)
 
     def pdf(self, x: float) -> float:
@@ -36,9 +36,9 @@ class GENERALIZED_EXTREME_VALUE:
         # print(scipy.stats.genextreme.pdf(x,  - self.xi, loc=self.mu, scale=self.sigma))
         z = lambda t: (t - self.mu) / self.sigma
         if self.xi == 0:
-            return (1 / self.sigma) * math.exp(-z(x) - math.exp(-z(x)))
+            return (1 / self.sigma) * numpy.exp(-z(x) - numpy.exp(-z(x)))
         else:
-            return (1 / self.sigma) * math.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi))) * (1 + self.xi * z(x)) ** (-1 - 1 / self.xi)
+            return (1 / self.sigma) * numpy.exp(-((1 + self.xi * z(x)) ** (-1 / self.xi))) * (1 + self.xi * z(x)) ** (-1 - 1 / self.xi)
 
     def get_num_parameters(self) -> int:
         """
@@ -76,6 +76,7 @@ class GENERALIZED_EXTREME_VALUE:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -94,4 +95,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

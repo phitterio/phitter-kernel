@@ -1,5 +1,5 @@
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 import scipy.stats
 
 
@@ -29,7 +29,7 @@ class GAMMA_3P:
         ## Method 2: Scipy Gamma Distribution class
         # result = scipy.stats.gamma.cdf(x, a=self.alpha, scale=self.beta)
         # print(result)
-        result = sc.gammainc(self.alpha, (x - self.loc) / self.beta)
+        result = scipy.special.gammainc(self.alpha, (x - self.loc) / self.beta)
         return result
 
     def pdf(self, x: float) -> float:
@@ -37,7 +37,7 @@ class GAMMA_3P:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = ((self.beta**-self.alpha) * ((x - self.loc) ** (self.alpha - 1)) * math.exp(-((x - self.loc) / self.beta))) / math.gamma(self.alpha)
+        # result = ((self.beta**-self.alpha) * ((x - self.loc) ** (self.alpha - 1)) * numpy.exp(-((x - self.loc) / self.beta))) / scipy.special.gamma(self.alpha)
         result = scipy.stats.gamma.pdf(x, self.alpha, loc=self.loc, scale=self.beta)
         return result
 
@@ -71,7 +71,7 @@ class GAMMA_3P:
             {"alpha": * , "beta": * }
         """
         alpha = (2 / measurements.skewness) ** 2
-        beta = math.sqrt(measurements.variance / alpha)
+        beta = numpy.sqrt(measurements.variance / alpha)
         loc = measurements.mean - alpha * beta
         parameters = {"alpha": alpha, "loc": loc, "beta": beta}
         return parameters
@@ -80,6 +80,7 @@ class GAMMA_3P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -98,4 +99,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

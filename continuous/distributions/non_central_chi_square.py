@@ -1,7 +1,7 @@
 import scipy.integrate
-import math
+import numpy
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 import numpy
 
 
@@ -24,24 +24,24 @@ class NON_CENTRAL_CHI_SQUARE:
         Alternative: quadrature integration method
         """
 
-        def Q(M: float, a: float, b: float) -> float:
-            """
-            Marcum Q - function
-            https://en.wikipedia.org/wiki/Marcum_Q-function
-            """
-            k = 1 - M
-            x = (a / b) ** k * sc.iv(k, a * b)
-            acum = 0
-            while x > 1e-20:
-                acum += x
-                k += 1
-                x = (a / b) ** k * sc.iv(k, a * b)
-            res = acum * math.exp(-(a**2 + b**2) / 2)
-            return res
+        # def Q(M: float, a: float, b: float) -> float:
+        #     """
+        #     Marcum Q - function
+        #     https://en.wikipedia.org/wiki/Marcum_Q-function
+        #     """
+        #     k = 1 - M
+        #     x = (a / b) ** k * scipy.special.iv(k, a * b)
+        #     acum = 0
+        #     while x > 1e-20:
+        #         acum += x
+        #         k += 1
+        #         x = (a / b) ** k * scipy.special.iv(k, a * b)
+        #     res = acum * numpy.exp(-(a**2 + b**2) / 2)
+        #     return res
 
-        # result = scipy.stats.ncx2.cdf(x, self.lambda_, self.n)
-        # result = sc.chndtr(x, self.lambda_, self.n)
-        result = 1 - Q(self.n / 2, math.sqrt(self.lambda_), math.sqrt(x))
+        result = scipy.stats.ncx2.cdf(x, self.lambda_, self.n)
+        # result = scipy.special.chndtr(x, self.lambda_, self.n)
+        # result = 1 - Q(self.n / 2, numpy.sqrt(self.lambda_), numpy.sqrt(x))
         return result
 
     def pdf(self, x: float) -> float:
@@ -50,10 +50,10 @@ class NON_CENTRAL_CHI_SQUARE:
         Calculated using definition of the function in the documentation
         """
         ## Method 1
-        # result = scipy.stats.ncx2.pdf(x, self.lambda_, self.n)
+        result = scipy.stats.ncx2.pdf(x, self.lambda_, self.n)
 
         ## Method 2
-        result = 1 / 2 * math.exp(-(x + self.lambda_) / 2) * (x / self.lambda_) ** ((self.n - 2) / 4) * sc.iv((self.n - 2) / 2, math.sqrt(self.lambda_ * x))
+        # result = 1 / 2 * numpy.exp(-(x + self.lambda_) / 2) * (x / self.lambda_) ** ((self.n - 2) / 4) * scipy.special.iv((self.n - 2) / 2, numpy.sqrt(self.lambda_ * x))
         return result
 
     def get_num_parameters(self) -> int:
@@ -117,6 +117,7 @@ class NON_CENTRAL_CHI_SQUARE:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -135,6 +136,8 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(60))
     # print(scipy.stats.ncx2.fit(data))

@@ -34,6 +34,7 @@ def equations(initial_solution, data_mean, data_variance, data_median):
 #############################################################################
 ## Import function to get measurements
 import sys
+    import numpy
 sys.path.append("C: / Users / USUARIO / Desktop / Fitter / utilities")
 from measurements.measurements import MEASUREMENTS
 

@@ -1,6 +1,6 @@
 import scipy.stats
-import scipy.special as sc
-import math
+import scipy.special
+import numpy
 
 
 class T_STUDENT_3P:
@@ -24,7 +24,7 @@ class T_STUDENT_3P:
         """
         z = lambda t: (t - self.loc) / self.scale
         # result = scipy.stats.t.cdf(z(x), self.df)
-        result = sc.betainc(self.df / 2, self.df / 2, (z(x) + math.sqrt(z(x) ** 2 + self.df)) / (2 * math.sqrt(z(x) ** 2 + self.df)))
+        result = scipy.special.betainc(self.df / 2, self.df / 2, (z(x) + numpy.sqrt(z(x) ** 2 + self.df)) / (2 * numpy.sqrt(z(x) ** 2 + self.df)))
         return result
 
     def pdf(self, x: float) -> float:
@@ -34,16 +34,16 @@ class T_STUDENT_3P:
         """
         z = lambda t: (t - self.loc) / self.scale
         # result = scipy.stats.t.pdf(z(x), self.df)
-        result = (1 / (math.sqrt(self.df) * sc.beta(0.5, self.df / 2))) * (1 + z(x) * z(x) / self.df) ** (-(self.df + 1) / 2)
+        result = (1 / (numpy.sqrt(self.df) * scipy.special.beta(0.5, self.df / 2))) * (1 + z(x) * z(x) / self.df) ** (-(self.df + 1) / 2)
         return result
 
     def ppf(self, u):
         # result = scipy.stats.t.ppf(u, self.df)
         if u >= 0.5:
-            result = self.loc + self.scale * math.sqrt(self.df * (1 - sc.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u))) / sc.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u)))
+            result = self.loc + self.scale * numpy.sqrt(self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u)))
             return result
         else:
-            result = self.loc - self.scale * math.sqrt(self.df * (1 - sc.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u))) / sc.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u)))
+            result = self.loc - self.scale * numpy.sqrt(self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u)))
             return result
 
     def get_num_parameters(self) -> int:
@@ -87,6 +87,7 @@ class T_STUDENT_3P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -105,4 +106,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

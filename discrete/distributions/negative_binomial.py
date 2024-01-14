@@ -27,7 +27,7 @@ class NEGATIVE_BINOMIAL:
         Probability density function
         Calculated using the definition of the function
         """
-        # result = sc.comb(self.r + x - 1, x) * (self.p**self.r) * ((1 - self.p) ** x)
+        # result = scipy.special.comb(self.r + x - 1, x) * (self.p**self.r) * ((1 - self.p) ** x)
         result = scipy.stats.nbinom.pmf(x, self.r, self.p)
         return result
 
@@ -70,6 +70,7 @@ class NEGATIVE_BINOMIAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
@@ -88,4 +89,7 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(round(measurements.mean)))
+    print(distribution.cdf(numpy.array([round(measurements.mean), round(measurements.mean)])))
     print(distribution.pmf(round(measurements.mean)))
+    print(distribution.pmf(numpy.array([round(measurements.mean), round(measurements.mean)])))
+

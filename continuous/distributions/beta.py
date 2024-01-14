@@ -1,7 +1,6 @@
-import math
-import scipy.optimize
 import numpy
-import scipy.special as sc
+import scipy.optimize
+import scipy.special
 import scipy.stats
 
 
@@ -26,10 +25,9 @@ class BETA:
         Alternative: quadrature integration method
         """
         z = lambda t: (t - self.A) / (self.B - self.A)
-        # result = scipy.stats.beta.cdf(z(x), self.alpha, self.beta)
+        result = scipy.stats.beta.cdf(z(x), self.alpha, self.beta)
         # result = print(result, error = scipy.integrate.quad(self.pdf, self.A, x)
-        result = sc.betainc(self.alpha, self.beta, z(x))
-
+        # result = scipy.special.betainc(self.alpha, self.beta, z(x))
         return result
 
     def pdf(self, x: float) -> float:
@@ -38,7 +36,9 @@ class BETA:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.A) / (self.B - self.A)
-        return (1 / (self.B - self.A)) * (math.gamma(self.alpha + self.beta) / (math.gamma(self.alpha) * math.gamma(self.beta))) * (z(x) ** (self.alpha - 1)) * ((1 - z(x)) ** (self.beta - 1))
+        result = scipy.stats.beta.pdf(z(x), self.alpha, self.beta)
+        # result = (1 / (self.B - self.A)) * (scipy.special.gamma(self.alpha + self.beta) / (scipy.special.gamma(self.alpha) * scipy.special.gamma(self.beta))) * (z(x) ** (self.alpha - 1)) * ((1 - z(x)) ** (self.beta - 1))
+        return result
 
     def get_num_parameters(self) -> int:
         """
@@ -80,7 +80,7 @@ class BETA:
             ## Parametric expected expressions
             parametric_mean = A + (alpha / (alpha + beta)) * (B - A)
             parametric_variance = ((alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1))) * (B - A) ** 2
-            parametric_skewness = 2 * ((beta - alpha) / (alpha + beta + 2)) * math.sqrt((alpha + beta + 1) / (alpha * beta))
+            parametric_skewness = 2 * ((beta - alpha) / (alpha + beta + 2)) * numpy.sqrt((alpha + beta + 1) / (alpha * beta))
             parametric_kurtosis = 3 * (((alpha + beta + 1) * (2 * (alpha + beta) ** 2 + (alpha * beta) * (alpha + beta - 6))) / ((alpha * beta) * (alpha + beta + 2) * (alpha + beta + 3)))
 
             ## System Equations
@@ -110,6 +110,8 @@ if __name__ == "__main__":
     ## Import function to get measurements
     import sys
 
+    import numpy
+
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -127,7 +129,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     # def equations(initial_solution: list[float], measurements) -> tuple[float]:
     #     ## Variables declaration
@@ -136,7 +140,7 @@ if __name__ == "__main__":
     #     ## Parametric expected expressions
     #     parametric_mean = A + (alpha / ( alpha + beta )) * (B - A)
     #     parametric_variance = ((alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1))) * (B - A) ** 2
-    #     parametric_skewness = 2 * ((beta - alpha) / (alpha + beta + 2)) * math.sqrt((alpha + beta + 1) / (alpha * beta))
+    #     parametric_skewness = 2 * ((beta - alpha) / (alpha + beta + 2)) * numpy.sqrt((alpha + beta + 1) / (alpha * beta))
     #     parametric_kurtosis = 3 * (((alpha + beta + 1) * (2 * (alpha + beta) ** 2  + (alpha * beta) * (alpha + beta - 6))) / ((alpha * beta) * (alpha + beta + 2) * (alpha + beta + 3)))
 
     #     ## System Equations

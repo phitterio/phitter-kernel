@@ -1,5 +1,4 @@
-import math
-
+import numpy
 
 class ARCSINE:
     """
@@ -19,14 +18,14 @@ class ARCSINE:
         Alternative: quadrature integration method
         """
         z = lambda t: (x - self.a) / (self.b - self.a)
-        return 2 * math.asin(math.sqrt(z(x))) / math.pi
+        return 2 * numpy.arcsin(numpy.sqrt(z(x))) / numpy.pi
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return 1 / (math.pi * math.sqrt((x - self.a) * (self.b - x)))
+        return 1 / (numpy.pi * numpy.sqrt((x - self.a) * (self.b - x)))
 
     def get_num_parameters(self) -> int:
         """
@@ -68,6 +67,7 @@ class ARCSINE:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -87,4 +87,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

@@ -1,6 +1,6 @@
 import scipy.stats
-import scipy.special as sc
-import math
+import scipy.special
+import numpy
 import scipy.optimize
 import numpy
 
@@ -27,7 +27,7 @@ class GENERALIZED_LOGISTIC:
         """
         # return scipy.stats.genlogistic.cdf(x, self.c, loc=self.loc, scale=self.scale)
         z = lambda t: (t - self.loc) / self.scale
-        return 1 / ((1 + math.exp(-z(x))) ** self.c)
+        return 1 / ((1 + numpy.exp(-z(x))) ** self.c)
 
     def pdf(self, x: float) -> float:
         """
@@ -36,7 +36,7 @@ class GENERALIZED_LOGISTIC:
         """
         # return scipy.stats.genlogistic.pdf(x, self.c, loc=self.loc, scale=self.scale)
         z = lambda t: (t - self.loc) / self.scale
-        return (self.c / self.scale) * math.exp(-z(x)) * ((1 + math.exp(-z(x))) ** (-self.c - 1))
+        return (self.c / self.scale) * numpy.exp(-z(x)) * ((1 + numpy.exp(-z(x))) ** (-self.c - 1))
 
     def get_num_parameters(self) -> int:
         """
@@ -73,12 +73,12 @@ class GENERALIZED_LOGISTIC:
             c, loc, scale = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = loc + scale * (0.57721 + sc.digamma(c))
-            parametric_variance = scale**2 * (math.pi**2 / 6 + sc.polygamma(1, c))
-            # parametric_skewness = (sc.polygamma(2,1) + sc.polygamma(2,c)) / ((math.pi ** 2 / 6 + sc.polygamma(1, c)) ** 1.5)
-            # parametric_kurtosis = 3 + (math.pi ** 4 / 15 + sc.polygamma(3,c)) / ((math.pi ** 2 / 6 + sc.polygamma(1, c)) ** 2)
-            parametric_median = loc + scale * (-math.log(0.5 ** (-1 / c) - 1))
-            # parametric_mode = loc + scale * math.log(c)
+            parametric_mean = loc + scale * (0.57721 + scipy.special.digamma(c))
+            parametric_variance = scale**2 * (numpy.pi**2 / 6 + scipy.special.polygamma(1, c))
+            # parametric_skewness = (scipy.special.polygamma(2,1) + scipy.special.polygamma(2,c)) / ((numpy.pi ** 2 / 6 + scipy.special.polygamma(1, c)) ** 1.5)
+            # parametric_kurtosis = 3 + (numpy.pi ** 4 / 15 + scipy.special.polygamma(3,c)) / ((numpy.pi ** 2 / 6 + scipy.special.polygamma(1, c)) ** 2)
+            parametric_median = loc + scale * (-numpy.log(0.5 ** (-1 / c) - 1))
+            # parametric_mode = loc + scale * numpy.log(c)
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -111,6 +111,7 @@ class GENERALIZED_LOGISTIC:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -129,4 +130,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

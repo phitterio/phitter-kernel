@@ -6,7 +6,7 @@ import collections
 
 class MEASUREMENTS_DISCRETE:
     def __init__(self, data: list[int]):
-        self.data = sorted(data)
+        self.data = numpy.sort(data)
         self.length = len(data)
         self.min = min(data)
         self.max = max(data)
@@ -18,8 +18,8 @@ class MEASUREMENTS_DISCRETE:
         self.median = int(numpy.median(self.data))
         self.mode = int(scipy.stats.mode(data, keepdims=True)[0][0])
         self.histogram = self.get_histogram()
-        self.domain = list(self.histogram.keys())
-        self.frequencies = list(self.histogram.values())
+        self.domain = numpy.fromiter(self.histogram.keys(), dtype=float)
+        self.frequencies = numpy.fromiter(self.histogram.values(), dtype=float)
         self.frequencies_pmf = list(map(lambda x: x / self.length, self.histogram.values()))
 
     def __str__(self) -> str:

@@ -1,9 +1,10 @@
+import scipy.stats
+
 class GEOMETRIC:
     """
     Geometric distribution
     https://en.wikipedia.org/wiki/Geometric_distribution
     """
-
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.p = self.parameters["p"]
@@ -15,6 +16,8 @@ class GEOMETRIC:
         Alternative: scipy cdf method
         """
         result = 1 - (1 - self.p) ** (x + 1)
+        # numpy.power(1 - self.p, x + 1)
+        # result = scipy.stats.geom.cdf(1 + x, self.p)
         return result
 
     def pmf(self, x: int) -> float:
@@ -23,6 +26,7 @@ class GEOMETRIC:
         Calculated using the definition of the function
         """
         result = self.p * (1 - self.p) ** (x - 1)
+        # result = scipy.stats.geom.pmf(x, self.p)
         return result
 
     def get_num_parameters(self) -> int:
@@ -61,6 +65,7 @@ class GEOMETRIC:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
@@ -79,4 +84,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(round(measurements.mean)))
+    print(distribution.cdf(numpy.array([round(measurements.mean), round(measurements.mean)])))
     print(distribution.pmf(round(measurements.mean)))
+    print(distribution.pmf(numpy.array([round(measurements.mean), round(measurements.mean)])))

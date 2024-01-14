@@ -1,6 +1,6 @@
 import numpy
 import scipy.optimize
-import scipy.special as sc
+import scipy.special
 
 
 class PERT:
@@ -26,7 +26,7 @@ class PERT:
         z = lambda t: (t - self.a) / (self.c - self.a)
 
         # result = scipy.stats.beta.cdf(z(x), alpha1, alpha2)
-        result = sc.betainc(alpha1, alpha2, z(x))
+        result = scipy.special.betainc(alpha1, alpha2, z(x))
 
         return result
 
@@ -37,7 +37,7 @@ class PERT:
         """
         alpha1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
         alpha2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
-        return (x - self.a) ** (alpha1 - 1) * (self.c - x) ** (alpha2 - 1) / (sc.beta(alpha1, alpha2) * (self.c - self.a) ** (alpha1 + alpha2 - 1))
+        return (x - self.a) ** (alpha1 - 1) * (self.c - x) ** (alpha2 - 1) / (scipy.special.beta(alpha1, alpha2) * (self.c - self.a) ** (alpha1 + alpha2 - 1))
 
     def get_num_parameters(self) -> int:
         """
@@ -79,10 +79,10 @@ class PERT:
 
             parametric_mean = (a + 4 * b + c) / 6
             parametric_variance = ((parametric_mean - a) * (c - parametric_mean)) / 7
-            # parametric_skewness = 2 * (alpha2 - alpha1) * math.sqrt(alpha2 + alpha1 + 1) / ((alpha2 + alpha1 + 2) *  math.sqrt(alpha2 * alpha1))
+            # parametric_skewness = 2 * (alpha2 - alpha1) * numpy.sqrt(alpha2 + alpha1 + 1) / ((alpha2 + alpha1 + 2) *  numpy.sqrt(alpha2 * alpha1))
             # parametric_kurtosis = 3 + 6 * ((alpha2 - alpha1) ** 2 * (alpha2 + alpha1 + 1) - (alpha2 * alpha1) * (alpha2 + alpha1 + 2)) / ((alpha2 * alpha1) * (alpha2 + alpha1 + 2) * (alpha2 + alpha1 + 3))
             # parametric_median = (a + 6 * b + c) / 8
-            parametric_median = sc.betaincinv(alpha1, alpha2, 0.5) * (c - a) + a
+            parametric_median = scipy.special.betaincinv(alpha1, alpha2, 0.5) * (c - a) + a
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -112,6 +112,7 @@ class PERT:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -130,7 +131,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
         a, c, b = initial_solution
@@ -140,7 +143,7 @@ if __name__ == "__main__":
 
         parametric_mean = (a + 4 * b + c) / 6
         parametric_variance = ((parametric_mean - a) * (c - parametric_mean)) / 7
-        # parametric_skewness = 2 * (alpha2 - alpha1) * math.sqrt(alpha2 + alpha1 + 1) / ((alpha2 + alpha1 + 2) *  math.sqrt(alpha2 * alpha1))
+        # parametric_skewness = 2 * (alpha2 - alpha1) * numpy.sqrt(alpha2 + alpha1 + 1) / ((alpha2 + alpha1 + 2) *  numpy.sqrt(alpha2 * alpha1))
         # parametric_kurtosis = 3 + 6 * ((alpha2 - alpha1) ** 2 * (alpha2 + alpha1 + 1) - (alpha2 * alpha1) * (alpha2 + alpha1 + 2)) / ((alpha2 * alpha1) * (alpha2 + alpha1 + 2) * (alpha2 + alpha1 + 3))
         parametric_median = (a + 6 * b + c) / 8
 

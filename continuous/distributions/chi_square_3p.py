@@ -1,6 +1,6 @@
-import math
+import numpy
 import scipy.optimize
-import scipy.special as sc
+import scipy.special
 import scipy.stats
 
 class CHI_SQUARE_3P:
@@ -23,7 +23,7 @@ class CHI_SQUARE_3P:
         # result, error = scipy.integrate.quad(self.pdf, 0, x)
         # result = scipy.stats.chi2.cdf(x, self.df, self.loc, self.scale)
         z = lambda t: (t - self.loc) / self.scale
-        result = sc.gammainc(self.df / 2, z(x) / 2)
+        result = scipy.special.gammainc(self.df / 2, z(x) / 2)
         return result
     
     def pdf(self, x: float) -> float:
@@ -33,7 +33,7 @@ class CHI_SQUARE_3P:
         """
         # result = scipy.stats.chi2.pdf(x, self.df, loc=self.loc, scale=self.scale)
         z = lambda t: (t - self.loc) / self.scale
-        result = (1 / self.scale) * (1 / (2 ** (self.df / 2) * math.gamma(self.df / 2))) * (z(x) ** ((self.df / 2) - 1)) * (math.exp(-z(x) / 2))
+        result = (1 / self.scale) * (1 / (2 ** (self.df / 2) * scipy.special.gamma(self.df / 2))) * (z(x) ** ((self.df / 2) - 1)) * (numpy.exp(-z(x) / 2))
         return result
     
     def get_num_parameters(self) -> int:
@@ -72,7 +72,7 @@ class CHI_SQUARE_3P:
         #     ## Parametric expected expressions
         #     parametric_mean = df * scale + loc
         #     parametric_variance = 2 * df * (scale ** 2)
-        #     parametric_skewness = math.sqrt(8 / df)
+        #     parametric_skewness = numpy.sqrt(8 / df)
         #     # parametric_kurtosis = 12 / df  + 3
             
         #     ## System Equations
@@ -88,7 +88,7 @@ class CHI_SQUARE_3P:
         
         # ## Method 1: Solve system
         # df = 8 / (measurements.skewness ** 2)
-        # scale = math.sqrt(measurements.variance / (2 * df))
+        # scale = numpy.sqrt(measurements.variance / (2 * df))
         # loc = measurements.mean - df * scale
         # parameters = {"df": df, "loc": loc, "scale": scale}
         
@@ -101,6 +101,7 @@ class CHI_SQUARE_3P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
 
@@ -118,4 +119,6 @@ if __name__ == "__main__":
     
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

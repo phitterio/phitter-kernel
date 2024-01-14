@@ -1,4 +1,4 @@
-import math
+import numpy
 
 
 class RECIPROCAL:
@@ -18,14 +18,14 @@ class RECIPROCAL:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        return (math.log(x) - math.log(self.a)) / (math.log(self.b) - math.log(self.a))
+        return (numpy.log(x) - numpy.log(self.a)) / (numpy.log(self.b) - numpy.log(self.a))
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return 1 / (x * (math.log(self.b) - math.log(self.a)))
+        return 1 / (x * (numpy.log(self.b) - numpy.log(self.a)))
 
     def get_num_parameters(self) -> int:
         """
@@ -67,6 +67,7 @@ class RECIPROCAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -85,4 +86,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

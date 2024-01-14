@@ -1,7 +1,7 @@
 import scipy.optimize
 import scipy.stats
 import numpy
-import scipy.special as sc
+import scipy.special
 
 
 class BETA_PRIME_4P:
@@ -25,7 +25,7 @@ class BETA_PRIME_4P:
         """
         result = scipy.stats.betaprime.cdf(x, self.alpha, self.beta, loc=self.loc, scale=self.scale)
         # z = lambda t: (t - self.loc) / self.scale
-        # result = sc.betainc(self.alpha, self.beta, z(x) / (1 + z(x)))
+        # result = scipy.special.betainc(self.alpha, self.beta, z(x) / (1 + z(x)))
         return result
 
     def pdf(self, x: float) -> float:
@@ -35,7 +35,7 @@ class BETA_PRIME_4P:
         """
         result = scipy.stats.betaprime.pdf(x, self.alpha, self.beta, loc=self.loc, scale=self.scale)
         # z = lambda t: (t - self.loc) / self.scale
-        # result = (1 / self.scale) * (z(x) ** (self.alpha - 1) * (1 + z(x)) ** (-self.alpha - self.beta)) / (sc.beta(self.alpha,self.beta))
+        # result = (1 / self.scale) * (z(x) ** (self.alpha - 1) * (1 + z(x)) ** (-self.alpha - self.beta)) / (scipy.special.beta(self.alpha,self.beta))
         return result
 
     def get_num_parameters(self) -> int:
@@ -77,7 +77,7 @@ class BETA_PRIME_4P:
 
             parametric_mean = scale * alpha / (beta - 1) + loc
             parametric_variance = (scale**2) * alpha * (alpha + beta - 1) / ((beta - 1) ** 2 * (beta - 2))
-            # parametric_skewness = 2 * math.sqrt(((beta - 2)) / (alpha * (alpha + beta - 1))) * (((2 * alpha + beta - 1)) / (beta - 3))
+            # parametric_skewness = 2 * numpy.sqrt(((beta - 2)) / (alpha * (alpha + beta - 1))) * (((2 * alpha + beta - 1)) / (beta - 3))
             parametric_median = loc + scale * scipy.stats.beta.ppf(0.5, alpha, beta) / (1 - scipy.stats.beta.ppf(0.5, alpha, beta))
             parametric_mode = scale * (alpha - 1) / (beta + 1) + loc
 
@@ -106,6 +106,7 @@ class BETA_PRIME_4P:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -124,4 +125,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

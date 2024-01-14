@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.optimize
 import scipy.stats
 
@@ -23,7 +23,7 @@ class JOHNSON_SU:
         Alternative: quadrature integration method
         """
         z = lambda t: (t - self.xi_) / self.lambda_
-        result = scipy.stats.norm.cdf(self.gamma_ + self.delta_ * math.asinh(z(x)))
+        result = scipy.stats.norm.cdf(self.gamma_ + self.delta_ * numpy.arcsinh(z(x)))
         # result, error = scipy.integrate.quad(self.pdf, float(" - inf"), x)
         return result
 
@@ -33,7 +33,7 @@ class JOHNSON_SU:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.xi_) / self.lambda_
-        return (self.delta_ / (self.lambda_ * math.sqrt(2 * math.pi) * math.sqrt(z(x) ** 2 + 1))) * math.exp(-(1 / 2) * (self.gamma_ + self.delta_ * math.asinh(z(x))) ** 2)
+        return (self.delta_ / (self.lambda_ * numpy.sqrt(2 * numpy.pi) * numpy.sqrt(z(x) ** 2 + 1))) * numpy.exp(-(1 / 2) * (self.gamma_ + self.delta_ * numpy.arcsinh(z(x))) ** 2)
 
     def get_num_parameters(self) -> int:
         """
@@ -55,18 +55,18 @@ class JOHNSON_SU:
             xi_, lambda_, gamma_, delta_ = initial_solution
 
             ## Help
-            w = math.exp(1 / delta_**2)
+            w = numpy.exp(1 / delta_**2)
             omega = gamma_ / delta_
-            A = w**2 * (w**4 + 2 * w**3 + 3 * w**2 - 3) * math.cosh(4 * omega)
-            B = 4 * w**2 * (w + 2) * math.cosh(2 * omega)
+            A = w**2 * (w**4 + 2 * w**3 + 3 * w**2 - 3) * numpy.cosh(4 * omega)
+            B = 4 * w**2 * (w + 2) * numpy.cosh(2 * omega)
             C = 3 * (2 * w + 1)
 
             ## Parametric expected expressions
-            parametric_mean = xi_ - lambda_ * math.sqrt(w) * math.sinh(omega)
-            parametric_variance = (lambda_**2 / 2) * (w - 1) * (w * math.cosh(2 * omega) + 1)
-            # parametric_skewness = -((lambda_ ** 3) * math.sqrt(w) * (w - 1) ** 2 * (w * (w + 2) * math.sinh(3 * omega) + 3 * math.sinh(omega)) ) / (4 * math.sqrt(parametric_variance) ** 3)
-            parametric_kurtosis = ((lambda_**4) * (w - 1) ** 2 * (A + B + C)) / (8 * math.sqrt(parametric_variance) ** 4)
-            parametric_median = xi_ + lambda_ * math.sinh(-omega)
+            parametric_mean = xi_ - lambda_ * numpy.sqrt(w) * numpy.sinh(omega)
+            parametric_variance = (lambda_**2 / 2) * (w - 1) * (w * numpy.cosh(2 * omega) + 1)
+            # parametric_skewness = -((lambda_ ** 3) * numpy.sqrt(w) * (w - 1) ** 2 * (w * (w + 2) * numpy.sinh(3 * omega) + 3 * numpy.sinh(omega)) ) / (4 * numpy.sqrt(parametric_variance) ** 3)
+            parametric_kurtosis = ((lambda_**4) * (w - 1) ** 2 * (A + B + C)) / (8 * numpy.sqrt(parametric_variance) ** 4)
+            parametric_median = xi_ + lambda_ * numpy.sinh(-omega)
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -84,6 +84,7 @@ class JOHNSON_SU:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -102,4 +103,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

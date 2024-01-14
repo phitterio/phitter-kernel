@@ -4,7 +4,7 @@ import scipy.stats as st
 import statsmodels.api as sm
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import math
+import numpy
 import random
 
 mpl.style.use("ggplot")
@@ -16,8 +16,8 @@ def num_bins_doane(data):
     """
     N = len(data)
     skewness = st.skew(data)
-    sigma_g1 = math.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
-    num_bins = 1 + math.log(N,2) + math.log(1 + abs(skewness) / sigma_g1,2)
+    sigma_g1 = numpy.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
+    num_bins = 1 + numpy.log(N,2) + numpy.log(1 + abs(skewness) / sigma_g1,2)
     num_bins = round(num_bins)
     return num_bins
 

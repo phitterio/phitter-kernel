@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.stats
 
 
@@ -21,8 +21,8 @@ class INVERSE_GAUSSIAN:
         Alternative: quadrature integration method
         """
         # result = scipy.stats.invgauss.cdf(x, self.mu/self.lambda_, scale=self.lambda_)
-        result = scipy.stats.norm.cdf(math.sqrt(self.lambda_ / x) * ((x / self.mu) - 1)) + math.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
-            -math.sqrt(self.lambda_ / x) * ((x / self.mu) + 1)
+        result = scipy.stats.norm.cdf(numpy.sqrt(self.lambda_ / x) * ((x / self.mu) - 1)) + numpy.exp(2 * self.lambda_ / self.mu) * scipy.stats.norm.cdf(
+            -numpy.sqrt(self.lambda_ / x) * ((x / self.mu) + 1)
         )
         return result
 
@@ -32,7 +32,7 @@ class INVERSE_GAUSSIAN:
         Calculated using definition of the function in the documentation
         """
         # result = scipy.stats.invgauss.pdf(x, self.mu/self.lambda_, scale=self.lambda_)
-        result = math.sqrt(self.lambda_ / (2 * math.pi * x**3)) * math.exp(-(self.lambda_ * (x - self.mu) ** 2) / (2 * self.mu**2 * x))
+        result = numpy.sqrt(self.lambda_ / (2 * numpy.pi * x**3)) * numpy.exp(-(self.lambda_ * (x - self.mu) ** 2) / (2 * self.mu**2 * x))
         return result
 
     def get_num_parameters(self) -> int:
@@ -74,6 +74,7 @@ class INVERSE_GAUSSIAN:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS

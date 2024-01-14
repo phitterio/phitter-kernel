@@ -1,6 +1,6 @@
-import scipy.special as sc
+import scipy.special
 import scipy.stats
-import math
+import numpy
 import scipy.optimize
 import numpy
 
@@ -22,9 +22,9 @@ class LEVY:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        y = lambda x: math.sqrt(self.c / ((x - self.mu)))
+        y = lambda x: numpy.sqrt(self.c / ((x - self.mu)))
 
-        # result = sc.erfc(y(x) / math.sqrt(2))
+        # result = scipy.special.erfc(y(x) / numpy.sqrt(2))
         # result = scipy.stats.levy.cdf(x, loc=self.mu, scale=self.c)
         result = 2 - 2 * scipy.stats.norm.cdf(y(x))
         return result
@@ -35,7 +35,7 @@ class LEVY:
         Calculated using definition of the function in the documentation
         """
         # result = scipy.stats.levy.pdf(x, loc=self.mu, scale=self.c)
-        result = math.sqrt(self.c / (2 * math.pi)) * math.exp(-self.c / (2 * (x - self.mu))) / ((x - self.mu) ** 1.5)
+        result = numpy.sqrt(self.c / (2 * numpy.pi)) * numpy.exp(-self.c / (2 * (x - self.mu))) / ((x - self.mu) ** 1.5)
         return result
 
     def get_num_parameters(self) -> int:
@@ -71,7 +71,7 @@ class LEVY:
         #     mu, c = initial_solution
 
         #     ## Parametric expected expressions
-        #     parametric_median = mu +  c / (2 * (sc.erfcinv(0.5) ** 2))
+        #     parametric_median = mu +  c / (2 * (scipy.special.erfcinv(0.5) ** 2))
         #     parametric_mode = mu + c / 3
 
         #     ## System Equations
@@ -98,6 +98,7 @@ class LEVY:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -116,4 +117,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

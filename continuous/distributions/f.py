@@ -1,5 +1,5 @@
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 
 
 class F:
@@ -20,16 +20,18 @@ class F:
         Calculated using the definition of the function
         Alternative: quadrature integration method
         """
-        ## print(scipy.stats.f.cdf(x, self.df1, self.df2))
-        return sc.betainc(self.df1 / 2, self.df2 / 2, x * self.df1 / (self.df1 * x + self.df2))
+        # result = scipy.special.betainc(self.df1 / 2, self.df2 / 2, x * self.df1 / (self.df1 * x + self.df2))
+        result = scipy.stats.f.cdf(x, self.df1, self.df2)
+        return result
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        ## print(scipy.stats.f.pdf(x, self.df1, self.df2))
-        return (1 / sc.beta(self.df1 / 2, self.df2 / 2)) * ((self.df1 / self.df2) ** (self.df1 / 2)) * (x ** (self.df1 / 2 - 1)) * ((1 + x * self.df1 / self.df2) ** (-1 * (self.df1 + self.df2) / 2))
+        # result = (1 / scipy.special.beta(self.df1 / 2, self.df2 / 2)) * ((self.df1 / self.df2) ** (self.df1 / 2)) * (x ** (self.df1 / 2 - 1)) * ((1 + x * self.df1 / self.df2) ** (-1 * (self.df1 + self.df2) / 2))
+        result = scipy.stats.f.pdf(x, self.df1, self.df2)
+        return result
 
     def get_num_parameters(self) -> int:
         """
@@ -72,6 +74,7 @@ class F:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -90,4 +93,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

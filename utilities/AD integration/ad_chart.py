@@ -1,6 +1,6 @@
 import numpy
 import matplotlib.pyplot as plt
-import math
+import numpy
 
 def empirical_distribution(x, data):
     cont = 0

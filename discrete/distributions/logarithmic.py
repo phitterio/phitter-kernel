@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.optimize
 import scipy.stats
 
@@ -27,7 +27,7 @@ class LOGARITHMIC:
         Probability density function
         Calculated using the definition of the function
         """
-        result = -(self.p**x) / (math.log(1 - self.p) * x)
+        result = -(self.p**x) / (numpy.log(1 - self.p) * x)
         return result
 
     def get_num_parameters(self) -> int:
@@ -64,7 +64,7 @@ class LOGARITHMIC:
             p = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = -p / ((1 - p) * math.log(1 - p))
+            parametric_mean = -p / ((1 - p) * numpy.log(1 - p))
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -78,6 +78,7 @@ class LOGARITHMIC:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
@@ -96,4 +97,7 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(round(measurements.mean)))
+    print(distribution.cdf(numpy.array([round(measurements.mean), round(measurements.mean)])))
     print(distribution.pmf(round(measurements.mean)))
+    print(distribution.pmf(numpy.array([round(measurements.mean), round(measurements.mean)])))
+

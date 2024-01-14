@@ -6,18 +6,18 @@ import type { ContinuousDistributions } from "@/interfaces/ContinuousDistributio
 const continuousDistributions: ContinuousDistributions = {
     alpha: {
         cdf: function (x, alpha, loc, scale) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
             const z = (t: number): number => (t - loc) / scale;
             return std_cdf(alpha - 1 / z(x)) / std_cdf(alpha);
         },
         pdf: function (x, alpha, loc, scale) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
             const z = (t: number): number => (t - loc) / scale;
-            return (1 / (scale * z(x) * z(x) * std_cdf(alpha) * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * (alpha - 1 / z(x)) ** 2);
+            return (1 / (scale * z(x) * z(x) * std_cdf(alpha) * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-0.5 * (alpha - 1 / z(x)) ** 2);
         },
         ppf: function (u, alpha, loc, scale) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             return loc + scale / (alpha - inv_std_cdf(u * std_cdf(alpha)));
         },
         sample: function (n_samples, alpha, loc, scale) {
@@ -33,13 +33,13 @@ const continuousDistributions: ContinuousDistributions = {
     arcsine: {
         cdf: function (x, a, b) {
             const z = (t: number): number => (t - a) / (b - a);
-            return (2 * Math.asin(Math.sqrt(z(x)))) / Math.PI;
+            return (2 * Math.asin(numpy.sqrt(z(x)))) / numpy.pi;
         },
         pdf: function (x, a, b) {
-            return 1 / (Math.PI * Math.sqrt((x - a) * (b - x)));
+            return 1 / (numpy.pi * numpy.sqrt((x - a) * (b - x)));
         },
         ppf: function (u, a, b) {
-            return a + (b - a) * Math.sin((u * Math.PI) / 2) ** 2;
+            return a + (b - a) * numpy.sin((u * numpy.pi) / 2) ** 2;
         },
         sample: function (n_samples, a, b) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), a, b));
@@ -52,22 +52,22 @@ const continuousDistributions: ContinuousDistributions = {
     argus: {
         cdf: function (x, chi, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-            const std_pdf = (t: number): number => (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-(t ** 2 / 2));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
+            const std_pdf = (t: number): number => (1 / numpy.sqrt(2 * numpy.pi)) * numpy.exp(-(t ** 2 / 2));
             const Ψ = (t: number): number => std_cdf(t) - t * std_pdf(t) - 0.5;
-            return 1 - Ψ(chi * Math.sqrt(1 - z(x) * z(x))) / Ψ(chi);
+            return 1 - Ψ(chi * numpy.sqrt(1 - z(x) * z(x))) / Ψ(chi);
         },
         pdf: function (x, chi, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-            const std_pdf = (t: number): number => (1 / Math.sqrt(2 * Math.PI)) * Math.exp((-t * t) / 2);
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
+            const std_pdf = (t: number): number => (1 / numpy.sqrt(2 * numpy.pi)) * numpy.exp((-t * t) / 2);
             const Ψ = (t: number): number => std_cdf(t) - t * std_pdf(t) - 0.5;
-            return (1 / scale) * (chi ** 3 / (Math.sqrt(2 * Math.PI) * Ψ(chi))) * z(x) * Math.sqrt(1 - z(x) * z(x)) * Math.exp(-0.5 * chi ** 2 * (1 - z(x) * z(x)));
+            return (1 / scale) * (chi ** 3 / (numpy.sqrt(2 * numpy.pi) * Ψ(chi))) * z(x) * numpy.sqrt(1 - z(x) * z(x)) * numpy.exp(-0.5 * chi ** 2 * (1 - z(x) * z(x)));
         },
         ppf: function (u, chi, loc, scale) {
             const y1 = (1 - u) * jStat.lowRegGamma(1.5, (chi * chi) / 2);
             const y2 = (2 * jStat.gammapinv(y1, 1.5)) / (chi * chi);
-            return loc + scale * Math.sqrt(1 - y2);
+            return loc + scale * numpy.sqrt(1 - y2);
         },
         sample: function (n_samples, chi, loc, scale) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), chi, loc, scale));
@@ -145,13 +145,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     bradford: {
         cdf: function (x, c, min, max) {
-            return Math.log(1 + (c * (x - min)) / (max - min)) / Math.log(c + 1);
+            return numpy.log(1 + (c * (x - min)) / (max - min)) / numpy.log(c + 1);
         },
         pdf: function (x, c, min, max) {
-            return c / ((c * (x - min) + max - min) * Math.log(c + 1));
+            return c / ((c * (x - min) + max - min) * numpy.log(c + 1));
         },
         ppf: function (u, c, min, max): number {
-            return min + ((Math.exp(u * Math.log(1 + c)) - 1) * (max - min)) / c;
+            return min + ((numpy.exp(u * numpy.log(1 + c)) - 1) * (max - min)) / c;
         },
         sample: function (n_samples, c, min, max) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), c, min, max));
@@ -204,13 +204,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     cauchy: {
         cdf: function (x, x0, gamma) {
-            return (1 / Math.PI) * Math.atan((x - x0) / gamma) + 1 / 2;
+            return (1 / numpy.pi) * numpy.arctan((x - x0) / gamma) + 1 / 2;
         },
         pdf: function (x, x0, gamma) {
-            return 1 / (Math.PI * gamma * (1 + ((x - x0) / gamma) ** 2));
+            return 1 / (numpy.pi * gamma * (1 + ((x - x0) / gamma) ** 2));
         },
         ppf: function (u, x0, gamma) {
-            return x0 + gamma * Math.tan(Math.PI * (u - 0.5));
+            return x0 + gamma * numpy.tan(numpy.pi * (u - 0.5));
         },
         sample: function (n_samples, x0, gamma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), x0, gamma));
@@ -226,7 +226,7 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(df / 2, x / 2);
         },
         pdf: function (x, df) {
-            return (1 / (2 ** (df / 2) * jStat.gammafn(df / 2))) * x ** (df / 2 - 1) * Math.exp(-x / 2);
+            return (1 / (2 ** (df / 2) * jStat.gammafn(df / 2))) * x ** (df / 2 - 1) * numpy.exp(-x / 2);
         },
         ppf: function (u, df) {
             return 2 * jStat.gammapinv(u, df / 2);
@@ -247,7 +247,7 @@ const continuousDistributions: ContinuousDistributions = {
         },
         pdf: function (x, df, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return (1 / scale) * (1 / (2 ** (df / 2) * jStat.gammafn(df / 2))) * z(x) ** (df / 2 - 1) * Math.exp(-z(x) / 2);
+            return (1 / scale) * (1 / (2 ** (df / 2) * jStat.gammafn(df / 2))) * z(x) ** (df / 2 - 1) * numpy.exp(-z(x) / 2);
         },
         ppf: function (u, df, loc, scale) {
             return 2 * scale * jStat.gammapinv(u, df / 2) + loc;
@@ -309,7 +309,7 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(k, x / beta);
         },
         pdf: function (x, k, beta) {
-            return (beta ** -k * x ** (k - 1) * Math.exp(-(x / beta))) / jStat.factorial(k - 1);
+            return (beta ** -k * x ** (k - 1) * numpy.exp(-(x / beta))) / jStat.factorial(k - 1);
         },
         ppf: function (u, k, beta) {
             return beta * jStat.gammapinv(u, k);
@@ -329,7 +329,7 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(k, (x - loc) / beta);
         },
         pdf: function (x, k, beta, loc) {
-            return (beta ** -k * (x - loc) ** (k - 1) * Math.exp(-((x - loc) / beta))) / jStat.factorial(k - 1);
+            return (beta ** -k * (x - loc) ** (k - 1) * numpy.exp(-((x - loc) / beta))) / jStat.factorial(k - 1);
         },
         ppf: function (u, k, beta, loc) {
             return beta * jStat.gammapinv(u, k) + loc;
@@ -347,15 +347,15 @@ const continuousDistributions: ContinuousDistributions = {
     },
     error_function: {
         cdf: function (x, h) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
             return std_cdf(2 ** 0.5 * h * x);
         },
         pdf: function (x, h) {
-            return (h * Math.exp(-1 * (-h * x) ** 2)) / Math.sqrt(Math.PI);
+            return (h * numpy.exp(-1 * (-h * x) ** 2)) / numpy.sqrt(numpy.pi);
         },
         ppf: function (u, h) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
-            return inv_std_cdf(u) / (h * Math.sqrt(2));
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
+            return inv_std_cdf(u) / (h * numpy.sqrt(2));
         },
         sample: function (n_samples, h) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), h));
@@ -367,13 +367,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     exponential: {
         cdf: function (x, lambda) {
-            return 1 - Math.exp(-lambda * x);
+            return 1 - numpy.exp(-lambda * x);
         },
         pdf: function (x, lambda) {
-            return lambda * Math.exp(-lambda * x);
+            return lambda * numpy.exp(-lambda * x);
         },
         ppf: function (u, lambda) {
-            return -Math.log(1 - u) / lambda;
+            return -numpy.log(1 - u) / lambda;
         },
         sample: function (n_samples, lambda) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), lambda));
@@ -385,13 +385,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     exponential_2p: {
         cdf: function (x, lambda, loc) {
-            return 1 - Math.exp(-lambda * (x - loc));
+            return 1 - numpy.exp(-lambda * (x - loc));
         },
         pdf: function (x, lambda, loc) {
-            return lambda * Math.exp(-lambda * (x - loc));
+            return lambda * numpy.exp(-lambda * (x - loc));
         },
         ppf: function (u, lambda, loc) {
-            return loc - Math.log(1 - u) / lambda;
+            return loc - numpy.log(1 - u) / lambda;
         },
         sample: function (n_samples, lambda, loc) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), lambda, loc));
@@ -448,18 +448,18 @@ const continuousDistributions: ContinuousDistributions = {
     },
     fatigue_life: {
         cdf: function (x, gamma, loc, scale) {
-            const z = (t: number): number => Math.sqrt((t - loc) / scale);
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
+            const z = (t: number): number => numpy.sqrt((t - loc) / scale);
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
             return std_cdf((z(x) - 1 / z(x)) / gamma);
         },
         pdf: function (x, gamma, loc, scale) {
-            const z = (t: number): number => Math.sqrt((t - loc) / scale);
-            const std_pdf = (t: number): number => (1 / Math.sqrt(2 * Math.PI)) * Math.exp((-1 / 2) * t ** 2);
+            const z = (t: number): number => numpy.sqrt((t - loc) / scale);
+            const std_pdf = (t: number): number => (1 / numpy.sqrt(2 * numpy.pi)) * numpy.exp((-1 / 2) * t ** 2);
             return ((z(x) + 1 / z(x)) / (2 * gamma * (x - loc))) * std_pdf((z(x) - 1 / z(x)) / gamma);
         },
         ppf: function (u, gamma, loc, scale) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
-            return loc + (scale * (gamma * inv_std_cdf(u) + Math.sqrt((gamma * inv_std_cdf(u)) ** 2 + 4)) ** 2) / 4;
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
+            return loc + (scale * (gamma * inv_std_cdf(u) + numpy.sqrt((gamma * inv_std_cdf(u)) ** 2 + 4)) ** 2) / 4;
         },
         sample: function (n_samples, gamma, loc, scale) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), gamma, loc, scale));
@@ -475,13 +475,13 @@ const continuousDistributions: ContinuousDistributions = {
         cdf: function (x, mu, sigma) {
             const z1 = (t: number): number => (t + mu) / sigma;
             const z2 = (t: number): number => (t - mu) / sigma;
-            return 0.5 * (jStat.erf(z1(x) / Math.sqrt(2)) + jStat.erf(z2(x) / Math.sqrt(2)));
+            return 0.5 * (jStat.erf(z1(x) / numpy.sqrt(2)) + jStat.erf(z2(x) / numpy.sqrt(2)));
         },
         pdf: function (x, mu, sigma) {
-            return Math.sqrt(2 / (Math.PI * sigma ** 2)) * Math.exp(-(x ** 2 + mu ** 2) / (2 * sigma ** 2)) * Math.cosh((mu * x) / sigma ** 2);
+            return numpy.sqrt(2 / (numpy.pi * sigma ** 2)) * numpy.exp(-(x ** 2 + mu ** 2) / (2 * sigma ** 2)) * numpy.cosh((mu * x) / sigma ** 2);
         },
         ppf: function (u, mu, sigma) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             return Math.abs(inv_std_cdf(1 - u) * sigma + mu);
         },
         sample: function (n_samples, mu, sigma) {
@@ -496,14 +496,14 @@ const continuousDistributions: ContinuousDistributions = {
     frechet: {
         cdf: function (x, alpha, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return Math.exp(-1 * z(x) ** -alpha);
+            return numpy.exp(-1 * z(x) ** -alpha);
         },
         pdf: function (x, alpha, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return (alpha / scale) * z(x) ** (-1 - alpha) * Math.exp(-1 * z(x) ** -alpha);
+            return (alpha / scale) * z(x) ** (-1 - alpha) * numpy.exp(-1 * z(x) ** -alpha);
         },
         ppf: function (u, alpha, loc, scale) {
-            return loc + scale * (-Math.log(u)) ** (-1 / alpha);
+            return loc + scale * (-numpy.log(u)) ** (-1 / alpha);
         },
         sample: function (n_samples, alpha, loc, scale) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), alpha, loc, scale));
@@ -520,7 +520,7 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(alpha, x / beta);
         },
         pdf: function (x, alpha, beta) {
-            return (beta ** -alpha * x ** (alpha - 1) * Math.exp(-(x / beta))) / jStat.gammafn(alpha);
+            return (beta ** -alpha * x ** (alpha - 1) * numpy.exp(-(x / beta))) / jStat.gammafn(alpha);
         },
         ppf: function (u, alpha, beta) {
             return beta * jStat.gammapinv(u, alpha);
@@ -539,7 +539,7 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(alpha, (x - loc) / beta);
         },
         pdf: function (x, alpha, beta, loc) {
-            return (beta ** -alpha * (x - loc) ** (alpha - 1) * Math.exp(-((x - loc) / beta))) / jStat.gammafn(alpha);
+            return (beta ** -alpha * (x - loc) ** (alpha - 1) * numpy.exp(-((x - loc) / beta))) / jStat.gammafn(alpha);
         },
         ppf: function (u, alpha, beta, loc) {
             return beta * jStat.gammapinv(u, alpha) + loc;
@@ -558,24 +558,24 @@ const continuousDistributions: ContinuousDistributions = {
         cdf: function (x, xi, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
             if (xi === 0) {
-                return Math.exp(-Math.exp(-z(x)));
+                return numpy.exp(-numpy.exp(-z(x)));
             } else {
-                return Math.exp(-1 * (1 + xi * z(x)) ** (-1 / xi));
+                return numpy.exp(-1 * (1 + xi * z(x)) ** (-1 / xi));
             }
         },
         pdf: function (x, xi, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
             if (xi === 0) {
-                return (1 / sigma) * Math.exp(-z(x) - Math.exp(-z(x)));
+                return (1 / sigma) * numpy.exp(-z(x) - numpy.exp(-z(x)));
             } else {
-                return (1 / sigma) * Math.exp(-1 * (1 + xi * z(x)) ** (-1 / xi)) * (1 + xi * z(x)) ** (-1 - 1 / xi);
+                return (1 / sigma) * numpy.exp(-1 * (1 + xi * z(x)) ** (-1 / xi)) * (1 + xi * z(x)) ** (-1 - 1 / xi);
             }
         },
         ppf: function (u, xi, mu, sigma) {
             if (xi === 0) {
-                return mu - sigma * Math.log(-Math.log(u));
+                return mu - sigma * numpy.log(-numpy.log(u));
             } else {
-                return mu + (sigma * ((-Math.log(u)) ** -xi - 1)) / xi;
+                return mu + (sigma * ((-numpy.log(u)) ** -xi - 1)) / xi;
             }
         },
         sample: function (n_samples, xi, mu, sigma) {
@@ -592,7 +592,7 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(d / p, (x / a) ** p);
         },
         pdf: function (x, a, d, p) {
-            return ((p / a ** d) * x ** (d - 1) * Math.exp(-1 * (x / a) ** p)) / jStat.gammafn(d / p);
+            return ((p / a ** d) * x ** (d - 1) * numpy.exp(-1 * (x / a) ** p)) / jStat.gammafn(d / p);
         },
         ppf: function (u, a, d, p) {
             return a * jStat.gammapinv(u, d / p) ** (1 / p);
@@ -612,7 +612,7 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(d / p, ((x - loc) / a) ** p);
         },
         pdf: function (x, a, d, p, loc) {
-            return ((p / a ** d) * (x - loc) ** (d - 1) * Math.exp(-1 * ((x - loc) / a) ** p)) / jStat.gammafn(d / p);
+            return ((p / a ** d) * (x - loc) ** (d - 1) * numpy.exp(-1 * ((x - loc) / a) ** p)) / jStat.gammafn(d / p);
         },
         ppf: function (u, a, d, p, loc) {
             return a * jStat.gammapinv(u, d / p) ** (1 / p) + loc;
@@ -631,14 +631,14 @@ const continuousDistributions: ContinuousDistributions = {
     generalized_logistic: {
         cdf: function (x, c, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return 1 / (1 + Math.exp(-z(x))) ** c;
+            return 1 / (1 + numpy.exp(-z(x))) ** c;
         },
         pdf: function (x, c, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return (c / scale) * Math.exp(-z(x)) * (1 + Math.exp(-z(x))) ** (-c - 1);
+            return (c / scale) * numpy.exp(-z(x)) * (1 + numpy.exp(-z(x))) ** (-c - 1);
         },
         ppf: function (u, c, loc, scale) {
-            return loc + scale * -Math.log(u ** (-1 / c) - 1);
+            return loc + scale * -numpy.log(u ** (-1 / c) - 1);
         },
         sample: function (n_samples, c, loc, scale) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), c, loc, scale));
@@ -655,7 +655,7 @@ const continuousDistributions: ContinuousDistributions = {
             return 0.5 + (Math.sign(x - mu) / 2) * jStat.lowRegGamma(1 / beta, Math.abs((x - mu) / alpha) ** beta);
         },
         pdf: function (x, mu, alpha, beta) {
-            return (beta / (2 * alpha * jStat.gammafn(1 / beta))) * Math.exp(-1 * (Math.abs(x - mu) / alpha) ** beta);
+            return (beta / (2 * alpha * jStat.gammafn(1 / beta))) * numpy.exp(-1 * (Math.abs(x - mu) / alpha) ** beta);
         },
         ppf: function (u, mu, alpha, beta) {
             return mu + Math.sign(u - 0.5) * (alpha ** beta * jStat.gammapinv(2 * Math.abs(u - 0.5), 1 / beta)) ** (1 / beta);
@@ -695,15 +695,15 @@ const continuousDistributions: ContinuousDistributions = {
     gibrat: {
         cdf: function (x, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return 0.5 * (1 + jStat.erf(Math.log(z(x)) / Math.sqrt(2)));
+            return 0.5 * (1 + jStat.erf(numpy.log(z(x)) / numpy.sqrt(2)));
         },
         pdf: function (x, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return (1 / (scale * z(x) * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.log(z(x)) ** 2);
+            return (1 / (scale * z(x) * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-0.5 * numpy.log(z(x)) ** 2);
         },
         ppf: function (u, loc, scale) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
-            return Math.exp(inv_std_cdf(u)) * scale + loc;
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
+            return numpy.exp(inv_std_cdf(u)) * scale + loc;
         },
         sample: function (n_samples, loc, scale) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), loc, scale));
@@ -717,14 +717,14 @@ const continuousDistributions: ContinuousDistributions = {
     gumbel_left: {
         cdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return 1 - Math.exp(-Math.exp(z(x)));
+            return 1 - numpy.exp(-numpy.exp(z(x)));
         },
         pdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return (1 / sigma) * Math.exp(z(x) - Math.exp(z(x)));
+            return (1 / sigma) * numpy.exp(z(x) - numpy.exp(z(x)));
         },
         ppf: function (u, mu, sigma) {
-            return mu + sigma * Math.log(-Math.log(1 - u));
+            return mu + sigma * numpy.log(-numpy.log(1 - u));
         },
         sample: function (n_samples, mu, sigma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), mu, sigma));
@@ -738,14 +738,14 @@ const continuousDistributions: ContinuousDistributions = {
     gumbel_right: {
         cdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return Math.exp(-Math.exp(-z(x)));
+            return numpy.exp(-numpy.exp(-z(x)));
         },
         pdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return (1 / sigma) * Math.exp(-z(x) - Math.exp(-z(x)));
+            return (1 / sigma) * numpy.exp(-z(x) - numpy.exp(-z(x)));
         },
         ppf: function (u, mu, sigma) {
-            return mu - sigma * Math.log(-Math.log(u));
+            return mu - sigma * numpy.log(-numpy.log(u));
         },
         sample: function (n_samples, mu, sigma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), mu, sigma));
@@ -759,14 +759,14 @@ const continuousDistributions: ContinuousDistributions = {
     half_normal: {
         cdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return jStat.erf(z(x) / Math.sqrt(2));
+            return jStat.erf(z(x) / numpy.sqrt(2));
         },
         pdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return (1 / sigma) * Math.sqrt(2 / Math.PI) * Math.exp(-(z(x) ** 2) / 2);
+            return (1 / sigma) * numpy.sqrt(2 / numpy.pi) * numpy.exp(-(z(x) ** 2) / 2);
         },
         ppf: function (u, mu, sigma) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             return inv_std_cdf((1 + u) / 2) * sigma + mu;
         },
         sample: function (n_samples, mu, sigma) {
@@ -780,15 +780,15 @@ const continuousDistributions: ContinuousDistributions = {
     },
     hyperbolic_secant: {
         cdf: function (x, mu, sigma) {
-            const z = (t: number): number => (Math.PI * (t - mu)) / (2 * sigma);
-            return (2 / Math.PI) * Math.atan(Math.exp(z(x)));
+            const z = (t: number): number => (numpy.pi * (t - mu)) / (2 * sigma);
+            return (2 / numpy.pi) * numpy.arctan(numpy.exp(z(x)));
         },
         pdf: function (x, mu, sigma) {
-            const z = (t: number): number => (Math.PI * (t - mu)) / (2 * sigma);
-            return 1 / Math.cosh(z(x)) / (2 * sigma);
+            const z = (t: number): number => (numpy.pi * (t - mu)) / (2 * sigma);
+            return 1 / numpy.cosh(z(x)) / (2 * sigma);
         },
         ppf: function (u, mu, sigma) {
-            return Math.log(Math.tan((u * Math.PI) / 2)) * ((2 * sigma) / Math.PI) + mu;
+            return numpy.log(numpy.tan((u * numpy.pi) / 2)) * ((2 * sigma) / numpy.pi) + mu;
         },
         sample: function (n_samples, mu, sigma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), mu, sigma));
@@ -804,7 +804,7 @@ const continuousDistributions: ContinuousDistributions = {
             return 1 - jStat.lowRegGamma(alpha, beta / x);
         },
         pdf: function (x, alpha, beta) {
-            return (beta ** alpha * x ** (-alpha - 1) * Math.exp(-(beta / x))) / jStat.gammafn(alpha);
+            return (beta ** alpha * x ** (-alpha - 1) * numpy.exp(-(beta / x))) / jStat.gammafn(alpha);
         },
         ppf: function (u, alpha, beta) {
             return beta / jStat.gammapinv(1 - u, alpha);
@@ -823,7 +823,7 @@ const continuousDistributions: ContinuousDistributions = {
             return 1 - jStat.lowRegGamma(alpha, beta / (x - loc));
         },
         pdf: function (x, alpha, beta, loc) {
-            return (beta ** alpha * (x - loc) ** (-alpha - 1) * Math.exp(-(beta / (x - loc)))) / jStat.gammafn(alpha);
+            return (beta ** alpha * (x - loc) ** (-alpha - 1) * numpy.exp(-(beta / (x - loc)))) / jStat.gammafn(alpha);
         },
         ppf: function (u, alpha, beta, loc) {
             return loc + beta / jStat.gammapinv(1 - u, alpha);
@@ -840,11 +840,11 @@ const continuousDistributions: ContinuousDistributions = {
     },
     inverse_gaussian: {
         cdf: function (x, mu, lambda) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-            return std_cdf(Math.sqrt(lambda / x) * (x / mu - 1)) + Math.exp((2 * lambda) / mu) * std_cdf(-Math.sqrt(lambda / x) * (x / mu + 1));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
+            return std_cdf(numpy.sqrt(lambda / x) * (x / mu - 1)) + numpy.exp((2 * lambda) / mu) * std_cdf(-numpy.sqrt(lambda / x) * (x / mu + 1));
         },
         pdf: function (x, mu, lambda) {
-            return Math.sqrt(lambda / (2 * Math.PI * x ** 3)) * Math.exp(-(lambda * (x - mu) ** 2) / (2 * mu ** 2 * x));
+            return numpy.sqrt(lambda / (2 * numpy.pi * x ** 3)) * numpy.exp(-(lambda * (x - mu) ** 2) / (2 * mu ** 2 * x));
         },
         ppf: function (u, mu, lambda) {
             const pyodideStore = usePyodideStore();
@@ -855,12 +855,12 @@ const continuousDistributions: ContinuousDistributions = {
         },
         sample: function (n_samples, mu, lambda) {
             const inv_std_cdf = (t: number): number => {
-                return Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+                return numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             };
             return [...Array(n_samples).keys()].map(function () {
                 const v = inv_std_cdf(Math.random());
                 const y = v * v;
-                const x = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * Math.sqrt(4 * mu * lambda * y + mu * mu * y * y);
+                const x = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * numpy.sqrt(4 * mu * lambda * y + mu * mu * y * y);
                 const u = Math.random();
                 if (u <= mu / (mu + x)) {
                     return x;
@@ -877,11 +877,11 @@ const continuousDistributions: ContinuousDistributions = {
     },
     inverse_gaussian_3p: {
         cdf: function (x, mu, lambda, loc) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-            return std_cdf(Math.sqrt(lambda / (x - loc)) * ((x - loc) / mu - 1)) + Math.exp((2 * lambda) / mu) * std_cdf(-Math.sqrt(lambda / (x - loc)) * ((x - loc) / mu + 1));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
+            return std_cdf(numpy.sqrt(lambda / (x - loc)) * ((x - loc) / mu - 1)) + numpy.exp((2 * lambda) / mu) * std_cdf(-numpy.sqrt(lambda / (x - loc)) * ((x - loc) / mu + 1));
         },
         pdf: function (x, mu, lambda, loc) {
-            return Math.sqrt(lambda / (2 * Math.PI * (x - loc) ** 3)) * Math.exp(-(lambda * (x - loc - mu) ** 2) / (2 * mu ** 2 * (x - loc)));
+            return numpy.sqrt(lambda / (2 * numpy.pi * (x - loc) ** 3)) * numpy.exp(-(lambda * (x - loc - mu) ** 2) / (2 * mu ** 2 * (x - loc)));
         },
         ppf: function (u, mu, lambda, loc) {
             const pyodideStore = usePyodideStore();
@@ -892,12 +892,12 @@ const continuousDistributions: ContinuousDistributions = {
         },
         sample: function (n_samples, mu, lambda, loc) {
             const inv_std_cdf = (t: number): number => {
-                return Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+                return numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             };
             return [...Array(n_samples).keys()].map(function () {
                 const v = inv_std_cdf(Math.random());
                 const y = v * v;
-                const x = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * Math.sqrt(4 * mu * lambda * y + mu * mu * y * y);
+                const x = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * numpy.sqrt(4 * mu * lambda * y + mu * mu * y * y);
                 const u = Math.random();
                 if (u <= mu / (mu + x)) {
                     return loc + x;
@@ -915,17 +915,17 @@ const continuousDistributions: ContinuousDistributions = {
     },
     johnson_sb: {
         cdf: function (x, xi, lambda, gamma, delta) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
             const z = (t: number): number => (t - xi) / lambda;
-            return std_cdf(gamma + delta * Math.log(z(x) / (1 - z(x))));
+            return std_cdf(gamma + delta * numpy.log(z(x) / (1 - z(x))));
         },
         pdf: function (x, xi, lambda, gamma, delta) {
             const z = (t: number): number => (t - xi) / lambda;
-            return (delta / (lambda * Math.sqrt(2 * Math.PI) * z(x) * (1 - z(x)))) * Math.exp(-(1 / 2) * (gamma + delta * Math.log(z(x) / (1 - z(x)))) ** 2);
+            return (delta / (lambda * numpy.sqrt(2 * numpy.pi) * z(x) * (1 - z(x)))) * numpy.exp(-(1 / 2) * (gamma + delta * numpy.log(z(x) / (1 - z(x)))) ** 2);
         },
         ppf: function (u, xi, lambda, gamma, delta) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
-            return (lambda * Math.exp((inv_std_cdf(u) - gamma) / delta)) / (1 + Math.exp((inv_std_cdf(u) - gamma) / delta)) + xi;
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
+            return (lambda * numpy.exp((inv_std_cdf(u) - gamma) / delta)) / (1 + numpy.exp((inv_std_cdf(u) - gamma) / delta)) + xi;
         },
         sample: function (n_samples, xi, lambda, gamma, delta) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), xi, lambda, gamma, delta));
@@ -939,17 +939,17 @@ const continuousDistributions: ContinuousDistributions = {
     },
     johnson_su: {
         cdf: function (x, xi, lambda, gamma, delta) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
             const z = (t: number): number => (t - xi) / lambda;
             return std_cdf(gamma + delta * Math.asinh(z(x)));
         },
         pdf: function (x, xi, lambda, gamma, delta) {
             const z = (t: number): number => (t - xi) / lambda;
-            return (delta / (lambda * Math.sqrt(2 * Math.PI) * Math.sqrt(z(x) ** 2 + 1))) * Math.exp(-(1 / 2) * (gamma + delta * Math.asinh(z(x))) ** 2);
+            return (delta / (lambda * numpy.sqrt(2 * numpy.pi) * numpy.sqrt(z(x) ** 2 + 1))) * numpy.exp(-(1 / 2) * (gamma + delta * Math.asinh(z(x))) ** 2);
         },
         ppf: function (u, xi, lambda, gamma, delta) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
-            return lambda * Math.sinh((inv_std_cdf(u) - gamma) / delta) + xi;
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
+            return lambda * numpy.sinh((inv_std_cdf(u) - gamma) / delta) + xi;
         },
         sample: function (n_samples, xi, lambda, gamma, delta) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), xi, lambda, gamma, delta));
@@ -985,13 +985,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     laplace: {
         cdf: function (x, mu, b) {
-            return 0.5 + 0.5 * Math.sign(x - mu) * (1 - Math.exp(-Math.abs(x - mu) / b));
+            return 0.5 + 0.5 * Math.sign(x - mu) * (1 - numpy.exp(-Math.abs(x - mu) / b));
         },
         pdf: function (x, mu, b) {
-            return (1 / (2 * b)) * Math.exp(-Math.abs(x - mu) / b);
+            return (1 / (2 * b)) * numpy.exp(-Math.abs(x - mu) / b);
         },
         ppf: function (u, mu, b) {
-            return mu - b * Math.sign(u - 0.5) * Math.log(1 - 2 * Math.abs(u - 0.5));
+            return mu - b * Math.sign(u - 0.5) * numpy.log(1 - 2 * Math.abs(u - 0.5));
         },
         sample: function (n_samples, mu, b) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), mu, b));
@@ -1004,14 +1004,14 @@ const continuousDistributions: ContinuousDistributions = {
     },
     levy: {
         cdf: function (x, mu, c) {
-            const y = (t: number): number => Math.sqrt(c / (t - mu));
-            return jStat.erfc(y(x) / Math.sqrt(2));
+            const y = (t: number): number => numpy.sqrt(c / (t - mu));
+            return jStat.erfc(y(x) / numpy.sqrt(2));
         },
         pdf: function (x, mu, c) {
-            return (Math.sqrt(c / (2 * Math.PI)) * Math.exp(-c / (2 * (x - mu)))) / (x - mu) ** 1.5;
+            return (numpy.sqrt(c / (2 * numpy.pi)) * numpy.exp(-c / (2 * (x - mu)))) / (x - mu) ** 1.5;
         },
         ppf: function (u, mu, c) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             return mu + c / inv_std_cdf((2 - u) / 2) ** 2;
         },
         sample: function (n_samples, mu, c) {
@@ -1026,14 +1026,14 @@ const continuousDistributions: ContinuousDistributions = {
     loggamma: {
         cdf: function (x, c, mu, sigma) {
             const z = (x: number): number => (x - mu) / sigma;
-            return jStat.lowRegGamma(c, Math.exp(z(x)));
+            return jStat.lowRegGamma(c, numpy.exp(z(x)));
         },
         pdf: function (x, c, mu, sigma) {
             const z = (x: number): number => (x - mu) / sigma;
-            return Math.exp(c * z(x) - Math.exp(z(x)) - jStat.gammaln(c)) / sigma;
+            return numpy.exp(c * z(x) - numpy.exp(z(x)) - jStat.gammaln(c)) / sigma;
         },
         ppf: function (u, c, mu, sigma) {
-            return mu + sigma * Math.log(jStat.gammapinv(u, c));
+            return mu + sigma * numpy.log(jStat.gammapinv(u, c));
         },
         sample: function (n_samples, c, mu, sigma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), c, mu, sigma));
@@ -1047,15 +1047,15 @@ const continuousDistributions: ContinuousDistributions = {
     },
     logistic: {
         cdf: function (x, mu, sigma) {
-            const z = (t: number): number => Math.exp(-(t - mu) / sigma);
+            const z = (t: number): number => numpy.exp(-(t - mu) / sigma);
             return 1 / (1 + z(x));
         },
         pdf: function (x, mu, sigma) {
-            const z = (t: number): number => Math.exp(-(t - mu) / sigma);
+            const z = (t: number): number => numpy.exp(-(t - mu) / sigma);
             return z(x) / (sigma * (1 + z(x)) ** 2);
         },
         ppf: function (u, mu, sigma) {
-            return mu + sigma * Math.log(u / (1 - u));
+            return mu + sigma * numpy.log(u / (1 - u));
         },
         sample: function (n_samples, mu, sigma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), mu, sigma));
@@ -1107,15 +1107,15 @@ const continuousDistributions: ContinuousDistributions = {
     },
     lognormal: {
         cdf: function (x, mu, sigma) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
-            return std_cdf((Math.log(x) - mu) / sigma);
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
+            return std_cdf((numpy.log(x) - mu) / sigma);
         },
         pdf: function (x, mu, sigma) {
-            return (1 / (x * sigma * Math.sqrt(2 * Math.PI))) * Math.exp(-((Math.log(x) - mu) ** 2 / (2 * sigma ** 2)));
+            return (1 / (x * sigma * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-((numpy.log(x) - mu) ** 2 / (2 * sigma ** 2)));
         },
         ppf: function (u, mu, sigma) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
-            return Math.exp(mu + sigma * inv_std_cdf(u));
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
+            return numpy.exp(mu + sigma * inv_std_cdf(u));
         },
         sample: function (n_samples, mu, sigma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), mu, sigma));
@@ -1129,14 +1129,14 @@ const continuousDistributions: ContinuousDistributions = {
     maxwell: {
         cdf: function (x, alpha, loc) {
             const z = (t: number): number => (t - loc) / alpha;
-            return jStat.erf(z(x) / Math.sqrt(2)) - Math.sqrt(2 / Math.PI) * z(x) * Math.exp((-1 * z(x) ** 2) / 2);
+            return jStat.erf(z(x) / numpy.sqrt(2)) - numpy.sqrt(2 / numpy.pi) * z(x) * numpy.exp((-1 * z(x) ** 2) / 2);
         },
         pdf: function (x, alpha, loc) {
             const z = (t: number): number => (t - loc) / alpha;
-            return (1 / alpha) * Math.sqrt(2 / Math.PI) * z(x) ** 2 * Math.exp((-1 * z(x) ** 2) / 2);
+            return (1 / alpha) * numpy.sqrt(2 / numpy.pi) * z(x) ** 2 * numpy.exp((-1 * z(x) ** 2) / 2);
         },
         ppf: function (u, alpha, loc) {
-            return alpha * Math.sqrt(2 * jStat.gammapinv(u, 1.5)) + loc;
+            return alpha * numpy.sqrt(2 * jStat.gammapinv(u, 1.5)) + loc;
         },
         sample: function (n_samples, alpha, loc) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), alpha, loc));
@@ -1150,15 +1150,15 @@ const continuousDistributions: ContinuousDistributions = {
     moyal: {
         cdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return jStat.erfc(Math.exp(-0.5 * z(x)) / Math.sqrt(2));
+            return jStat.erfc(numpy.exp(-0.5 * z(x)) / numpy.sqrt(2));
         },
         pdf: function (x, mu, sigma) {
             const z = (t: number): number => (t - mu) / sigma;
-            return Math.exp(-0.5 * (z(x) + Math.exp(-z(x)))) / (sigma * Math.sqrt(2 * Math.PI));
+            return numpy.exp(-0.5 * (z(x) + numpy.exp(-z(x)))) / (sigma * numpy.sqrt(2 * numpy.pi));
         },
         ppf: function (u, mu, sigma) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
-            return mu - sigma * Math.log(inv_std_cdf(1 - u / 2) ** 2);
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
+            return mu - sigma * numpy.log(inv_std_cdf(1 - u / 2) ** 2);
         },
         sample: function (n_samples, mu, sigma) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), mu, sigma));
@@ -1174,10 +1174,10 @@ const continuousDistributions: ContinuousDistributions = {
             return jStat.lowRegGamma(m, (m / omega) * x ** 2);
         },
         pdf: function (x, m, omega) {
-            return ((2 * m ** m) / (jStat.gammafn(m) * omega ** m)) * (x ** (2 * m - 1) * Math.exp(-(m / omega) * x ** 2));
+            return ((2 * m ** m) / (jStat.gammafn(m) * omega ** m)) * (x ** (2 * m - 1) * numpy.exp(-(m / omega) * x ** 2));
         },
         ppf: function (u, m, omega) {
-            return Math.sqrt(jStat.gammapinv(u, m) * (omega / m));
+            return numpy.sqrt(jStat.gammapinv(u, m) * (omega / m));
         },
         sample: function (n_samples, m, omega) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), m, omega));
@@ -1197,7 +1197,7 @@ const continuousDistributions: ContinuousDistributions = {
             return Number(result);
         },
         pdf: function (x, lambda, n) {
-            return (1 / 2) * Math.exp(-(x + lambda) / 2) * (x / lambda) ** ((n - 2) / 4) * BESSEL.besseli(Math.sqrt(lambda * x), (n - 2) / 2);
+            return (1 / 2) * numpy.exp(-(x + lambda) / 2) * (x / lambda) ** ((n - 2) / 4) * BESSEL.besseli(numpy.sqrt(lambda * x), (n - 2) / 2);
         },
         ppf: function (u, lambda, n) {
             const pyodideStore = usePyodideStore();
@@ -1210,10 +1210,10 @@ const continuousDistributions: ContinuousDistributions = {
             // This method return a value from sample.
             // But not the specific inverse of (u)
             const norm_inv = (t: number, miu_: number, sigma_: number): number => {
-                return miu_ + sigma_ * Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+                return miu_ + sigma_ * numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             };
             return [...Array(n_samples).keys()].map(function () {
-                const result = [...Array(n).keys()].reduce((acum) => acum + norm_inv(Math.random(), Math.sqrt(lambda / n), 1) ** 2, 0);
+                const result = [...Array(n).keys()].reduce((acum) => acum + norm_inv(Math.random(), numpy.sqrt(lambda / n), 1) ** 2, 0);
                 return result;
             });
         },
@@ -1249,10 +1249,10 @@ const continuousDistributions: ContinuousDistributions = {
             // This method return a value from sample.
             // But not the specific inverse of (u)
             const norm_inv = (t: number, miu_: number, sigma_: number): number => {
-                return miu_ + sigma_ * Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+                return miu_ + sigma_ * numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             };
             return [...Array(n_samples).keys()].map(function () {
-                const var_nc_chi2 = [...Array(n1).keys()].reduce((acum) => acum + norm_inv(Math.random(), Math.sqrt(lambda / n1), 1) ** 2, 0);
+                const var_nc_chi2 = [...Array(n1).keys()].reduce((acum) => acum + norm_inv(Math.random(), numpy.sqrt(lambda / n1), 1) ** 2, 0);
                 const var_chi2 = 2 * jStat.gammapinv(Math.random(), n2 / 2);
                 return var_nc_chi2 / n1 / (var_chi2 / n2);
             });
@@ -1292,12 +1292,12 @@ const continuousDistributions: ContinuousDistributions = {
             // This method return a value from sample.
             // But not the specific inverse of (u)
             const norm_inv = (t: number, miu_: number, sigma_: number): number => {
-                return miu_ + sigma_ * Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+                return miu_ + sigma_ * numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             };
             return [...Array(n_samples).keys()].map(function () {
                 const var_normal = norm_inv(Math.random(), lambda, 1);
                 const var_chi2 = 2 * jStat.gammapinv(Math.random(), n / 2);
-                return loc + (scale * var_normal) / Math.sqrt(var_chi2 / n);
+                return loc + (scale * var_normal) / numpy.sqrt(var_chi2 / n);
             });
         },
         parametersRestrictions: function (lambda, n, loc, scale) {
@@ -1310,14 +1310,14 @@ const continuousDistributions: ContinuousDistributions = {
     },
     normal: {
         cdf: function (x, mu, sigma) {
-            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / Math.sqrt(2)));
+            const std_cdf = (t: number): number => 0.5 * (1 + jStat.erf(t / numpy.sqrt(2)));
             return std_cdf((x - mu) / sigma);
         },
         pdf: function (x, mu, sigma) {
-            return (1 / (sigma * Math.sqrt(2 * Math.PI))) * Math.exp(-((x - mu) ** 2 / (2 * sigma ** 2)));
+            return (1 / (sigma * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-((x - mu) ** 2 / (2 * sigma ** 2)));
         },
         ppf: function (u, mu, sigma) {
-            const inv_std_cdf = (t: number): number => Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+            const inv_std_cdf = (t: number): number => numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             return mu + sigma * inv_std_cdf(u);
         },
         sample: function (n_samples, mu, sigma) {
@@ -1416,13 +1416,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     rayleigh: {
         cdf: function (x, gamma, sigma) {
-            return 1 - Math.exp(-0.5 * ((x - gamma) / sigma) ** 2);
+            return 1 - numpy.exp(-0.5 * ((x - gamma) / sigma) ** 2);
         },
         pdf: function (x, gamma, sigma) {
-            return ((x - gamma) / sigma ** 2) * Math.exp(-0.5 * ((x - gamma) / sigma) ** 2);
+            return ((x - gamma) / sigma ** 2) * numpy.exp(-0.5 * ((x - gamma) / sigma) ** 2);
         },
         ppf: function (u, gamma, sigma) {
-            return Math.sqrt(-2 * Math.log(1 - u)) * sigma + gamma;
+            return numpy.sqrt(-2 * numpy.log(1 - u)) * sigma + gamma;
         },
         sample: function (n_samples) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random()));
@@ -1435,13 +1435,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     reciprocal: {
         cdf: function (x, a, b) {
-            return (Math.log(x) - Math.log(a)) / (Math.log(b) - Math.log(a));
+            return (numpy.log(x) - numpy.log(a)) / (numpy.log(b) - numpy.log(a));
         },
         pdf: function (x, a, b) {
-            return 1 / (x * (Math.log(b) - Math.log(a)));
+            return 1 / (x * (numpy.log(b) - numpy.log(a)));
         },
         ppf: function (u, a, b) {
-            return Math.exp(u * (Math.log(b) - Math.log(a)) + Math.log(a));
+            return numpy.exp(u * (numpy.log(b) - numpy.log(a)) + numpy.log(a));
         },
         sample: function (n_samples, a, b) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), a, b));
@@ -1464,13 +1464,13 @@ const continuousDistributions: ContinuousDistributions = {
                     k += 1;
                     x = (a / b) ** k * BESSEL.besseli(a * b, k);
                 }
-                const result = acum * Math.exp(-(a ** 2 + b ** 2) / 2);
+                const result = acum * numpy.exp(-(a ** 2 + b ** 2) / 2);
                 return result;
             }
             return 1 - Q(1, v / sigma, x / sigma);
         },
         pdf: function (x, v, sigma) {
-            return (x / sigma ** 2) * Math.exp(-(x ** 2 + v ** 2) / (2 * sigma ** 2)) * BESSEL.besseli((x * v) / sigma ** 2, 0);
+            return (x / sigma ** 2) * numpy.exp(-(x ** 2 + v ** 2) / (2 * sigma ** 2)) * BESSEL.besseli((x * v) / sigma ** 2, 0);
         },
         ppf: function (u, v, sigma) {
             const pyodideStore = usePyodideStore();
@@ -1483,15 +1483,15 @@ const continuousDistributions: ContinuousDistributions = {
             // This method return a value from sample.
             // But not the specific inverse of (u)
             const norm_inv = (t: number, miu_: number, sigma_: number): number => {
-                return miu_ + sigma_ * Math.sqrt(2) * jStat.erfinv(2 * t - 1);
+                return miu_ + sigma_ * numpy.sqrt(2) * jStat.erfinv(2 * t - 1);
             };
             return [...Array(n_samples).keys()].map(function () {
-                const θ = Math.PI / 2;
+                const θ = numpy.pi / 2;
                 const r1 = Math.random();
                 const r2 = Math.random();
-                const X = norm_inv(r1, v * Math.cos(θ), sigma);
-                const Y = norm_inv(r2, v * Math.sin(θ), sigma);
-                return Math.sqrt(X * X + Y * Y);
+                const X = norm_inv(r1, v * numpy.cos(θ), sigma);
+                const Y = norm_inv(r2, v * numpy.sin(θ), sigma);
+                return numpy.sqrt(X * X + Y * Y);
             });
         },
         parametersRestrictions: function (v, sigma) {
@@ -1503,11 +1503,11 @@ const continuousDistributions: ContinuousDistributions = {
     semicircular: {
         cdf: function (x, loc, R) {
             const z = (t: number): number => t - loc;
-            return 0.5 + (z(x) * Math.sqrt(R ** 2 - z(x) ** 2)) / (Math.PI * R ** 2) + Math.asin(z(x) / R) / Math.PI;
+            return 0.5 + (z(x) * numpy.sqrt(R ** 2 - z(x) ** 2)) / (numpy.pi * R ** 2) + Math.asin(z(x) / R) / numpy.pi;
         },
         pdf: function (x, loc, R) {
             const z = (t: number): number => t - loc;
-            return (2 * Math.sqrt(R ** 2 - z(x) ** 2)) / (Math.PI * R ** 2);
+            return (2 * numpy.sqrt(R ** 2 - z(x) ** 2)) / (numpy.pi * R ** 2);
         },
         ppf: function (u, loc, R) {
             return loc + R * (2 * jStat.ibetainv(u, 1.5, 1.5) - 1);
@@ -1523,16 +1523,16 @@ const continuousDistributions: ContinuousDistributions = {
     },
     t_student: {
         cdf: function (x, df) {
-            return jStat.ibeta((x + Math.sqrt(x * x + df)) / (2 * Math.sqrt(x * x + df)), df / 2, df / 2);
+            return jStat.ibeta((x + numpy.sqrt(x * x + df)) / (2 * numpy.sqrt(x * x + df)), df / 2, df / 2);
         },
         pdf: function (x, df) {
-            return (1 + (x * x) / df) ** (-(df + 1) / 2) / (Math.sqrt(df) * jStat.betafn(0.5, df / 2));
+            return (1 + (x * x) / df) ** (-(df + 1) / 2) / (numpy.sqrt(df) * jStat.betafn(0.5, df / 2));
         },
         ppf: function (u, df) {
             if (u >= 0.5) {
-                return Math.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
+                return numpy.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
             } else {
-                return -Math.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
+                return -numpy.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
             }
         },
         sample: function (n_samples, df) {
@@ -1546,17 +1546,17 @@ const continuousDistributions: ContinuousDistributions = {
     t_student_3p: {
         cdf: function (x, df, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return jStat.ibeta((z(x) + Math.sqrt(z(x) ** 2 + df)) / (2 * Math.sqrt(z(x) ** 2 + df)), df / 2, df / 2);
+            return jStat.ibeta((z(x) + numpy.sqrt(z(x) ** 2 + df)) / (2 * numpy.sqrt(z(x) ** 2 + df)), df / 2, df / 2);
         },
         pdf: function (x, df, loc, scale) {
             const z = (t: number): number => (t - loc) / scale;
-            return ((1 / (Math.sqrt(df) * jStat.betafn(0.5, df / 2))) * (1 + z(x) ** 2 / df) ** (-(df + 1) / 2)) / scale;
+            return ((1 / (numpy.sqrt(df) * jStat.betafn(0.5, df / 2))) * (1 + z(x) ** 2 / df) ** (-(df + 1) / 2)) / scale;
         },
         ppf: function (u, df, loc, scale) {
             if (u >= 0.5) {
-                return loc + scale * Math.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
+                return loc + scale * numpy.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
             } else {
-                return loc - scale * Math.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
+                return loc - scale * numpy.sqrt((df * (1 - jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5))) / jStat.ibetainv(2 * Math.min(u, 1 - u), 0.5 * df, 0.5));
             }
         },
         sample: function (n_samples, df, loc, scale) {
@@ -1612,13 +1612,13 @@ const continuousDistributions: ContinuousDistributions = {
             const Area2 = (c - b) * h;
             const Area3 = ((d - c) * h) / 2;
             if (u <= Area1) {
-                return a + Math.sqrt(u * (d + c - b - a) * (b - a));
+                return a + numpy.sqrt(u * (d + c - b - a) * (b - a));
             }
             if (u <= Area1 + Area2) {
                 return (u * (d + c - b - a) + a + b) / 2;
             }
             if (u <= Area1 + Area2 + Area3) {
-                return d - Math.sqrt((1 - u) * (d + c - b - a) * (d - c));
+                return d - numpy.sqrt((1 - u) * (d + c - b - a) * (d - c));
             }
             return 0;
         },
@@ -1665,9 +1665,9 @@ const continuousDistributions: ContinuousDistributions = {
         },
         ppf: function (u, a, b, c) {
             if (u < (c - a) / (b - a)) {
-                return a + Math.sqrt(u * (b - a) * (c - a));
+                return a + numpy.sqrt(u * (b - a) * (c - a));
             } else {
-                return b - Math.sqrt((1 - u) * (b - a) * (b - c));
+                return b - numpy.sqrt((1 - u) * (b - a) * (b - c));
             }
         },
         sample: function (n_samples, a, b, c) {
@@ -1699,13 +1699,13 @@ const continuousDistributions: ContinuousDistributions = {
     },
     weibull: {
         cdf: function (x, alpha, beta) {
-            return 1 - Math.exp(-1 * (x / beta) ** alpha);
+            return 1 - numpy.exp(-1 * (x / beta) ** alpha);
         },
         pdf: function (x, alpha, beta) {
-            return (alpha / beta) * (x / beta) ** (alpha - 1) * Math.exp(-1 * (x / beta) ** alpha);
+            return (alpha / beta) * (x / beta) ** (alpha - 1) * numpy.exp(-1 * (x / beta) ** alpha);
         },
         ppf: function (u, alpha, beta) {
-            return beta * (-Math.log(1 - u)) ** (1 / alpha);
+            return beta * (-numpy.log(1 - u)) ** (1 / alpha);
         },
         sample: function (n_samples, alpha, beta) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), alpha, beta));
@@ -1719,14 +1719,14 @@ const continuousDistributions: ContinuousDistributions = {
     weibull_3p: {
         cdf: function (x, alpha, beta, loc) {
             const z = (t: number): number => (t - loc) / beta;
-            return 1 - Math.exp(-1 * z(x) ** alpha);
+            return 1 - numpy.exp(-1 * z(x) ** alpha);
         },
         pdf: function (x, alpha, beta, loc) {
             const z = (t: number): number => (t - loc) / beta;
-            return (alpha / beta) * z(x) ** (alpha - 1) * Math.exp(-1 * z(x) ** alpha);
+            return (alpha / beta) * z(x) ** (alpha - 1) * numpy.exp(-1 * z(x) ** alpha);
         },
         ppf: function (u, alpha, beta, loc) {
-            return loc + beta * (-Math.log(1 - u)) ** (1 / alpha);
+            return loc + beta * (-numpy.log(1 - u)) ** (1 / alpha);
         },
         sample: function (n_samples, alpha, beta, loc) {
             return [...Array(n_samples).keys()].map(() => this.ppf(Math.random(), alpha, beta, loc));

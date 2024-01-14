@@ -1,25 +1,25 @@
 import scipy.stats
-import numpy
-import scipy.optimize
 import math
+import scipy.optimize
+import numpy
 
 
 class MEASUREMENTS_CONTINUOUS:
     def __init__(self, data: list[float | int], num_bins: int | None = None):
-        self.data = sorted(data)
-        self.length = len(data)
-        self.min = min(data)
-        self.max = max(data)
-        self.mean = numpy.mean(data)
-        self.variance = numpy.var(data, ddof=1)
-        self.standard_deviation = numpy.std(data, ddof=1)
-        self.skewness = scipy.stats.moment(data, 3) / pow(self.standard_deviation, 3)
-        self.kurtosis = scipy.stats.moment(data, 4) / pow(self.standard_deviation, 4)
-        self.median = numpy.median(data)
-        self.mode = self.calculate_mode(data)
-        self.num_bins = num_bins if num_bins != None else self.num_bins_doane(data)
-        self.absolutes_frequencies, self.bin_edges = numpy.histogram(data, self.num_bins)
-        self.densities_frequencies, _ = numpy.histogram(data, self.num_bins, density=True)
+        self.data = numpy.sort(data)
+        self.length = len(self.data)
+        self.min = self.data[0]
+        self.max = self.data[-1]
+        self.mean = numpy.mean(self.data)
+        self.variance = numpy.var(self.data, ddof=1)
+        self.standard_deviation = numpy.std(self.data, ddof=1)
+        self.skewness = scipy.stats.moment(self.data, 3) / pow(self.standard_deviation, 3)
+        self.kurtosis = scipy.stats.moment(self.data, 4) / pow(self.standard_deviation, 4)
+        self.median = numpy.median(self.data)
+        self.mode = self.calculate_mode(self.data)
+        self.num_bins = num_bins if num_bins != None else self.num_bins_doane(self.data)
+        self.absolutes_frequencies, self.bin_edges = numpy.histogram(self.data, self.num_bins)
+        self.densities_frequencies, _ = numpy.histogram(self.data, self.num_bins, density=True)
         self.central_values = [(self.bin_edges[i] + self.bin_edges[i + 1]) / 2 for i in range(len(self.bin_edges) - 1)]
 
     def __str__(self) -> str:
@@ -59,8 +59,8 @@ class MEASUREMENTS_CONTINUOUS:
         """
         N = self.length
         skewness = scipy.stats.skew(data)
-        sigma_g1 = math.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
-        num_bins = 1 + math.log2(N) + math.log2(1 + abs(skewness) / sigma_g1)
+        sigma_g1 = numpy.sqrt((6 * (N - 2)) / ((N + 1) * (N + 3)))
+        num_bins = 1 + numpy.log2(N) + numpy.log2(1 + abs(skewness) / sigma_g1)
         return math.ceil(num_bins)
 
 

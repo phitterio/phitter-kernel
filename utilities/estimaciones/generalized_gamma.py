@@ -1,7 +1,7 @@
-import math
+import numpy
 import numpy
 
-def get_measurements(data: list)  - > dict:
+def get_measurements(data: list)  -> dict:
     import scipy.stats
     import numpy
     measurements = {}
@@ -37,7 +37,7 @@ measurements = MEASUREMENTS(data)
 def equations(initial_solution, data_mean, data_variance, data_skewness):
     a, d, p = initial_solution
     
-    E = lambda r: a ** r * (math.gamma((d + r) / p) / math.gamma(d / p))
+    E = lambda r: a ** r * (scipy.special.gamma((d + r) / p) / scipy.special.gamma(d / p))
     
     parametric_mean = E(1)
     parametric_variance = E(2) - E(1) ** 2

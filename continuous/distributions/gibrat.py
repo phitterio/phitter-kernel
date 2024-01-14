@@ -1,6 +1,6 @@
-import math
+import numpy
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 
 
 class GIBRAT:
@@ -21,7 +21,7 @@ class GIBRAT:
         Alternative: quadrature integration method
         """
         # z = lambda t: (t - self.loc) / self.scale
-        # result = 0.5 * (1 + sc.erf(math.log(z(x)) / math.sqrt(2)))
+        # result = 0.5 * (1 + scipy.special.erf(numpy.log(z(x)) / numpy.sqrt(2)))
         result = scipy.stats.gibrat.cdf(x, self.loc, self.scale)
         return result
 
@@ -31,7 +31,7 @@ class GIBRAT:
         Calculated using definition of the function in the documentation
         """
         # z = lambda t: (t - self.loc) / self.scale
-        # result = 1 / (self.scale * z(x) * math.sqrt(2 * math.pi)) * math.exp(-0.5 * math.log(z(x)) ** 2)
+        # result = 1 / (self.scale * z(x) * numpy.sqrt(2 * numpy.pi)) * numpy.exp(-0.5 * numpy.log(z(x)) ** 2)
         result = scipy.stats.gibrat.pdf(x, self.loc, self.scale)
         return result
 
@@ -66,7 +66,7 @@ class GIBRAT:
             {"loc": * , "scale": *}
         """
         # loc = measurements.min - 1e-3
-        # scale = (measurements.mean - loc) / math.sqrt(math.e)
+        # scale = (measurements.mean - loc) / numpy.sqrt(numpy.e)
         scipy_params = scipy.stats.gibrat.fit(measurements.data)
         parameters = {"loc": scipy_params[0], "scale": scipy_params[1]}
         return parameters
@@ -75,6 +75,7 @@ class GIBRAT:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -93,4 +94,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

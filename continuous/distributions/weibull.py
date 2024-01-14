@@ -1,4 +1,4 @@
-import math
+import numpy
 import numpy
 import scipy.optimize
 import scipy.stats
@@ -20,14 +20,14 @@ class WEIBULL:
         Cumulative distribution function.
         Calculated with known formula.
         """
-        return 1 - math.exp(-((x / self.beta) ** self.alpha))
+        return 1 - numpy.exp(-((x / self.beta) ** self.alpha))
 
     def pdf(self, x: float) -> float:
         """
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (self.alpha / self.beta) * ((x / self.beta) ** (self.alpha - 1)) * math.exp(-((x / self.beta) ** self.alpha))
+        return (self.alpha / self.beta) * ((x / self.beta) ** (self.alpha - 1)) * numpy.exp(-((x / self.beta) ** self.alpha))
 
     def get_num_parameters(self) -> int:
         """
@@ -64,7 +64,7 @@ class WEIBULL:
             alpha, beta = initial_solution
 
             ## Generatred moments function (not - centered)
-            E = lambda k: (beta**k) * math.gamma(1 + k / alpha)
+            E = lambda k: (beta**k) * scipy.special.gamma(1 + k / alpha)
 
             ## Parametric expected expressions
             parametric_mean = E(1)
@@ -88,6 +88,7 @@ class WEIBULL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -106,7 +107,9 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     print("\n========= Time parameter estimation analisys ========")
 

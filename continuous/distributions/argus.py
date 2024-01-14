@@ -1,6 +1,6 @@
-import math
+import numpy
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 
 
 class ARGUS:
@@ -24,8 +24,8 @@ class ARGUS:
         z = lambda t: (t - self.loc) / self.scale
         # Ψ = lambda t: scipy.stats.norm.cdf(t) - t * scipy.stats.norm.pdf(t)-0.5
         # print(scipy.stats.argus.cdf(x, self.chi, loc=self.loc, scale=self.scale))
-        # print(1 - Ψ(self.chi * math.sqrt(1 - z(x) * z(x))) / Ψ(self.chi))
-        result = 1 - sc.gammainc(1.5, self.chi * self.chi * (1 - z(x) ** 2) / 2) / sc.gammainc(1.5, self.chi * self.chi / 2)
+        # print(1 - Ψ(self.chi * numpy.sqrt(1 - z(x) * z(x))) / Ψ(self.chi))
+        result = 1 - scipy.special.gammainc(1.5, self.chi * self.chi * (1 - z(x) ** 2) / 2) / scipy.special.gammainc(1.5, self.chi * self.chi / 2)
         return result
 
     def pdf(self, x: float) -> float:
@@ -36,7 +36,7 @@ class ARGUS:
         z = lambda t: (t - self.loc) / self.scale
         Ψ = lambda t: scipy.stats.norm.cdf(t) - t * scipy.stats.norm.pdf(t) - 0.5
         # print(scipy.stats.argus.pdf(x, self.chi, loc=self.loc, scale=self.scale))
-        result = (1 / self.scale) * ((self.chi**3) / (math.sqrt(2 * math.pi) * Ψ(self.chi))) * z(x) * math.sqrt(1 - z(x) * z(x)) * math.exp(-0.5 * self.chi**2 * (1 - z(x) * z(x)))
+        result = (1 / self.scale) * ((self.chi**3) / (numpy.sqrt(2 * numpy.pi) * Ψ(self.chi))) * z(x) * numpy.sqrt(1 - z(x) * z(x)) * numpy.exp(-0.5 * self.chi**2 * (1 - z(x) * z(x)))
         return result
 
     def get_num_parameters(self) -> int:
@@ -78,6 +78,7 @@ class ARGUS:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -96,4 +97,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

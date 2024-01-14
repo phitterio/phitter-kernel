@@ -26,7 +26,7 @@ class BINOMIAL:
         Probability density function
         Calculated using the definition of the function
         """
-        # result = sc.comb(self.n, x) * (self.p**x) * ((1 - self.p) ** (self.n - x))
+        # result = scipy.special.comb(self.n, x) * (self.p**x) * ((1 - self.p) ** (self.n - x))
         result = scipy.stats.binom.pmf(x, self.n, self.p)
         return result
 
@@ -69,6 +69,7 @@ class BINOMIAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
@@ -87,4 +88,7 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(round(measurements.mean)))
+    print(distribution.cdf(numpy.array([round(measurements.mean), round(measurements.mean)])))
     print(distribution.pmf(round(measurements.mean)))
+    print(distribution.pmf(numpy.array([round(measurements.mean), round(measurements.mean)])))
+

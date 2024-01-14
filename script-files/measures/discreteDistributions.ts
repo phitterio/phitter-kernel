@@ -60,7 +60,7 @@ const discreteDistributions: DiscreteDistributions = {
             return p * (1 - p) ** (x - 1);
         },
         ppf: function (u, p) {
-            return Math.ceil(Math.log(1 - u) / Math.log(1 - p));
+            return Math.ceil(numpy.log(1 - u) / numpy.log(1 - p));
         },
         sample: function (n_samples, p) {
             return [...Array(n_samples)].map(() => this.ppf(Math.random(), p));
@@ -112,11 +112,11 @@ const discreteDistributions: DiscreteDistributions = {
             return r;
         },
         pmf: function (x, p) {
-            return -(p ** x) / (Math.log(1 - p) * x);
+            return -(p ** x) / (numpy.log(1 - p) * x);
         },
         ppf: function (u, p) {
             function _logarithmicCdf(x: number, p: number) {
-                const _logarithmicPmf = (t: number, p: number): number => -(p ** t) / (Math.log(1 - p) * t);
+                const _logarithmicPmf = (t: number, p: number): number => -(p ** t) / (numpy.log(1 - p) * t);
                 let r = 0;
                 for (let t = 1; t <= x; t++) {
                     r = r + _logarithmicPmf(t, p);
@@ -168,7 +168,7 @@ const discreteDistributions: DiscreteDistributions = {
             return stdDists.poisson.cdf(x, lambda);
         },
         pmf: function (x, lambda) {
-            return (lambda ** x * Math.exp(-lambda)) / jStat.factorial(x);
+            return (lambda ** x * numpy.exp(-lambda)) / jStat.factorial(x);
         },
         ppf: function (u, lambda) {
             return stdDists.poisson.quantile(u, lambda);

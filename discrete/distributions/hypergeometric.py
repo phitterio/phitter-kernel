@@ -1,5 +1,3 @@
-import math
-
 import numpy
 import scipy.optimize
 import scipy.stats
@@ -31,7 +29,7 @@ class HYPERGEOMETRIC:
         Probability density function
         Calculated using the definition of the function
         """
-        # result = sc.comb(self.K, x) * sc.comb(self.N - self.K, self.n - x) / sc.comb(self.N, self.n)
+        # result = scipy.special.comb(self.K, x) * scipy.special.comb(self.N - self.K, self.n - x) / scipy.special.comb(self.N, self.n)
         result = scipy.stats.hypergeom.pmf(x, self.N, self.n, self.K)
         return result
 
@@ -73,9 +71,9 @@ class HYPERGEOMETRIC:
             ## Parametric expected expressions
             parametric_mean = n * K / N
             parametric_variance = (n * K / N) * ((N - K) / N) * ((N - n) / (N - 1))
-            # parametric_skewness = (N - 2 * K) * math.sqrt(N - 1) * (N - 2 * n)  / (math.sqrt(n * K * (N - K) * (N - n)) * (N - 2))
+            # parametric_skewness = (N - 2 * K) * numpy.sqrt(N - 1) * (N - 2 * n)  / (numpy.sqrt(n * K * (N - K) * (N - n)) * (N - 2))
             # parametric_kurtosis = 3 + (1 / (n * K * (N - K) * (N - n) * (N - 2) * (N - 3))) * ((N - 1) * N * N * (N * (N + 1) - 6 * K * (N - K) - 6 * n * (N - n)) + 6 * n * K * (N - K) * (N - n) * (5 * N - 6))
-            parametric_mode = math.floor((n + 1) * (K + 1) / (N + 2))
+            parametric_mode = numpy.floor((n + 1) * (K + 1) / (N + 2))
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -98,6 +96,7 @@ class HYPERGEOMETRIC:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_discrete import MEASUREMENTS_DISCRETE
@@ -116,4 +115,7 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(round(measurements.mean)))
+    print(distribution.cdf(numpy.array([round(measurements.mean), round(measurements.mean)])))
     print(distribution.pmf(round(measurements.mean)))
+    print(distribution.pmf(numpy.array([round(measurements.mean), round(measurements.mean)])))
+

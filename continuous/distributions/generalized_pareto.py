@@ -73,7 +73,7 @@ class GENERALIZED_PARETO:
             ## Parametric expected expressions
             parametric_mean = mu + sigma / (1 - c)
             parametric_variance = sigma * sigma / ((1 - c) * (1 - c) * (1 - 2 * c))
-            # parametric_skewness = 2 * (1 + c) * math.sqrt(1 - 2 * c) / (1 - 3 * c)
+            # parametric_skewness = 2 * (1 + c) * numpy.sqrt(1 - 2 * c) / (1 - 3 * c)
             # parametric_kurtosis = 3 * (1 - 2 * c) * (2 * c * c + c + 3) / ((1 -  3 * c) * (1 -  4 + c))
             parametric_median = mu + sigma * (2**c - 1) / c
             # parametric_mode = loc
@@ -116,6 +116,7 @@ class GENERALIZED_PARETO:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -134,4 +135,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

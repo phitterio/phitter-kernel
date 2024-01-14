@@ -1,8 +1,8 @@
-import math
+import numpy
 import scipy.optimize
 import numpy
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 
 
 class GENERALIZED_GAMMA:
@@ -25,7 +25,7 @@ class GENERALIZED_GAMMA:
         Alternative: quadrature integration method
         """
         # result = scipy.stats.gamma.cdf((x / self.a) ** self.p, a=self.d / self.p, scale=1)
-        result = sc.gammainc(self.d / self.p, (x / self.a) ** self.p)
+        result = scipy.special.gammainc(self.d / self.p, (x / self.a) ** self.p)
 
         return result
 
@@ -34,7 +34,7 @@ class GENERALIZED_GAMMA:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        return (self.p / (self.a**self.d)) * (x ** (self.d - 1)) * math.exp(-((x / self.a) ** self.p)) / math.gamma(self.d / self.p)
+        return (self.p / (self.a**self.d)) * (x ** (self.d - 1)) * numpy.exp(-((x / self.a) ** self.p)) / scipy.special.gamma(self.d / self.p)
 
     def get_num_parameters(self) -> int:
         """
@@ -70,7 +70,7 @@ class GENERALIZED_GAMMA:
         def equations(initial_solution: tuple[float], measurements) -> tuple[float]:
             a, d, p = initial_solution
 
-            E = lambda r: a**r * (math.gamma((d + r) / p) / math.gamma(d / p))
+            E = lambda r: a**r * (scipy.special.gamma((d + r) / p) / scipy.special.gamma(d / p))
 
             parametric_mean = E(1)
             parametric_variance = E(2) - E(1) ** 2
@@ -107,6 +107,7 @@ class GENERALIZED_GAMMA:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -125,6 +126,8 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     print(scipy.stats.gengamma.fit(measurements.data))

@@ -1,5 +1,5 @@
 import scipy.integrate
-import math
+import numpy
 import scipy.stats
 
 
@@ -24,7 +24,7 @@ class JOHNSON_SB:
         """
         # result, error = scipy.integrate.quad(self.pdf, self.xi_, x)
         z = lambda t: (t - self.xi_) / self.lambda_
-        result = scipy.stats.norm.cdf(self.gamma_ + self.delta_ * math.log(z(x) / (1 - z(x))))
+        result = scipy.stats.norm.cdf(self.gamma_ + self.delta_ * numpy.log(z(x) / (1 - z(x))))
         return result
 
     def pdf(self, x: float) -> float:
@@ -33,7 +33,7 @@ class JOHNSON_SB:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.xi_) / self.lambda_
-        return (self.delta_ / (self.lambda_ * math.sqrt(2 * math.pi) * z(x) * (1 - z(x)))) * math.exp(-(1 / 2) * (self.gamma_ + self.delta_ * math.log(z(x) / (1 - z(x)))) ** 2)
+        return (self.delta_ / (self.lambda_ * numpy.sqrt(2 * numpy.pi) * z(x) * (1 - z(x)))) * numpy.exp(-(1 / 2) * (self.gamma_ + self.delta_ * numpy.log(z(x) / (1 - z(x)))) ** 2)
 
     def get_num_parameters(self) -> int:
         """
@@ -82,10 +82,10 @@ class JOHNSON_SB:
         # p = x3 - x2
 
         # ## Calculation distribution parameters
-        # lambda_ = (p * math.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2-4))) / (p ** 2 / (m * n) - 1)
+        # lambda_ = (p * numpy.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2-4))) / (p ** 2 / (m * n) - 1)
         # xi_ = 0.5 * (x3 + x2)-0.5 * lambda_ + p * (p / n - p / m) / (2 * (p ** 2 / (m * n) - 1))
-        # delta_ = z / math.acosh(0.5 *  math.sqrt((1 + p / m) * (1 + p / n)))
-        # gamma_ = delta_ * math.asinh((p / n - p / m) * math.sqrt((1 + p / m) * (1 + p / n)-4) / (2 * (p ** 2 / (m * n) - 1)))
+        # delta_ = z / math.acosh(0.5 *  numpy.sqrt((1 + p / m) * (1 + p / n)))
+        # gamma_ = delta_ * math.asinh((p / n - p / m) * numpy.sqrt((1 + p / m) * (1 + p / n)-4) / (2 * (p ** 2 / (m * n) - 1)))
 
         # parameters = {"xi": xi_, "lambda": lambda_, "gamma": gamma_, "delta": delta_}
 
@@ -97,6 +97,7 @@ class JOHNSON_SB:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -115,4 +116,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

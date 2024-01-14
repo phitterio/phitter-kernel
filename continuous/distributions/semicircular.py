@@ -1,6 +1,4 @@
 import numpy
-import math
-import scipy.stats
 
 
 class SEMICIRCULAR:
@@ -8,7 +6,6 @@ class SEMICIRCULAR:
     Semicicrcular Distribution
     https://en.wikipedia.org/wiki/Wigner_semicircle_distribution
     """
-
     def __init__(self, measurements):
         self.parameters = self.get_parameters(measurements)
         self.loc = self.parameters["loc"]
@@ -21,7 +18,7 @@ class SEMICIRCULAR:
         Alternative: quadrature integration method
         """
         z = lambda t: t - self.loc
-        result = 0.5 + z(x) * math.sqrt(self.R**2 - z(x) ** 2) / (math.pi * self.R**2) + math.asin(z(x) / self.R) / math.pi
+        result = 0.5 + z(x) * numpy.sqrt(self.R**2 - z(x) ** 2) / (numpy.pi * self.R**2) + numpy.arcsin(z(x) / self.R) / numpy.pi
         return result
 
     def pdf(self, x: float) -> float:
@@ -30,7 +27,7 @@ class SEMICIRCULAR:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: t - self.loc
-        result = 2 * math.sqrt(self.R**2 - z(x) ** 2) / (math.pi * self.R**2)
+        result = 2 * numpy.sqrt(self.R**2 - z(x) ** 2) / (numpy.pi * self.R**2)
         return result
 
     def get_num_parameters(self) -> int:
@@ -62,7 +59,7 @@ class SEMICIRCULAR:
             {"mu": * , "sigma": * }
         """
         loc = measurements.mean
-        R = math.sqrt(4 * measurements.variance)
+        R = numpy.sqrt(4 * measurements.variance)
 
         ## Correction from domain  - R < x < R
         d1 = (loc - R) - measurements.min
@@ -77,6 +74,7 @@ class SEMICIRCULAR:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -95,4 +93,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

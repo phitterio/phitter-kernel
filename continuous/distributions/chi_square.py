@@ -1,7 +1,7 @@
 import scipy.integrate
-import math
+import numpy
 import scipy.stats
-import scipy.special as sc
+import scipy.special
 
 
 class CHI_SQUARE:
@@ -22,7 +22,7 @@ class CHI_SQUARE:
         """
         # result, error = scipy.integrate.quad(self.pdf, 0, x)
         # result = scipy.stats.chi2.cdf(x, self.df)
-        result = sc.gammainc(self.df / 2, x / 2)
+        result = scipy.special.gammainc(self.df / 2, x / 2)
         return result
 
     def pdf(self, x: float) -> float:
@@ -30,7 +30,7 @@ class CHI_SQUARE:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # result = (1 / (2 ** (self.df / 2) * math.gamma(self.df / 2))) * (x ** ((self.df / 2) - 1)) * (math.exp(-x / 2))
+        # result = (1 / (2 ** (self.df / 2) * scipy.special.gamma(self.df / 2))) * (x ** ((self.df / 2) - 1)) * (numpy.exp(-x / 2))
         # print(result)
         result = scipy.stats.chi2.pdf(x, self.df)
         return result
@@ -71,6 +71,7 @@ class CHI_SQUARE:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -89,6 +90,8 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     print(scipy.stats.chi2.fit(measurements.data))

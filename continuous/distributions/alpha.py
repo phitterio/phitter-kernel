@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.stats
 import scipy.integrate
 import scipy.optimize
@@ -32,9 +32,9 @@ class ALPHA:
         Probability density function
         Calculated using definition of the function in the documentation
         """
-        # print(scipy.stats.alpha.pdf(x, self.alpha, loc=self.loc, scale=self.scale))
-        z = lambda t: (t - self.loc) / self.scale
-        result = (1 / (self.scale * z(x) * z(x) * scipy.stats.norm.cdf(self.alpha) * math.sqrt(2 * math.pi))) * math.exp(-0.5 * (self.alpha - 1 / z(x)) ** 2)
+        # z = lambda t: (t - self.loc) / self.scale
+        # result = (1 / (self.scale * z(x) * z(x) * scipy.stats.norm.cdf(self.alpha) * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-0.5 * (self.alpha - 1 / z(x)) ** 2)
+        result = scipy.stats.alpha.pdf(x, self.alpha, loc=self.loc, scale=self.scale)
         return result
 
     def get_num_parameters(self) -> int:
@@ -72,7 +72,7 @@ class ALPHA:
         #     alpha, loc, scale = initial_solution
 
         #     z = lambda t: (t - loc) / scale
-        #     pdf = lambda x: (1 / (scale * z(x) * z(x) * scipy.stats.norm.cdf(alpha) * math.sqrt(2 * math.pi))) * math.exp(-0.5 * (alpha - 1 / z(x)) ** 2)
+        #     pdf = lambda x: (1 / (scale * z(x) * z(x) * scipy.stats.norm.cdf(alpha) * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-0.5 * (alpha - 1 / z(x)) ** 2)
 
         #     ## Generatred moments function (not - centered)
         #     E_1 = scipy.integrate.quad(lambda x: x ** 1 * pdf(x), 0, 10 * measurements.max)[0]
@@ -86,7 +86,7 @@ class ALPHA:
         #     # parametric_skewness = (E_3 - 3 * E_2 * E_1 + 2 * E_1 ** 3) / ((E_2 - E_1 ** 2)) ** 1.5
         #     # parametric_kurtosis = (E_4-4 * E_1 * E_3 + 6 * E_1 ** 2 * E_2 - 3 * E_1 ** 4) /  ((E_2 - E_1 ** 2)) ** 2
         #     parametric_median = loc + scale / (alpha - scipy.stats.norm.ppf(0.5 * scipy.stats.norm.cdf(alpha)))
-        #     parametric_mode = loc + scale * (math.sqrt(alpha * alpha + 8) - alpha) / 4
+        #     parametric_mode = loc + scale * (numpy.sqrt(alpha * alpha + 8) - alpha) / 4
 
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
@@ -116,6 +116,7 @@ class ALPHA:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -134,11 +135,13 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     # alpha, loc, scale = 6, 10, 5
     # z = lambda t: (t - loc) / scale
-    # pdf = lambda x: (1 / (scale * z(x) * z(x) * scipy.stats.norm.cdf(alpha) * math.sqrt(2 * math.pi))) * math.exp(-0.5 * (alpha - 1 / z(x)) ** 2)
+    # pdf = lambda x: (1 / (scale * z(x) * z(x) * scipy.stats.norm.cdf(alpha) * numpy.sqrt(2 * numpy.pi))) * numpy.exp(-0.5 * (alpha - 1 / z(x)) ** 2)
 
     # E_1 = scipy.integrate.quad(lambda x: x ** 1 * pdf(x), 0, 10 * measurements.max)[0]
     # E_2 = scipy.integrate.quad(lambda x: x ** 2 * pdf(x), 0, 10 * measurements.max)[0]
@@ -150,6 +153,6 @@ if __name__ == "__main__":
     # parametric_skewness = (E_3 - 3 * E_2 * E_1 + 2 * E_1 ** 3) / ((E_2 - E_1 ** 2)) ** 1.5
     # parametric_kurtosis = (E_4-4 * E_1 * E_3 + 6 * E_1 ** 2 * E_2 - 3 * E_1 ** 4) /  ((E_2 - E_1 ** 2)) ** 2
     # parametric_median = loc + scale / (alpha - scipy.stats.norm.ppf(0.5 * scipy.stats.norm.cdf(alpha)))
-    # parametric_mode = loc + scale * (math.sqrt(alpha * alpha + 8) - alpha) / 4
+    # parametric_mode = loc + scale * (numpy.sqrt(alpha * alpha + 8) - alpha) / 4
 
     # print(parametric_mean, parametric_variance, parametric_skewness, parametric_kurtosis, parametric_median, parametric_mode)

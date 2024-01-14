@@ -1,5 +1,5 @@
-import math
-import scipy.special as sc
+import numpy
+import scipy.special
 
 
 class MAXWELL:
@@ -21,7 +21,7 @@ class MAXWELL:
         """
         # result = scipy.stats.maxwell.cdf(x, loc = self.loc, scale = self.alpha)
         z = lambda t: (x - self.loc) / self.alpha
-        result = sc.erf(z(x) / (math.sqrt(2))) - math.sqrt(2 / math.pi) * z(x) * math.exp(-z(x) ** 2 / 2)
+        result = scipy.special.erf(z(x) / (numpy.sqrt(2))) - numpy.sqrt(2 / numpy.pi) * z(x) * numpy.exp(-z(x) ** 2 / 2)
         return result
 
     def pdf(self, x: float) -> float:
@@ -31,7 +31,7 @@ class MAXWELL:
         """
         # result = scipy.stats.maxwell.pdf(x, loc = self.loc, scale = self.alpha)
         z = lambda t: (x - self.loc) / self.alpha
-        result = 1 / self.alpha * math.sqrt(2 / math.pi) * z(x) ** 2 * math.exp(-z(x) ** 2 / 2)
+        result = 1 / self.alpha * numpy.sqrt(2 / numpy.pi) * z(x) ** 2 * numpy.exp(-z(x) ** 2 / 2)
         return result
 
     def get_num_parameters(self) -> int:
@@ -66,10 +66,10 @@ class MAXWELL:
         #     alpha, loc = initial_solution
 
         #     ## Parametric expected expressions
-        #     parametric_mean = loc + 2 * alpha * math.sqrt(2 / math.pi)
-        #     parametric_variance = alpha ** 2 * (3 * math.pi - 8) / math.pi
-        #     parametric_median = loc + alpha * math.sqrt(2 * sc.gammaincinv(1.5, 0.5))
-        #     # parametric_mode = loc + sigma * alpha * math.sqrt(2)
+        #     parametric_mean = loc + 2 * alpha * numpy.sqrt(2 / numpy.pi)
+        #     parametric_variance = alpha ** 2 * (3 * numpy.pi - 8) / numpy.pi
+        #     parametric_median = loc + alpha * numpy.sqrt(2 * scipy.special.gammaincinv(1.5, 0.5))
+        #     # parametric_mode = loc + sigma * alpha * numpy.sqrt(2)
 
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
@@ -85,8 +85,8 @@ class MAXWELL:
         # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
         # parameters = {"alpha": solution.x[0], "loc": solution.x[1]}
 
-        alpha = math.sqrt(measurements.variance * math.pi / (3 * math.pi - 8))
-        loc = measurements.mean - 2 * alpha * math.sqrt(2 / math.pi)
+        alpha = numpy.sqrt(measurements.variance * numpy.pi / (3 * numpy.pi - 8))
+        loc = measurements.mean - 2 * alpha * numpy.sqrt(2 / numpy.pi)
         parameters = {"alpha": alpha, "loc": loc}
 
         return parameters
@@ -95,6 +95,7 @@ class MAXWELL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -113,6 +114,8 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
 
     # print(scipy.stats.ncf.fit(data))

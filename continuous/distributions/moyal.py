@@ -1,6 +1,6 @@
-import scipy.special as sc
+import scipy.special
 import scipy.stats
-import math
+import numpy
 import scipy.optimize
 import numpy
 
@@ -25,8 +25,8 @@ class MOYAL:
         """
         z = lambda t: (t - self.mu) / self.sigma
         # result = result = scipy.stats.moyal.cdf(x, loc = self.mu, scale = self.sigma)
-        # result = 1 - sc.gammainc(0.5, math.exp(-z(x)) / 2)
-        result = sc.erfc(math.exp(-0.5 * z(x)) / math.sqrt(2))
+        # result = 1 - scipy.special.gammainc(0.5, numpy.exp(-z(x)) / 2)
+        result = scipy.special.erfc(numpy.exp(-0.5 * z(x)) / numpy.sqrt(2))
         return result
 
     def pdf(self, x: float) -> float:
@@ -36,7 +36,7 @@ class MOYAL:
         """
         z = lambda t: (t - self.mu) / self.sigma
         # result = scipy.stats.moyal.pdf(x, loc = self.mu, scale = self.sigma)
-        result = math.exp(-0.5 * (z(x) + math.exp(-z(x)))) / (self.sigma * math.sqrt(2 * math.pi))
+        result = numpy.exp(-0.5 * (z(x) + numpy.exp(-z(x)))) / (self.sigma * numpy.sqrt(2 * numpy.pi))
         return result
 
     def get_num_parameters(self) -> int:
@@ -72,8 +72,8 @@ class MOYAL:
         #     mu, sigma = initial_solution
 
         #     ## Parametric expected expressions
-        #     parametric_mean = mu + sigma * (math.log(2) + 0.577215664901532)
-        #     parametric_variance = sigma * sigma * math.pi * math.pi / 2
+        #     parametric_mean = mu + sigma * (numpy.log(2) + 0.577215664901532)
+        #     parametric_variance = sigma * sigma * numpy.pi * numpy.pi / 2
 
         #     ## System Equations
         #     eq1 = parametric_mean - measurements.mean
@@ -86,8 +86,8 @@ class MOYAL:
         # args = ([measurements])
         # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
 
-        sigma = math.sqrt(2 * measurements.variance / (math.pi * math.pi))
-        mu = measurements.mean - sigma * (math.log(2) + 0.577215664901532)
+        sigma = numpy.sqrt(2 * measurements.variance / (numpy.pi * numpy.pi))
+        mu = measurements.mean - sigma * (numpy.log(2) + 0.577215664901532)
 
         parameters = {"mu": mu, "sigma": sigma}
         return parameters
@@ -96,6 +96,7 @@ class MOYAL:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -114,4 +115,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))

@@ -1,4 +1,5 @@
 import sys
+    import numpy
 
 sys.path.append("../continuous")
 sys.path.append("../continuous/measurements")

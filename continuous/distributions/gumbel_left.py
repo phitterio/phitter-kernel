@@ -1,4 +1,4 @@
-import math
+import numpy
 import scipy.optimize
 
 
@@ -23,7 +23,7 @@ class GUMBEL_LEFT:
         Alternative: quadrature integration method
         """
         z = lambda t: (t - self.mu) / self.sigma
-        return 1 - math.exp(-math.exp(z(x)))
+        return 1 - numpy.exp(-numpy.exp(z(x)))
 
     def pdf(self, x: float) -> float:
         """
@@ -31,7 +31,7 @@ class GUMBEL_LEFT:
         Calculated using definition of the function in the documentation
         """
         z = lambda t: (t - self.mu) / self.sigma
-        return (1 / self.sigma) * math.exp(z(x) - math.exp(z(x)))
+        return (1 / self.sigma) * numpy.exp(z(x) - numpy.exp(z(x)))
 
     def get_num_parameters(self) -> int:
         """
@@ -68,7 +68,7 @@ class GUMBEL_LEFT:
 
             ## Parametric expected expressions
             parametric_mean = mu - sigma * 0.5772156649
-            parametric_variance = (sigma**2) * (math.pi**2) / 6
+            parametric_variance = (sigma**2) * (numpy.pi**2) / 6
 
             ## System Equations
             eq1 = parametric_mean - measurements.mean
@@ -84,6 +84,7 @@ class GUMBEL_LEFT:
 if __name__ == "__main__":
     ## Import function to get measurements
     import sys
+    import numpy
 
     sys.path.append("../measurements")
     from measurements_continuous import MEASUREMENTS_CONTINUOUS
@@ -102,4 +103,6 @@ if __name__ == "__main__":
 
     print(distribution.get_parameters(measurements))
     print(distribution.cdf(measurements.mean))
+    print(distribution.cdf(numpy.array([measurements.mean, measurements.mean])))
     print(distribution.pdf(measurements.mean))
+    print(distribution.pdf(numpy.array([measurements.mean, measurements.mean])))
