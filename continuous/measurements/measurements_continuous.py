@@ -21,6 +21,7 @@ class MEASUREMENTS_CONTINUOUS:
         self.absolutes_frequencies, self.bin_edges = numpy.histogram(self.data, self.num_bins)
         self.densities_frequencies, _ = numpy.histogram(self.data, self.num_bins, density=True)
         self.central_values = [(self.bin_edges[i] + self.bin_edges[i + 1]) / 2 for i in range(len(self.bin_edges) - 1)]
+        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.length - 1]])
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})

@@ -21,6 +21,7 @@ class MEASUREMENTS_DISCRETE:
         self.domain = numpy.fromiter(self.histogram.keys(), dtype=float)
         self.frequencies = numpy.fromiter(self.histogram.values(), dtype=float)
         self.frequencies_pmf = list(map(lambda x: x / self.length, self.histogram.values()))
+        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.length - 1]])
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})

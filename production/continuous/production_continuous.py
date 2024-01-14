@@ -2628,6 +2628,7 @@ class MEASUREMENTS_CONTINUOUS:
         self.absolutes_frequencies, self.bin_edges = numpy.histogram(self.data, self.num_bins)
         self.densities_frequencies, _ = numpy.histogram(self.data, self.num_bins, density=True)
         self.central_values = [(self.bin_edges[i] + self.bin_edges[i + 1]) / 2 for i in range(len(self.bin_edges) - 1)]
+        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.length - 1]])
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -2672,10 +2673,9 @@ def test_chi_square_continuous(distribution, measurements, confidence_level=0.95
 
 def test_kolmogorov_smirnov_continuous(distribution, measurements, confidence_level=0.95):
     N = measurements.length
-    idx = numpy.concatenate([numpy.where(measurements.data[:-1] != measurements.data[1:])[0], [N - 1]])
     Sn = (numpy.arange(N) + 1) / N
     Fn = distribution.cdf(measurements.data)
-    errors = numpy.abs(Sn[idx] - Fn[idx])
+    errors = numpy.abs(Sn[measurements.idx_ks] - Fn[measurements.idx_ks])
     statistic_ks = numpy.max(errors)
     critical_value = scipy.stats.kstwo.ppf(confidence_level, N)
     p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
@@ -2734,9 +2734,6 @@ def test_anderson_darling_continuous(distribution, measurements, confidence_leve
     rejected = A2 >= critical_value
     result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_ad
-
-
-import numpy
 
 
 class PHITTER_CONTINUOUS:
