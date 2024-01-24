@@ -83,8 +83,7 @@ from distributions.weibull_3p import WEIBULL_3P
 from measurements_continuous import MEASUREMENTS_CONTINUOUS
 from test_anderson_darling_continuous import test_anderson_darling_continuous
 from test_chi_square_continuous import test_chi_square_continuous
-from test_kolmogorov_smirnov_continuous import \
-    test_kolmogorov_smirnov_continuous
+from test_kolmogorov_smirnov_continuous import test_kolmogorov_smirnov_continuous
 
 
 class PHITTER_CONTINUOUS:
@@ -96,11 +95,11 @@ class PHITTER_CONTINUOUS:
         minimum_sse=float("inf"),
     ):
         self.data = data
-        self.measurements = MEASUREMENTS_CONTINUOUS(self.data, num_bins)
-        self.confidence_level=confidence_level
+        self.measurements = MEASUREMENTS_CONTINUOUS(self.data, num_bins, confidence_level)
+        self.confidence_level = confidence_level
         self.minimum_sse = minimum_sse
         self.distribution_results = {}
-        self.none_results = {"test_statistic": None,"critical_value": None,"p_value": None,"rejected": None}
+        self.none_results = {"test_statistic": None, "critical_value": None, "p_value": None, "rejected": None}
 
     def test(self, test_function, label: str, distribution):
         validation_test = False
@@ -131,7 +130,6 @@ class PHITTER_CONTINUOUS:
             sse = numpy.sum(numpy.power(self.measurements.densities_frequencies - pdf_values, 2.0))
         except:
             validate_estimation = False
-            
 
         self.distribution_results = {}
         if validate_estimation and distribution.parameter_restrictions() and not numpy.isnan(sse) and not numpy.isinf(sse) and sse < self.minimum_sse:
@@ -143,12 +141,12 @@ class PHITTER_CONTINUOUS:
                 self.distribution_results["sse"] = sse
                 self.distribution_results["parameters"] = str(distribution.parameters)
                 self.distribution_results["n_test_passed"] = (
-                    + int(self.distribution_results["chi_square"]["rejected"] == False)
+                    +int(self.distribution_results["chi_square"]["rejected"] == False)
                     + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == False)
                     + int(self.distribution_results["anderson_darling"]["rejected"] == False)
                 )
                 self.distribution_results["n_test_null"] = (
-                    + int(self.distribution_results["chi_square"]["rejected"] == None)
+                    +int(self.distribution_results["chi_square"]["rejected"] == None)
                     + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == None)
                     + int(self.distribution_results["anderson_darling"]["rejected"] == None)
                 )
@@ -159,21 +157,89 @@ class PHITTER_CONTINUOUS:
     def fit(self, n_jobs: int = 1):
         if n_jobs <= 0:
             raise Exception("n_jobs must be greater than 1")
-        
-        _ALL_CONTINUOUS_DISTRIBUTIONS = [ALPHA, ARCSINE, ARGUS, BETA, BETA_PRIME, BETA_PRIME_4P, BRADFORD, BURR, BURR_4P, CAUCHY, CHI_SQUARE, CHI_SQUARE_3P, DAGUM, DAGUM_4P, ERLANG, ERLANG_3P, ERROR_FUNCTION, EXPONENTIAL, EXPONENTIAL_2P, F, FATIGUE_LIFE, FOLDED_NORMAL, FRECHET, F_4P, GAMMA, GAMMA_3P, GENERALIZED_EXTREME_VALUE, GENERALIZED_GAMMA, GENERALIZED_GAMMA_4P, GENERALIZED_LOGISTIC, GENERALIZED_NORMAL, GENERALIZED_PARETO, GIBRAT, GUMBEL_LEFT, GUMBEL_RIGHT, HALF_NORMAL, HYPERBOLIC_SECANT, INVERSE_GAMMA, INVERSE_GAMMA_3P, INVERSE_GAUSSIAN, INVERSE_GAUSSIAN_3P, JOHNSON_SB, JOHNSON_SU, KUMARASWAMY, LAPLACE, LEVY, LOGGAMMA, LOGISTIC, LOGLOGISTIC, LOGLOGISTIC_3P, LOGNORMAL, MAXWELL, MOYAL, NAKAGAMI, NON_CENTRAL_CHI_SQUARE, NON_CENTRAL_F, NON_CENTRAL_T_STUDENT, NORMAL, PARETO_FIRST_KIND, PARETO_SECOND_KIND, PERT, POWER_FUNCTION, RAYLEIGH, RECIPROCAL, RICE, SEMICIRCULAR, TRAPEZOIDAL, TRIANGULAR, T_STUDENT, T_STUDENT_3P, UNIFORM, WEIBULL, WEIBULL_3P]
-        
+
+        _ALL_CONTINUOUS_DISTRIBUTIONS = [
+            ALPHA,
+            ARCSINE,
+            ARGUS,
+            BETA,
+            BETA_PRIME,
+            BETA_PRIME_4P,
+            BRADFORD,
+            BURR,
+            BURR_4P,
+            CAUCHY,
+            CHI_SQUARE,
+            CHI_SQUARE_3P,
+            DAGUM,
+            DAGUM_4P,
+            ERLANG,
+            ERLANG_3P,
+            ERROR_FUNCTION,
+            EXPONENTIAL,
+            EXPONENTIAL_2P,
+            F,
+            FATIGUE_LIFE,
+            FOLDED_NORMAL,
+            FRECHET,
+            F_4P,
+            GAMMA,
+            GAMMA_3P,
+            GENERALIZED_EXTREME_VALUE,
+            GENERALIZED_GAMMA,
+            GENERALIZED_GAMMA_4P,
+            GENERALIZED_LOGISTIC,
+            GENERALIZED_NORMAL,
+            GENERALIZED_PARETO,
+            GIBRAT,
+            GUMBEL_LEFT,
+            GUMBEL_RIGHT,
+            HALF_NORMAL,
+            HYPERBOLIC_SECANT,
+            INVERSE_GAMMA,
+            INVERSE_GAMMA_3P,
+            INVERSE_GAUSSIAN,
+            INVERSE_GAUSSIAN_3P,
+            JOHNSON_SB,
+            JOHNSON_SU,
+            KUMARASWAMY,
+            LAPLACE,
+            LEVY,
+            LOGGAMMA,
+            LOGISTIC,
+            LOGLOGISTIC,
+            LOGLOGISTIC_3P,
+            LOGNORMAL,
+            MAXWELL,
+            MOYAL,
+            NAKAGAMI,
+            NON_CENTRAL_CHI_SQUARE,
+            NON_CENTRAL_F,
+            NON_CENTRAL_T_STUDENT,
+            NORMAL,
+            PARETO_FIRST_KIND,
+            PARETO_SECOND_KIND,
+            PERT,
+            POWER_FUNCTION,
+            RAYLEIGH,
+            RECIPROCAL,
+            RICE,
+            SEMICIRCULAR,
+            TRAPEZOIDAL,
+            TRIANGULAR,
+            T_STUDENT,
+            T_STUDENT_3P,
+            UNIFORM,
+            WEIBULL,
+            WEIBULL_3P,
+        ]
+
         if n_jobs == 1:
-            processing_results = [
-                self.process_distribution(distribution_class)
-                for distribution_class in _ALL_CONTINUOUS_DISTRIBUTIONS
-            ]
+            processing_results = [self.process_distribution(distribution_class) for distribution_class in _ALL_CONTINUOUS_DISTRIBUTIONS]
         else:
-            processing_results = joblib.Parallel(n_jobs=n_jobs)(
-                joblib.delayed(self.process_distribution)(distribution_class)
-                for distribution_class in _ALL_CONTINUOUS_DISTRIBUTIONS
-            )
+            processing_results = joblib.Parallel(n_jobs=n_jobs)(joblib.delayed(self.process_distribution)(distribution_class) for distribution_class in _ALL_CONTINUOUS_DISTRIBUTIONS)
         processing_results = [r for r in processing_results if r is not None]
-        
+
         sorted_results_sse = {distribution: results for distribution, results in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
         not_rejected_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
 

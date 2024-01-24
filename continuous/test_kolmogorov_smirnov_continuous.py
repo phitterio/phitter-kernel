@@ -53,10 +53,8 @@ def test_kolmogorov_smirnov_continuous(distribution, measurements, confidence_le
     #     else:
     #         Fn = distribution.cdf(measurements.data[i])
     #         errors.append(abs(Sn - Fn))
-
-    Sn = (numpy.arange(N) + 1) / N
     Fn = distribution.cdf(measurements.data)
-    errors = numpy.abs(Sn[measurements.idx_ks] - Fn[measurements.idx_ks])
+    errors = numpy.abs(measurements.Sn_ks[measurements.idx_ks] - Fn[measurements.idx_ks])
 
     ## Calculation of indicators
     statistic_ks = numpy.max(errors)

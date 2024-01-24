@@ -264,6 +264,7 @@ class MEASUREMENTS_DISCRETE:
         self.frequencies = numpy.fromiter(self.histogram.values(), dtype=float)
         self.frequencies_pmf = list(map(lambda x: x / self.length, self.histogram.values()))
         self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.length - 1]])
+        self.Sn_ks = (numpy.arange(self.length) + 1) / self.length
 
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
@@ -294,9 +295,8 @@ def test_chi_square_discrete(distribution, measurements, confidence_level=0.95):
 
 def test_kolmogorov_smirnov_discrete(distribution, measurements, confidence_level=0.95):
     N = measurements.length
-    Sn = (numpy.arange(N) + 1) / N
     Fn = distribution.cdf(measurements.data)
-    errors = numpy.abs(Sn[measurements.idx_ks] - Fn[measurements.idx_ks])
+    errors = numpy.abs(measurements.Sn_ks[measurements.idx_ks] - Fn[measurements.idx_ks])
     statistic_ks = numpy.max(errors)
     critical_value = scipy.stats.kstwo.ppf(confidence_level, N)
     p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)

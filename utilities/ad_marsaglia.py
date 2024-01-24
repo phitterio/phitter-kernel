@@ -35,7 +35,7 @@ def AD(n, z):
     z : statistic of Anderson Darling A2
 
     Returns
-     -  -  -  -  -  -  -
+    =======
     Return the probability that critical value (integral) is less than test statstic
     """
     return adinf(z) + errfix(n, adinf(z))

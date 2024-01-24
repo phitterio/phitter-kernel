@@ -1,9 +1,5 @@
 import numpy
 from measurements.measurements_continuous import MEASUREMENTS_CONTINUOUS
-import sys
-
-sys.path.append("../utilities")
-import ad_marsaglia as ad
 
 
 def test_anderson_darling_continuous(distribution, measurements, confidence_level=0.95):
@@ -67,8 +63,8 @@ def test_anderson_darling_continuous(distribution, measurements, confidence_leve
 
     ## Calculation of indicators
     A2 = -N - S
-    critical_value = ad.ad_critical_value(confidence_level, N)
-    p_value = ad.ad_p_value(N, A2)
+    critical_value = measurements.critical_value_ad
+    p_value = measurements.ad_p_value(N, A2)
     rejected = A2 >= critical_value
 
     ## Construction of answer
