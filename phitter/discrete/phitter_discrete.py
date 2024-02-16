@@ -1,6 +1,6 @@
 import sys
 
-import joblib
+import concurrent.futures
 import numpy
 
 sys.path.append("../../discrete")
@@ -71,10 +71,12 @@ class PHITTER_DISCRETE:
             if v1 or v2:
                 self.distribution_results["sse"] = sse
                 self.distribution_results["parameters"] = str(distribution.parameters)
-                self.distribution_results["n_test_passed"] = int(self.distribution_results["chi_square"]["rejected"] == False) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == False)
+                self.distribution_results["n_test_passed"] = int(self.distribution_results["chi_square"]["rejected"] == False) + int(
+                    self.distribution_results["kolmogorov_smirnov"]["rejected"] == False
+                )
                 self.distribution_results["n_test_null"] = int(self.distribution_results["chi_square"]["rejected"] == None) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == None)
                 return distribution_name, self.distribution_results
-            
+
         return None
 
     def fit(self, n_jobs: int = 1):
@@ -86,7 +88,7 @@ class PHITTER_DISCRETE:
         if n_jobs == 1:
             processing_results = [self.process_distribution(distribution_class) for distribution_class in _ALL_DISCRETE_DISTRIBUTIONS]
         else:
-            processing_results = joblib.Parallel(n_jobs=n_jobs)(joblib.delayed(self.process_distribution)(distribution_class) for distribution_class in _ALL_DISCRETE_DISTRIBUTIONS)
+            processing_results = list(concurrent.futures.ProcessPoolExecutor(max_workers=n_jobs).map(self.process_distribution, _ALL_DISCRETE_DISTRIBUTIONS))
         processing_results = [r for r in processing_results if r is not None]
 
         sorted_results_sse = {distribution: results for distribution, results in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
@@ -97,7 +99,7 @@ class PHITTER_DISCRETE:
 
 if __name__ == "__main__":
     path = "../../discrete/data/data_binomial.txt"
-    sample_distribution_file = open(path, "r")
+    sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
     phitter_discrete = PHITTER_DISCRETE(data)

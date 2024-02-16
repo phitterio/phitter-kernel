@@ -1,5 +1,4 @@
 import collections
-import joblib
 import numpy
 import scipy.optimize
 import scipy.stats
@@ -112,7 +111,7 @@ class LOGARITHMIC:
         result = scipy.stats.logser.cdf(x, self.p)
         return result
     def pmf(self, x: int) -> float:
-        result = -(self.p**x) / (numpy.log(1 - self.p) * x)
+        result = scipy.stats.logser.pmf(x, self.p)
         return result
     def get_num_parameters(self) -> int:
         return len(self.parameters)
@@ -294,7 +293,9 @@ class PHITTER_DISCRETE:
             if v1 or v2:
                 self.distribution_results["sse"] = sse
                 self.distribution_results["parameters"] = str(distribution.parameters)
-                self.distribution_results["n_test_passed"] = int(self.distribution_results["chi_square"]["rejected"] == False) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == False)
+                self.distribution_results["n_test_passed"] = int(self.distribution_results["chi_square"]["rejected"] == False) + int(
+                    self.distribution_results["kolmogorov_smirnov"]["rejected"] == False
+                )
                 self.distribution_results["n_test_null"] = int(self.distribution_results["chi_square"]["rejected"] == None) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == None)
                 return distribution_name, self.distribution_results
         return None
@@ -305,7 +306,7 @@ class PHITTER_DISCRETE:
         if n_jobs == 1:
             processing_results = [self.process_distribution(distribution_class) for distribution_class in _ALL_DISCRETE_DISTRIBUTIONS]
         else:
-            processing_results = joblib.Parallel(n_jobs=n_jobs)(joblib.delayed(self.process_distribution)(distribution_class) for distribution_class in _ALL_DISCRETE_DISTRIBUTIONS)
+            processing_results = list(concurrent.futures.ProcessPoolExecutor(max_workers=n_jobs).map(self.process_distribution, _ALL_DISCRETE_DISTRIBUTIONS))
         processing_results = [r for r in processing_results if r is not None]
         sorted_results_sse = {distribution: results for distribution, results in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
         not_rejected_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
@@ -314,10 +315,10 @@ class PHITTER_DISCRETE:
 
 if __name__ == "__main__":
     path = "../../discrete/data/data_binomial.txt"
-    sample_distribution_file = open(path, "r")
+    sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
-    phitter_discrete = PHITTER_DISCRETE(data)
+    phitter_discrete = PHITTER_DISCRETE(data, confidence_level=0.95, minimum_sse=100)
     sorted_results_sse, not_rejected_results = phitter_discrete.fit()
 
     for distribution, results in not_rejected_results.items():

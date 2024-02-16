@@ -1,6 +1,6 @@
 import sys
 
-import joblib
+import concurrent.futures
 import numpy
 
 sys.path.append("../../continuous")
@@ -237,7 +237,7 @@ class PHITTER_CONTINUOUS:
         if n_jobs == 1:
             processing_results = [self.process_distribution(distribution_class) for distribution_class in _ALL_CONTINUOUS_DISTRIBUTIONS]
         else:
-            processing_results = joblib.Parallel(n_jobs=n_jobs)(joblib.delayed(self.process_distribution)(distribution_class) for distribution_class in _ALL_CONTINUOUS_DISTRIBUTIONS)
+            processing_results = list(concurrent.futures.ProcessPoolExecutor(max_workers=n_jobs).map(self.process_distribution, _ALL_CONTINUOUS_DISTRIBUTIONS))
         processing_results = [r for r in processing_results if r is not None]
 
         sorted_results_sse = {distribution: results for distribution, results in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
@@ -247,12 +247,13 @@ class PHITTER_CONTINUOUS:
 
 
 if __name__ == "__main__":
-    path = "../../continuous/data/data_beta.txt"
-    sample_distribution_file = open(path, "r")
+    # path = "../../continuous/data/data_beta.txt"
+    path = "../../data/discrete/book2.txt"
+    sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
     phitter_continuous = PHITTER_CONTINUOUS(data)
-    sorted_results_sse, not_rejected_results = phitter_continuous.fit(n_jobs=4)
+    sorted_results_sse, not_rejected_results = phitter_continuous.fit(n_jobs=6)
 
-    for distribution, results in not_rejected_results.items():
+    for distribution, results in sorted_results_sse.items():
         print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")

@@ -1,7 +1,8 @@
-import scipy.stats
 import math
-import scipy.optimize
+
 import numpy
+import scipy.optimize
+import scipy.stats
 
 
 class MEASUREMENTS_CONTINUOUS:
@@ -41,7 +42,8 @@ class MEASUREMENTS_CONTINUOUS:
 
     def calculate_mode(self) -> float:
         distribution = scipy.stats.gaussian_kde(self.data)
-        solution = scipy.optimize.shgo(lambda x: -distribution.pdf(x)[0], bounds=[[self.min, self.max]], n=100 * self.length)
+        # solution = scipy.optimize.shgo(lambda x: -distribution.pdf(x)[0], bounds=[(self.min, self.max)], n=100 * self.length)
+        solution = scipy.optimize.minimize(lambda x: -distribution.pdf(x)[0], x0=[self.mean], bounds=[(self.min, self.max)])
         return solution.x[0]
 
     def num_bins_doane(self, data):
@@ -107,7 +109,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../data/data_generalized_pareto.txt"
+    path = "../data/data_exponential.txt"
     data = get_data(path)
 
     measurements = MEASUREMENTS_CONTINUOUS(data)

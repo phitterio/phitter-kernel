@@ -27,7 +27,8 @@ class LOGARITHMIC:
         Probability density function
         Calculated using the definition of the function
         """
-        result = -(self.p**x) / (numpy.log(1 - self.p) * x)
+        # result = -(self.p**x) / (numpy.log(1 - self.p) * x)
+        result = scipy.stats.logser.pmf(x, self.p)
         return result
 
     def get_num_parameters(self) -> int:
