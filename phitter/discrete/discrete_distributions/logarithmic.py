@@ -6,6 +6,7 @@ import scipy.stats
 class LOGARITHMIC:
     """
     Logarithmic distribution
+    Parameters LOGARITHMIC distribution: {"p": *}
     https://phitter.io/distributions/discrete/logarithmic
     """
 

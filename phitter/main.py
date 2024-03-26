@@ -26,16 +26,16 @@ class PHITTER:
         self.minimum_sse = minimum_sse
         self.distributions_to_fit = distributions_to_fit
 
-    def fit(self, n_jobs: int = 1):
+    def fit(self, n_workers: int = 1):
         if self.fit_type == "continuous":
             self.phitter_continuous = PHITTER_CONTINUOUS(
                 data=self.data, num_bins=self.num_bins, confidence_level=self.confidence_level, minimum_sse=self.minimum_sse, distributions_to_fit=self.distributions_to_fit
             )
-            self.phitter_continuous.fit(n_jobs=n_jobs)
+            self.phitter_continuous.fit(n_workers=n_workers)
 
         if self.fit_type == "discrete":
             self.phitter_discrete = PHITTER_DISCRETE(data=self.data, confidence_level=self.confidence_level, minimum_sse=self.minimum_sse, distributions_to_fit=self.distributions_to_fit)
-            self.phitter_discrete.fit(n_jobs=n_jobs)
+            self.phitter_discrete.fit(n_workers=n_workers)
 
     @property
     def best_distribution(self):
@@ -420,7 +420,7 @@ if __name__ == "__main__":
     data = [float(x.strip().replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
     phitter = PHITTER(data, fit_type="continuous")
-    phitter.fit(n_jobs=6)
+    phitter.fit(n_workers=6)
 
     print(f"Best Distribution: {phitter.best_distribution}")
 

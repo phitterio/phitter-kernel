@@ -6,6 +6,7 @@ import scipy.stats
 class HYPERGEOMETRIC:
     """
     Hypergeometric_distribution
+    Parameters HYPERGEOMETRIC distribution: {"N": *, "K": *, "n": *}
     https://phitter.io/distributions/discrete/hypergeometric
     """
 

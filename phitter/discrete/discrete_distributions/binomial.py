@@ -5,6 +5,7 @@ import scipy.stats
 class BINOMIAL:
     """
     Binomial distribution
+    Parameters BINOMIAL distribution: {"n": *, "p": *}
     https://phitter.io/distributions/discrete/binomial
     """
 

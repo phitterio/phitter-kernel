@@ -822,13 +822,13 @@ class PHITTER_DISCRETE:
                 return distribution_name, self.distribution_results, distribution
         return None
 
-    def fit(self, n_jobs: int = 1):
-        if n_jobs <= 0:
-            raise Exception("n_jobs must be greater than 1")
-        if n_jobs == 1:
+    def fit(self, n_workers: int = 1):
+        if n_workers <= 0:
+            raise Exception("n_workers must be greater than 1")
+        if n_workers == 1:
             processing_results = [self.process_distribution(distribution_name) for distribution_name in self.distributions_to_fit]
         else:
-            executor = concurrent.futures.ProcessPoolExecutor(max_workers=n_jobs)
+            executor = concurrent.futures.ProcessPoolExecutor(max_workers=n_workers)
             processing_results = list(executor.map(self.process_distribution, self.distributions_to_fit))
         processing_results = [r for r in processing_results if r is not None]
         self.sorted_distributions_sse = {distribution: results for distribution, results, _ in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}

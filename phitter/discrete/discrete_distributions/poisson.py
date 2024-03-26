@@ -5,6 +5,7 @@ import scipy.stats
 class POISSON:
     """
     Poisson distribution
+    Parameters POISSON distribution: {"lambda": *}
     https://phitter.io/distributions/discrete/poisson
     """
 

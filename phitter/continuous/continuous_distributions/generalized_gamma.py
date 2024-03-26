@@ -17,7 +17,7 @@ class GENERALIZED_GAMMA:
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the GENERALIZED_GAMMA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The GENERALIZED_GAMMA distribution parameters are: {"a": *, "d": *, "p": *}.
+        Parameters GENERALIZED_GAMMA distribution: {"a": *, "d": *, "p": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

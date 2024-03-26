@@ -2306,9 +2306,9 @@ async function main() {
                         )
                         return distribution_name, self.distribution_results
                 return None
-            def fit(self, n_jobs: int = 1):
-                if n_jobs <= 0:
-                    raise Exception("n_jobs must be greater than 1")
+            def fit(self, n_workers: int = 1):
+                if n_workers <= 0:
+                    raise Exception("n_workers must be greater than 1")
                 ALL_CONTINUOUS_DISTRIBUTIONS = [
                     ALPHA,
                     ARCSINE,
@@ -2384,10 +2384,10 @@ async function main() {
                     WEIBULL,
                     WEIBULL_3P,
                 ]
-                if n_jobs == 1:
+                if n_workers == 1:
                     processing_results = [self.process_distribution(distribution_class) for distribution_class in ALL_CONTINUOUS_DISTRIBUTIONS]
                 else:
-                    processing_results = list(concurrent.futures.ProcessPoolExecutor(max_workers=n_jobs).map(self.process_distribution, ALL_CONTINUOUS_DISTRIBUTIONS))
+                    processing_results = list(concurrent.futures.ProcessPoolExecutor(max_workers=n_workers).map(self.process_distribution, ALL_CONTINUOUS_DISTRIBUTIONS))
                 processing_results = [r for r in processing_results if r is not None]
                 sorted_distributions_sse = {distribution: results for distribution, results in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
                 not_rejected_distributions = {distribution: results for distribution, results in sorted_distributions_sse.items() if results["n_test_passed"] > 0}

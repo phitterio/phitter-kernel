@@ -6,13 +6,14 @@ import scipy.optimize
 class KUMARASWAMY:
     """
     Kumaraswami distribution
+    Parameters KUMARASWAMY distribution: {"alpha": *, "beta": *, "min": *, "max": *}
     https://phitter.io/distributions/continuous/kumaraswamy
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the KUMARASWAMY distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The KUMARASWAMY distribution parameters are: {"alpha": *, "beta": *, "min": *, "max": *}.
+        Parameters KUMARASWAMY distribution: {"alpha": *, "beta": *, "min": *, "max": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

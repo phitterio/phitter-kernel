@@ -11,13 +11,14 @@ warnings.filterwarnings("ignore")
 class BURR_4P:
     """
     Burr distribution
+    Parameters BURR_4P distribution: {"A": *, "B": *, "C": *, "loc": *}
     https://phitter.io/distributions/continuous/burr_4p
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the BURR_4P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The BURR_4P distribution parameters are: {"A": *, "B": *, "C": *, "loc": *}.
+        Parameters BURR_4P distribution: {"A": *, "B": *, "C": *, "loc": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

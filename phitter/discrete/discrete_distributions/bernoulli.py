@@ -5,6 +5,7 @@ import scipy.stats
 class BERNOULLI:
     """
     Bernoulli distribution
+    Parameters BERNOULLI distribution: {"p": *}
     https://phitter.io/distributions/discrete/bernoulli
     """
 

@@ -3,14 +3,16 @@
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://gist.githubusercontent.com/phitterio/66bc7f3674eac01ae646e30ba697a6d7/raw/e96dbba0eb26b20d35e608fefc3984bd87f0010b/DarkPhitterLogo.svg" width="350">
         <source media="(prefers-color-scheme: light)" srcset="https://gist.githubusercontent.com/phitterio/170ce460d7e766545265772525edecf6/raw/71b4867c6e5683455cf1d68bea5bea7eda55ce7d/LightPhitterLogo.svg" width="350">
-        <img alt="phitter-dark-logo" src="https://gist.githubusercontent.com/phitterio/66bc7f3674eac01ae646e30ba697a6d7/raw/e96dbba0eb26b20d35e608fefc3984bd87f0010b/DarkPhitterLogo.svg">
+        <img alt="phitter-dark-logo" src="https://gist.githubusercontent.com/phitterio/170ce460d7e766545265772525edecf6/raw/71b4867c6e5683455cf1d68bea5bea7eda55ce7d/LightPhitterLogo.svg" width="350">
     </picture>
 </p>
 
 <p>
     Phitter analyzes datasets and determines the best analytical probability distributions that represent them. The Phitter kernel studies over 80 probability distributions, both continuous and discrete, 3 goodness-of-fit tests, and interactive visualizations. For each selected probability distribution, a standard modeling guide is provided along with spreadsheets that detail the methodology for using the chosen distribution in data science, operations research, and artificial intelligence.
 </p>
-<p>In this repository is the implementation in python and the kernel for <a src="https://phitter.io">Phitter Web</a></p>
+<p>
+    IIn this repository is the implementation of the python library and the kernel of <a href="https://phitter.io">Phitter Web</a>
+</p>
 
 ## Installation
 
@@ -48,7 +50,7 @@ phitter_cont = phitter.PHITTER(
     minimum_sse=1e-2,
     distributions_to_fit=["beta", "normal", "fatigue_life", "triangular"],
 )
-phitter_cont.fit(n_jobs=6)
+phitter_cont.fit(n_workers=6)
 ```
 ### Full discrete implementation
 ```python
@@ -63,7 +65,7 @@ phitter_disc = phitter.PHITTER(
     minimum_sse=1e-2,
     distributions_to_fit=["binomial", "geometric"],
 )
-phitter_disc.fit(n_jobs=2)
+phitter_disc.fit(n_workers=2)
 ```
 
 ### Phitter: properties and methods
@@ -90,7 +92,7 @@ phitter_cont.fit()
 
 phitter_cont.plot_histogram()
 ```
-<img alt="phitter_histogram" src="./multimedia/histogram.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/histogram.png" width="500" />
 
 
 ### Histogram PDF Dsitributions Plot
@@ -102,7 +104,7 @@ phitter_cont.fit()
 
 phitter_cont.plot_histogram_distributions()
 ```
-<img alt="phitter_histogram" src="./multimedia/histogram_pdf_distributions.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/histogram_pdf_distributions.png" width="500" />
 
 ### Histogram PDF Dsitribution Plot
 ```python
@@ -113,7 +115,7 @@ phitter_cont.fit()
 
 phitter_cont.plot_distribution("beta")
 ```
-<img alt="phitter_histogram" src="./multimedia/histogram_pdf_distribution.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/histogram_pdf_distribution.png" width="500" />
 
 ### ECDF Plot
 ```python
@@ -124,7 +126,7 @@ phitter_cont.fit()
 
 phitter_cont.phitter.plot_ecdf()
 ```
-<img alt="phitter_histogram" src="./multimedia/ecdf.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/ecdf.png" width="500" />
 
 ### ECDF Distribution Plot
 ```python
@@ -135,7 +137,7 @@ phitter_cont.fit()
 
 phitter_cont.phitter.plot_ecdf_distribution("beta")
 ```
-<img alt="phitter_histogram" src="./multimedia/ecdf_distribution.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/ecdf_distribution.png" width="500" />
 
 
 ### QQ Plot
@@ -147,7 +149,7 @@ phitter_cont.fit()
 
 phitter_cont.phitter.qq_plot("beta")
 ```
-<img alt="phitter_histogram" src="./multimedia/qq_plot_distribution.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/qq_plot_distribution.png" width="500" />
 
 ### QQ - Regression Plot 
 ```python
@@ -158,14 +160,14 @@ phitter_cont.fit()
 
 phitter_cont.phitter.qq_plot_regression("beta")
 ```
-<img alt="phitter_histogram" src="./multimedia/qq_plot_distribution_regression.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/qq_plot_distribution_regression.png" width="500" />
 
 
 ### Distributions: Methods and properties 
 ```python
 import phitter
 
-distribution = phitter.continuous.BETA({"alpha": 5, "beta": 3, "A": 200, "B": 1000})
+distribution = phitter.continuous.BETA(parameters={"alpha": 5, "beta": 3, "A": 200, "B": 1000})
 
 ## CDF, PDF, PPF, PMF receive float or numpy.ndarray. For discrete distributions PMF instead of PDF. Parameters notation are in description of ditribution
 distribution.cdf(752) # -> 0.6242831129533498

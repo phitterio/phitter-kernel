@@ -6,13 +6,14 @@ import scipy.stats
 class F:
     """
     F distribution
+    Parameters F distribution: {"df1": *, "df2": *}
     https://phitter.io/distributions/continuous/f
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the F distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The F distribution parameters are: {"df1": *, "df2": *}.
+        Parameters F distribution: {"df1": *, "df2": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

@@ -6,13 +6,14 @@ import scipy.stats
 class GIBRAT:
     """
     Gibrat distribution
+    Parameters GIBRAT distribution: {"loc": *, "scale": *}
     https://phitter.io/distributions/continuous/gibrat
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the GIBRAT distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The GIBRAT distribution parameters are: {"loc": *, "scale": *}.
+        Parameters GIBRAT distribution: {"loc": *, "scale": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

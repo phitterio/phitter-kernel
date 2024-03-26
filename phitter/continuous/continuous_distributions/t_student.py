@@ -6,13 +6,14 @@ import scipy.stats
 class T_STUDENT:
     """
     T distribution
+    Parameters T_STUDENT distribution: {"df": *}
     https://phitter.io/distributions/continuous/t_student    Hand - book on  STATISTICAL  DISTRIBUTIONS  for  experimentalists (pag.143) ...  Christian Walck
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the T_STUDENT distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The T_STUDENT distribution parameters are: {"df": *}.
+        Parameters T_STUDENT distribution: {"df": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

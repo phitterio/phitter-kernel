@@ -7,13 +7,14 @@ class FATIGUE_LIFE:
     """
     Fatigue life distribution
     Also known as Birnbaum-Saunders distribution
+    Parameters FATIGUE_LIFE distribution: {"gamma": *, "loc": *, "scale": *}
     https://phitter.io/distributions/continuous/fatigue_life
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the FATIGUE_LIFE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The FATIGUE_LIFE distribution parameters are: {"gamma": *, "loc": *, "scale": *}.
+        Parameters FATIGUE_LIFE distribution: {"gamma": *, "loc": *, "scale": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

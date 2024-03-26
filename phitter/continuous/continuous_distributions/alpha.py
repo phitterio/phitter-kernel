@@ -11,13 +11,14 @@ warnings.filterwarnings("ignore")
 class ALPHA:
     """
     Alpha distribution
+    Parameters ALPHA distribution: {"alpha": *, "loc": *, "scale": *}
     https://phitter.io/distributions/continuous/alpha
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the ALPHA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The ALPHA distribution parameters are: {"alpha": *, "loc": *, "scale": *}.
+        Parameters ALPHA distribution: {"alpha": *, "loc": *, "scale": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

@@ -11,13 +11,14 @@ warnings.filterwarnings("ignore")
 class BURR:
     """
     Burr distribution
+    Parameters BURR distribution: {"A": *, "B": *, "C": *}
     https://phitter.io/distributions/continuous/burr
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the BURR distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The BURR distribution parameters are: {"A": *, "B": *, "C": *}.
+        Parameters BURR distribution: {"A": *, "B": *, "C": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -209,7 +210,6 @@ class BURR:
         # b = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
         # solution = scipy.optimize.least_squares(equations, x0, bounds = b, args=([continuous_measures]))
         # parameters = {"A": solution.x[0], "B": solution.x[1], "C": solution.x[2]}
-        # print(parameters)
 
         # Scipy class
         scipy_params = scipy.stats.burr12.fit(continuous_measures.data)

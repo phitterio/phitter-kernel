@@ -8,3 +8,5 @@ from phitter.discrete.discrete_distributions import POISSON
 from phitter.discrete.discrete_distributions import UNIFORM
 from phitter.discrete.discrete_distributions import ALL_DISCRETE_DISTRIBUTIONS
 from phitter.discrete.discrete_measures import DISCRETE_MEASURES
+from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_chi_square
+from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_kolmogorov_smirnov

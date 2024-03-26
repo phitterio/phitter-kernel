@@ -4,13 +4,14 @@ import numpy
 class UNIFORM:
     """
     Uniform distribution
+    Parameters UNIFORM distribution: {"a": *, "b": *}
     https://phitter.io/distributions/continuous/uniform
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the UNIFORM distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The UNIFORM distribution parameters are: {"a": *, "b": *}.
+        Parameters UNIFORM distribution: {"a": *, "b": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

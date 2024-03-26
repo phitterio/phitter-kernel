@@ -6,13 +6,14 @@ import scipy.stats
 class GENERALIZED_PARETO:
     """
     Generalized Pareto distribution
+    Parameters GENERALIZED_PARETO distribution: {"c": *, "mu": *, "sigma": *}
     https://phitter.io/distributions/continuous/generalized_pareto
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the GENERALIZED_PARETO distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The GENERALIZED_PARETO distribution parameters are: {"c": *, "mu": *, "sigma": *}.
+        Parameters GENERALIZED_PARETO distribution: {"c": *, "mu": *, "sigma": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

@@ -4,13 +4,14 @@ import numpy
 class EXPONENTIAL_2P:
     """
     Exponential distribution
+    Parameters EXPONENTIAL_2P distribution: {"lambda": *, "loc": *}
     https://phitter.io/distributions/continuous/exponential_2p
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the EXPONENTIAL_2P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The EXPONENTIAL_2P distribution parameters are: {"lambda": *, "loc": *}.
+        Parameters EXPONENTIAL_2P distribution: {"lambda": *, "loc": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

@@ -6,13 +6,14 @@ import scipy.stats
 class JOHNSON_SB:
     """
     Johnson SB distribution
+    Parameters JOHNSON_SB distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
     https://phitter.io/distributions/continuous/johnson_sb
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the JOHNSON_SB distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The JOHNSON_SB distribution parameters are: {"xi": *, "lambda": *, "gamma": *, "delta": *}.
+        Parameters JOHNSON_SB distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

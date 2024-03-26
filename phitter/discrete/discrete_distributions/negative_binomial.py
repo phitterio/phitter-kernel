@@ -5,6 +5,7 @@ import scipy.stats
 class NEGATIVE_BINOMIAL:
     """
     Negative binomial distribution
+    Parameters NEGATIVE_BINOMIAL distribution: {"r": *, "p": *}
     https://phitter.io/distributions/discrete/negative_binomial
     """
 

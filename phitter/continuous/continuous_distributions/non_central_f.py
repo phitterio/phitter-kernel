@@ -7,13 +7,14 @@ import scipy.stats
 class NON_CENTRAL_F:
     """
     Non-Central F distribution
+    Parameters NON_CENTRAL_F distribution: {"lambda": *, "n1": *, "n2": *}
     https://phitter.io/distributions/continuous/non_central_f
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the NON_CENTRAL_F distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The NON_CENTRAL_F distribution parameters are: {"lambda": *, "n1": *, "n2": *}.
+        Parameters NON_CENTRAL_F distribution: {"lambda": *, "n1": *, "n2": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

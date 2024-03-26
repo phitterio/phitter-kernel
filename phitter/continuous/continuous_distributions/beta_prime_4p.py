@@ -17,7 +17,7 @@ class BETA_PRIME_4P:
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the BETA_PRIME_4P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The BETA_PRIME_4P distribution parameters are: {"alpha": *, "beta": *, "loc": *, "scale": *}.
+        Parameters BETA_PRIME_4P distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -207,7 +207,6 @@ class BETA_PRIME_4P:
 
             return (eq1, eq2, eq3, eq4)
 
-        scipy_params = scipy.stats.betaprime.fit(continuous_measures.data)
 
         try:
             bnds = ((0, 0, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
@@ -216,6 +215,7 @@ class BETA_PRIME_4P:
             solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
             parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[3], "scale": solution.x[2]}
         except:
+            scipy_params = scipy.stats.betaprime.fit(continuous_measures.data)
             parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "loc": scipy_params[2], "scale": scipy_params[3]}
 
         return parameters

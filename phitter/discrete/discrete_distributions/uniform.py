@@ -4,6 +4,7 @@ import numpy
 class UNIFORM:
     """
     Uniform distribution
+    Parameters UNIFORM distribution: {"a": *, "b": *}
     https://phitter.io/distributions/discrete/uniform
     """
 

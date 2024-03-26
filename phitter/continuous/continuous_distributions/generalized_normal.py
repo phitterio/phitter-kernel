@@ -6,6 +6,7 @@ import scipy.stats
 class GENERALIZED_NORMAL:
     """
     Generalized normal distribution
+    Parameters GENERALIZED_NORMAL distribution: {"beta": *, "mu": *, "alpha": *}
     https://phitter.io/distributions/continuous/generalized_normal    This distribution is known whit the following names:
     * Error Distribution
     * Exponential Power Distribution
@@ -17,7 +18,7 @@ class GENERALIZED_NORMAL:
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the GENERALIZED_NORMAL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The GENERALIZED_NORMAL distribution parameters are: {"beta": *, "mu": *, "alpha": *}.
+        Parameters GENERALIZED_NORMAL distribution: {"beta": *, "mu": *, "alpha": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

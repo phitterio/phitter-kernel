@@ -7,13 +7,14 @@ import scipy.stats
 class CHI_SQUARE:
     """
     Chi Square distribution
+    Parameters CHI_SQUARE distribution: {"df": *}
     https://phitter.io/distributions/continuous/chi_square
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the CHI_SQUARE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The CHI_SQUARE distribution parameters are: {"df": *}.
+        Parameters CHI_SQUARE distribution: {"df": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

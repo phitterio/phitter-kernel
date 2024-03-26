@@ -6,13 +6,14 @@ import scipy.stats
 class WEIBULL_3P:
     """
     Weibull distribution
+    Parameters WEIBULL_3P distribution: {"alpha": *, "loc": *, "beta": *}
     https://phitter.io/distributions/continuous/weibull_3p
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the WEIBULL_3P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The WEIBULL_3P distribution parameters are: {"alpha": *, "loc": *, "beta": *}.
+        Parameters WEIBULL_3P distribution: {"alpha": *, "loc": *, "beta": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

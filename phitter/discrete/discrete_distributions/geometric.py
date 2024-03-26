@@ -5,6 +5,7 @@ import scipy.stats
 class GEOMETRIC:
     """
     Geometric distribution
+    Parameters GEOMETRIC distribution: {"p": *}
     https://phitter.io/distributions/discrete/geometric
     """
 

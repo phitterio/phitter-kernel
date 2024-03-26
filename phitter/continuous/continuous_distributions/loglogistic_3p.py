@@ -6,13 +6,14 @@ import scipy.stats
 class LOGLOGISTIC_3P:
     """
     Loglogistic distribution
+    Parameters LOGLOGISTIC_3P distribution: {"loc": *, "alpha": *, "beta": *}
     https://phitter.io/distributions/continuous/loglogistic_3p
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the LOGLOGISTIC_3P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The LOGLOGISTIC_3P distribution parameters are: {"loc": *, "alpha": *, "beta": *}.
+        Parameters LOGLOGISTIC_3P distribution: {"loc": *, "alpha": *, "beta": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

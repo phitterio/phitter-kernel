@@ -6,13 +6,14 @@ import scipy.special
 class DAGUM:
     """
     Dagum distribution
+    Parameters DAGUM distribution: {"a": *, "b": *, "p": *}
     https://phitter.io/distributions/continuous/dagum
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the DAGUM distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The DAGUM distribution parameters are: {"a": *, "b": *, "p": *}.
+        Parameters DAGUM distribution: {"a": *, "b": *, "p": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

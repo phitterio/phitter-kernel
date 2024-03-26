@@ -5,13 +5,14 @@ import scipy.special
 class ARCSINE:
     """
     Arcsine distribution
+    Parameters ARCSINE distribution: {"a": *, "b": *}
     https://phitter.io/distributions/continuous/arcsine
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the ARCSINE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The ARCSINE distribution parameters are: {"a": *, "b": *}.
+        Parameters ARCSINE distribution: {"a": *, "b": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

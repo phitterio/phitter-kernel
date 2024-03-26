@@ -6,13 +6,14 @@ import scipy.stats
 class F_4P:
     """
     F distribution
+    Parameters F_4P distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
     https://phitter.io/distributions/continuous/f_4p
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the F_4P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The F_4P distribution parameters are: {"df1": *, "df2": *, "loc": *, "scale": *}.
+        Parameters F_4P distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

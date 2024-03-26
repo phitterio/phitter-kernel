@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "phitter"
-version = "0.0.1"
+version = "0.0.2"
 description = "Find the best probability distribution for your dataset"
 authors = [{name = "Sebastián José Herrera Monterrosa", email = "phitter.email@gmail.com"}]
 readme = "README.md"
@@ -33,9 +33,8 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "numpy>=1.26.4",
-    "scipy>=1.12.0",
-    "plotly>=5.20.0"
+    "scipy>=1.1.0",
+    "plotly>=5.14.0"
 ]
 
 [project.urls]

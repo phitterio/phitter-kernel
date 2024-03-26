@@ -7,13 +7,14 @@ import scipy.stats
 class LEVY:
     """
     Levy distribution
+    Parameters LEVY distribution: {"mu": *, "c": *}
     https://phitter.io/distributions/continuous/levy
     """
 
     def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
         """
         Initializes the LEVY distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        The LEVY distribution parameters are: {"mu": *, "c": *}.
+        Parameters LEVY distribution: {"mu": *, "c": *}
         """
         if continuous_measures is None and parameters is None:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
