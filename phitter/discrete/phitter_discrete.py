@@ -1,42 +1,41 @@
+import concurrent.futures
+import typing
 import sys
 
-import concurrent.futures
 import numpy
-
-sys.path.append("../../discrete")
-sys.path.append("../../discrete/measurements")
-
-from distributions.bernoulli import BERNOULLI
-from distributions.binomial import BINOMIAL
-from distributions.geometric import GEOMETRIC
-from distributions.hypergeometric import HYPERGEOMETRIC
-from distributions.logarithmic import LOGARITHMIC
-from distributions.negative_binomial import NEGATIVE_BINOMIAL
-from distributions.poisson import POISSON
-from distributions.uniform import UNIFORM
-from measurements_discrete import MEASUREMENTS_DISCRETE
-from test_chi_square_discrete import test_chi_square_discrete
-from test_kolmogorov_smirnov_discrete import test_kolmogorov_smirnov_discrete
+import plotly.express as px
+import plotly.graph_objects as go
+import scipy.stats
 
 
 class PHITTER_DISCRETE:
     def __init__(
         self,
-        data: list[int | float],
+        data: list[int | float] | numpy.ndarray,
         confidence_level=0.95,
-        minimum_sse=float("inf"),
+        minimum_sse=numpy.inf,
+        distributions_to_fit: list[str] | typing.Literal["all"] = "all",
     ):
+        if distributions_to_fit != "all":
+            not_distributions_ids = [dist for dist in distributions_to_fit if dist not in ALL_DISCRETE_DISTRIBUTIONS.keys()]
+            if len(not_distributions_ids) > 0:
+                raise Exception(f"{not_distributions_ids} not founded in cdiscrete disributions")
+
         self.data = data
-        self.measurements = MEASUREMENTS_DISCRETE(self.data)
+        self.discrete_measures = DISCRETE_MEASURES(self.data)
         self.confidence_level = confidence_level
         self.minimum_sse = minimum_sse
         self.distribution_results = {}
         self.none_results = {"test_statistic": None, "critical_value": None, "p_value": None, "rejected": None}
+        self.distributions_to_fit = list(ALL_DISCRETE_DISTRIBUTIONS.keys()) if distributions_to_fit == "all" else distributions_to_fit
+        self.sorted_distributions_sse = None
+        self.not_rejected_distributions = None
+        self.distribution_instances = None
 
     def test(self, test_function, label: str, distribution):
         validation_test = False
         try:
-            test = test_function(distribution, self.measurements, confidence_level=self.confidence_level)
+            test = test_function(distribution, self.discrete_measures)
             if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
                 self.distribution_results[label] = {
                     "test_statistic": test["test_statistic"],
@@ -51,59 +50,355 @@ class PHITTER_DISCRETE:
             self.distribution_results[label] = self.none_results
         return validation_test
 
-    def process_distribution(self, distribution_class):
-        distribution_name = distribution_class.__name__.lower()
+    def process_distribution(self, distribution_name: str) -> tuple[str, dict, typing.Any] | None:
+        distribution_class = ALL_DISCRETE_DISTRIBUTIONS[distribution_name]
 
         validate_estimation = True
         sse = 0
         try:
-            distribution = distribution_class(self.measurements)
-            pmf_values = [distribution.pmf(d) for d in self.measurements.domain]
-            sse = numpy.sum(numpy.power(numpy.array(pmf_values) - numpy.array(self.measurements.frequencies_pmf), 2.0))
+            distribution = distribution_class(self.discrete_measures)
+            pmf_values = distribution.pmf(self.discrete_measures.domain)
+            sse = numpy.sum(numpy.power(pmf_values - self.discrete_measures.densities_frequencies, 2))
         except:
             validate_estimation = False
 
         self.distribution_results = {}
         if validate_estimation and distribution.parameter_restrictions() and not numpy.isnan(sse) and not numpy.isinf(sse) and sse < self.minimum_sse:
-            v1 = self.test(test_chi_square_discrete, "chi_square", distribution)
-            v2 = self.test(test_kolmogorov_smirnov_discrete, "kolmogorov_smirnov", distribution)
+            v1 = self.test(evaluate_discrete_test_chi_square, "chi_square", distribution)
+            v2 = self.test(evaluate_discrete_test_kolmogorov_smirnov, "kolmogorov_smirnov", distribution)
 
             if v1 or v2:
                 self.distribution_results["sse"] = sse
-                self.distribution_results["parameters"] = str(distribution.parameters)
+                self.distribution_results["parameters"] = distribution.parameters
                 self.distribution_results["n_test_passed"] = int(self.distribution_results["chi_square"]["rejected"] == False) + int(
                     self.distribution_results["kolmogorov_smirnov"]["rejected"] == False
                 )
                 self.distribution_results["n_test_null"] = int(self.distribution_results["chi_square"]["rejected"] == None) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == None)
-                return distribution_name, self.distribution_results
-
+                return distribution_name, self.distribution_results, distribution
         return None
 
     def fit(self, n_jobs: int = 1):
         if n_jobs <= 0:
             raise Exception("n_jobs must be greater than 1")
 
-        _ALL_DISCRETE_DISTRIBUTIONS = [BERNOULLI, BINOMIAL, GEOMETRIC, HYPERGEOMETRIC, LOGARITHMIC, NEGATIVE_BINOMIAL, POISSON, UNIFORM]
-
         if n_jobs == 1:
-            processing_results = [self.process_distribution(distribution_class) for distribution_class in _ALL_DISCRETE_DISTRIBUTIONS]
+            processing_results = [self.process_distribution(distribution_name) for distribution_name in self.distributions_to_fit]
         else:
-            processing_results = list(concurrent.futures.ProcessPoolExecutor(max_workers=n_jobs).map(self.process_distribution, _ALL_DISCRETE_DISTRIBUTIONS))
+            executor = concurrent.futures.ProcessPoolExecutor(max_workers=n_jobs)
+            processing_results = list(executor.map(self.process_distribution, self.distributions_to_fit))
+
         processing_results = [r for r in processing_results if r is not None]
+        self.sorted_distributions_sse = {distribution: results for distribution, results, _ in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
+        self.not_rejected_distributions = {distribution: results for distribution, results in self.sorted_distributions_sse.items() if results["n_test_passed"] > 0}
+        self.distribution_instances = {distribution: instance for distribution, _, instance in processing_results}
 
-        sorted_results_sse = {distribution: results for distribution, results in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
-        not_rejected_results = {distribution: results for distribution, results in sorted_results_sse.items() if results["n_test_passed"] > 0}
+    def plot_histogram(
+        self,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+    ):
+        domain = self.discrete_measures.domain
+        densities_frequencies = self.discrete_measures.densities_frequencies
 
-        return sorted_results_sse, not_rejected_results
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=domain, y=densities_frequencies, marker_color=plot_bar_color, name="Data", showlegend=True))
+        fig.update_layout(
+            height=plot_height,
+            width=plot_width,
+            title=plot_title,
+            xaxis_title=plot_xaxis_title,
+            yaxis_title=plot_yaxis_title,
+            legend_title=plot_legend_title,
+            template="ggplot2",
+            legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10), title_font_size=11),
+            bargap=plot_bargap,
+        )
+        fig.show()
+
+    def plot_histogram_distributions_pmf(
+        self,
+        n_distributions: int,
+        n_distributions_visible: int,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+    ):
+        domain = self.discrete_measures.domain
+        densities_frequencies = self.discrete_measures.densities_frequencies
+
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=domain, y=densities_frequencies, marker_color=plot_bar_color, name="Data", showlegend=False))
+
+        for idx, (distribution_name, result) in enumerate(list(self.sorted_distributions_sse.items())[:n_distributions]):
+            y_plot = self.distribution_instances[distribution_name].pmf(domain)
+            distribution_sse = result["sse"]
+            is_visible = True if idx + 1 <= n_distributions_visible else "legendonly"
+            is_rejected = "✅" if distribution_name in self.not_rejected_distributions else ""
+            scatter_name = f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"
+            scatter_line = dict(color=px.colors.qualitative.G10[idx], width=2) if idx < len(px.colors.qualitative.G10) else dict(width=2)
+            try:
+                fig.add_trace(go.Scatter(x=domain, y=y_plot, mode="lines+markers", visible=is_visible, name=scatter_name, line=scatter_line))
+            except Exception:
+                fig.add_trace(go.Scatter(x=domain, y=numpy.zeros(len(domain)), mode="lines+markers", visible=is_visible, name=scatter_name, line=scatter_line))
+
+        fig.update_layout(
+            height=plot_height,
+            width=plot_width,
+            title=f"{plot_title} - PMF DISTRIBUTIONS",
+            xaxis_title=plot_xaxis_title,
+            yaxis_title=plot_yaxis_title,
+            legend_title=plot_legend_title,
+            template="ggplot2",
+            xaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
+            bargap=plot_bargap,
+        )
+
+        fig.show()
+
+    def plot_distribution_pmf(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+        plot_line_color: str,
+        plot_line_width: int,
+    ):
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not founded")
+
+        domain = self.discrete_measures.domain
+        densities_frequencies = self.discrete_measures.densities_frequencies
+
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=domain, y=densities_frequencies, marker_color=plot_bar_color, name="Data", showlegend=True))
+
+        y_plot = self.distribution_instances[distribution_name].pmf(domain)
+        distribution_sse = self.sorted_distributions_sse[distribution_name]["sse"]
+        is_rejected = "✅" if distribution_name in self.not_rejected_distributions else ""
+        scatter_name = f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"
+        scatter_line = dict(color=plot_line_color, width=plot_line_width)
+
+        try:
+            fig.add_trace(go.Scatter(x=domain, y=y_plot, mode="lines+markers", name=scatter_name, line=scatter_line))
+        except Exception:
+            fig.add_trace(go.Scatter(x=domain, y=numpy.zeros(len(domain)), mode="lines+markers", name=scatter_name, line=scatter_line))
+
+        fig.update_layout(
+            height=plot_height,
+            width=plot_width,
+            title=f"{plot_title} - PMF {distribution_name.upper().replace('_', ' ')} DISTRIBUTION",
+            xaxis_title=plot_xaxis_title,
+            yaxis_title=plot_yaxis_title,
+            legend_title=plot_legend_title,
+            template="ggplot2",
+            xaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
+            bargap=plot_bargap,
+        )
+
+        fig.show()
+
+    def plot_ecdf(
+        self,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+    ):
+        domain = self.discrete_measures.domain
+        ecdf_frequencies = self.discrete_measures.ecdf_frequencies
+
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=domain, y=ecdf_frequencies, marker_color=plot_bar_color, name="Empirical Distribution", showlegend=True))
+        fig.update_layout(
+            height=plot_height,
+            width=plot_width,
+            title=plot_title,
+            xaxis_title=plot_xaxis_title,
+            yaxis_title=plot_yaxis_title,
+            legend_title=plot_legend_title,
+            template="ggplot2",
+            xaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
+            bargap=plot_bargap,
+        )
+        fig.show()
+
+    def plot_ecdf_distribution(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_empirical_bar_color: str,
+        plot_empirical_bargap: float,
+        plot_distribution_line_color: str,
+        plot_distribution_line_width: int,
+    ):
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not founded")
+
+        domain = self.discrete_measures.domain
+        ecdf_frequencies = self.discrete_measures.ecdf_frequencies
+
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=domain, y=ecdf_frequencies, marker_color=plot_empirical_bar_color, name="Empirical Distribution", showlegend=True))
+
+        y_plot = self.distribution_instances[distribution_name].cdf(domain)
+        distribution_sse = self.sorted_distributions_sse[distribution_name]["sse"]
+        is_rejected = "✅" if distribution_name in self.not_rejected_distributions else ""
+        try:
+            fig.add_trace(
+                go.Scatter(
+                    x=domain,
+                    y=y_plot,
+                    mode="lines+markers",
+                    name=f"{distribution_name}: {distribution_sse:.4E}{is_rejected}",
+                    line=dict(color=plot_distribution_line_color, width=plot_distribution_line_width),
+                )
+            )
+        except Exception:
+            fig.add_trace(go.Scatter(x=domain, y=numpy.zeros(len(domain)), mode="lines+markers", name=f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"))
+
+        fig.update_layout(
+            height=plot_height,
+            width=plot_width,
+            title=f"{plot_title} - CDF {distribution_name.upper().replace('_', ' ')} DISTRIBUTION",
+            xaxis_title=plot_xaxis_title,
+            yaxis_title=plot_yaxis_title,
+            legend_title=plot_legend_title,
+            template="ggplot2",
+            xaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
+            bargap=plot_empirical_bargap,
+        )
+        fig.show()
+
+    def qq_plot(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        qq_marker_name: str,
+        qq_marker_color: str,
+        qq_marker_size: int,
+    ):
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not founded")
+
+        x = self.distribution_instances[distribution_name].ppf(self.discrete_measures.qq_arr)
+        y = self.discrete_measures.data
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=x, y=y, mode="markers", name=qq_marker_name, marker=dict(color=qq_marker_color, size=qq_marker_size), showlegend=True))
+        fig.update_layout(
+            height=plot_height,
+            width=plot_width,
+            title=f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION",
+            xaxis_title=plot_xaxis_title,
+            yaxis_title=plot_yaxis_title,
+            legend_title=plot_legend_title,
+            template="ggplot2",
+            xaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
+        )
+        fig.show()
+
+    def qq_plot_regression(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        qq_marker_name: str,
+        qq_marker_color: str,
+        qq_marker_size: int,
+        regression_line_name: str,
+        regression_line_color: str,
+        regression_line_width: int,
+    ):
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not founded")
+
+        x = self.distribution_instances[distribution_name].ppf(self.discrete_measures.qq_arr)
+        y = self.discrete_measures.data
+
+        linear_regression = scipy.stats.linregress(x, y)
+        y_reg = linear_regression.intercept + x * linear_regression.slope
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=x, y=y_reg, mode="lines", name=regression_line_name, line=dict(color=regression_line_color, width=regression_line_width)))
+        fig.add_trace(go.Scatter(x=x, y=y, mode="markers", name=qq_marker_name, marker=dict(color=qq_marker_color, size=qq_marker_size)))
+        fig.update_layout(
+            height=plot_height,
+            width=plot_width,
+            title=f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION <br><br><sup>Regression: {linear_regression.intercept:.4g} + x * {linear_regression.slope:.4g} • r = {linear_regression.rvalue:.4g}</sup>",
+            xaxis_title=plot_xaxis_title,
+            yaxis_title=plot_yaxis_title,
+            legend_title=plot_legend_title,
+            template="ggplot2",
+            xaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
+            legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
+        )
+        fig.show()
 
 
 if __name__ == "__main__":
-    path = "../../discrete/data/data_binomial.txt"
+    from discrete_distributions import ALL_DISCRETE_DISTRIBUTIONS
+    from discrete_measures import DISCRETE_MEASURES
+    from discrete_statistical_tests import evaluate_discrete_test_chi_square
+    from discrete_statistical_tests import evaluate_discrete_test_kolmogorov_smirnov
+
+    path = "../../datasets_test/discrete/sample_binomial.txt"
     sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
+    sample_distribution_file.close()
 
     phitter_discrete = PHITTER_DISCRETE(data)
-    sorted_results_sse, not_rejected_results = phitter_discrete.fit()
+    phitter_discrete.fit()
 
-    for distribution, results in not_rejected_results.items():
+    for distribution, results in phitter_discrete.sorted_distributions_sse.items():
         print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")
+else:
+    from phitter.discrete.discrete_distributions import ALL_DISCRETE_DISTRIBUTIONS
+    from phitter.discrete.discrete_measures import DISCRETE_MEASURES
+    from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_chi_square
+    from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_kolmogorov_smirnov

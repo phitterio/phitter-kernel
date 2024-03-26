@@ -1,0 +1,383 @@
+\documentclass{article}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\hypersetup{
+    colorlinks=true,
+    linktoc=all,
+    linkcolor=teal,
+}
+\nocite{*}
+\usepackage{datetime2}
+
+\titleformat*{\section}{\fontsize{14}{8}\bfseries}
+\titleformat*{\subsection}{\fontsize{10}{8}\bfseries}
+\DTMlangsetup{showdayofmonth=false}
+
+\begin{document}
+
+\title{\textbf{DISCRETE PROBABILITY DISTRIBUTIONS}}
+\author{https://phitter.io}
+\date{\today}
+\maketitle
+\begin{abstract}
+    This document provides an overview of the continuous probability distributions utilized in Phitter. It includes a detailed description for each distribution, covering aspects such as the definition, domain, parameter definitions and domains, probability density function, cumulative distribution function, percentile point function, raw moments, mean, variance, skewness, kurtosis, median, and mode in a concise and clear manner.
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+
+\newpage
+\section{Bernoulli Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{Bernoulli}\left(p\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in\left\{0,1\right\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} p\in\left(0,1\right)\subseteq\mathbb{R} \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=\left\{\begin{array}{cl} 1-p & \text{if } \ x=0 \\ 1 & \text{if } \ x=1 \end{array} \right.\\ \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=p^x(1-p)^{1-x} \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\left\{\begin{array}{cl} 1 & \text{if } \ u \leq p \\ 0 & \text{if } \ u > p \end{array} \right.\\ \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=0}^{1}x^{k}f_{X}\left(x\right)=p \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=p \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=p(1-p) \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=\frac{1-2p}{\sqrt{p(1-p)}} \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=3+\frac{1 - 6p(1-p)}{p(1-p)} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=\left\{\begin{array}{cl} 0 & \text{if } p < 1/2 \\ \left[0, 1\right] & \text{if } p = 1/2\\ 1 & \text{if } p > 1/2 \end{array} \right.\\ \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)=\left\{\begin{array}{cl} 0 & \text{if } \ p < 1/2 \\ 0, 1 & \text{if } \ p = 1/2\\ 1 & \text{if } \ p > 1/2 \end{array} \right.\\ \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ u:\text{Uniform[0,1] random varible} $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/bernoulli.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/1sWJZYZWW8cVLFXYV-fb3Lq4y2YgWzgTGWHfhIJ0zM5c}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+
+
+\newpage
+\section{Binomial Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{Binomial}\left(n,p\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in\mathbb{N}\equiv \left\{ 0,1,2,\dots \right\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} n\in\mathbb{N}, p\in\left(0,1\right)\subseteq\mathbb{R} \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=\sum_{i=0}^{x} \binom{n}{i} p^i(1-p)^{n-i}=I(1-p, n - x, 1 + x) \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=\binom{n}{x} p^x (1-p)^{n-x} \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\arg\min_{x}\left| F_{X}\left(x\right)-u \right| \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=0}^{\infty }x^{k}f_{X}\left(x\right)=\sum_{i=0}^k\tfrac{n!}{(n-i)!}S(k,i)p^{i} \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=np \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=np(1-p) \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=\frac{1-2p}{\sqrt{np(1-p)}} \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=3+\frac{1-6p(1-p)}{np(1-p)} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=\lfloor{np}\rfloor \vee \lceil{np}\rceil \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)=\lfloor (n + 1)p \rfloor \vee \lceil (n + 1)p \rceil - 1 \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ \text{Computing an analytic expression for the inverse of the cumulative distribution function} \\ \text{is not feasible. However, it is possible to calculate the Percentile Point Function by} \\ \text{approximating it to the nearest integer.} $
+    \item $ u:\text{Uniform[0,1] random varible} $
+    \item $ \lfloor{x}\rfloor: \text{Floor function} $
+    \item $ \lceil{x}\rceil: \text{Ceiling Function} $
+    \item $ I\left(x,a,b\right):\text{Regularized incomplete beta function} $
+    \item $ S(a,b):\text{Stirling numbers of the second kind}=\frac1{b!}\sum_{j=0}^b(-1)^{b-j}\binom {b}{j} j^a $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/binomial.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/1bPOiZVUhjLMmbFqVjWMqg1NzTvsZxVIw95fi5hIhkn0}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+
+
+\newpage
+\section{Geometric Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{Geometric}\left(p\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in\mathbb{N}\equiv \left\{0,1,2,\dots\right\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} p\in\left(0,1\right)\subseteq\mathbb{R} \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=1-(1 - p)^{\lfloor x\rfloor} \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=(1 - p)^{x-1}p \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\left\lceil{\frac{\ln{(1-u)}}{\ln{(1-p)}}}\right\rceil \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=0}^{\infty}x^{k}f_{X}\left(x\right)=\sum_{x=0}^\infty (1-p)^x p\cdot x^k \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=\frac{1}{p} \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=\frac{1-p}{p^2} \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=\frac{2-p}{\sqrt{1-p}} \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=9+\frac{p^2}{1-p} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=\left\lceil \frac{-1}{\log_2(1-p)} \right\rceil \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)=1 \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ u:\text{Uniform[0,1] random varible} $
+    \item $ \lfloor{x}\rfloor: \text{Floor function} $
+    \item $ \lceil{x}\rceil: \text{Ceiling Function} $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/geometric.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/1cEU6n8UxpJ_Had6WfFnAXZ2FcaLGYu8g5srQ_iEfjgg}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+
+
+\newpage
+\section{Hypergeometric Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{Hypergeometric}\left(N,K,n\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in\left\{\max{(0,n+K-N)}, \min{(n, K )}\right\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} N\in\mathbb{N}, K\in\left\{0\dots N\right\}, n\in\left\{0\dots N\right\} \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=\sum_{i=0}^{x}\binom{K}{i}\binom{N-K}{n-i}\bigg/\binom{N}{n} \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=\binom{K}{x}\binom{N-K}{n-x}\bigg/\binom{N}{n} \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\arg\min_{x}\left| F_{X}\left(x\right)-u \right| \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=\max{(0,n+K-N)}}^{\min{(n, K )}}x^{k}f_{X}\left(x\right) \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=\frac{nK}{N} \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=n\frac{K}{N}\frac{N-K}{N}\frac{N-n}{N-1} \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=\frac{(N-2K)(N-1)^\frac{1}{2}(N-2n)}{[nK(N-K)(N-n)]^\frac{1}{2}(N-2)} \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=3+\frac{1}{n K(N-K)(N-n)(N-2)(N-3)} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=F^{-1}_{X}\left(0.5\right) \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)=\left \lfloor \frac{(n+1)(K+1)}{N+2} \right \rfloor \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ \text{Computing an analytic expression for the inverse of the cumulative distribution function} \\ \text{is not feasible. However, it is possible to calculate the Percentile Point Function by} \\ \text{approximating it to the nearest integer.} $
+    \item $ u:\text{Uniform[0,1] random varible} $
+    \item $ \lfloor{x}\rfloor: \text{Floor function} $
+    \item $ \lceil{x}\rceil: \text{Ceiling Function} $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/hypergeometric.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/10xUqKVoFzUiukuYt6VFwlaetMDTdGulHQPEWl1rJiMA}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+
+
+\newpage
+\section{Logarithmic Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{Logarithmic}\left(p\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in\mathbb{N}_{\geqslant 1}\equiv \left\{1,2,\dots\right\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} p\in\left(0,1\right)\subseteq\mathbb{R} \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=\sum_{i=0}^{x}\frac{1}{-\ln(1 - p)} \frac{p^i}{i} \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=\frac{1}{-\ln(1 - p)} \frac{p^x}{x} \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\arg\min_{x}\left| F_{X}\left(x\right)-u \right| \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=0}^{\infty}x^{k}f_{X}\left(x\right)=\frac{(k - 1)!}{-\ln(1 - p)} \left(\frac{p}{1 - p}\right)^k \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=\frac{1}{-\ln(1 - p)} \frac{p}{1 - p} \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=-\frac{p^2 + p\ln(1-p)}{(1-p)^2(\ln(1-p))^2} \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}} \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=F^{-1}_{X}\left(0.5\right) \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)=1 \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ \text{Computing an analytic expression for the inverse of the cumulative distribution function} \\ \text{is not feasible. However, it is possible to calculate the Percentile Point Function by} \\ \text{approximating it to the nearest integer.} $
+    \item $ u:\text{Uniform[0,1] random varible} $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/logarithmic.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/1N-YXrSfOYkPKwerL5I1QmfxuwbZzVUzgBWTcKzcmLhE}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+
+
+\newpage
+\section{Negative Binomial Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{NegativeBinomial}\left(r,p\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in\mathbb{N}\equiv \left\{0,1,2,\dots\right\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} r\in\mathbb{N}_{\geqslant 1}, p\in\left(0,1\right)\subseteq\mathbb{R} \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=I(p,r,x+1) \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=\binom{r+x-1}{x}p^r(1-p)^x \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\arg\min_{x}\left| F_{X}\left(x\right)-u \right| \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=0}^{\infty}x^{k}f_{X}\left(x\right) \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=\frac{r(1-p)}{p} \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=\frac{r(1-p)}{p^2} \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=\frac{2-p}{\sqrt{r\,(1-p)}} \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=3+\frac{6}{r} + \frac{p^2}{r\,(1-p)} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=F^{-1}_{X}\left(0.5\right) \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)=\lfloor(r-1)\,(1-p)/p\rfloor \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ \text{Computing an analytic expression for the inverse of the cumulative distribution function} \\ \text{is not feasible. However, it is possible to calculate the Percentile Point Function by} \\ \text{approximating it to the nearest integer.} $
+    \item $ u:\text{Uniform[0,1] random varible} $
+    \item $ I\left(x,a,b\right):\text{Regularized incomplete beta function} $
+    \item $ \lfloor{x}\rfloor: \text{Floor function} $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/negative_binomial.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/1xmCWBiswdW5s7SIhwT2nrdQxLFAb6hw73iy52_nvjQE}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+
+
+\newpage
+\section{Poisson Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{Poisson}\left(\lambda\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in\mathbb{N}\equiv \left\{0,1,2,\dots\right\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} \lambda\in\mathbb{R}^{+} \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=e^{-\lambda} \sum_{i=0}^{x} \frac{\lambda^i}{i!}=1-\frac{\gamma(x+1, \lambda)}{x!}=1-P(x-1,\lambda) \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=\frac{\lambda^x e^{-\lambda}}{x!} \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\arg\min_{x}\left| F_{X}\left(x\right)-u \right| \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=0}^{\infty}x^{k}f_{X}\left(x\right) \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=\lambda \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=\lambda \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=\lambda^{-1/2} \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=3+\lambda^{-1} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=\lfloor\lambda+1/3-0.02/\lambda\rfloor \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)=\lfloor\lambda\rfloor \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ \text{Computing an analytic expression for the inverse of the cumulative distribution function} \\ \text{is not feasible. However, it is possible to calculate the Percentile Point Function by} \\ \text{approximating it to the nearest integer.} $
+    \item $ u:\text{Uniform[0,1] random varible} $
+    \item $ \lfloor{x}\rfloor: \text{Floor function} $
+    \item $ P\left(a,x \right)=\frac{\gamma(a,x)}{\Gamma(a)}:\text{Regularized lower incomplete gamma function} $
+    \item $ \gamma\left(a,x \right):\text{Lower incomplete Gamma function} $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/poisson.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/1fwoe70JH5Ve6sETb7AwBdb4eep_h2DeGlpHIWcHeZA8}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+
+
+\newpage
+\section{Uniform Distribution}
+\subsection{Distribution definition}
+\begin{equation*} X\sim\mathrm{Uniform}\left(a,b\right) \end{equation*}
+\subsection{Distribution domain}
+\begin{equation*} x\in \{a,a+1,\dots,b-1,b\} \end{equation*}
+\subsection{Parameters domain and parameters constraints}
+\begin{equation*} a\in\mathbb{N}, b\in\mathbb{N}, a < b \end{equation*}
+\subsection{Cumulative distribution function}
+\begin{equation*} F_{X}\left(x\right)=\frac{x -a+1}{b-a+1} \end{equation*}
+\subsection{Probability density function}
+\begin{equation*} f_{X}\left(x\right)=\frac{1}{b-a+1} \end{equation*}
+\subsection{Percent point function/Sample}
+\begin{equation*} F^{-1}_{X}\left(u\right)=\left\lceil u(b-a+1)+a-1 \right\rceil \end{equation*}
+\subsection{Parametric centered moments}
+\begin{equation*} E[X^k]=\mu'_{k}=\sum_{x=a}^{b}x^{k}f_{X}\left(x\right)=\frac{1}{b-a+1}\sum_{x=a}^{b}x^{k} \end{equation*}
+\subsection{Parametric mean}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=\frac{a+b}{2} \end{equation*}
+\subsection{Parametric variance}
+\begin{equation*} \mathrm{Variance}(X)=(\mu'_{2}-\mu'^{2}_{1})=\frac{(b-a+1)^2-1}{12} \end{equation*}
+\subsection{Parametric skewness}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=0 \end{equation*}
+\subsection{Parametric kurtosis}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=3-\frac{6((b-a+1)^2+1)}{5((b-a+1)^2-1)} \end{equation*}
+\subsection{Parametric median}
+\begin{equation*} \mathrm{Median}(X)=\frac{a+b}{2} \end{equation*}
+\subsection{Parametric mode}
+\begin{equation*} \mathrm{Mode}(X)\in [a, b] \end{equation*}
+\subsection{Additional information and definitions}
+\begin{itemize}
+    \item $ u:\text{Uniform[0,1] random varible} $
+    \item $ \lceil{x}\rceil: \text{Ceiling Function} $
+\end{itemize}
+\subsection{Spreadsheet documents}
+\begin{itemize}
+    \item \href{https://github.com/phitterio/phitter-files/blob/main/discrete/uniform.xlsx}{\color{teal}{Excel file from GitHub repository}}
+    \item \href{https://docs.google.com/spreadsheets/d/1Ahl2ugOKkUCVWzzc_aNHwlA5Af4sHpTwqSiFIyYPsfM}{\color{teal}{Google spreadsheet document}}
+\end{itemize}
+
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{References.bib}
+\end{document}

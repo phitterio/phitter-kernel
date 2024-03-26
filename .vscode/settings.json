@@ -4,6 +4,9 @@
         "./continuous/measurements",
         "./utilities",
         "./discrete",
-        "./discrete/measurements"
+        "./discrete/measurements",
+        "./continuous/statistical_tests",
+        "./continuous/distributions",
+        "./phitter_web/continuous"
     ]
 }

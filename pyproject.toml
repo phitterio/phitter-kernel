@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phitter"
+version = "0.0.1"
+description = "Find the best probability distribution for your dataset"
+authors = [{name = "Sebastián José Herrera Monterrosa", email = "phitter.email@gmail.com"}]
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+keywords = ["scientific", "engineering", "mathematics", "artificial intelligence", "software development", "python modules"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Education",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "numpy>=1.26.4",
+    "scipy>=1.12.0",
+    "plotly>=5.20.0"
+]
+
+[project.urls]
+Homepage = "https://phitter.io"
+Documentation = "https://github.com/phitterio/phitter-kernel"
+Repository = "https://github.com/phitterio/phitter-kernel"
+
+[tool.setuptools]
+packages = ["phitter", "phitter.continuous", "phitter.continuous.continuous_distributions", "phitter.continuous.continuous_measures", "phitter.continuous.continuous_statistical_tests", "phitter.discrete", "phitter.discrete.discrete_distributions", "phitter.discrete.discrete_measures", "phitter.discrete.discrete_statistical_tests"]
