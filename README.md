@@ -92,8 +92,7 @@ phitter_cont.fit()
 
 phitter_cont.plot_histogram()
 ```
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/histogram.png" width="500" />
-
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/histogram.png?raw=true" width="500" />
 
 ### Histogram PDF Dsitributions Plot
 ```python
@@ -104,7 +103,7 @@ phitter_cont.fit()
 
 phitter_cont.plot_histogram_distributions()
 ```
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/histogram_pdf_distributions.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/histogram_pdf_distributions.png?raw=true" width="500" />
 
 ### Histogram PDF Dsitribution Plot
 ```python
@@ -115,7 +114,7 @@ phitter_cont.fit()
 
 phitter_cont.plot_distribution("beta")
 ```
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/histogram_pdf_distribution.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/histogram_pdf_distribution.png?raw=true" width="500" />
 
 ### ECDF Plot
 ```python
@@ -126,7 +125,7 @@ phitter_cont.fit()
 
 phitter_cont.phitter.plot_ecdf()
 ```
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/ecdf.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/ecdf.png?raw=true" width="500" />
 
 ### ECDF Distribution Plot
 ```python
@@ -137,7 +136,7 @@ phitter_cont.fit()
 
 phitter_cont.phitter.plot_ecdf_distribution("beta")
 ```
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/ecdf_distribution.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/ecdf_distribution.png?raw=true" width="500" />
 
 
 ### QQ Plot
@@ -149,7 +148,7 @@ phitter_cont.fit()
 
 phitter_cont.phitter.qq_plot("beta")
 ```
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/qq_plot_distribution.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/qq_plot_distribution.png?raw=true" width="500" />
 
 ### QQ - Regression Plot 
 ```python
@@ -160,7 +159,7 @@ phitter_cont.fit()
 
 phitter_cont.phitter.qq_plot_regression("beta")
 ```
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/tree/main/utilities/multimedia/qq_plot_distribution_regression.png" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/qq_plot_distribution_regression.png?raw=true" width="500" />
 
 
 ### Distributions: Methods and properties 

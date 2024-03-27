@@ -4,7 +4,6 @@ import scipy.optimize
 import scipy.stats
 import typing
 
-
 class BERNOULLI:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
         if discrete_measures is None and parameters is None:
@@ -14,75 +13,57 @@ class BERNOULLI:
         else:
             self.parameters = parameters
         self.p = self.parameters["p"]
-
     @property
     def name(self):
         return "bernoulli"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.bernoulli.cdf(x, self.p)
         return result
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = (self.p**x) * (1 - self.p) ** (1 - x)
         return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.bernoulli.ppf(u, self.p)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return self.p
-
     @property
     def variance(self) -> float:
         return self.p * (1 - self.p)
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return (1 - 2 * self.p) / numpy.sqrt(self.p * (1 - self.p))
-
     @property
     def kurtosis(self) -> float:
         return (6 * self.p * self.p - 6 * self.p + 1) / (self.p * (1 - self.p)) + 3
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return 0 if self.p < 0.5 else 1
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.p > 0 and self.p < 1
         return v1
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         p = discrete_measures.mean
         parameters = {"p": p}
         return parameters
-
 
 class BINOMIAL:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
@@ -94,78 +75,60 @@ class BINOMIAL:
             self.parameters = parameters
         self.n = self.parameters["n"]
         self.p = self.parameters["p"]
-
     @property
     def name(self):
         return "binomial"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.binom.cdf(x, self.n, self.p)
         return result
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.binom.pmf(x, self.n, self.p)
         return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.binom.ppf(u, self.n, self.p)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return self.n * self.p
-
     @property
     def variance(self) -> float:
         return self.n * self.p * (1 - self.p)
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return (1 - self.p - self.p) / numpy.sqrt(self.n * self.p * (1 - self.p))
-
     @property
     def kurtosis(self) -> float:
         return (1 - 6 * self.p * (1 - self.p)) / (self.n * self.p * (1 - self.p)) + 3
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return numpy.floor(self.p * (self.n + 1))
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.p > 0 and self.p < 1
         v2 = self.n > 0
         v3 = type(self.n) == int
         return v1 and v2 and v3
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         p = 1 - discrete_measures.variance / discrete_measures.mean
         n = int(round(discrete_measures.mean / p, 0))
         parameters = {"n": n, "p": p}
         return parameters
-
 
 class GEOMETRIC:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
@@ -176,75 +139,57 @@ class GEOMETRIC:
         else:
             self.parameters = parameters
         self.p = self.parameters["p"]
-
     @property
     def name(self):
         return "geometric"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = 1 - (1 - self.p) ** numpy.floor(x)
         return result
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = self.p * (1 - self.p) ** (x - 1)
         return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.geom.ppf(u, self.p)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(0)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return 1 / self.p
-
     @property
     def variance(self) -> float:
         return (1 - self.p) / (self.p * self.p)
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return (2 - self.p) / numpy.sqrt(1 - self.p)
-
     @property
     def kurtosis(self) -> float:
         return 3 + 6 + (self.p * self.p) / (1 - self.p)
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return 1.0
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.p > 0 and self.p < 1
         return v1
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         p = 1 / discrete_measures.mean
         parameters = {"p": p}
         return parameters
-
 
 class HYPERGEOMETRIC:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
@@ -257,75 +202,58 @@ class HYPERGEOMETRIC:
         self.N = self.parameters["N"]
         self.K = self.parameters["K"]
         self.n = self.parameters["n"]
-
     @property
     def name(self):
         return "hypergeometric"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.hypergeom.cdf(x, self.N, self.n, self.K)
         return result
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.hypergeom.pmf(x, self.N, self.n, self.K)
         return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.hypergeom.ppf(u, self.N, self.n, self.K)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return (self.n * self.K) / self.N
-
     @property
     def variance(self) -> float:
         return ((self.n * self.K) / self.N) * ((self.N - self.K) / self.N) * ((self.N - self.n) / (self.N - 1))
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return ((self.N - 2 * self.K) * numpy.sqrt(self.N - 1) * (self.N - 2 * self.n)) / (numpy.sqrt(self.n * self.K * (self.N - self.K) * (self.N - self.n)) * (self.N - 2))
-
     @property
     def kurtosis(self) -> float:
         return 3 + (1 / (self.n * self.K * (self.N - self.K) * (self.N - self.n) * (self.N - 2) * (self.N - 3))) * (
             (self.N - 1) * self.N * self.N * (self.N * (self.N + 1) - 6 * self.K * (self.N - self.K) - 6 * self.n * (self.N - self.n))
             + 6 * self.n * self.K * (self.N - self.K) * (self.N - self.n) * (5 * self.N - 6)
         )
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return numpy.floor(((self.n + 1) * (self.K + 1)) / (self.N + 2))
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.N > 0 and type(self.N) == int
         v2 = self.K > 0 and type(self.K) == int
         v3 = self.n > 0 and type(self.n) == int
         return v1 and v2 and v3
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], discrete_measures) -> tuple[float]:
             N, K, n = initial_solution
@@ -336,14 +264,12 @@ class HYPERGEOMETRIC:
             eq2 = parametric_variance - discrete_measures.variance
             eq3 = parametric_mode - discrete_measures.mode
             return (eq1, eq2, eq3)
-
         bnds = ((discrete_measures.max, discrete_measures.max, 1), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (discrete_measures.max * 5, discrete_measures.max * 3, discrete_measures.max)
         args = [discrete_measures]
         solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
         parameters = {"N": round(solution.x[0]), "K": round(solution.x[1]), "n": round(solution.x[2])}
         return parameters
-
 
 class LOGARITHMIC:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
@@ -354,86 +280,67 @@ class LOGARITHMIC:
         else:
             self.parameters = parameters
         self.p = self.parameters["p"]
-
     @property
     def name(self):
         return "logarithmic"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.logser.cdf(x, self.p)
         return result
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.logser.pmf(x, self.p)
         return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.logser.ppf(u, self.p)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return -self.p / ((1 - self.p) * numpy.log(1 - self.p))
-
     @property
     def variance(self) -> float:
         return (-self.p * (self.p + numpy.log(1 - self.p))) / ((1 - self.p) ** 2 * numpy.log(1 - self.p) ** 2)
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return (
             -(2 * self.p**2 + 3 * self.p * numpy.log(1 - self.p) + (1 + self.p) * numpy.log(1 - self.p) ** 2)
             / (numpy.log(1 - self.p) * (self.p + numpy.log(1 - self.p)) * numpy.sqrt(-self.p * (self.p + numpy.log(1 - self.p))))
         ) * numpy.log(1 - self.p)
-
     @property
     def kurtosis(self) -> float:
         return -(6 * self.p**3 + 12 * self.p**2 * numpy.log(1 - self.p) + self.p * (4 * self.p + 7) * numpy.log(1 - self.p) ** 2 + (self.p**2 + 4 * self.p + 1) * numpy.log(1 - self.p) ** 3) / (
             self.p * (self.p + numpy.log(1 - self.p)) ** 2
         )
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return 1
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.p > 0 and self.p < 1
         return v1
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         def equations(initial_solution: tuple[float], discrete_measures) -> tuple[float]:
             p = initial_solution
             parametric_mean = -p / ((1 - p) * numpy.log(1 - p))
             eq1 = parametric_mean - discrete_measures.mean
             return eq1
-
         solution = scipy.optimize.least_squares(equations, 0.5, bounds=(0, 1), args=([discrete_measures]))
         parameters = {"p": solution.x[0]}
         return parameters
-
 
 class NEGATIVE_BINOMIAL:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
@@ -445,78 +352,60 @@ class NEGATIVE_BINOMIAL:
             self.parameters = parameters
         self.r = self.parameters["r"]
         self.p = self.parameters["p"]
-
     @property
     def name(self):
         return "negative_binomial"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.beta.cdf(self.p, self.r, x + 1)
         return result
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.nbinom.pmf(x, self.r, self.p)
         return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.nbinom.ppf(u, self.r, self.p)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return (self.r * (1 - self.p)) / self.p
-
     @property
     def variance(self) -> float:
         return (self.r * (1 - self.p)) / (self.p * self.p)
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return (2 - self.p) / numpy.sqrt(self.r * (1 - self.p))
-
     @property
     def kurtosis(self) -> float:
         return 6 / self.r + (self.p * self.p) / (self.r * (1 - self.p)) + 3
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return numpy.floor(((self.r - 1) * (1 - self.p)) / self.p)
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.p > 0 and self.p < 1
         v2 = self.r > 0
         v3 = type(self.r) == int
         return v1 and v2 and v3
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         p = discrete_measures.mean / discrete_measures.variance
         r = round(discrete_measures.mean * p / (1 - p))
         parameters = {"r": r, "p": p}
         return parameters
-
 
 class POISSON:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
@@ -527,75 +416,57 @@ class POISSON:
         else:
             self.parameters = parameters
         self.lambda_ = self.parameters["lambda"]
-
     @property
     def name(self):
         return "poisson"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.poisson.cdf(x, self.lambda_)
         return result
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.poisson.pmf(x, self.lambda_)
         return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = scipy.stats.poisson.ppf(u, self.lambda_)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return self.lambda_
-
     @property
     def variance(self) -> float:
         return self.lambda_
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return self.lambda_**-0.5
-
     @property
     def kurtosis(self) -> float:
         return 1 / self.lambda_ + 3
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return numpy.floor(self.lambda_)
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.lambda_ > 0
         return v1
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         lambda_ = discrete_measures.mean
         parameters = {"lambda": lambda_}
         return parameters
-
 
 class UNIFORM:
     def __init__(self, discrete_measures, parameters: dict[str, int | float] = None):
@@ -607,78 +478,60 @@ class UNIFORM:
             self.parameters = parameters
         self.a = self.parameters["a"]
         self.b = self.parameters["b"]
-
     @property
     def name(self):
         return "uniform"
-
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         return (x - self.a + 1) / (self.b - self.a + 1)
-
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         if type(x) == int:
             return 1 / (self.b - self.a + 1)
         return numpy.full(len(x), 1 / (self.b - self.a + 1))
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         result = numpy.ceil(u * (self.b - self.a + 1) + self.a - 1)
         return result
-
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
             numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
-
     def non_central_moments(self, k: int) -> float | None:
         return None
-
     def central_moments(self, k: int) -> float | None:
         return None
-
     @property
     def mean(self) -> float:
         return (self.a + self.b) / 2
-
     @property
     def variance(self) -> float:
         return ((self.b - self.a + 1) * (self.b - self.a + 1) - 1) / 12
-
     @property
     def standard_deviation(self) -> float:
         return numpy.sqrt(self.variance)
-
     @property
     def skewness(self) -> float:
         return 0
-
     @property
     def kurtosis(self) -> float:
         return ((-6 / 5) * ((self.b - self.a + 1) * (self.b - self.a + 1) + 1)) / ((self.b - self.a + 1) * (self.b - self.a + 1) - 1) + 3
-
     @property
     def median(self) -> float:
         return self.ppf(0.5)
-
     @property
     def mode(self) -> float:
         return None
-
     @property
     def num_parameters(self) -> int:
         return len(self.parameters)
-
     def parameter_restrictions(self) -> bool:
         v1 = self.b > self.a
         v2 = type(self.b) == int
         v3 = type(self.a) == int
         return v1 and v2 and v3
-
     def get_parameters(self, discrete_measures) -> dict[str, float | int]:
         a = round(discrete_measures.min)
         b = round(discrete_measures.max)
         parameters = {"a": a, "b": b}
         return parameters
-
 
 ALL_DISCRETE_DISTRIBUTIONS = {
     "bernoulli": BERNOULLI,
@@ -690,7 +543,6 @@ ALL_DISCRETE_DISTRIBUTIONS = {
     "poisson": POISSON,
     "uniform": UNIFORM,
 }
-
 
 class DISCRETE_MEASURES:
     def __init__(
@@ -718,19 +570,14 @@ class DISCRETE_MEASURES:
         self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.length)
         self.ecdf_frequencies = numpy.cumsum(self.densities_frequencies)
         self.qq_arr = (numpy.arange(1, self.length + 1) - 0.5) / self.length
-
     def __str__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
-
     def __repr__(self) -> str:
         return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
-
     def get_dict(self) -> str:
         return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
-
     def critical_value_chi2(self, freedom_degrees):
         return scipy.stats.chi2.ppf(self.confidence_level, freedom_degrees)
-
 
 def evaluate_discrete_test_chi_square(distribution, discrete_measures):
     N = discrete_measures.length
@@ -744,7 +591,6 @@ def evaluate_discrete_test_chi_square(distribution, discrete_measures):
     result_test_chi2 = {"test_statistic": statistic_chi2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_chi2
 
-
 def evaluate_discrete_test_kolmogorov_smirnov(distribution, discrete_measures):
     N = discrete_measures.length
     Fn = distribution.cdf(discrete_measures.data)
@@ -755,7 +601,6 @@ def evaluate_discrete_test_kolmogorov_smirnov(distribution, discrete_measures):
     rejected = statistic_ks >= critical_value
     result_test_ks = {"test_statistic": statistic_ks, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_ks
-
 
 class PHITTER_DISCRETE:
     def __init__(
@@ -779,7 +624,6 @@ class PHITTER_DISCRETE:
         self.sorted_distributions_sse = None
         self.not_rejected_distributions = None
         self.distribution_instances = None
-
     def test(self, test_function, label: str, distribution):
         validation_test = False
         try:
@@ -797,7 +641,6 @@ class PHITTER_DISCRETE:
         except:
             self.distribution_results[label] = self.none_results
         return validation_test
-
     def process_distribution(self, distribution_name: str) -> tuple[str, dict, typing.Any] | None:
         distribution_class = ALL_DISCRETE_DISTRIBUTIONS[distribution_name]
         validate_estimation = True
@@ -821,7 +664,6 @@ class PHITTER_DISCRETE:
                 self.distribution_results["n_test_null"] = int(self.distribution_results["chi_square"]["rejected"] == None) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == None)
                 return distribution_name, self.distribution_results, distribution
         return None
-
     def fit(self, n_workers: int = 1):
         if n_workers <= 0:
             raise Exception("n_workers must be greater than 1")
@@ -834,7 +676,6 @@ class PHITTER_DISCRETE:
         self.sorted_distributions_sse = {distribution: results for distribution, results, _ in sorted(processing_results, key=lambda x: (-x[1]["n_test_passed"], x[1]["sse"]))}
         self.not_rejected_distributions = {distribution: results for distribution, results in self.sorted_distributions_sse.items() if results["n_test_passed"] > 0}
         self.distribution_instances = {distribution: instance for distribution, _, instance in processing_results}
-
     def plot_histogram(
         self,
         plot_title: str,
@@ -862,7 +703,6 @@ class PHITTER_DISCRETE:
             bargap=plot_bargap,
         )
         fig.show()
-
     def plot_histogram_distributions_pmf(
         self,
         n_distributions: int,
@@ -905,7 +745,6 @@ class PHITTER_DISCRETE:
             bargap=plot_bargap,
         )
         fig.show()
-
     def plot_distribution_pmf(
         self,
         distribution_name: str,
@@ -949,7 +788,6 @@ class PHITTER_DISCRETE:
             bargap=plot_bargap,
         )
         fig.show()
-
     def plot_ecdf(
         self,
         plot_title: str,
@@ -979,7 +817,6 @@ class PHITTER_DISCRETE:
             bargap=plot_bargap,
         )
         fig.show()
-
     def plot_ecdf_distribution(
         self,
         distribution_name: str,
@@ -1029,7 +866,6 @@ class PHITTER_DISCRETE:
             bargap=plot_empirical_bargap,
         )
         fig.show()
-
     def qq_plot(
         self,
         distribution_name: str,
@@ -1062,7 +898,6 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
         fig.show()
-
     def qq_plot_regression(
         self,
         distribution_name: str,
@@ -1101,3 +936,4 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
         fig.show()
+

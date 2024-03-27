@@ -184,24 +184,25 @@ class JOHNSON_SB:
                Estimation of parameters of Johnson's system of distributions.
                Journal of Modern Applied Statistical Methods, 10(2), 9.
         """
-        # ## Percentiles
-        # z = 0.5384
-        # percentiles = [scipy.stats.norm.cdf(0.5384 * i) for i in range(-3, 4, 2)]
-        # x1, x2, x3, x4 = [scipy.stats.scoreatpercentile(continuous_measures.data, 100 * x) for x in percentiles]
+        ## Percentiles
+        z = 0.5384
+        percentiles = [scipy.stats.norm.cdf(0.5384 * i) for i in range(-3, 4, 2)]
+        x1, x2, x3, x4 = [scipy.stats.scoreatpercentile(continuous_measures.data, 100 * x) for x in percentiles]
 
-        # ## Calculation m,n,p
-        # m = x4 - x3
-        # n = x2 - x1
-        # p = x3 - x2
+        ## Calculation m,n,p
+        m = x4 - x3
+        n = x2 - x1
+        p = x3 - x2
 
-        # ## Calculation distribution parameters
-        # lambda_ = (p * numpy.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2-4))) / (p ** 2 / (m * n) - 1)
-        # xi_ = 0.5 * (x3 + x2)-0.5 * lambda_ + p * (p / n - p / m) / (2 * (p ** 2 / (m * n) - 1))
-        # delta_ = z / numpy.acosh(0.5 *  numpy.sqrt((1 + p / m) * (1 + p / n)))
-        # gamma_ = delta_ * numpy.asinh((p / n - p / m) * numpy.sqrt((1 + p / m) * (1 + p / n)-4) / (2 * (p ** 2 / (m * n) - 1)))
+        ## Calculation distribution parameters
+        lambda_ = (p * numpy.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2 - 4))) / (p**2 / (m * n) - 1)
+        xi_ = 0.5 * (x3 + x2) - 0.5 * lambda_ + p * (p / n - p / m) / (2 * (p**2 / (m * n) - 1))
+        delta_ = z / numpy.arccosh(0.5 * numpy.sqrt((1 + p / m) * (1 + p / n)))
+        gamma_ = delta_ * numpy.arcsinh((p / n - p / m) * numpy.sqrt((1 + p / m) * (1 + p / n) - 4) / (2 * (p**2 / (m * n) - 1)))
 
-        # parameters = {"xi": xi_, "lambda": lambda_, "gamma": gamma_, "delta": delta_}
+        parameters = {"xi": xi_, "lambda": lambda_, "gamma": gamma_, "delta": delta_}
 
+        ## Scipy parameters
         scipy_params = scipy.stats.johnsonsb.fit(continuous_measures.data)
         parameters = {"xi": scipy_params[2], "lambda": scipy_params[3], "gamma": scipy_params[0], "delta": scipy_params[1]}
         return parameters
