@@ -10,18 +10,19 @@ class DAGUM:
     https://phitter.io/distributions/continuous/dagum
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
+    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
         """
         Initializes the DAGUM distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters DAGUM distribution: {"a": *, "b": *, "p": *}
         """
-        if continuous_measures is None and parameters is None:
+        if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
-
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
 
         self.a = self.parameters["a"]
         self.b = self.parameters["b"]
@@ -30,6 +31,10 @@ class DAGUM:
     @property
     def name(self):
         return "dagum"
+
+    @property
+    def parameters_example(self) -> dict[str, int | float]:
+        return {"a": 5, "b": 56, "p": 1}
 
     def cdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
@@ -203,13 +208,14 @@ class DAGUM:
             parametric_variance = -(mu(1) ** 2) + mu(2)
             # parametric_skewness = (2 * mu(1) ** 3 - 3 * mu(1) * mu(2) + mu(3)) / (-(mu(1) ** 2) + mu(2)) ** 1.5
             # parametric_kurtosis = (-3 * mu(1) ** 4 + 6 * mu(1) ** 2 * mu(2) -4 * mu(1) * mu(3) + mu(4)) / (-(mu(1) ** 2) + mu(2)) ** 2
-            parametric_median = b * ((2 ** (1 / p)) - 1) ** (-1 / a)
-            # parametric_mode = b * ((a * p - 1) / (a + 1)) ** (1 / a)
+            # parametric_median = b * ((2 ** (1 / p)) - 1) ** (-1 / a)
+            parametric_mode = b * ((a * p - 1) / (a + 1)) ** (1 / a)
 
             ## System Equations
             eq1 = parametric_mean - continuous_measures.mean
             eq2 = parametric_variance - continuous_measures.variance
-            eq3 = parametric_median - continuous_measures.median
+            eq3 = parametric_mode - continuous_measures.mode
+            # eq3 = parametric_median - continuous_measures.median
 
             return (eq1, eq2, eq3)
 
@@ -227,9 +233,6 @@ class DAGUM:
 
         sse_sc = sse(parameters_sc)
         sse_ls = sse(parameters_ls)
-
-        # print(" * ", sse_sc)
-        # print(" - ", sse_ls)
 
         if a0 <= 2:
             return parameters_sc
@@ -263,7 +266,7 @@ if __name__ == "__main__":
     distribution = DAGUM(continuous_measures)
 
     print(f"{distribution.name} distribution")
-    print(f"Parameters: {distribution.get_parameters(continuous_measures)}")
+    print(f"Parameters: {distribution.parameters}")
     print(f"CDF: {distribution.cdf(continuous_measures.mean)} {distribution.cdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PDF: {distribution.pdf(continuous_measures.mean)} {distribution.pdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PPF: {distribution.ppf(0.5)} {distribution.ppf(numpy.array([0.5, 0.5]))} - V: {distribution.cdf(distribution.ppf(0.5))}")

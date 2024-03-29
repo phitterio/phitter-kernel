@@ -10,24 +10,29 @@ class T_STUDENT:
     https://phitter.io/distributions/continuous/t_student    Hand - book on  STATISTICAL  DISTRIBUTIONS  for  experimentalists (pag.143) ...  Christian Walck
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
+    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
         """
         Initializes the T_STUDENT distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters T_STUDENT distribution: {"df": *}
         """
-        if continuous_measures is None and parameters is None:
+        if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
-
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
 
         self.df = self.parameters["df"]
 
     @property
     def name(self):
         return "t_student"
+
+    @property
+    def parameters_example(self) -> dict[str, int | float]:
+        return {"df": 8}
 
     def cdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
@@ -45,20 +50,14 @@ class T_STUDENT:
         result = (1 / (numpy.sqrt(self.df) * scipy.special.beta(0.5, self.df / 2))) * (1 + x * x / self.df) ** (-(self.df + 1) / 2)
         return result
 
-    def ppf(self, u):
-        # result = scipy.stats.t.ppf(u, self.df)
-        if u >= 0.5:
-            result = numpy.sqrt(self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u)))
-            return result
-        else:
-            result = -numpy.sqrt(self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * min(u, 1 - u)))
-            return result
-
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u => PPF[u] = x
         """
-        result = numpy.sqrt(self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u]))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u])))
+        # result = scipy.stats.t.ppf(u, self.df)
+        result = numpy.sign(u - 0.5) * numpy.sqrt(
+            self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u]))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u]))
+        )
         return result
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
@@ -160,11 +159,8 @@ class T_STUDENT:
         =======
         parameters: {"df": *}
         """
-
         df = 2 * continuous_measures.variance / (continuous_measures.variance - 1)
-
         parameters = {"df": df}
-
         return parameters
 
 
@@ -188,7 +184,7 @@ if __name__ == "__main__":
     distribution = T_STUDENT(continuous_measures)
 
     print(f"{distribution.name} distribution")
-    print(f"Parameters: {distribution.get_parameters(continuous_measures)}")
+    print(f"Parameters: {distribution.parameters}")
     print(f"CDF: {distribution.cdf(continuous_measures.mean)} {distribution.cdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PDF: {distribution.pdf(continuous_measures.mean)} {distribution.pdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PPF: {distribution.ppf(0.5)} {distribution.ppf(numpy.array([0.5, 0.5]))} - V: {distribution.cdf(distribution.ppf(0.5))}")
@@ -200,11 +196,3 @@ if __name__ == "__main__":
     print(f"kurtosis: {distribution.kurtosis} - {continuous_measures.kurtosis}")
     print(f"median: {distribution.median} - {continuous_measures.median}")
     print(f"mode: {distribution.mode} - {continuous_measures.mode}")
-
-    print(distribution.cdf(-3))
-    print(distribution.pdf(-3))
-
-    print(distribution.ppf(0.007627123509096105))
-    print(distribution.ppf(0.9))
-
-    print(scipy.stats.t.fit((continuous_measures.data)))

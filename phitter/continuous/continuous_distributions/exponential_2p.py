@@ -8,18 +8,19 @@ class EXPONENTIAL_2P:
     https://phitter.io/distributions/continuous/exponential_2p
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
+    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
         """
         Initializes the EXPONENTIAL_2P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters EXPONENTIAL_2P distribution: {"lambda": *, "loc": *}
         """
-        if continuous_measures is None and parameters is None:
+        if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
-
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
 
         self.lambda_ = self.parameters["lambda"]
         self.loc = self.parameters["loc"]
@@ -27,6 +28,10 @@ class EXPONENTIAL_2P:
     @property
     def name(self):
         return "exponential_2p"
+
+    @property
+    def parameters_example(self) -> dict[str, int | float]:
+        return {"lambda": 0.01, "loc": 50}
 
     def cdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """

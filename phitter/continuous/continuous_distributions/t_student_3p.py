@@ -10,18 +10,19 @@ class T_STUDENT_3P:
     https://phitter.io/distributions/continuous/t_student_3p
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
+    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
         """
         Initializes the T_STUDENT_3P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters T_STUDENT_3P distribution: {"df": *, "loc": *, "scale": *}
         """
-        if continuous_measures is None and parameters is None:
+        if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
-
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
 
         self.df = self.parameters["df"]
         self.loc = self.parameters["loc"]
@@ -30,6 +31,10 @@ class T_STUDENT_3P:
     @property
     def name(self):
         return "t_student_3p"
+
+    @property
+    def parameters_example(self) -> dict[str, int | float]:
+        return {"df": 15, "loc": 100, "scale": 3}
 
     def cdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
@@ -156,10 +161,14 @@ class T_STUDENT_3P:
         =======
         parameters: {"df": *, "loc": *, "scale": *}
         """
-
+        ## Scipy parameters
         scipy_params = scipy.stats.t.fit(continuous_measures.data)
         parameters = {"df": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
 
+        # loc = continuous_measures.mean
+        # df = 4 + 6 / (continuous_measures.kurtosis - 3)
+        # scale = numpy.sqrt(continuous_measures.variance * (df + 2) / df)
+        # parameters = {"df": df, "loc": loc, "scale": scale}
         return parameters
 
 
@@ -183,7 +192,15 @@ if __name__ == "__main__":
     distribution = T_STUDENT_3P(continuous_measures)
 
     print(f"{distribution.name} distribution")
-    print(f"Parameters: {distribution.get_parameters(continuous_measures)}")
+    print(f"Parameters: {distribution.parameters}")
     print(f"CDF: {distribution.cdf(continuous_measures.mean)} {distribution.cdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PDF: {distribution.pdf(continuous_measures.mean)} {distribution.pdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PPF: {distribution.ppf(0.5)} {distribution.ppf(numpy.array([0.3, 0.7]))} - V: {distribution.cdf(distribution.ppf(0.5))}")
+    print(f"SAMPLE: {distribution.sample(5)}")
+    print(f"\nSTATS")
+    print(f"mean: {distribution.mean} - {continuous_measures.mean}")
+    print(f"variance: {distribution.variance} - {continuous_measures.variance}")
+    print(f"skewness: {distribution.skewness} - {continuous_measures.skewness}")
+    print(f"kurtosis: {distribution.kurtosis} - {continuous_measures.kurtosis}")
+    print(f"median: {distribution.median} - {continuous_measures.median}")
+    print(f"mode: {distribution.mode} - {continuous_measures.mode}")

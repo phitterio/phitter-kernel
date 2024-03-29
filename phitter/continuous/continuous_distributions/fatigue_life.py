@@ -11,18 +11,19 @@ class FATIGUE_LIFE:
     https://phitter.io/distributions/continuous/fatigue_life
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
+    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
         """
         Initializes the FATIGUE_LIFE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters FATIGUE_LIFE distribution: {"gamma": *, "loc": *, "scale": *}
         """
-        if continuous_measures is None and parameters is None:
+        if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
-
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
 
         self.gamma = self.parameters["gamma"]
         self.loc = self.parameters["loc"]
@@ -31,6 +32,10 @@ class FATIGUE_LIFE:
     @property
     def name(self):
         return "fatigue_life"
+
+    @property
+    def parameters_example(self) -> dict[str, int | float]:
+        return {"gamma": 5, "loc": 3, "scale": 9}
 
     def cdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
@@ -199,7 +204,7 @@ if __name__ == "__main__":
     distribution = FATIGUE_LIFE(continuous_measures)
 
     print(f"{distribution.name} distribution")
-    print(f"Parameters: {distribution.get_parameters(continuous_measures)}")
+    print(f"Parameters: {distribution.parameters}")
     print(f"CDF: {distribution.cdf(continuous_measures.mean)} {distribution.cdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PDF: {distribution.pdf(continuous_measures.mean)} {distribution.pdf(numpy.array([continuous_measures.mean, continuous_measures.mean]))}")
     print(f"PPF: {distribution.ppf(0.5)} {distribution.ppf(numpy.array([0.5, 0.5]))} - V: {distribution.cdf(distribution.ppf(0.5))}")

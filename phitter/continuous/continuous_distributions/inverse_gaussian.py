@@ -10,18 +10,19 @@ class INVERSE_GAUSSIAN:
     https://phitter.io/distributions/continuous/inverse_gaussian
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None):
+    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
         """
         Initializes the INVERSE_GAUSSIAN distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters INVERSE_GAUSSIAN distribution: {"mu": *, "lambda": *}
         """
-        if continuous_measures is None and parameters is None:
+        if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
-
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
 
         self.mu = self.parameters["mu"]
         self.lambda_ = self.parameters["lambda"]
@@ -29,6 +30,10 @@ class INVERSE_GAUSSIAN:
     @property
     def name(self):
         return "inverse_gaussian"
+
+    @property
+    def parameters_example(self) -> dict[str, int | float]:
+        return {"mu": 10, "lambda": 19}
 
     def cdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """

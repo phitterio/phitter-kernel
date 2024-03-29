@@ -162,7 +162,7 @@ class PHITTER_CONTINUOUS:
             is_visible = True if idx + 1 <= n_distributions_visible else "legendonly"
             is_rejected = "✅" if distribution_name in self.not_rejected_distributions else ""
             scatter_name = f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"
-            scatter_line = dict(color=px.colors.qualitative.G10[idx], width=2) if idx < len(px.colors.qualitative.G10) else dict(width=2)
+            scatter_line = dict(color=px.colors.qualitative.G10[idx], width=2) if idx < len(px.colors.qualitative.G10) else dict(width=3)
             try:
                 fig.add_trace(go.Scatter(x=x_plot, y=y_plot, mode="lines", visible=is_visible, name=scatter_name, line=scatter_line))
             except Exception:

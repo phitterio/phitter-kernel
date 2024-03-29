@@ -11,7 +11,7 @@
     Phitter analyzes datasets and determines the best analytical probability distributions that represent them. The Phitter kernel studies over 80 probability distributions, both continuous and discrete, 3 goodness-of-fit tests, and interactive visualizations. For each selected probability distribution, a standard modeling guide is provided along with spreadsheets that detail the methodology for using the chosen distribution in data science, operations research, and artificial intelligence.
 </p>
 <p>
-    IIn this repository is the implementation of the python library and the kernel of <a href="https://phitter.io">Phitter Web</a>
+    In this repository is the implementation of the python library and the kernel of <a href="https://phitter.io">Phitter Web</a>
 </p>
 
 ## Installation
@@ -173,7 +173,6 @@ distribution.cdf(752) # -> 0.6242831129533498
 distribution.pdf(388) # -> 0.0002342575686629883
 distribution.ppf(0.623) # -> 751.5512889417921
 distribution.sample(2) # -> [550.800114   514.85410326]
-distribution.sample(2) # -> [622.94263263 827.21838464]
 
 ## STATS
 distribution.mean # -> 700.0
