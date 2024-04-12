@@ -174,7 +174,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_exponential_2P.txt"
+    path = "../continuous_distributions_sample/sample_exponential_2p.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
     distribution = EXPONENTIAL_2P(continuous_measures)

@@ -7,12 +7,29 @@
     </picture>
 </p>
 
+<p align="center">
+<a href="https://pypi.org/project/phitter" target="_blank">
+    <img src="https://img.shields.io/pypi/dm/phitter.svg" alt="Supported Python versions">
+</a>
+<a href="https://pypi.org/project/phitter" target="_blank">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="Supported Python versions">
+</a>
+<a href="https://pypi.org/project/phitter" target="_blank">
+    <img src="https://img.shields.io/pypi/pyversions/phitter" alt="Supported Python versions">
+</a>
+</p>
+
+
+
 <p>
     Phitter analyzes datasets and determines the best analytical probability distributions that represent them. The Phitter kernel studies over 80 probability distributions, both continuous and discrete, 3 goodness-of-fit tests, and interactive visualizations. For each selected probability distribution, a standard modeling guide is provided along with spreadsheets that detail the methodology for using the chosen distribution in data science, operations research, and artificial intelligence.
 </p>
 <p>
-    In this repository is the implementation of the python library and the kernel of <a href="https://phitter.io">Phitter Web</a>
+    This repository contains the implementation of the python library and the kernel of <a href="https://phitter.io">Phitter Web</a>
 </p>
+
+
+
 
 ## Installation
 
@@ -26,6 +43,11 @@ pip install phitter
 ```
 
 ## Usage
+
+<a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/tests/distributions/continuous_distributions.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+
 
 ### General
 ```python
@@ -123,7 +145,7 @@ data: list[int | float] = [...]
 phitter_cont = phitter.PHITTER(data)
 phitter_cont.fit()
 
-phitter_cont.phitter.plot_ecdf()
+phitter_cont.plot_ecdf()
 ```
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/ecdf.png?raw=true" width="500" />
 
@@ -134,7 +156,7 @@ data: list[int | float] = [...]
 phitter_cont = phitter.PHITTER(data)
 phitter_cont.fit()
 
-phitter_cont.phitter.plot_ecdf_distribution("beta")
+phitter_cont.plot_ecdf_distribution("beta")
 ```
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/ecdf_distribution.png?raw=true" width="500" />
 
@@ -146,7 +168,7 @@ data: list[int | float] = [...]
 phitter_cont = phitter.PHITTER(data)
 phitter_cont.fit()
 
-phitter_cont.phitter.qq_plot("beta")
+phitter_cont.qq_plot("beta")
 ```
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/qq_plot_distribution.png?raw=true" width="500" />
 
@@ -157,7 +179,7 @@ data: list[int | float] = [...]
 phitter_cont = phitter.PHITTER(data)
 phitter_cont.fit()
 
-phitter_cont.phitter.qq_plot_regression("beta")
+phitter_cont.qq_plot_regression("beta")
 ```
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/utilities/multimedia/qq_plot_distribution_regression.png?raw=true" width="500" />
 
@@ -185,7 +207,9 @@ distribution.mode # -> 733.3333333333333
 ```
 
 ## Continuous Distributions
+#### [1. PDF File Documentation Continuous Distributions](https://github.com/phitterio/phitter-kernel/blob/main/distributions_documentation/continuous/document_continuous_distributions/phitter_continuous_distributions.pdf)
 
+#### 2. Phitter Online Interactive Documentation
 <div>
     <a href="https://phitter.io/distributions/continuous/alpha" target="_blank">• ALPHA</a>
     <a href="https://phitter.io/distributions/continuous/arcsine" target="_blank">• ARCSINE</a>
@@ -263,7 +287,9 @@ distribution.mode # -> 733.3333333333333
 </div>
 
 ## Discrete Distributions
+#### [1. PDF File Documentation Discrete Distributions](https://github.com/phitterio/phitter-kernel/blob/main/distributions_documentation/discrete/document_discrete_distributions/phitter_discrete_distributions.pdf)
 
+#### 2. Phitter Online Interactive Documentation
 <div style="display: flex; flex-wrap: wrap">
     <a href="https://phitter.io/distributions/discrete/bernoulli" target="_blank">• BERNOULLI</a>
     <a href="https://phitter.io/distributions/discrete/binomial" target="_blank">• BINOMIAL</a>
@@ -274,3 +300,4 @@ distribution.mode # -> 733.3333333333333
     <a href="https://phitter.io/distributions/discrete/poisson" target="_blank">• POISSON</a>
     <a href="https://phitter.io/distributions/discrete/uniform" target="_blank">• UNIFORM</a>
 </div>
+

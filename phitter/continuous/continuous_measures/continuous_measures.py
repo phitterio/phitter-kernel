@@ -31,7 +31,7 @@ class CONTINUOUS_MEASURES:
         self.confidence_level = confidence_level
         self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.length)
         self.critical_value_ad = self.ad_critical_value(self.confidence_level, self.length)
-        self.ecdf_frequencies = numpy.arange(1, len(self.data_unique) + 1) / len(self.data_unique)
+        self.ecdf_frequencies = numpy.array([self.data[self.data <= x].size / self.data.size for x in self.data_unique])
         self.qq_arr = (numpy.arange(1, self.length + 1) - 0.5) / self.length
 
     def __str__(self) -> str:

@@ -239,7 +239,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_burr_4P.txt"
+    path = "../continuous_distributions_sample/sample_burr_4p.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
     distribution = BURR_4P(continuous_measures)

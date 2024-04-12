@@ -215,7 +215,7 @@ class DAGUM:
             eq1 = parametric_mean - continuous_measures.mean
             eq2 = parametric_variance - continuous_measures.variance
             eq3 = parametric_mode - continuous_measures.mode
-            # eq3 = parametric_median - continuous_measures.median
+            # eq2 = parametric_median - continuous_measures.median
 
             return (eq1, eq2, eq3)
 
