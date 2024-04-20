@@ -14,6 +14,7 @@ class CAUCHY:
         """
         Initializes the CAUCHY distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters CAUCHY distribution: {"x0": *, "gamma": *}
+        https://phitter.io/distributions/continuous/cauchy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -145,7 +146,7 @@ class CAUCHY:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -164,7 +165,7 @@ class CAUCHY:
         # solution = scipy.optimize.minimize(objective, [x0_ini, gamma_ini], method="SLSQP", bounds = [(-numpy.inf, numpy.inf),(0,numpy.inf)])
         # print(solution)
 
-        scipy_params = scipy.stats.cauchy.fit(continuous_measures.data)
+        scipy_params = scipy.stats.cauchy.fit(continuous_measures.data_to_fit)
 
         ## Results
         parameters = {"x0": scipy_params[0], "gamma": scipy_params[1]}

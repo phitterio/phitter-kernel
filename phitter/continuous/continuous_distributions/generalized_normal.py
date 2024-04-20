@@ -19,6 +19,7 @@ class GENERALIZED_NORMAL:
         """
         Initializes the GENERALIZED_NORMAL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GENERALIZED_NORMAL distribution: {"beta": *, "mu": *, "alpha": *}
+        https://phitter.io/distributions/continuous/generalized_normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -154,13 +155,13 @@ class GENERALIZED_NORMAL:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
         parameters: {"beta": *, "mu": *, "alpha": *}
         """
-        scipy_params = scipy.stats.gennorm.fit(continuous_measures.data)
+        scipy_params = scipy.stats.gennorm.fit(continuous_measures.data_to_fit)
         parameters = {"beta": scipy_params[0], "mu": scipy_params[1], "alpha": scipy_params[2]}
         return parameters
 

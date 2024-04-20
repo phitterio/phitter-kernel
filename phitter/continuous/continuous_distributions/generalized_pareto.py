@@ -14,6 +14,7 @@ class GENERALIZED_PARETO:
         """
         Initializes the GENERALIZED_PARETO distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GENERALIZED_PARETO distribution: {"c": *, "mu": *, "sigma": *}
+        https://phitter.io/distributions/continuous/generalized_pareto
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -153,7 +154,7 @@ class GENERALIZED_PARETO:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -186,15 +187,15 @@ class GENERALIZED_PARETO:
         ## but it's not so much when c < 0.
         ## The solution of system of equation is so good. The problem is that
         ## the continuous_measures of genpareto distributions is not defined from c >  1 / 4 (kurtosis)
-        scipy_params = scipy.stats.genpareto.fit(continuous_measures.data)
+        scipy_params = scipy.stats.genpareto.fit(continuous_measures.data_to_fit)
         parameters = {"c": scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}
 
         if parameters["c"] < 0:
-            scipy_params = scipy.stats.genpareto.fit(continuous_measures.data)
+            scipy_params = scipy.stats.genpareto.fit(continuous_measures.data_to_fit)
             c0 = scipy_params[0]
             x0 = [c0, continuous_measures.min, 1]
-            b = ((-numpy.inf, -numpy.inf, 0), (numpy.inf, continuous_measures.min, numpy.inf))
-            solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([continuous_measures]))
+            bounds = ((-numpy.inf, -numpy.inf, 0), (numpy.inf, continuous_measures.min, numpy.inf))
+            solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures]))
             parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
 
             ## When c < 0 the domain of of x is [mu, mu - sigma / c]

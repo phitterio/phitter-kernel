@@ -14,6 +14,7 @@ class GAMMA:
         """
         Initializes the GAMMA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GAMMA distribution: {"alpha": *, "beta": *}
+        https://phitter.io/distributions/continuous/gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -173,7 +174,7 @@ class GAMMA:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======

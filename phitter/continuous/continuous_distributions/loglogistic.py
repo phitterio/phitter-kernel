@@ -14,6 +14,7 @@ class LOGLOGISTIC:
         """
         Initializes the LOGLOGISTIC distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters LOGLOGISTIC distribution: {"alpha": *, "beta": *}
+        https://phitter.io/distributions/continuous/loglogistic
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -167,7 +168,7 @@ class LOGLOGISTIC:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -189,13 +190,13 @@ class LOGLOGISTIC:
 
         #     return (eq1, eq2)
 
-        # bnds = ((0, 0), (numpy.inf, numpy.inf))
+        # bounds = ((0, 0), (numpy.inf, numpy.inf))
         # x0 = (continuous_measures.mean, 1 / continuous_measures.variance ** 0.5)
         # args = (continuous_measures.mean, continuous_measures.variance, continuous_measures.skewness)
-        # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
         # parameters = {"alpha": solution.x[0], "beta": solution.x[1]}
 
-        scipy_params = scipy.stats.fisk.fit(continuous_measures.data)
+        scipy_params = scipy.stats.fisk.fit(continuous_measures.data_to_fit)
         parameters = {"alpha": scipy_params[2], "beta": scipy_params[0]}
 
         return parameters
@@ -255,10 +256,10 @@ if __name__ == "__main__":
         return (eq1, eq2)
 
     ti = time.time()
-    bnds = ((0, 0), (numpy.inf, numpy.inf))
+    bounds = ((0, 0), (numpy.inf, numpy.inf))
     x0 = (continuous_measures.mean, continuous_measures.variance)
     args = (continuous_measures.mean, continuous_measures.variance, continuous_measures.skewness)
-    solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+    solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
     parameters = {"alpha": solution.x[0], "beta": solution.x[1]}
     print(parameters)
     print("Solve equations time: ", time.time() - ti)

@@ -15,6 +15,7 @@ class NON_CENTRAL_F:
         """
         Initializes the NON_CENTRAL_F distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters NON_CENTRAL_F distribution: {"lambda": *, "n1": *, "n2": *}
+        https://phitter.io/distributions/continuous/non_central_f
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -226,7 +227,7 @@ class NON_CENTRAL_F:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -256,10 +257,10 @@ class NON_CENTRAL_F:
 
             return (eq1, eq2, eq3)
 
-        bnds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (continuous_measures.mean, 1, 10)
         args = [continuous_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"lambda": solution.x[0], "n1": solution.x[1], "n2": solution.x[2]}
 
         return parameters

@@ -15,6 +15,7 @@ class FATIGUE_LIFE:
         """
         Initializes the FATIGUE_LIFE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters FATIGUE_LIFE distribution: {"gamma": *, "loc": *, "scale": *}
+        https://phitter.io/distributions/continuous/fatigue_life
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -154,7 +155,7 @@ class FATIGUE_LIFE:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -179,7 +180,7 @@ class FATIGUE_LIFE:
 
         # solution = scipy.optimize.fsolve(equations, (1, 1, 1), continuous_measures)
         # print(solution)
-        scipy_params = scipy.stats.fatiguelife.fit(continuous_measures.data)
+        scipy_params = scipy.stats.fatiguelife.fit(continuous_measures.data_to_fit)
         parameters = {"gamma": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
         return parameters
 

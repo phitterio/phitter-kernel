@@ -38,7 +38,7 @@ def evaluate_discrete_test_kolmogorov_smirnov(distribution, discrete_measures):
             distribution. If it's true, no.
     """
     ## Parameters and preparations
-    N = discrete_measures.length
+    N = discrete_measures.size
 
     ## Calculation of errors
     Fn = distribution.cdf(discrete_measures.data)

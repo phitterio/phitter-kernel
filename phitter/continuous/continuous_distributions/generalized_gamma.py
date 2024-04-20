@@ -18,6 +18,7 @@ class GENERALIZED_GAMMA:
         """
         Initializes the GENERALIZED_GAMMA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GENERALIZED_GAMMA distribution: {"a": *, "d": *, "p": *}
+        https://phitter.io/distributions/continuous/generalized_gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -174,7 +175,7 @@ class GENERALIZED_GAMMA:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -205,14 +206,14 @@ class GENERALIZED_GAMMA:
 
             ## If return a perameter < 0 then use least_square with restriction
             if all(x > 0 for x in solution) is False or all(x == 1 for x in solution) is True:
-                bnds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
+                bounds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
                 x0 = (1, 1, 1)
                 args = [continuous_measures]
-                response = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+                response = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
                 solution = response.x
             parameters = {"a": solution[0], "d": solution[1], "p": solution[2]}
         except:
-            scipy_params = scipy.stats.gengamma.fit(continuous_measures.data)
+            scipy_params = scipy.stats.gengamma.fit(continuous_measures.data_to_fit)
             parameters = {"a": scipy_params[0], "c": scipy_params[1], "mu": scipy_params[2]}
 
         return parameters

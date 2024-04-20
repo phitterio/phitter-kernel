@@ -14,6 +14,7 @@ class NORMAL:
         """
         Initializes the NORMAL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters NORMAL distribution: {"mu": *, "sigma": *}
+        https://phitter.io/distributions/continuous/normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

@@ -14,6 +14,7 @@ class POWER_FUNCTION:
         """
         Initializes the POWER_FUNCTION distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters POWER_FUNCTION distribution: {"alpha": *, "a": *, "b": *}
+        https://phitter.io/distributions/continuous/power_function
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -184,7 +185,7 @@ class POWER_FUNCTION:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -214,10 +215,10 @@ class POWER_FUNCTION:
 
             return (eq1, eq2, eq3)
 
-        bnds = ((0, -numpy.inf, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((0, -numpy.inf, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (1, 1, continuous_measures.max)
         args = [continuous_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"alpha": solution.x[0], "a": solution.x[1], "b": continuous_measures.max + 1e-3}
 
         return parameters

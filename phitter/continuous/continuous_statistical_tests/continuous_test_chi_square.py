@@ -37,7 +37,7 @@ def evaluate_continuous_test_chi_square(distribution, continuous_measures):
     """
 
     ## Parameters and preparations
-    N = continuous_measures.length
+    N = continuous_measures.size
     freedom_degrees = max(continuous_measures.num_bins - 1 - distribution.num_parameters, 1)
 
     ## Calculation of errors

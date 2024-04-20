@@ -15,6 +15,7 @@ class LOGGAMMA:
         """
         Initializes the LOGGAMMA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters LOGGAMMA distribution: {"c": *, "mu": *, "sigma": *}
+        https://phitter.io/distributions/continuous/loggamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -157,7 +158,7 @@ class LOGGAMMA:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -181,10 +182,10 @@ class LOGGAMMA:
 
             return (eq1, eq2, eq3)
 
-        bnds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (1, 1, 1)
         args = (continuous_measures.mean, continuous_measures.variance, continuous_measures.skewness)
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
         return parameters
 
@@ -243,10 +244,10 @@ if __name__ == "__main__":
         return (eq1, eq2, eq3)
 
     ti = time.time()
-    bnds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
+    bounds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
     x0 = (1, 1, 1)
     args = (continuous_measures.mean, continuous_measures.variance, continuous_measures.skewness)
-    solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+    solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
     parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
     print(parameters)
     print("Solve equations time: ", time.time() - ti)

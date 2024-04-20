@@ -15,6 +15,7 @@ class LEVY:
         """
         Initializes the LEVY distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters LEVY distribution: {"mu": *, "c": *}
+        https://phitter.io/distributions/continuous/levy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -153,7 +154,7 @@ class LEVY:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -173,14 +174,14 @@ class LEVY:
 
         #     return (eq1, eq2)
 
-        # bnds = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
+        # bounds = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
         # x0 = (1, 1)
         # args = ([continuous_measures])
-        # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
         # print(solution.x)
         # parameters = {"mu": solution.x[0], "c": solution.x[1]}
 
-        scipy_params = scipy.stats.levy.fit(continuous_measures.data)
+        scipy_params = scipy.stats.levy.fit(continuous_measures.data_to_fit)
 
         ## Results
         parameters = {"mu": scipy_params[0], "c": scipy_params[1]}

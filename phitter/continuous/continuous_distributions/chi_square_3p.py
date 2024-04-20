@@ -15,6 +15,7 @@ class CHI_SQUARE_3P:
         """
         Initializes the CHI_SQUARE_3P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters CHI_SQUARE_3P distribution: {"df": *, "loc": *, "scale": *}
+        https://phitter.io/distributions/continuous/chi_square_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -155,7 +156,7 @@ class CHI_SQUARE_3P:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -189,7 +190,7 @@ class CHI_SQUARE_3P:
         # parameters = {"df": df, "loc": loc, "scale": scale}
 
         ## Scipy FIT
-        scipy_params = scipy.stats.chi2.fit(continuous_measures.data)
+        scipy_params = scipy.stats.chi2.fit(continuous_measures.data_to_fit)
         parameters = {"df": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
 
         return parameters

@@ -14,6 +14,7 @@ class F:
         """
         Initializes the F distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters F distribution: {"df1": *, "df2": *}
+        https://phitter.io/distributions/continuous/f
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -170,14 +171,14 @@ class F:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
         parameters: {"df1": *, "df2": *}
         """
         ## Scipy parameters of distribution
-        scipy_params = scipy.stats.f.fit(continuous_measures.data)
+        scipy_params = scipy.stats.f.fit(continuous_measures.data_to_fit)
 
         ## Results
         parameters = {"df1": scipy_params[0], "df2": scipy_params[1]}

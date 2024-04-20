@@ -36,7 +36,7 @@ def evaluate_discrete_test_chi_square(distribution, discrete_measures):
             distribution. If it's true, no.
     """
     ## Parameters and preparations
-    N = discrete_measures.length
+    N = discrete_measures.size
     freedom_degrees = max(len(discrete_measures.domain) - 1 - distribution.num_parameters, 1)
 
     ## Calculation of errors

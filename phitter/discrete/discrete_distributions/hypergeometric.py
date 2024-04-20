@@ -11,8 +11,13 @@ class HYPERGEOMETRIC:
     """
 
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+        """
+        Initializes the HYPERGEOMETRIC distribution by either providing a Discrete Measures instance [DISCRETE_MEASURES] or a dictionary with the distribution's parameters.
+        The HYPERGEOMETRIC distribution parameters are: {"N": *, "K": *, "n": *}.
+        https://phitter.io/distributions/continuous/hypergeometric
+        """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
         if parameters != None:
@@ -150,7 +155,7 @@ class HYPERGEOMETRIC:
         Parameters
         ==========
         discrete_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -177,10 +182,10 @@ class HYPERGEOMETRIC:
 
             return (eq1, eq2, eq3)
 
-        bnds = ((discrete_measures.max, discrete_measures.max, 1), (numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((discrete_measures.max, discrete_measures.max, 1), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (discrete_measures.max * 5, discrete_measures.max * 3, discrete_measures.max)
         args = [discrete_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"N": round(solution.x[0]), "K": round(solution.x[1]), "n": round(solution.x[2])}
 
         return parameters

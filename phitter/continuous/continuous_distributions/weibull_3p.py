@@ -14,6 +14,7 @@ class WEIBULL_3P:
         """
         Initializes the WEIBULL_3P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters WEIBULL_3P distribution: {"alpha": *, "loc": *, "beta": *}
+        https://phitter.io/distributions/continuous/weibull_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -171,7 +172,7 @@ class WEIBULL_3P:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -199,10 +200,10 @@ class WEIBULL_3P:
 
             return (eq1, eq2, eq3)
 
-        bnds = ((0, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((0, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (1, 1, continuous_measures.mean)
         args = [continuous_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"alpha": solution.x[0], "loc": solution.x[2], "beta": solution.x[1]}
 
         return parameters

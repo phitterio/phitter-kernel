@@ -7,12 +7,14 @@ import typing
 
 class BERNOULLI:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.p = self.parameters["p"]
 
     @property
@@ -90,12 +92,14 @@ class BERNOULLI:
 
 class BINOMIAL:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.n = self.parameters["n"]
         self.p = self.parameters["p"]
 
@@ -177,12 +181,14 @@ class BINOMIAL:
 
 class GEOMETRIC:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.p = self.parameters["p"]
 
     @property
@@ -260,12 +266,14 @@ class GEOMETRIC:
 
 class HYPERGEOMETRIC:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.N = self.parameters["N"]
         self.K = self.parameters["K"]
         self.n = self.parameters["n"]
@@ -353,22 +361,24 @@ class HYPERGEOMETRIC:
             eq3 = parametric_mode - discrete_measures.mode
             return (eq1, eq2, eq3)
 
-        bnds = ((discrete_measures.max, discrete_measures.max, 1), (numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((discrete_measures.max, discrete_measures.max, 1), (numpy.inf, numpy.inf, numpy.inf))
         x0 = (discrete_measures.max * 5, discrete_measures.max * 3, discrete_measures.max)
         args = [discrete_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"N": round(solution.x[0]), "K": round(solution.x[1]), "n": round(solution.x[2])}
         return parameters
 
 
 class LOGARITHMIC:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.p = self.parameters["p"]
 
     @property
@@ -457,12 +467,14 @@ class LOGARITHMIC:
 
 class NEGATIVE_BINOMIAL:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.r = self.parameters["r"]
         self.p = self.parameters["p"]
 
@@ -544,12 +556,14 @@ class NEGATIVE_BINOMIAL:
 
 class POISSON:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.lambda_ = self.parameters["lambda"]
 
     @property
@@ -627,12 +641,14 @@ class POISSON:
 
 class UNIFORM:
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
-        if discrete_measures is None and parameters is None:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+        if discrete_measures is None and parameters is None and init_parameters_examples == False:
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
-        else:
+        if parameters != None:
             self.parameters = parameters
+        if init_parameters_examples:
+            self.parameters = self.parameters_example
         self.a = self.parameters["a"]
         self.b = self.parameters["b"]
 
@@ -729,11 +745,13 @@ class DISCRETE_MEASURES:
         self,
         data: list[int],
         confidence_level: float = 0.95,
+        subsample_estimation_size: int | None = None,
     ):
         self.data = numpy.sort(data)
-        self.length = len(data)
-        self.min = min(data)
-        self.max = max(data)
+        self.size = self.data.size
+        self.data_to_fit = self.data if subsample_estimation_size == None else numpy.random.choice(self.data, size=min(self.size, subsample_estimation_size), replace=False)
+        self.min = self.data[0]
+        self.max = self.data[-1]
         self.mean = numpy.mean(data)
         self.variance = numpy.var(data, ddof=1)
         self.std = numpy.std(data, ddof=1)
@@ -744,28 +762,28 @@ class DISCRETE_MEASURES:
         self.domain = numpy.arange(self.min, self.max + 1)
         self.absolutes_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=False)
         self.densities_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=True)
-        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.length - 1]])
-        self.Sn_ks = (numpy.arange(self.length) + 1) / self.length
+        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.size - 1]])
+        self.Sn_ks = (numpy.arange(self.size) + 1) / self.size
         self.confidence_level = confidence_level
-        self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.length)
+        self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.size)
         self.ecdf_frequencies = numpy.cumsum(self.densities_frequencies)
-        self.qq_arr = (numpy.arange(1, self.length + 1) - 0.5) / self.length
+        self.qq_arr = (numpy.arange(1, self.size + 1) - 0.5) / self.size
 
     def __str__(self) -> str:
-        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+        return str({"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
     def __repr__(self) -> str:
-        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+        return str({"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
     def get_dict(self) -> str:
-        return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
+        return {"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
 
     def critical_value_chi2(self, freedom_degrees):
         return scipy.stats.chi2.ppf(self.confidence_level, freedom_degrees)
 
 
 def evaluate_discrete_test_chi_square(distribution, discrete_measures):
-    N = discrete_measures.length
+    N = discrete_measures.size
     freedom_degrees = max(len(discrete_measures.domain) - 1 - distribution.num_parameters, 1)
     expected_values = numpy.ceil(N * (distribution.pmf(discrete_measures.domain)))
     errors = ((discrete_measures.absolutes_frequencies - expected_values) ** 2) / expected_values
@@ -778,7 +796,7 @@ def evaluate_discrete_test_chi_square(distribution, discrete_measures):
 
 
 def evaluate_discrete_test_kolmogorov_smirnov(distribution, discrete_measures):
-    N = discrete_measures.length
+    N = discrete_measures.size
     Fn = distribution.cdf(discrete_measures.data)
     errors = numpy.abs(discrete_measures.Sn_ks[discrete_measures.idx_ks] - Fn[discrete_measures.idx_ks])
     statistic_ks = numpy.max(errors)
@@ -795,15 +813,29 @@ class PHITTER_DISCRETE:
         data: list[int | float] | numpy.ndarray,
         confidence_level=0.95,
         minimum_sse=numpy.inf,
+        subsample_estimation_size: int | None = None,
         distributions_to_fit: list[str] | typing.Literal["all"] = "all",
+        exclude_distributions: list[str] | typing.Literal["any"] = "any",
     ):
-        if distributions_to_fit != "all":
+        if distributions_to_fit != "all" and exclude_distributions != "any":
+            raise Exception(f"Specify either distributions_to_fit or exclude_distributions, not both.")
+        if distributions_to_fit == "all" and exclude_distributions == "any":
+            self.distributions_to_fit = list(ALL_DISCRETE_DISTRIBUTIONS.keys())
+        if distributions_to_fit != "all" and exclude_distributions == "any":
             not_distributions_ids = [dist for dist in distributions_to_fit if dist not in ALL_DISCRETE_DISTRIBUTIONS.keys()]
             if len(not_distributions_ids) > 0:
-                raise Exception(f"{not_distributions_ids} not founded in cdiscrete disributions")
-        self.data = data
-        self.discrete_measures = DISCRETE_MEASURES(self.data)
-        self.confidence_level = confidence_level
+                raise Exception(f"{not_distributions_ids} not founded in continuous disributions")
+            self.distributions_to_fit = distributions_to_fit
+        if distributions_to_fit == "all" and exclude_distributions != "any":
+            not_distributions_ids = [dist for dist in exclude_distributions if dist not in ALL_DISCRETE_DISTRIBUTIONS.keys()]
+            if len(not_distributions_ids) > 0:
+                raise Exception(f"{not_distributions_ids} not founded in continuous disributions")
+            self.distributions_to_fit = [dist for dist in ALL_DISCRETE_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
+        self.discrete_measures = DISCRETE_MEASURES(
+            data=data,
+            confidence_level=confidence_level,
+            subsample_estimation_size=subsample_estimation_size,
+        )
         self.minimum_sse = minimum_sse
         self.distribution_results = {}
         self.none_results = {"test_statistic": None, "critical_value": None, "p_value": None, "rejected": None}
@@ -877,6 +909,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
+        plot_renderer: str | None,
     ):
         domain = self.discrete_measures.domain
         densities_frequencies = self.discrete_measures.densities_frequencies
@@ -893,7 +926,7 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10), title_font_size=11),
             bargap=plot_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
     def plot_histogram_distributions_pmf(
         self,
@@ -907,6 +940,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
+        plot_renderer: str | None,
     ):
         domain = self.discrete_measures.domain
         densities_frequencies = self.discrete_measures.densities_frequencies
@@ -936,7 +970,7 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
     def plot_distribution_pmf(
         self,
@@ -951,6 +985,7 @@ class PHITTER_DISCRETE:
         plot_bargap: float,
         plot_line_color: str,
         plot_line_width: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -980,7 +1015,7 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
     def plot_ecdf(
         self,
@@ -992,6 +1027,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
+        plot_renderer: str | None,
     ):
         domain = self.discrete_measures.domain
         ecdf_frequencies = self.discrete_measures.ecdf_frequencies
@@ -1010,7 +1046,7 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
     def plot_ecdf_distribution(
         self,
@@ -1025,6 +1061,7 @@ class PHITTER_DISCRETE:
         plot_empirical_bargap: float,
         plot_distribution_line_color: str,
         plot_distribution_line_width: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -1060,7 +1097,7 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_empirical_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
     def qq_plot(
         self,
@@ -1074,6 +1111,7 @@ class PHITTER_DISCRETE:
         qq_marker_name: str,
         qq_marker_color: str,
         qq_marker_size: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -1093,7 +1131,7 @@ class PHITTER_DISCRETE:
             yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
     def qq_plot_regression(
         self,
@@ -1110,6 +1148,7 @@ class PHITTER_DISCRETE:
         regression_line_name: str,
         regression_line_color: str,
         regression_line_width: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -1132,4 +1171,4 @@ class PHITTER_DISCRETE:
             yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)

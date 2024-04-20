@@ -48,7 +48,7 @@ def evaluate_continuous_test_anderson_darling(distribution, continuous_measures)
     """
 
     ## Parameters and preparations
-    N = continuous_measures.length
+    N = continuous_measures.size
 
     ## Calculation S
     S = numpy.sum(((2 * (numpy.arange(N) + 1) - 1) / N) * (numpy.log(distribution.cdf(continuous_measures.data)) + numpy.log(1 - distribution.cdf(continuous_measures.data[::-1]))))
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         sample_distribution_file.close()
         return data
 
-    for distribution_name, distribution_class in _ALL_CONTINUOUS_DISTRIBUTIONS.items():
+    for distribution_name, distribution_class in ALL_CONTINUOUS_DISTRIBUTIONS.items():
         print(distribution_name)
         path = f"../continuous_distributions_sample/sample_{distribution_name}.txt"
         data = get_data(path)

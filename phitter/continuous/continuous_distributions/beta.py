@@ -15,6 +15,7 @@ class BETA:
         """
         Initializes the BETA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters BETA distribution: {"alpha": *, "beta": *, "A": *, "B": *}
+        https://phitter.io/distributions/continuous/beta
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -161,7 +162,7 @@ class BETA:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -186,17 +187,17 @@ class BETA:
 
             return (eq1, eq2, eq3, eq4)
 
-        bnds = ((0, 0, -numpy.inf, continuous_measures.mean), (numpy.inf, numpy.inf, continuous_measures.mean, numpy.inf))
+        bounds = ((0, 0, -numpy.inf, continuous_measures.mean), (numpy.inf, numpy.inf, continuous_measures.mean, numpy.inf))
         x0 = (1, 1, continuous_measures.min, continuous_measures.max)
         args = [continuous_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"alpha": solution.x[0], "beta": solution.x[1], "A": solution.x[2], "B": solution.x[3]}
 
         v1 = parameters["alpha"] > 0
         v2 = parameters["beta"] > 0
         v3 = parameters["A"] < parameters["B"]
         if (v1 and v2 and v3) == False:
-            scipy_params = scipy.stats.beta.fit(continuous_measures.data)
+            scipy_params = scipy.stats.beta.fit(continuous_measures.data_to_fit)
             parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "A": scipy_params[2], "B": scipy_params[3]}
         return parameters
 
@@ -266,7 +267,7 @@ if __name__ == "__main__":
 
     # print("=====")
     # ti = time.time()
-    # scipy_params = scipy.stats.beta.fit(continuous_measures.data)
+    # scipy_params = scipy.stats.beta.fit(continuous_measures.data_to_fit)
     # parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "A": scipy_params[2], "B": scipy_params[3]}
     # print(parameters)
     # print("Scipy time get parameters: ",time.time() - ti)
@@ -274,9 +275,9 @@ if __name__ == "__main__":
     # print("=====")
 
     # ti = time.time()
-    # bnds = ((0, 0,  - numpy.inf, continuous_measures.mean), (numpy.inf, numpy.inf, continuous_measures.mean, numpy.inf))
+    # bounds = ((0, 0,  - numpy.inf, continuous_measures.mean), (numpy.inf, numpy.inf, continuous_measures.mean, numpy.inf))
     # x0 = (1, 1, continuous_measures.min, continuous_measures.max)
     # args = ([continuous_measures])
-    # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+    # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
     # print(solution.x)
     # print("Solve equations time: ", time.time() - ti)

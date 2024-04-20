@@ -1,7 +1,10 @@
 import concurrent.futures
+import random
+import re
 import typing
-import sys
 
+import matplotlib
+import matplotlib.pyplot as plt
 import numpy
 import plotly.express as px
 import plotly.graph_objects as go
@@ -14,16 +17,33 @@ class PHITTER_DISCRETE:
         data: list[int | float] | numpy.ndarray,
         confidence_level=0.95,
         minimum_sse=numpy.inf,
+        subsample_estimation_size: int | None = None,
         distributions_to_fit: list[str] | typing.Literal["all"] = "all",
+        exclude_distributions: list[str] | typing.Literal["any"] = "any",
     ):
-        if distributions_to_fit != "all":
+        if distributions_to_fit != "all" and exclude_distributions != "any":
+            raise Exception(f"Specify either distributions_to_fit or exclude_distributions, not both.")
+
+        if distributions_to_fit == "all" and exclude_distributions == "any":
+            self.distributions_to_fit = list(ALL_DISCRETE_DISTRIBUTIONS.keys())
+
+        if distributions_to_fit != "all" and exclude_distributions == "any":
             not_distributions_ids = [dist for dist in distributions_to_fit if dist not in ALL_DISCRETE_DISTRIBUTIONS.keys()]
             if len(not_distributions_ids) > 0:
-                raise Exception(f"{not_distributions_ids} not founded in cdiscrete disributions")
+                raise Exception(f"{not_distributions_ids} not founded in discrete disributions")
+            self.distributions_to_fit = distributions_to_fit
 
-        self.data = data
-        self.discrete_measures = DISCRETE_MEASURES(self.data)
-        self.confidence_level = confidence_level
+        if distributions_to_fit == "all" and exclude_distributions != "any":
+            not_distributions_ids = [dist for dist in exclude_distributions if dist not in ALL_DISCRETE_DISTRIBUTIONS.keys()]
+            if len(not_distributions_ids) > 0:
+                raise Exception(f"{not_distributions_ids} not founded in discrete disributions")
+            self.distributions_to_fit = [dist for dist in ALL_DISCRETE_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
+
+        self.discrete_measures = DISCRETE_MEASURES(
+            data=data,
+            confidence_level=confidence_level,
+            subsample_estimation_size=subsample_estimation_size,
+        )
         self.minimum_sse = minimum_sse
         self.distribution_results = {}
         self.none_results = {"test_statistic": None, "critical_value": None, "p_value": None, "rejected": None}
@@ -92,7 +112,12 @@ class PHITTER_DISCRETE:
         self.not_rejected_distributions = {distribution: results for distribution, results in self.sorted_distributions_sse.items() if results["n_test_passed"] > 0}
         self.distribution_instances = {distribution: instance for distribution, _, instance in processing_results}
 
-    def plot_histogram(
+    def parse_rgba_color(self, rgba_string):
+        rgba = re.match(r"rgba\((\d+),(\d+),(\d+),(\d*(?:\.\d+)?)\)", rgba_string)
+        r, g, b, a = map(float, rgba.groups())
+        return (r / 255, g / 255, b / 255, a)
+
+    def plot_histogram_plotly(
         self,
         plot_title: str,
         plot_xaxis_title: str,
@@ -102,6 +127,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
+        plot_renderer: str | None,
     ):
         domain = self.discrete_measures.domain
         densities_frequencies = self.discrete_measures.densities_frequencies
@@ -119,9 +145,34 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10), title_font_size=11),
             bargap=plot_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
-    def plot_histogram_distributions_pmf(
+    def plot_histogram_matplotlib(
+        self,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+        plot_renderer: str | None = None,
+    ):
+        matplotlib.style.use("ggplot")
+        domain = self.discrete_measures.domain
+        densities_frequencies = self.discrete_measures.densities_frequencies
+
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        # plt.hist(self.discrete_measures.data, density=True, label="Data", bins=self.discrete_measures.num_bins, ec="white", color=self.parse_rgba_color(plot_bar_color))
+        plt.bar(domain, densities_frequencies, label="Data", color=self.parse_rgba_color(plot_bar_color))
+        plt.title(plot_title)
+        plt.xlabel(plot_xaxis_title, fontsize=10)
+        plt.ylabel(plot_yaxis_title, fontsize=10)
+        plt.legend(title=plot_legend_title, fontsize=8, bbox_to_anchor=(1.01, 1.01), loc="upper left")
+        plt.show()
+
+    def plot_histogram_distributions_pmf_plotly(
         self,
         n_distributions: int,
         n_distributions_visible: int,
@@ -133,6 +184,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
+        plot_renderer: str | None,
     ):
         domain = self.discrete_measures.domain
         densities_frequencies = self.discrete_measures.densities_frequencies
@@ -166,9 +218,47 @@ class PHITTER_DISCRETE:
             bargap=plot_bargap,
         )
 
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
-    def plot_distribution_pmf(
+    def plot_histogram_distributions_pmf_matplotlib(
+        self,
+        n_distributions: int,
+        n_distributions_visible: int,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+        plot_renderer: str | None,
+    ):
+        matplotlib.style.use("ggplot")
+        domain = self.discrete_measures.domain
+        densities_frequencies = self.discrete_measures.densities_frequencies
+
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        # plt.hist(self.discrete_measures.data, density=True, bins=self.discrete_measures.num_bins, ec="white", color=self.parse_rgba_color(plot_bar_color))
+        plt.bar(domain, densities_frequencies, color=self.parse_rgba_color(plot_bar_color))
+
+        for idx, (distribution_name, result) in enumerate(list(self.sorted_distributions_sse.items())[:n_distributions]):
+            y_plot = self.distribution_instances[distribution_name].pmf(domain)
+            distribution_sse = result["sse"]
+            is_rejected = "✓" if distribution_name in self.not_rejected_distributions else ""
+            scatter_name = f"{idx+1:02d}. {distribution_name}: {distribution_sse:.4E}{is_rejected}"
+            try:
+                plt.plot(domain, y_plot, label=scatter_name, color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)), marker=".")
+            except Exception:
+                plt.plot(domain, numpy.zeros(len(domain)), label=scatter_name, color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)), marker=".")
+
+        plt.title(f"{plot_title} - PMF DISTRIBUTIONS")
+        plt.xlabel(plot_xaxis_title, fontsize=10)
+        plt.ylabel(plot_yaxis_title, fontsize=10)
+        plt.legend(title=plot_legend_title, fontsize=8, bbox_to_anchor=(1.01, 1.01), loc="upper left")
+        plt.show()
+
+    def plot_distribution_pmf_plotly(
         self,
         distribution_name: str,
         plot_title: str,
@@ -181,6 +271,7 @@ class PHITTER_DISCRETE:
         plot_bargap: float,
         plot_line_color: str,
         plot_line_width: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -216,9 +307,50 @@ class PHITTER_DISCRETE:
             bargap=plot_bargap,
         )
 
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
-    def plot_ecdf(
+    def plot_distribution_pmf_matplotlib(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+        plot_line_color: str,
+        plot_line_width: int,
+        plot_renderer: str | None,
+    ):
+        matplotlib.style.use("ggplot")
+        domain = self.discrete_measures.domain
+        densities_frequencies = self.discrete_measures.densities_frequencies
+
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not founded")
+
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        # plt.hist(self.discrete_measures.data, density=True, label="Data", bins=self.discrete_measures.num_bins, ec="white", color=self.parse_rgba_color(plot_bar_color))
+        plt.bar(domain, densities_frequencies, label="Data", color=self.parse_rgba_color(plot_bar_color))
+
+        y_plot = self.distribution_instances[distribution_name].pmf(domain)
+        distribution_sse = self.sorted_distributions_sse[distribution_name]["sse"]
+        is_rejected = "✓" if distribution_name in self.not_rejected_distributions else ""
+        scatter_name = f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"
+        try:
+            plt.plot(domain, y_plot, label=scatter_name, color=self.parse_rgba_color(plot_line_color), linewidth=plot_line_width, marker="o")
+        except Exception:
+            plt.plot(domain, numpy.zeros(len(domain)), label=scatter_name, color=self.parse_rgba_color(plot_line_color), linewidth=plot_line_width, marker="o")
+
+        plt.title(f"{plot_title} - PMF {distribution_name.upper().replace('_', ' ')} DISTRIBUTION")
+        plt.xlabel(plot_xaxis_title, fontsize=10)
+        plt.ylabel(plot_yaxis_title, fontsize=10)
+        plt.legend(title=plot_legend_title, fontsize=8, bbox_to_anchor=(1.01, 1.01), loc="upper left")
+        plt.show()
+
+    def plot_ecdf_plotly(
         self,
         plot_title: str,
         plot_xaxis_title: str,
@@ -228,6 +360,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
+        plot_renderer: str | None,
     ):
         domain = self.discrete_measures.domain
         ecdf_frequencies = self.discrete_measures.ecdf_frequencies
@@ -247,9 +380,39 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
-    def plot_ecdf_distribution(
+    def plot_ecdf_matplotlib(
+        self,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_bar_color: str,
+        plot_bargap: float,
+        plot_renderer: str | None,
+    ):
+        matplotlib.style.use("ggplot")
+
+        matplotlib.style.use("ggplot")
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        plt.hist(
+            self.discrete_measures.data,
+            density=True,
+            cumulative=True,
+            label="Data",
+            ec="white",
+            color=self.parse_rgba_color(plot_bar_color),
+        )
+        plt.title(plot_title)
+        plt.xlabel(plot_xaxis_title, fontsize=10)
+        plt.ylabel(plot_yaxis_title, fontsize=10)
+        plt.legend(title=plot_legend_title, fontsize=8, bbox_to_anchor=(1.01, 1.01), loc="upper left")
+        plt.show()
+
+    def plot_ecdf_distribution_plotly(
         self,
         distribution_name: str,
         plot_title: str,
@@ -262,6 +425,7 @@ class PHITTER_DISCRETE:
         plot_empirical_bargap: float,
         plot_distribution_line_color: str,
         plot_distribution_line_width: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -301,9 +465,59 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_empirical_bargap,
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
-    def qq_plot(
+    def plot_ecdf_distribution_matplotlib(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        plot_empirical_bar_color: str,
+        plot_empirical_bargap: float,
+        plot_distribution_line_color: str,
+        plot_distribution_line_width: int,
+        plot_renderer: str | None,
+    ):
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not founded")
+
+        matplotlib.style.use("ggplot")
+
+        domain = self.discrete_measures.domain
+        ecdf_frequencies = self.discrete_measures.ecdf_frequencies
+
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        # plt.hist(
+        #     self.discrete_measures.data,
+        #     density=True,
+        #     cumulative=True,
+        #     label="Data",
+        #     ec="white",
+        #     color=self.parse_rgba_color(plot_empirical_bar_color),
+        # )
+        plt.bar(domain, ecdf_frequencies, label="Data", color=self.parse_rgba_color(plot_empirical_bar_color))
+
+        domain = self.discrete_measures.domain
+        y_plot = self.distribution_instances[distribution_name].cdf(domain)
+        distribution_sse = self.sorted_distributions_sse[distribution_name]["sse"]
+        is_rejected = "✓" if distribution_name in self.not_rejected_distributions else ""
+        scatter_name = f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"
+        try:
+            plt.plot(domain, y_plot, label=scatter_name, color=self.parse_rgba_color(plot_distribution_line_color), linewidth=plot_distribution_line_width, marker=".")
+        except Exception:
+            plt.plot(domain, numpy.zeros(len(domain)), label=scatter_name, color=self.parse_rgba_color(plot_distribution_line_color), linewidth=plot_distribution_line_width)
+
+        plt.title(plot_title)
+        plt.xlabel(plot_xaxis_title, fontsize=10)
+        plt.ylabel(plot_yaxis_title, fontsize=10)
+        plt.legend(title=plot_legend_title, fontsize=8, bbox_to_anchor=(1.01, 1.01), loc="upper left")
+        plt.show()
+
+    def qq_plot_plotly(
         self,
         distribution_name: str,
         plot_title: str,
@@ -315,6 +529,7 @@ class PHITTER_DISCRETE:
         qq_marker_name: str,
         qq_marker_color: str,
         qq_marker_size: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -336,9 +551,38 @@ class PHITTER_DISCRETE:
             yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
 
-    def qq_plot_regression(
+    def qq_plot_matplotlib(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        qq_marker_name: str,
+        qq_marker_color: str,
+        qq_marker_size: int,
+        plot_renderer: str | None,
+    ):
+        matplotlib.style.use("ggplot")
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not found")
+
+        x = self.distribution_instances[distribution_name].ppf(self.discrete_measures.qq_arr)
+        y = self.discrete_measures.data
+
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        plt.scatter(x, y, label=qq_marker_name, color=self.parse_rgba_color(qq_marker_color), s=qq_marker_size)
+        plt.title(f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION")
+        plt.xlabel(plot_xaxis_title)
+        plt.ylabel(plot_yaxis_title)
+        plt.legend(title=plot_legend_title, fontsize=8, bbox_to_anchor=(1.01, 1.01), loc="upper left")
+        plt.show()
+
+    def qq_plot_regression_plotly(
         self,
         distribution_name: str,
         plot_title: str,
@@ -353,6 +597,7 @@ class PHITTER_DISCRETE:
         regression_line_name: str,
         regression_line_color: str,
         regression_line_width: int,
+        plot_renderer: str | None,
     ):
         if distribution_name not in self.distribution_instances:
             raise Exception(f"{distribution_name} distribution not founded")
@@ -369,7 +614,7 @@ class PHITTER_DISCRETE:
         fig.update_layout(
             height=plot_height,
             width=plot_width,
-            title=f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION <br><br><sup>Regression: {linear_regression.intercept:.4g} + x * {linear_regression.slope:.4g} • r = {linear_regression.rvalue:.4g}</sup>",
+            title=f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION <br><br><sup>Regression: {linear_regression.intercept:.4f} + x * {linear_regression.slope:.4f} • r = {linear_regression.rvalue:.4f}</sup>",
             xaxis_title=plot_xaxis_title,
             yaxis_title=plot_yaxis_title,
             legend_title=plot_legend_title,
@@ -378,14 +623,51 @@ class PHITTER_DISCRETE:
             yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
-        fig.show()
+        fig.show(renderer=plot_renderer)
+
+    def qq_plot_regression_matplotlib(
+        self,
+        distribution_name: str,
+        plot_title: str,
+        plot_xaxis_title: str,
+        plot_yaxis_title: str,
+        plot_legend_title: str,
+        plot_height: int,
+        plot_width: int,
+        qq_marker_name: str,
+        qq_marker_color: str,
+        qq_marker_size: int,
+        regression_line_name: str,
+        regression_line_color: str,
+        regression_line_width: int,
+        plot_renderer: str | None,
+    ):
+        matplotlib.style.use("ggplot")
+        if distribution_name not in self.distribution_instances:
+            raise Exception(f"{distribution_name} distribution not found")
+
+        x = self.distribution_instances[distribution_name].ppf(self.discrete_measures.qq_arr)
+        y = self.discrete_measures.data
+
+        linear_regression = scipy.stats.linregress(x, y)
+        y_reg = linear_regression.intercept + x * linear_regression.slope
+
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        plt.plot(x, y_reg, label=regression_line_name, color=self.parse_rgba_color(regression_line_color), linewidth=regression_line_width)
+        plt.scatter(x, y, label=qq_marker_name, color=self.parse_rgba_color(qq_marker_color), s=qq_marker_size)
+        plt.title(
+            f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION\nRegression: {linear_regression.intercept:.4f} + x * {linear_regression.slope:.4f} • r = {linear_regression.rvalue:.4f}"
+        )
+        plt.xlabel(plot_xaxis_title, fontsize=10)
+        plt.ylabel(plot_yaxis_title, fontsize=10)
+        plt.legend(title=plot_legend_title, fontsize=8, bbox_to_anchor=(1.01, 1.01), loc="upper left")
+        plt.show()
 
 
 if __name__ == "__main__":
     from discrete_distributions import ALL_DISCRETE_DISTRIBUTIONS
     from discrete_measures import DISCRETE_MEASURES
-    from discrete_statistical_tests import evaluate_discrete_test_chi_square
-    from discrete_statistical_tests import evaluate_discrete_test_kolmogorov_smirnov
+    from discrete_statistical_tests import evaluate_discrete_test_chi_square, evaluate_discrete_test_kolmogorov_smirnov
 
     path = "../../datasets_test/discrete/sample_binomial.txt"
     sample_distribution_file = open(path, "r", encoding="utf-8-sig")
@@ -400,5 +682,4 @@ if __name__ == "__main__":
 else:
     from phitter.discrete.discrete_distributions import ALL_DISCRETE_DISTRIBUTIONS
     from phitter.discrete.discrete_measures import DISCRETE_MEASURES
-    from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_chi_square
-    from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_kolmogorov_smirnov
+    from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_chi_square, evaluate_discrete_test_kolmogorov_smirnov

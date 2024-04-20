@@ -15,6 +15,7 @@ class NON_CENTRAL_CHI_SQUARE:
         """
         Initializes the NON_CENTRAL_CHI_SQUARE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters NON_CENTRAL_CHI_SQUARE distribution: {"lambda": *, "n": *}
+        https://phitter.io/distributions/continuous/non_central_chi_square
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -171,7 +172,7 @@ class NON_CENTRAL_CHI_SQUARE:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -194,10 +195,10 @@ class NON_CENTRAL_CHI_SQUARE:
 
         #     return (eq1, eq2)
 
-        # bnds = ((0, 0), (numpy.inf, numpy.inf))
+        # bounds = ((0, 0), (numpy.inf, numpy.inf))
         # x0 = (continuous_measures.mean, 1)
         # args = ([continuous_measures])
-        # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
         # parameters = {"lambda": solution.x[0], "n": round(solution.x[1])}
 
         lambda_ = continuous_measures.variance / 2 - continuous_measures.mean

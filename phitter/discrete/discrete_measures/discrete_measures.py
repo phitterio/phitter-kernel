@@ -8,11 +8,13 @@ class DISCRETE_MEASURES:
         self,
         data: list[int],
         confidence_level: float = 0.95,
+        subsample_estimation_size: int | None = None,
     ):
         self.data = numpy.sort(data)
-        self.length = len(data)
-        self.min = min(data)
-        self.max = max(data)
+        self.size = self.data.size
+        self.data_to_fit = self.data if subsample_estimation_size == None else numpy.random.choice(self.data, size=min(self.size, subsample_estimation_size), replace=False)
+        self.min = self.data[0]
+        self.max = self.data[-1]
         self.mean = numpy.mean(data)
         self.variance = numpy.var(data, ddof=1)
         self.std = numpy.std(data, ddof=1)
@@ -23,21 +25,21 @@ class DISCRETE_MEASURES:
         self.domain = numpy.arange(self.min, self.max + 1)
         self.absolutes_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=False)
         self.densities_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=True)
-        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.length - 1]])
-        self.Sn_ks = (numpy.arange(self.length) + 1) / self.length
+        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.size - 1]])
+        self.Sn_ks = (numpy.arange(self.size) + 1) / self.size
         self.confidence_level = confidence_level
-        self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.length)
+        self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.size)
         self.ecdf_frequencies = numpy.cumsum(self.densities_frequencies)
-        self.qq_arr = (numpy.arange(1, self.length + 1) - 0.5) / self.length
+        self.qq_arr = (numpy.arange(1, self.size + 1) - 0.5) / self.size
 
     def __str__(self) -> str:
-        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+        return str({"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
     def __repr__(self) -> str:
-        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+        return str({"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
     def get_dict(self) -> str:
-        return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
+        return {"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
 
     def critical_value_chi2(self, freedom_degrees):
         return scipy.stats.chi2.ppf(self.confidence_level, freedom_degrees)
@@ -57,7 +59,7 @@ if __name__ == "__main__":
 
     discrete_measures = DISCRETE_MEASURES(data)
 
-    print("Length: ", discrete_measures.length)
+    print("size: ", discrete_measures.size)
     print("Min: ", discrete_measures.min)
     print("Max: ", discrete_measures.max)
     print("Mean: ", discrete_measures.mean)

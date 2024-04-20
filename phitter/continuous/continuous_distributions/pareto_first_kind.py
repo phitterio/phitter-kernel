@@ -14,6 +14,7 @@ class PARETO_FIRST_KIND:
         """
         Initializes the PARETO_FIRST_KIND distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters PARETO_FIRST_KIND distribution: {"alpha": *, "xm": *, "loc": *}
+        https://phitter.io/distributions/continuous/pareto_first_kind
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -170,7 +171,7 @@ class PARETO_FIRST_KIND:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -202,13 +203,13 @@ class PARETO_FIRST_KIND:
 
         #     return (eq1, eq2, eq3)
 
-        # bnds = ((1, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
+        # bounds = ((1, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
         # x0 = (1, continuous_measures.mean, continuous_measures.mean)
         # args = [continuous_measures]
-        # solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         # parameters = {"alpha": solution.x[0], "xm": solution.x[1], "loc": solution.x[2]}
 
-        scipy_params = scipy.stats.pareto.fit(continuous_measures.data)
+        scipy_params = scipy.stats.pareto.fit(continuous_measures.data_to_fit)
         parameters = {"xm": scipy_params[2], "alpha": scipy_params[0], "loc": scipy_params[1]}
 
         # # Solve system

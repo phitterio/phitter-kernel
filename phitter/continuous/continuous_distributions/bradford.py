@@ -13,6 +13,7 @@ class BRADFORD:
         """
         Initializes the BRADFORD distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters BRADFORD distribution: {"c": *, "min": *, "max": *}
+        https://phitter.io/distributions/continuous/bradford
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -154,7 +155,7 @@ class BRADFORD:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -177,9 +178,7 @@ class BRADFORD:
             return eq1
 
         solution = scipy.optimize.fsolve(equations, (1), continuous_measures)
-
         parameters = {"c": solution[0], "min": _min, "max": _max}
-
         return parameters
 
 

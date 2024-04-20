@@ -1,6 +1,7 @@
 import numpy
 import scipy.optimize
 import scipy.special
+import scipy.stats
 
 
 class DAGUM:
@@ -14,6 +15,7 @@ class DAGUM:
         """
         Initializes the DAGUM distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters DAGUM distribution: {"a": *, "b": *, "p": *}
+        https://phitter.io/distributions/continuous/dagum
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -171,7 +173,7 @@ class DAGUM:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -182,18 +184,8 @@ class DAGUM:
             def __pdf(x: float, params: dict) -> float:
                 return (params["a"] * params["p"] / x) * (((x / params["b"]) ** (params["a"] * params["p"])) / ((((x / params["b"]) ** (params["a"])) + 1) ** (params["p"] + 1)))
 
-            ## Frequencies of histogram
-            frequencies, bin_edges = numpy.histogram(continuous_measures.data, density=True)
-
-            ## Central values of histogram
-            central_values = [(bin_edges[i] + bin_edges[i + 1]) / 2 for i in range(len(bin_edges) - 1)]
-
-            ## Calculate fitted PDF and error with fit in distribution
-            pdf_values = [__pdf(c, parameters) for c in central_values]
-
-            ## Calculate SSE (sum of squared estimate of errors)
-            sse = numpy.sum(numpy.power(frequencies - pdf_values, 2))
-
+            pdf_values = __pdf(continuous_measures.central_values, parameters)
+            sse = numpy.sum(numpy.power(continuous_measures.densities_frequencies - pdf_values, 2))
             return sse
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
@@ -220,15 +212,16 @@ class DAGUM:
             return (eq1, eq2, eq3)
 
         ## Scipy Burr3 = Dagum parameter
-        s0_burr3_sc = scipy.stats.burr.fit(continuous_measures.data)
+        s0_burr3_sc = scipy.stats.burr.fit(continuous_measures.data_to_fit)
+
         parameters_sc = {"a": s0_burr3_sc[0], "b": s0_burr3_sc[3], "p": s0_burr3_sc[1]}
 
         ##  Least Square Method
         a0 = s0_burr3_sc[0]
         b0 = s0_burr3_sc[3]
         x0 = [a0, b0, 1]
-        b = ((1e-5, 1e-5, 1e-5), (numpy.inf, numpy.inf, numpy.inf))
-        solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([continuous_measures]))
+        bounds = ((1e-5, 1e-5, 1e-5), (numpy.inf, numpy.inf, numpy.inf))
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures]))
         parameters_ls = {"a": solution.x[0], "b": solution.x[1], "p": solution.x[2]}
 
         sse_sc = sse(parameters_sc)
@@ -262,6 +255,9 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../continuous_distributions_sample/sample_dagum.txt"
     data = get_data(path)
+
+    data = DAGUM(init_parameters_examples=True).sample(10000000)
+
     continuous_measures = CONTINUOUS_MEASURES(data)
     distribution = DAGUM(continuous_measures)
 

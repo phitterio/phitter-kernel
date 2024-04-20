@@ -15,6 +15,7 @@ class FOLDED_NORMAL:
         """
         Initializes the FOLDED_NORMAL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters FOLDED_NORMAL distribution: {"mu": *, "sigma": *}
+        https://phitter.io/distributions/continuous/folded_normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -190,8 +191,8 @@ class FOLDED_NORMAL:
             return (eq1, eq2)
 
         x0 = [continuous_measures.mean, continuous_measures.standard_deviation]
-        b = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
-        solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([continuous_measures]))
+        bounds = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures]))
         parameters = {"mu": solution.x[0], "sigma": solution.x[1]}
 
         return parameters

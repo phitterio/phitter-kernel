@@ -14,6 +14,7 @@ class TRAPEZOIDAL:
         """
         Initializes the TRAPEZOIDAL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters TRAPEZOIDAL distribution: {"a": *, "b": *, "c": *, "d": *}
+        https://phitter.io/distributions/continuous/trapezoidal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -194,7 +195,7 @@ class TRAPEZOIDAL:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -221,8 +222,8 @@ class TRAPEZOIDAL:
         d = continuous_measures.max + 1e-3
 
         x0 = [(d + a) * 0.25, (d + a) * 0.75]
-        bnds = ((a, a), (d, d))
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=([continuous_measures, a, d]))
+        bounds = ((a, a), (d, d))
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures, a, d]))
 
         parameters = {"a": a, "b": solution.x[0], "c": solution.x[1], "d": d}
         return parameters

@@ -9,10 +9,12 @@ class CONTINUOUS_MEASURES:
         data: list[float | int],
         num_bins: int | None = None,
         confidence_level: float = 0.95,
+        subsample_estimation_size: int | None = None,
     ):
         self.data = numpy.sort(data)
         self.data_unique = numpy.unique(self.data)
-        self.length = len(self.data)
+        self.size = self.data.size
+        self.data_to_fit = self.data if subsample_estimation_size == None else numpy.random.choice(self.data, size=min(self.size, subsample_estimation_size), replace=False)
         self.min = self.data[0]
         self.max = self.data[-1]
         self.mean = numpy.mean(self.data)
@@ -26,26 +28,26 @@ class CONTINUOUS_MEASURES:
         self.absolutes_frequencies, self.bin_edges = numpy.histogram(self.data, self.num_bins)
         self.densities_frequencies, _ = numpy.histogram(self.data, self.num_bins, density=True)
         self.central_values = (self.bin_edges[:-1] + self.bin_edges[1:]) / 2
-        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.length - 1]])
-        self.Sn_ks = (numpy.arange(self.length) + 1) / self.length
+        self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.size - 1]])
+        self.Sn_ks = (numpy.arange(self.size) + 1) / self.size
         self.confidence_level = confidence_level
-        self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.length)
-        self.critical_value_ad = self.ad_critical_value(self.confidence_level, self.length)
-        self.ecdf_frequencies = numpy.array([self.data[self.data <= x].size / self.data.size for x in self.data_unique])
-        self.qq_arr = (numpy.arange(1, self.length + 1) - 0.5) / self.length
+        self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.size)
+        self.critical_value_ad = self.ad_critical_value(self.confidence_level, self.size)
+        self.ecdf_frequencies = numpy.searchsorted(self.data, self.data_unique, side="right") / self.data.size
+        self.qq_arr = (numpy.arange(1, self.size + 1) - 0.5) / self.size
 
     def __str__(self) -> str:
-        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+        return str({"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
     def __repr__(self) -> str:
-        return str({"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
+        return str({"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode})
 
     def get_dict(self) -> str:
-        return {"length": self.length, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
+        return {"size": self.size, "mean": self.mean, "variance": self.variance, "skewness": self.skewness, "kurtosis": self.kurtosis, "median": self.median, "mode": self.mode}
 
     def calculate_mode(self) -> float:
         distribution = scipy.stats.gaussian_kde(self.data)
-        # solution = scipy.optimize.shgo(lambda x: -distribution.pdf(x)[0], bounds=[(self.min, self.max)], n=100 * self.length)
+        # solution = scipy.optimize.shgo(lambda x: -distribution.pdf(x)[0], bounds=[(self.min, self.max)], n=100 * self.size)
         solution = scipy.optimize.minimize(lambda x: -distribution.pdf(x)[0], x0=[self.mean], bounds=[(self.min, self.max)])
         return solution.x[0]
 
@@ -101,7 +103,7 @@ if __name__ == "__main__":
 
     continuous_measures = CONTINUOUS_MEASURES(data)
 
-    print(f"Length: {continuous_measures.length}")
+    print(f"Size: {continuous_measures.size}")
     print(f"Min: {continuous_measures.min}")
     print(f"Max: {continuous_measures.max}")
     print(f"Mean: {continuous_measures.mean}")

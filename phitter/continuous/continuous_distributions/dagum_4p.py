@@ -18,6 +18,7 @@ class DAGUM_4P:
         """
         Initializes the DAGUM_4P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters DAGUM_4P distribution: {"a": *, "b": *, "p": *, "loc": *}
+        https://phitter.io/distributions/continuous/dagum_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -176,7 +177,7 @@ class DAGUM_4P:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -227,7 +228,7 @@ class DAGUM_4P:
             return (eq1, eq2, eq3, eq4)
 
         ## Scipy Burr3 = Dagum parameter
-        s0_burr3_sc = scipy.stats.burr.fit(continuous_measures.data)
+        s0_burr3_sc = scipy.stats.burr.fit(continuous_measures.data_to_fit)
         parameters_sc = {"a": s0_burr3_sc[0], "b": s0_burr3_sc[3], "p": s0_burr3_sc[1], "loc": s0_burr3_sc[2]}
 
         if s0_burr3_sc[0] <= 2:
@@ -235,8 +236,8 @@ class DAGUM_4P:
         else:
             a0 = s0_burr3_sc[0]
             x0 = [a0, 1, 1, continuous_measures.mean]
-            b = ((1e-5, 1e-5, 1e-5, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
-            solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([continuous_measures]))
+            bounds = ((1e-5, 1e-5, 1e-5, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
+            solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures]))
             parameters_ls = {"a": solution.x[0], "b": solution.x[1], "p": solution.x[2], "loc": solution.x[3]}
 
             sse_sc = sse(parameters_sc)

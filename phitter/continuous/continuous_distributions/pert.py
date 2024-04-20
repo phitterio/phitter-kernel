@@ -14,6 +14,7 @@ class PERT:
         """
         Initializes the PERT distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters PERT distribution: {"a": *, "b": *, "c": *}
+        https://phitter.io/distributions/continuous/pert
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -108,18 +109,16 @@ class PERT:
         """
         Parametric skewness
         """
-        α1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
-        α2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
-        return (2 * (α2 - α1) * numpy.sqrt(α1 + α2 + 1)) / ((α1 + α2 + 2) * numpy.sqrt(α1 * α2))
+        return (2 * (self.alpha2 - self.alpha1) * numpy.sqrt(self.alpha1 + self.alpha2 + 1)) / ((self.alpha1 + self.alpha2 + 2) * numpy.sqrt(self.alpha1 * self.alpha2))
 
     @property
     def kurtosis(self) -> float:
         """
         Parametric kurtosis
         """
-        α1 = (4 * self.b + self.c - 5 * self.a) / (self.c - self.a)
-        α2 = (5 * self.c - self.a - 4 * self.b) / (self.c - self.a)
-        return (6 * ((α2 - α1) ** 2 * (α1 + α2 + 1) - α1 * α2 * (α1 + α2 + 2))) / (α1 * α2 * (α1 + α2 + 2) * (α1 + α2 + 3)) + 3
+        return (6 * ((self.alpha2 - self.alpha1) ** 2 * (self.alpha1 + self.alpha2 + 1) - self.alpha1 * self.alpha2 * (self.alpha1 + self.alpha2 + 2))) / (
+            self.alpha1 * self.alpha2 * (self.alpha1 + self.alpha2 + 2) * (self.alpha1 + self.alpha2 + 3)
+        ) + 3
 
     @property
     def median(self) -> float:
@@ -190,12 +189,12 @@ class PERT:
             return (eq1, eq2, eq5)
 
         ## Parameters of equations system
-        bnds = ((-numpy.inf, continuous_measures.mean, continuous_measures.min), (continuous_measures.mean, numpy.inf, continuous_measures.max))
+        bounds = ((-numpy.inf, continuous_measures.mean, continuous_measures.min), (continuous_measures.mean, numpy.inf, continuous_measures.max))
         x0 = (continuous_measures.min, continuous_measures.mean, continuous_measures.max)
         args = [continuous_measures]
 
         ## Solve Equation system
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"a": solution.x[0], "b": solution.x[1], "c": solution.x[2]}
 
         ## Correction of parameters

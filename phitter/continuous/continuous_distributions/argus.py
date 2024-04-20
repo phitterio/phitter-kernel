@@ -1,6 +1,7 @@
 import numpy
 import scipy.special
 import scipy.stats
+import scipy.integrate
 
 
 class ARGUS:
@@ -14,6 +15,7 @@ class ARGUS:
         """
         Initializes the ARGUS distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters ARGUS distribution: {"chi": *, "loc": *, "scale": *}
+        https://phitter.io/distributions/continuous/argus
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -34,7 +36,7 @@ class ARGUS:
 
     @property
     def parameters_example(self) -> dict[str, int | float]:
-        return {"chi": 3, "loc": 102, "scale": 0}
+        return {"chi": 3, "loc": 102, "scale": 5}
 
     def cdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
@@ -64,6 +66,7 @@ class ARGUS:
         y1 = (1 - u) * scipy.special.gammainc(1.5, (self.chi * self.chi) / 2)
         y2 = (2 * scipy.special.gammaincinv(1.5, y1)) / (self.chi * self.chi)
         result = self.loc + self.scale * numpy.sqrt(1 - y2)
+        # result = scipy.stats.argus.ppf(u, self.chi, loc=self.loc, scale=self.scale)
         return result
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
@@ -78,12 +81,27 @@ class ARGUS:
         """
         Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx
         """
-        return None
+        f = lambda x: x**k * self.pdf(x)
+        return scipy.integrate.quad(f, self.loc, self.loc + self.scale)[0]
 
     def central_moments(self, k: int) -> float | None:
         """
         Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
         """
+        µ1 = self.non_central_moments(1)
+        µ2 = self.non_central_moments(2)
+        µ3 = self.non_central_moments(3)
+        µ4 = self.non_central_moments(4)
+
+        if k == 1:
+            return 0
+        if k == 2:
+            return µ2 - µ1**2
+        if k == 3:
+            return µ3 - 3 * µ1 * µ2 + 2 * µ1**3
+        if k == 4:
+            return µ4 - 4 * µ1 * µ3 + 6 * µ1**2 * µ2 - 3 * µ1**4
+
         return None
 
     @property
@@ -117,14 +135,20 @@ class ARGUS:
         """
         Parametric skewness
         """
-        return None
+        µ1 = self.non_central_moments(1)
+        µ2 = self.non_central_moments(2)
+        central_µ3 = self.central_moments(3)
+        return central_µ3 / (µ2 - µ1**2) ** 1.5
 
     @property
     def kurtosis(self) -> float:
         """
         Parametric kurtosis
         """
-        return None
+        µ1 = self.non_central_moments(1)
+        µ2 = self.non_central_moments(2)
+        central_µ4 = self.central_moments(4)
+        return central_µ4 / (µ2 - µ1**2) ** 2
 
     @property
     def median(self) -> float:
@@ -165,13 +189,13 @@ class ARGUS:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
         parameters: {"chi": *, "loc": *, "scale": *}
         """
-        scipy_params = scipy.stats.argus.fit(continuous_measures.data)
+        scipy_params = scipy.stats.argus.fit(continuous_measures.data_to_fit)
         parameters = {"chi": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
         return parameters
 
@@ -192,6 +216,7 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../continuous_distributions_sample/sample_argus.txt"
     data = get_data(path)
+
     continuous_measures = CONTINUOUS_MEASURES(data)
     distribution = ARGUS(continuous_measures)
 

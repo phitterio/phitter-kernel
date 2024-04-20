@@ -13,6 +13,7 @@ class TRIANGULAR:
         """
         Initializes the TRIANGULAR distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters TRIANGULAR distribution: {"a": *, "b": *, "c": *}
+        https://phitter.io/distributions/continuous/triangular
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -168,7 +169,7 @@ class TRIANGULAR:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -210,7 +211,7 @@ class TRIANGULAR:
         # c = (u * b + v * a) / (u + v)
 
         # Scipy parameters of distribution
-        # scipy_params = scipy.stats.triang.fit(continuous_measures.data)
+        # scipy_params = scipy.stats.triang.fit(continuous_measures.data_to_fit)
         # a = scipy_params[1]
         # b = scipy_params[1] + scipy_params[2]
         # c = scipy_params[1] + scipy_params[2] * scipy_params[0]

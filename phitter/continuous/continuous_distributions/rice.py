@@ -15,6 +15,7 @@ class RICE:
         """
         Initializes the RICE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters RICE distribution: {"v": *, "sigma": *}
+        https://phitter.io/distributions/continuous/rice
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -221,7 +222,7 @@ class RICE:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -247,10 +248,10 @@ class RICE:
 
             return (eq1, eq2)
 
-        bnds = ((0, 0), (numpy.inf, numpy.inf))
+        bounds = ((0, 0), (numpy.inf, numpy.inf))
         x0 = (continuous_measures.mean, numpy.sqrt(continuous_measures.variance))
         args = [continuous_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"v": solution.x[0], "sigma": solution.x[1]}
 
         return parameters

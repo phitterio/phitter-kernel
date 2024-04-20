@@ -15,6 +15,7 @@ class GENERALIZED_LOGISTIC:
         """
         Initializes the GENERALIZED_LOGISTIC distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GENERALIZED_LOGISTIC distribution: {"loc": *, "scale": *, "c": *}
+        https://phitter.io/distributions/continuous/generalized_logistic
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -152,7 +153,7 @@ class GENERALIZED_LOGISTIC:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -188,12 +189,12 @@ class GENERALIZED_LOGISTIC:
 
         ## least square methods
         x0 = [continuous_measures.mean, continuous_measures.mean, continuous_measures.mean]
-        b = ((1e-5, -numpy.inf, 1e-5), (numpy.inf, numpy.inf, numpy.inf))
-        solution = scipy.optimize.least_squares(equations, x0, bounds=b, args=([continuous_measures]))
+        bounds = ((1e-5, -numpy.inf, 1e-5), (numpy.inf, numpy.inf, numpy.inf))
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures]))
         parameters = {"c": solution.x[0], "loc": solution.x[1], "scale": solution.x[2]}
 
         # ## scipy methods
-        # scipy_params = scipy.stats.genlogistic.fit(continuous_measures.data)
+        # scipy_params = scipy.stats.genlogistic.fit(continuous_measures.data_to_fit)
         # parameters = {"loc": scipy_params[1], "scale": scipy_params[2], "c": scipy_params[0]}
 
         return parameters

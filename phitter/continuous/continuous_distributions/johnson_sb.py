@@ -14,6 +14,7 @@ class JOHNSON_SB:
         """
         Initializes the JOHNSON_SB distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters JOHNSON_SB distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
+        https://phitter.io/distributions/continuous/johnson_sb
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -176,7 +177,7 @@ class JOHNSON_SB:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -208,7 +209,7 @@ class JOHNSON_SB:
         parameters = {"xi": xi_, "lambda": lambda_, "gamma": gamma_, "delta": delta_}
 
         ## Scipy parameters
-        scipy_params = scipy.stats.johnsonsb.fit(continuous_measures.data)
+        scipy_params = scipy.stats.johnsonsb.fit(continuous_measures.data_to_fit)
         parameters = {"xi": scipy_params[2], "lambda": scipy_params[3], "gamma": scipy_params[0], "delta": scipy_params[1]}
         return parameters
 

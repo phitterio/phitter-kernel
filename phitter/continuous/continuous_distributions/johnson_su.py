@@ -14,6 +14,7 @@ class JOHNSON_SU:
         """
         Initializes the JOHNSON_SU distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters JOHNSON_SU distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
+        https://phitter.io/distributions/continuous/johnson_su
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")

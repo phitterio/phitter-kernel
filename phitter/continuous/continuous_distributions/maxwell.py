@@ -13,6 +13,7 @@ class MAXWELL:
         """
         Initializes the MAXWELL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters MAXWELL distribution: {"alpha": *, "loc": *}
+        https://phitter.io/distributions/continuous/maxwell
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -150,7 +151,7 @@ class MAXWELL:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -173,10 +174,10 @@ class MAXWELL:
 
         #     return (eq1, eq2, eq3)
 
-        # bnds = ((0,  - numpy.inf), (numpy.inf, numpy.inf))
+        # bounds = ((0,  - numpy.inf), (numpy.inf, numpy.inf))
         # x0 = (1, continuous_measures.mean)
         # args = ([continuous_measures])
-        # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
         # parameters = {"alpha": solution.x[0], "loc": solution.x[1]}
 
         alpha = numpy.sqrt(continuous_measures.variance * numpy.pi / (3 * numpy.pi - 8))

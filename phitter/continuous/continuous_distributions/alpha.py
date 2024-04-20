@@ -19,6 +19,7 @@ class ALPHA:
         """
         Initializes the ALPHA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters ALPHA distribution: {"alpha": *, "loc": *, "scale": *}
+        https://phitter.io/distributions/continuous/alpha
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -185,7 +186,7 @@ class ALPHA:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -222,16 +223,16 @@ class ALPHA:
         #     return (eq1, eq2, eq3)
 
         ## THIS METHOD IS CORRECT, BUT IS VERY SLOW BECAUSE THE INTEGRATION
-        # bnds = ((0, 9, 0), (numpy.inf, continuous_measures.mean, numpy.inf))
+        # bounds = ((0, 9, 0), (numpy.inf, continuous_measures.mean, numpy.inf))
         # x0 = (1, continuous_measures.mean, 1)
         # args = ([continuous_measures])
-        # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
         # parameters = {"alpha": solution.x[0], "loc": solution.x[1], "scale": solution.x[2]}
 
         # solution = scipy.optimize.fsolve(equations, (1, 1, 1), continuous_measures)
         # parameters = {"alpha": solution[0], "loc": solution[1], "scale": solution[2]}
 
-        scipy_params = scipy.stats.alpha.fit(continuous_measures.data)
+        scipy_params = scipy.stats.alpha.fit(continuous_measures.data_to_fit)
         parameters = {"alpha": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
         return parameters
 

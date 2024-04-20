@@ -14,6 +14,7 @@ class PARETO_SECOND_KIND:
         """
         Initializes the PARETO_SECOND_KIND distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters PARETO_SECOND_KIND distribution: {"alpha": *, "xm": *, "loc": *}
+        https://phitter.io/distributions/continuous/pareto_second_kind
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -169,7 +170,7 @@ class PARETO_SECOND_KIND:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -202,10 +203,10 @@ class PARETO_SECOND_KIND:
 
         #     return (eq1, eq2, eq3)
 
-        # bnds = ((1, 0,  - numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
+        # bounds = ((1, 0,  - numpy.inf), (numpy.inf, numpy.inf, numpy.inf))
         # x0 = (7, 6, continuous_measures.mode)
         # args = ([continuous_measures])
-        # solution = scipy.optimize.least_squares(equations, x0, bounds = bnds, args=args)
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
         # parameters = {"alpha": solution.x[0], "xm": solution.x[1], "loc": solution.x[2]}
 
         m = continuous_measures.mean
@@ -213,12 +214,12 @@ class PARETO_SECOND_KIND:
         # mo = continuous_measures.mode
         v = continuous_measures.variance
 
-        loc = scipy.stats.lomax.fit(continuous_measures.data)[1]
+        loc = scipy.stats.lomax.fit(continuous_measures.data_to_fit)[1]
         xm = -((m - loc) * ((m - loc) ** 2 + v)) / ((m - loc) ** 2 - v)
         alpha = -(2 * v) / ((m - loc) ** 2 - v)
         parameters = {"xm": xm, "alpha": alpha, "loc": loc}
 
-        # scipy_params = scipy.stats.lomax.fit(continuous_measures.data)
+        # scipy_params = scipy.stats.lomax.fit(continuous_measures.data_to_fit)
         # parameters = {"xm": scipy_params[2] , "alpha": scipy_params[0], "loc": scipy_params[1]}
 
         return parameters

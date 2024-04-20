@@ -14,6 +14,7 @@ class KUMARASWAMY:
         """
         Initializes the KUMARASWAMY distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters KUMARASWAMY distribution: {"alpha": *, "beta": *, "min": *, "max": *}
+        https://phitter.io/distributions/continuous/kumaraswamy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -179,7 +180,7 @@ class KUMARASWAMY:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -211,10 +212,10 @@ class KUMARASWAMY:
 
         # solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), continuous_measures)
         l = continuous_measures.min - 3 * abs(continuous_measures.min)
-        bnds = ((0, 0, l, l), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((0, 0, l, l), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
         x0 = (1, 1, 1, 1)
         args = [continuous_measures]
-        solution = scipy.optimize.least_squares(equations, x0, bounds=bnds, args=args)
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
 
         parameters = {"alpha": solution.x[0], "beta": solution.x[1], "min": solution.x[2], "max": solution.x[3]}
         return parameters

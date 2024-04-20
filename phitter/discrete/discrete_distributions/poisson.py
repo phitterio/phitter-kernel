@@ -10,8 +10,13 @@ class POISSON:
     """
 
     def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+        """
+        Initializes the POISSON distribution by either providing a Discrete Measures instance [DISCRETE_MEASURES] or a dictionary with the distribution's parameters.
+        The POISSON distribution parameters are: {"lambda": *}.
+        https://phitter.io/distributions/continuous/poisson
+        """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures)
         if parameters != None:
@@ -142,7 +147,7 @@ class POISSON:
         Parameters
         ==========
         discrete_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======

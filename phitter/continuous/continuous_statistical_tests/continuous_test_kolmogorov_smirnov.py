@@ -37,7 +37,7 @@ def evaluate_continuous_test_kolmogorov_smirnov(distribution, continuous_measure
     """
 
     ## Parameters and preparations
-    N = continuous_measures.length
+    N = continuous_measures.size
 
     ## Calculation of errors
     Fn = distribution.cdf(continuous_measures.data)

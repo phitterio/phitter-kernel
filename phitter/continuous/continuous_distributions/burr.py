@@ -19,6 +19,7 @@ class BURR:
         """
         Initializes the BURR distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters BURR distribution: {"A": *, "B": *, "C": *}
+        https://phitter.io/distributions/continuous/burr
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
@@ -179,7 +180,7 @@ class BURR:
         Parameters
         ==========
         continuous_measures: MEASUREMESTS
-            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, length, num_bins, data
+            attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data
 
         Returns
         =======
@@ -212,12 +213,12 @@ class BURR:
 
         ## Solve equations system
         # x0 = [continuous_measures.mean, continuous_measures.mean, continuous_measures.mean]
-        # b = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
-        # solution = scipy.optimize.least_squares(equations, x0, bounds = b, args=([continuous_measures]))
+        # bounds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = b, args=([continuous_measures]))
         # parameters = {"A": solution.x[0], "B": solution.x[1], "C": solution.x[2]}
 
         # Scipy class
-        scipy_params = scipy.stats.burr12.fit(continuous_measures.data)
+        scipy_params = scipy.stats.burr12.fit(continuous_measures.data_to_fit)
         parameters = {"A": scipy_params[3], "B": scipy_params[0], "C": scipy_params[1]}
         return parameters
 
