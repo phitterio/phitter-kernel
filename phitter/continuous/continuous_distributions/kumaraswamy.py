@@ -1,6 +1,7 @@
 import numpy
 import scipy.integrate
 import scipy.optimize
+import scipy.special
 
 
 class KUMARASWAMY:
@@ -10,16 +11,23 @@ class KUMARASWAMY:
     https://phitter.io/distributions/continuous/kumaraswamy
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the KUMARASWAMY distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters KUMARASWAMY distribution: {"alpha": *, "beta": *, "min": *, "max": *}
         https://phitter.io/distributions/continuous/kumaraswamy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -76,7 +84,7 @@ class KUMARASWAMY:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -189,31 +197,31 @@ class KUMARASWAMY:
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
             ## Variables declaration
-            alpha_, beta_, min_, max_ = initial_solution
+            alpha, beta, min_, max_ = initial_solution
 
             ## Generatred moments function (not - centered)
-            E = lambda r: beta_ * scipy.special.gamma(1 + r / alpha_) * scipy.special.gamma(beta_) / scipy.special.gamma(1 + beta_ + r / alpha_)
+            E = lambda r: beta * scipy.special.gamma(1 + r / alpha) * scipy.special.gamma(beta) / scipy.special.gamma(1 + beta + r / alpha)
 
             ## Parametric expected expressions
             parametric_mean = E(1) * (max_ - min_) + min_
             parametric_variance = (E(2) - E(1) ** 2) * (max_ - min_) ** 2
             parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
             parametric_kurtosis = (E(4) - 4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) / ((E(2) - E(1) ** 2)) ** 2
-            parametric_median = ((1 - 2 ** (-1 / beta_)) ** (1 / alpha_)) * (max_ - min_) + min_
+            # parametric_median = ((1 - 2 ** (-1 / beta)) ** (1 / alpha)) * (max_ - min_) + min_
+            # parametric_mode = min_ + (max_ - min_) * ((alpha - 1) / (alpha * beta - 1)) ** (1 / alpha)
 
             ## System Equations
             eq1 = parametric_mean - continuous_measures.mean
             eq2 = parametric_variance - continuous_measures.variance
-            # eq2 = parametric_median - continuous_measures.median
             eq3 = parametric_skewness - continuous_measures.skewness
             eq4 = parametric_kurtosis - continuous_measures.kurtosis
+            # eq3 = parametric_median - continuous_measures.median
+            # eq4 = parametric_mode - continuous_measures.mode
 
             return (eq1, eq2, eq3, eq4)
 
-        # solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), continuous_measures)
-        l = continuous_measures.min - 3 * abs(continuous_measures.min)
-        bounds = ((0, 0, l, l), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
-        x0 = (1, 1, 1, 1)
+        bounds = ((1e-5, 1e-5, -numpy.inf, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
+        x0 = (1, 1, continuous_measures.min, continuous_measures.max)
         args = [continuous_measures]
         solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
 
@@ -241,7 +249,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_kumaraswamy.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = KUMARASWAMY(continuous_measures)
+    distribution = KUMARASWAMY(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

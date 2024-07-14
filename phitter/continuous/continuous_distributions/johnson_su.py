@@ -10,16 +10,23 @@ class JOHNSON_SU:
     https://phitter.io/distributions/continuous/johnson_su
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the JOHNSON_SU distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters JOHNSON_SU distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
         https://phitter.io/distributions/continuous/johnson_su
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -77,7 +84,7 @@ class JOHNSON_SU:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -187,8 +194,15 @@ class JOHNSON_SU:
 
             return (eq1, eq2, eq3, eq4)
 
-        solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), continuous_measures)
-        parameters = {"xi": solution[0], "lambda": solution[1], "gamma": solution[2], "delta": solution[3]}
+        # solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), continuous_measures)
+        # parameters = {"xi": solution[0], "lambda": solution[1], "gamma": solution[2], "delta": solution[3]}
+
+        bounds = ((-numpy.inf, 1e-5, -numpy.inf, 1e-5), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
+        x0 = (continuous_measures.mean, 1, 1, 1)
+        args = [continuous_measures]
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
+
+        parameters = {"xi": solution.x[0], "lambda": solution.x[1], "gamma": solution.x[2], "delta": solution.x[3]}
         return parameters
 
 
@@ -209,7 +223,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_johnson_su.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = JOHNSON_SU(continuous_measures)
+    distribution = JOHNSON_SU(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

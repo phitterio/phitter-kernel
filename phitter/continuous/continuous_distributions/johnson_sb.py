@@ -10,16 +10,23 @@ class JOHNSON_SB:
     https://phitter.io/distributions/continuous/johnson_sb
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the JOHNSON_SB distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters JOHNSON_SB distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
         https://phitter.io/distributions/continuous/johnson_sb
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -42,23 +49,26 @@ class JOHNSON_SB:
         """
         Cumulative distribution function
         """
-        # result, error = scipy.integrate.quad(self.pdf, self.xi_, x)
-        z = lambda t: (t - self.xi_) / self.lambda_
-        result = scipy.stats.norm.cdf(self.gamma_ + self.delta_ * numpy.log(z(x) / (1 - z(x))))
+        # z = lambda t: (t - self.xi_) / self.lambda_
+        # result = scipy.stats.norm.cdf(self.gamma_ + self.delta_ * numpy.log(z(x) / (1 - z(x))))
+        result = scipy.stats.johnsonsb.cdf(x, self.gamma_, self.delta_, loc=self.xi_, scale=self.lambda_)
         return result
 
     def pdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Probability density function
         """
-        z = lambda t: (t - self.xi_) / self.lambda_
-        return (self.delta_ / (self.lambda_ * numpy.sqrt(2 * numpy.pi) * z(x) * (1 - z(x)))) * numpy.exp(-(1 / 2) * (self.gamma_ + self.delta_ * numpy.log(z(x) / (1 - z(x)))) ** 2)
+        # z = lambda t: (t - self.xi_) / self.lambda_
+        # result = (self.delta_ / (self.lambda_ * numpy.sqrt(2 * numpy.pi) * z(x) * (1 - z(x)))) * numpy.exp(-(1 / 2) * (self.gamma_ + self.delta_ * numpy.log(z(x) / (1 - z(x)))) ** 2)
+        result = scipy.stats.johnsonsb.pdf(x, self.gamma_, self.delta_, loc=self.xi_, scale=self.lambda_)
+        return result
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u => PPF[u] = x
         """
-        result = (self.lambda_ * numpy.exp((scipy.stats.norm.ppf(u) - self.gamma_) / self.delta_)) / (1 + numpy.exp((scipy.stats.norm.ppf(u) - self.gamma_) / self.delta_)) + self.xi_
+        # result = (self.lambda_ * numpy.exp((scipy.stats.norm.ppf(u) - self.gamma_) / self.delta_)) / (1 + numpy.exp((scipy.stats.norm.ppf(u) - self.gamma_) / self.delta_)) + self.xi_
+        result = scipy.stats.johnsonsb.ppf(u, self.gamma_, self.delta_, loc=self.xi_, scale=self.lambda_)
         return result
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
@@ -78,7 +88,7 @@ class JOHNSON_SB:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -190,27 +200,35 @@ class JOHNSON_SB:
                Estimation of parameters of Johnson's system of distributions.
                Journal of Modern Applied Statistical Methods, 10(2), 9.
         """
-        ## Percentiles
-        z = 0.5384
-        percentiles = [scipy.stats.norm.cdf(0.5384 * i) for i in range(-3, 4, 2)]
-        x1, x2, x3, x4 = [scipy.stats.scoreatpercentile(continuous_measures.data, 100 * x) for x in percentiles]
+        # ## Percentiles
+        # z = 0.5384
 
-        ## Calculation m,n,p
-        m = x4 - x3
-        n = x2 - x1
-        p = x3 - x2
+        # # Usar numpy para calcular percentiles
+        # percentiles = scipy.stats.norm.cdf(z * numpy.array([-3, -1, 1, 3]))
+        # scores = numpy.percentile(continuous_measures.data, 100 * percentiles)
 
-        ## Calculation distribution parameters
-        lambda_ = (p * numpy.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2 - 4))) / (p**2 / (m * n) - 1)
-        xi_ = 0.5 * (x3 + x2) - 0.5 * lambda_ + p * (p / n - p / m) / (2 * (p**2 / (m * n) - 1))
-        delta_ = z / numpy.arccosh(0.5 * numpy.sqrt((1 + p / m) * (1 + p / n)))
-        gamma_ = delta_ * numpy.arcsinh((p / n - p / m) * numpy.sqrt((1 + p / m) * (1 + p / n) - 4) / (2 * (p**2 / (m * n) - 1)))
+        # x1, x2, x3, x4 = scores
 
-        parameters = {"xi": xi_, "lambda": lambda_, "gamma": gamma_, "delta": delta_}
+        # ## Cálculo de m, n, p
+        # m = x4 - x3
+        # n = x2 - x1
+        # p = x3 - x2
+
+        # ## Cálculo de los parámetros de distribución
+        # p_squared = p ** 2
+        # m_n_product = m * n
+        # term = (p_squared / m_n_product - 1)
+
+        # lambda_ = (p * numpy.sqrt((((1 + p / m) * (1 + p / n) - 2) ** 2 - 4))) / term
+        # xi_ = 0.5 * (x3 + x2) - 0.5 * lambda_ + p * (p / n - p / m) / (2 * term)
+        # delta_ = z / numpy.arccosh(0.5 * numpy.sqrt((1 + p / m) * (1 + p / n)))
+        # gamma_ = delta_ * numpy.arcsinh((p / n - p / m) * numpy.sqrt((1 + p / m) * (1 + p / n) - 4) / (2 * term))
+
+        # parameters = {"xi": xi_, "lambda": lambda_, "gamma": gamma_, "delta": delta_}
 
         ## Scipy parameters
-        scipy_params = scipy.stats.johnsonsb.fit(continuous_measures.data_to_fit)
-        parameters = {"xi": scipy_params[2], "lambda": scipy_params[3], "gamma": scipy_params[0], "delta": scipy_params[1]}
+        scipy_parameters = scipy.stats.johnsonsb.fit(continuous_measures.data_to_fit)
+        parameters = {"xi": scipy_parameters[2], "lambda": scipy_parameters[3], "gamma": scipy_parameters[0], "delta": scipy_parameters[1]}
         return parameters
 
 
@@ -231,7 +249,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_johnson_sb.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = JOHNSON_SB(continuous_measures)
+    distribution = JOHNSON_SB(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

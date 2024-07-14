@@ -11,16 +11,23 @@ class BETA:
     https://phitter.io/distributions/continuous/beta
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the BETA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters BETA distribution: {"alpha": *, "beta": *, "A": *, "B": *}
         https://phitter.io/distributions/continuous/beta
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -81,7 +88,7 @@ class BETA:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -197,8 +204,8 @@ class BETA:
         v2 = parameters["beta"] > 0
         v3 = parameters["A"] < parameters["B"]
         if (v1 and v2 and v3) == False:
-            scipy_params = scipy.stats.beta.fit(continuous_measures.data_to_fit)
-            parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "A": scipy_params[2], "B": scipy_params[3]}
+            scipy_parameters = scipy.stats.beta.fit(continuous_measures.data_to_fit)
+            parameters = {"alpha": scipy_parameters[0], "beta": scipy_parameters[1], "A": scipy_parameters[2], "B": scipy_parameters[3]}
         return parameters
 
 
@@ -222,7 +229,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_beta.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = BETA(continuous_measures)
+    distribution = BETA(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")
@@ -237,47 +244,3 @@ if __name__ == "__main__":
     print(f"kurtosis: {distribution.kurtosis} - {continuous_measures.kurtosis}")
     print(f"median: {distribution.median} - {continuous_measures.median}")
     print(f"mode: {distribution.mode} - {continuous_measures.mode}")
-
-    # def equations(initial_solution: list[float], continuous_measures) -> tuple[float]:
-    #     ## Variables declaration
-    #     alpha, beta, A, B = initial_solution
-
-    #     ## Parametric expected expressions
-    #     parametric_mean = A + (alpha / ( alpha + beta )) * (B - A)
-    #     parametric_variance = ((alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1))) * (B - A) ** 2
-    #     parametric_skewness = 2 * ((beta - alpha) / (alpha + beta + 2)) * numpy.sqrt((alpha + beta + 1) / (alpha * beta))
-    #     parametric_kurtosis = 3 * (((alpha + beta + 1) * (2 * (alpha + beta) ** 2  + (alpha * beta) * (alpha + beta - 6))) / ((alpha * beta) * (alpha + beta + 2) * (alpha + beta + 3)))
-
-    #     ## System Equations
-    #     eq1 = parametric_mean - continuous_measures.mean
-    #     eq2 = parametric_variance - continuous_measures.variance
-    #     eq3 = parametric_skewness - continuous_measures.skewness
-    #     eq4 = parametric_kurtosis  - continuous_measures.kurtosis
-
-    #     return (eq1, eq2, eq3, eq4)
-
-    # ## Get parameters of distribution: SCIPY vs EQUATIONS
-    # import time
-    # print("=====")
-    # ti = time.time()
-    # solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), continuous_measures)
-    # parameters = {"alpha": solution[0], "beta": solution[1], "A": solution[2], "B": solution[3]}
-    # print(parameters)
-    # print("Solve equations time: ", time.time() - ti)
-
-    # print("=====")
-    # ti = time.time()
-    # scipy_params = scipy.stats.beta.fit(continuous_measures.data_to_fit)
-    # parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "A": scipy_params[2], "B": scipy_params[3]}
-    # print(parameters)
-    # print("Scipy time get parameters: ",time.time() - ti)
-
-    # print("=====")
-
-    # ti = time.time()
-    # bounds = ((0, 0,  - numpy.inf, continuous_measures.mean), (numpy.inf, numpy.inf, continuous_measures.mean, numpy.inf))
-    # x0 = (1, 1, continuous_measures.min, continuous_measures.max)
-    # args = ([continuous_measures])
-    # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
-    # print(solution.x)
-    # print("Solve equations time: ", time.time() - ti)

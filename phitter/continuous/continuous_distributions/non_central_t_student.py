@@ -1,5 +1,6 @@
 import numpy
 import scipy.integrate
+import scipy.optimize
 import scipy.special
 import scipy.stats
 
@@ -11,16 +12,23 @@ class NON_CENTRAL_T_STUDENT:
     https://phitter.io/distributions/continuous/non_central_t_student    Hand-book on Statistical Distributions (pag.116) ... Christian Walck
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the NON_CENTRAL_T_STUDENT distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters NON_CENTRAL_T_STUDENT distribution: {"lambda": *, "n": *, "loc": *, "scale": *}
         https://phitter.io/distributions/continuous/non_central_t_student
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -117,7 +125,7 @@ class NON_CENTRAL_T_STUDENT:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -248,7 +256,7 @@ class NON_CENTRAL_T_STUDENT:
 
             return (eq1, eq2, eq3, eq4)
 
-        bounds = ((0, 0, 0, 0), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
+        bounds = ((-numpy.inf, 1e-5, -numpy.inf, 1e-5), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
         x0 = (1, 5, continuous_measures.mean, 1)
         args = [continuous_measures]
         solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
@@ -275,7 +283,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_NON_CENTRAL_T_STUDENT.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = NON_CENTRAL_T_STUDENT(continuous_measures)
+    distribution = NON_CENTRAL_T_STUDENT(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")
@@ -290,5 +298,3 @@ if __name__ == "__main__":
     print(f"kurtosis: {distribution.kurtosis} - {continuous_measures.kurtosis}")
     print(f"median: {distribution.median} - {continuous_measures.median}")
     print(f"mode: {distribution.mode} - {continuous_measures.mode}")
-
-    # print(scipy.stats.nct.fit(data))

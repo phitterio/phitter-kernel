@@ -8,7 +8,12 @@ class UNIFORM:
     https://phitter.io/distributions/discrete/uniform
     """
 
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the UNIFORM distribution by either providing a Discrete Measures instance [DISCRETE_MEASURES] or a dictionary with the distribution's parameters.
         The UNIFORM distribution parameters are: {"a": *, "b": *}.
@@ -17,7 +22,7 @@ class UNIFORM:
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -71,7 +76,7 @@ class UNIFORM:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -178,7 +183,7 @@ if __name__ == "__main__":
     ## Distribution class
     data = get_data(path)
     discrete_measures = DISCRETE_MEASURES(data)
-    distribution = UNIFORM(discrete_measures)
+    distribution = UNIFORM(discrete_measures=discrete_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

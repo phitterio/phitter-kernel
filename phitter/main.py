@@ -10,6 +10,10 @@ from phitter.discrete.phitter_discrete import PHITTER_DISCRETE
 
 
 class PHITTER:
+    """
+    Fit continuous or discrete distributions to a given dataset.
+    """
+
     def __init__(
         self,
         data: list[int | float] | numpy.ndarray,
@@ -17,26 +21,80 @@ class PHITTER:
         num_bins: int | None = None,
         confidence_level=0.95,
         minimum_sse=numpy.inf,
+        subsample_size: int | None = None,
         subsample_estimation_size: int | None = None,
         distributions_to_fit: list[str] | typing.Literal["all"] = "all",
         exclude_distributions: list[str] | typing.Literal["any"] = "any",
     ):
+        """
+        Parameters
+        ----------
+        data : list[int | float] or numpy.ndarray
+            The dataset to fit the distributions to.
+        fit_type : str, optional
+            The type of fit, either "continuous" or "discrete" (default is "continuous").
+        num_bins : int, optional
+            The number of bins to use for the histogram if the fit type is "continuous" (default is calculated using Doane's rule).
+        confidence_level : float, optional
+            The confidence level for the distribution fitting (default is 0.95).
+        minimum_sse : float, optional
+            The minimum sum of squared errors (default is numpy.inf).
+        subsample_size : int, optional
+            The size of the subsample to use for fitting (default is None).
+        subsample_estimation_size : int, optional
+            The size of the subsample used to estimate the parameters of each distribution (default is None).
+        distributions_to_fit : list[str] or str, optional
+            The list of distributions to fit or "all" to fit all available distributions (default is "all").
+        exclude_distributions : list[str] or str, optional
+            The list of distributions to exclude or "any" to exclude none (default is "any").
+
+        Raises
+        ------
+        ValueError
+            If the subsample size is larger than the dataset size.
+            If the subsample estimation size is larger than the dataset size.
+            If the subsample estimation size is larger than the subsample size.
+            If both 'distributions_to_fit' and 'exclude_distributions' are specified.
+            If any specified distribution is not found in the list of available distributions.
+        """
+        if subsample_size != None:
+            if subsample_size > len(data):
+                raise ValueError("The subsample size must be smaller than the size of the dataset.")
+
+        if subsample_estimation_size != None:
+            if subsample_estimation_size > len(data):
+                raise ValueError("The subsample size used to estimate the parameters of each distribution must be smaller than the size of the dataset.")
+
+        if subsample_estimation_size != None and subsample_size != None:
+            if subsample_estimation_size > subsample_size:
+                raise ValueError("The subsample size used to estimate the parameters of each distribution must be smaller than the subsample size.")
+
         self.data = data
         self.fit_type = fit_type
-        self.num_bins = num_bins if num_bins != None else len(numpy.histogram_bin_edges(self.data, bins="doane"))
+        self.num_bins = num_bins if num_bins != None else numpy.histogram_bin_edges(self.data, bins="doane").size
         self.confidence_level = confidence_level
         self.minimum_sse = minimum_sse
+        self.subsample_size = subsample_size
         self.subsample_estimation_size = subsample_estimation_size
         self.distributions_to_fit = distributions_to_fit
         self.exclude_distributions = exclude_distributions
 
     def fit(self, n_workers: int = 1):
+        """
+        Fits the appropriate distributions to the data using the specified number of workers.
+
+        Parameters
+        ----------
+        n_workers : int, optional
+            The number of workers to use for fitting the distributions (default is 1).
+        """
         if self.fit_type == "continuous":
             self.phitter_continuous = PHITTER_CONTINUOUS(
                 data=self.data,
                 num_bins=self.num_bins,
                 confidence_level=self.confidence_level,
                 minimum_sse=self.minimum_sse,
+                subsample_size=self.subsample_size,
                 subsample_estimation_size=self.subsample_estimation_size,
                 distributions_to_fit=self.distributions_to_fit,
                 exclude_distributions=self.exclude_distributions,
@@ -48,6 +106,7 @@ class PHITTER:
                 data=self.data,
                 confidence_level=self.confidence_level,
                 minimum_sse=self.minimum_sse,
+                subsample_size=self.subsample_size,
                 subsample_estimation_size=self.subsample_estimation_size,
                 distributions_to_fit=self.distributions_to_fit,
                 exclude_distributions=self.exclude_distributions,
@@ -56,8 +115,8 @@ class PHITTER:
 
     @property
     def best_distribution(self):
-        id = list(self.sorted_distributions_sse.keys())[0]
-        return {"id": id, "parameters": self.sorted_distributions_sse[id]["parameters"]}
+        id_distribution = list(self.sorted_distributions_sse.keys())[0]
+        return {"id": id_distribution, "parameters": self.sorted_distributions_sse[id_distribution]["parameters"]}
 
     @property
     def sorted_distributions_sse(self):
@@ -75,10 +134,45 @@ class PHITTER:
         if self.fit_type == "discrete":
             return self.phitter_discrete.not_rejected_distributions
 
+    def get_parameters(self, id_distribution: str) -> dict:
+        if id_distribution not in self.sorted_distributions_sse:
+            raise Exception(f"{id_distribution} distribution not founded")
+        return self.sorted_distributions_sse[id_distribution]["parameters"]
+
+    def get_test_chi_square(self, id_distribution: str) -> dict:
+        if id_distribution not in self.sorted_distributions_sse:
+            raise Exception(f"{id_distribution} distribution not founded")
+        return self.sorted_distributions_sse[id_distribution]["chi_square"]
+
+    def get_test_kolmogorov_smirnov(self, id_distribution: str) -> dict:
+        if id_distribution not in self.sorted_distributions_sse:
+            raise Exception(f"{id_distribution} distribution not founded")
+        return self.sorted_distributions_sse[id_distribution]["kolmogorov_smirnov"]
+
+    def get_test_anderson_darling(self, id_distribution: str) -> dict:
+        if id_distribution not in self.sorted_distributions_sse:
+            raise Exception(f"{id_distribution} distribution not founded")
+        return self.sorted_distributions_sse[id_distribution]["anderson_darling"]
+
+    def get_sse(self, id_distribution: str) -> float:
+        if id_distribution not in self.sorted_distributions_sse:
+            raise Exception(f"{id_distribution} distribution not founded")
+        return self.sorted_distributions_sse[id_distribution]["sse"]
+
+    def get_n_test_passed(self, id_distribution: str) -> int:
+        if id_distribution not in self.sorted_distributions_sse:
+            raise Exception(f"{id_distribution} distribution not founded")
+        return self.sorted_distributions_sse[id_distribution]["n_test_passed"]
+
+    def get_n_test_null(self, id_distribution: str) -> int:
+        if id_distribution not in self.sorted_distributions_sse:
+            raise Exception(f"{id_distribution} distribution not founded")
+        return self.sorted_distributions_sse[id_distribution]["n_test_null"]
+
     def dict_to_dataframe(self, data: dict[str, dict]) -> pandas.DataFrame:
         flat_data = []
         for distribution, values in data.items():
-            is_rejected = "✅" if values["n_test_passed"] >= 1 else "❌"
+            is_rejected = "✅" if values["n_test_passed"] >= 1 else "✖️"
             flat_entry = {("distribution", ""): distribution}
             flat_entry[("passed", "")] = is_rejected
             for test, results in values.items():
@@ -217,7 +311,7 @@ class PHITTER:
         plot_width=600,
         plot_bar_color="rgba(128,128,128,1)",
         plot_bargap=0.15,
-        plot_renderer: str | None = None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
         if self.fit_type == "continuous":
@@ -231,7 +325,6 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_continuous.plot_histogram_plotly(
@@ -243,7 +336,7 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
         if self.fit_type == "discrete":
@@ -257,7 +350,6 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_discrete.plot_histogram_plotly(
@@ -269,7 +361,7 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
     def plot_histogram_distributions(
@@ -284,7 +376,7 @@ class PHITTER:
         plot_width=600,
         plot_bar_color="rgba(128,128,128,1)",
         plot_bargap=0.15,
-        plot_renderer: str | None = None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
         if self.fit_type == "continuous":
@@ -300,7 +392,6 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_continuous.plot_histogram_distributions_pdf_plotly(
@@ -314,7 +405,7 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
         if self.fit_type == "discrete":
@@ -330,7 +421,6 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_discrete.plot_histogram_distributions_pmf_plotly(
@@ -344,12 +434,12 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
     def plot_distribution(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title="HISTOGRAM",
         plot_xaxis_title="Domain",
         plot_yaxis_title="Probability Density/Mass Function",
@@ -360,13 +450,13 @@ class PHITTER:
         plot_bargap=0.15,
         plot_line_color="rgba(255,0,0,1)",
         plot_line_width=3,
-        plot_renderer: str | None = None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
         if self.fit_type == "continuous":
             if plot_engine == "matplotlib":
                 self.phitter_continuous.plot_distribution_pdf_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -377,11 +467,10 @@ class PHITTER:
                     plot_bargap=plot_bargap,
                     plot_line_color=plot_line_color,
                     plot_line_width=plot_line_width,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_continuous.plot_distribution_pdf_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -392,13 +481,13 @@ class PHITTER:
                     plot_bargap=plot_bargap,
                     plot_line_color=plot_line_color,
                     plot_line_width=plot_line_width,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
         if self.fit_type == "discrete":
             if plot_engine == "matplotlib":
                 self.phitter_discrete.plot_distribution_pmf_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -409,11 +498,10 @@ class PHITTER:
                     plot_bargap=plot_bargap,
                     plot_line_color=plot_line_color,
                     plot_line_width=plot_line_width,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_discrete.plot_distribution_pmf_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -424,7 +512,7 @@ class PHITTER:
                     plot_bargap=plot_bargap,
                     plot_line_color=plot_line_color,
                     plot_line_width=plot_line_width,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
     def plot_ecdf(
@@ -442,7 +530,7 @@ class PHITTER:
         plot_line_name="Empirical Distribution",
         plot_bar_color="rgba(128,128,128,1)",
         plot_bargap=0.15,
-        plot_renderer: str | None = None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
         if self.fit_type == "continuous":
@@ -459,7 +547,6 @@ class PHITTER:
                     plot_line_color=plot_line_color,
                     plot_line_width=plot_line_width,
                     plot_line_name=plot_line_name,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
                 )
             else:
                 self.phitter_continuous.plot_ecdf_plotly(
@@ -474,11 +561,11 @@ class PHITTER:
                     plot_line_color=plot_line_color,
                     plot_line_width=plot_line_width,
                     plot_line_name=plot_line_name,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
+                    plotly_plot_renderer=plotly_plot_renderer if len(self.data) <= 10000 else "png",
                 )
 
         if self.fit_type == "discrete":
-            if len(self.data) > 10000 or plot_engine == "matplotlib":
+            if plot_engine == "matplotlib":
                 self.phitter_discrete.plot_ecdf_matplotlib(
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
@@ -488,7 +575,6 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_discrete.plot_ecdf_plotly(
@@ -500,12 +586,12 @@ class PHITTER:
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
                     plot_bargap=plot_bargap,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
     def plot_ecdf_distribution(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title="ECDF",
         plot_xaxis_title="Domain",
         plot_yaxis_title="Cumulative Distribution Function",
@@ -521,13 +607,13 @@ class PHITTER:
         plot_empirical_bargap=0.15,
         plot_distribution_line_color="rgba(255,0,0,1)",
         plot_distribution_line_width=2,
-        plot_renderer: str | None = None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
         if self.fit_type == "continuous":
             if len(self.data) > 10000 or plot_engine == "matplotlib":
                 self.phitter_continuous.plot_ecdf_distribution_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_xaxis_min_offset=plot_xaxis_min_offset,
@@ -541,11 +627,10 @@ class PHITTER:
                     plot_empirical_line_name=plot_empirical_line_name,
                     plot_distribution_line_color=plot_distribution_line_color,
                     plot_distribution_line_width=plot_distribution_line_width,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
                 )
             else:
                 self.phitter_continuous.plot_ecdf_distribution_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_xaxis_min_offset=plot_xaxis_min_offset,
@@ -559,13 +644,13 @@ class PHITTER:
                     plot_empirical_line_name=plot_empirical_line_name,
                     plot_distribution_line_color=plot_distribution_line_color,
                     plot_distribution_line_width=plot_distribution_line_width,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
+                    plotly_plot_renderer=plotly_plot_renderer if len(self.data) <= 10000 else "png",
                 )
 
         if self.fit_type == "discrete":
-            if len(self.data) > 10000 or plot_engine == "matplotlib":
+            if plot_engine == "matplotlib":
                 self.phitter_discrete.plot_ecdf_distribution_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -576,11 +661,10 @@ class PHITTER:
                     plot_empirical_bargap=plot_empirical_bargap,
                     plot_distribution_line_color=plot_distribution_line_color,
                     plot_distribution_line_width=plot_distribution_line_width,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_discrete.plot_ecdf_distribution_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -591,12 +675,12 @@ class PHITTER:
                     plot_empirical_bargap=plot_empirical_bargap,
                     plot_distribution_line_color=plot_distribution_line_color,
                     plot_distribution_line_width=plot_distribution_line_width,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
     def qq_plot(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title="QQ PLOT",
         plot_xaxis_title="Theorical Quantiles",
         plot_yaxis_title="Sample Quantiles",
@@ -606,13 +690,13 @@ class PHITTER:
         qq_marker_name="Markers QQ",
         qq_marker_color="rgba(128,128,128,1)",
         qq_marker_size=6,
-        plot_renderer: str | None = None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
         if self.fit_type == "continuous":
             if len(self.data) > 10000 or plot_engine == "matplotlib":
                 self.phitter_continuous.qq_plot_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -622,11 +706,10 @@ class PHITTER:
                     qq_marker_name=qq_marker_name,
                     qq_marker_color=qq_marker_color,
                     qq_marker_size=qq_marker_size,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_continuous.qq_plot_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -636,13 +719,13 @@ class PHITTER:
                     qq_marker_name=qq_marker_name,
                     qq_marker_color=qq_marker_color,
                     qq_marker_size=qq_marker_size,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
+                    plotly_plot_renderer=plotly_plot_renderer if len(self.data) <= 10000 else "png",
                 )
 
         if self.fit_type == "discrete":
             if len(self.data) > 10000 or plot_engine == "matplotlib":
                 self.phitter_discrete.qq_plot_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -652,11 +735,10 @@ class PHITTER:
                     qq_marker_name=qq_marker_name,
                     qq_marker_color=qq_marker_color,
                     qq_marker_size=qq_marker_size,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_discrete.qq_plot_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -666,12 +748,12 @@ class PHITTER:
                     qq_marker_name=qq_marker_name,
                     qq_marker_color=qq_marker_color,
                     qq_marker_size=qq_marker_size,
-                    plot_renderer=plot_renderer,
+                    plotly_plot_renderer=plotly_plot_renderer,
                 )
 
     def qq_plot_regression(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title="QQ PLOT",
         plot_xaxis_title="Theorical Quantiles",
         plot_yaxis_title="Sample Quantiles",
@@ -684,13 +766,13 @@ class PHITTER:
         regression_line_name="Regression",
         regression_line_color="rgba(255,0,0,1)",
         regression_line_width=2,
-        plot_renderer: str | None = None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
         if self.fit_type == "continuous":
             if len(self.data) > 10000 or plot_engine == "matplotlib":
                 self.phitter_continuous.qq_plot_regression_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -703,11 +785,10 @@ class PHITTER:
                     regression_line_name=regression_line_name,
                     regression_line_color=regression_line_color,
                     regression_line_width=regression_line_width,
-                    plot_renderer=plot_renderer,
                 )
             else:
                 self.phitter_continuous.qq_plot_regression_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -720,13 +801,13 @@ class PHITTER:
                     regression_line_name=regression_line_name,
                     regression_line_color=regression_line_color,
                     regression_line_width=regression_line_width,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
+                    plotly_plot_renderer=plotly_plot_renderer if len(self.data) <= 10000 else "png",
                 )
 
         if self.fit_type == "discrete":
             if len(self.data) > 10000 or plot_engine == "matplotlib":
                 self.phitter_discrete.qq_plot_regression_matplotlib(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -739,11 +820,10 @@ class PHITTER:
                     regression_line_name=regression_line_name,
                     regression_line_color=regression_line_color,
                     regression_line_width=regression_line_width,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
                 )
             else:
                 self.phitter_discrete.qq_plot_regression_plotly(
-                    distribution_name=distribution_name,
+                    id_distribution=id_distribution,
                     plot_title=plot_title,
                     plot_xaxis_title=plot_xaxis_title,
                     plot_yaxis_title=plot_yaxis_title,
@@ -756,18 +836,18 @@ class PHITTER:
                     regression_line_name=regression_line_name,
                     regression_line_color=regression_line_color,
                     regression_line_width=regression_line_width,
-                    plot_renderer=plot_renderer if len(self.data) <= 10000 else "png",
+                    plotly_plot_renderer=plotly_plot_renderer if len(self.data) <= 10000 else "png",
                 )
 
 
 if __name__ == "__main__":
-    # path = "../datasets_test/discrete/book2.txt"
-    path = "../datasets_test/continuous/data.txt"
+    path = "../datasets_test/discrete/book2.txt"
+    # path = "../datasets_test/continuous/data.txt"
     sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.strip().replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
-    phitter = PHITTER(data, fit_type="continuous")
-    phitter.fit(n_workers=6)
+    phitter = PHITTER(data, fit_type="discrete")
+    phitter.fit(n_workers=2)
 
     print(f"Best Distribution: {phitter.best_distribution}")
 

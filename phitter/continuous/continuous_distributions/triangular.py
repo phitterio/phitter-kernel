@@ -9,16 +9,23 @@ class TRIANGULAR:
     https://phitter.io/distributions/continuous/triangular
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the TRIANGULAR distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters TRIANGULAR distribution: {"a": *, "b": *, "c": *}
         https://phitter.io/distributions/continuous/triangular
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -91,7 +98,7 @@ class TRIANGULAR:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -157,9 +164,8 @@ class TRIANGULAR:
         """
         Check parameters restrictions
         """
-        v1 = self.a < self.c
-        v2 = self.c < self.b
-        return v1 and v2
+        v1 = self.a < self.c < self.b
+        return v1
 
     def get_parameters(self, continuous_measures) -> dict[str, float | int]:
         """
@@ -179,7 +185,7 @@ class TRIANGULAR:
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
         #     ## Variables declaration
         #     a, b, c = initial_solution
-        #     print(continuous_measures)
+        #     print(continuous_measures=continuous_measures)
         #     ## Parametric expected expressions
         #     parametric_mean = (a + b + c) / 3
         #     parametric_variance = (a ** 2 + b ** 2 + c ** 2 - a * b - a * c - b * c) / 18
@@ -211,10 +217,10 @@ class TRIANGULAR:
         # c = (u * b + v * a) / (u + v)
 
         # Scipy parameters of distribution
-        # scipy_params = scipy.stats.triang.fit(continuous_measures.data_to_fit)
-        # a = scipy_params[1]
-        # b = scipy_params[1] + scipy_params[2]
-        # c = scipy_params[1] + scipy_params[2] * scipy_params[0]
+        # scipy_parameters = scipy.stats.triang.fit(continuous_measures.data_to_fit)
+        # a = scipy_parameters[1]
+        # b = scipy_parameters[1] + scipy_parameters[2]
+        # c = scipy_parameters[1] + scipy_parameters[2] * scipy_parameters[0]
 
         parameters = {"a": a, "b": b, "c": c}
         return parameters
@@ -237,7 +243,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_triangular.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = TRIANGULAR(continuous_measures)
+    distribution = TRIANGULAR(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

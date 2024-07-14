@@ -12,16 +12,23 @@ class INVERSE_GAMMA:
     https://phitter.io/distributions/continuous/inverse_gamma
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the INVERSE_GAMMA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters INVERSE_GAMMA distribution: {"alpha": *, "beta": *}
         https://phitter.io/distributions/continuous/inverse_gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -86,7 +93,7 @@ class INVERSE_GAMMA:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -187,35 +194,46 @@ class INVERSE_GAMMA:
         =======
         parameters: {"alpha": *, "beta": *}
         """
+
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
         #     ## Variables declaration
         #     alpha, beta = initial_solution
 
         #     ## Generatred moments function (not - centered)
-        #     E = lambda k: (beta ** k) / numpy.prod(numpy.array([(alpha - i) for i in range(1,k + 1)]))
+        #     E = lambda k: (beta**k) / numpy.prod(numpy.array(alpha - numpy.arange(1, k + 1)))
 
         #     ## Parametric expected expressions
-        #     parametric_mean = E(1)
-        #     parametric_variance = (E(2) - E(1) ** 2)
+        #     # parametric_mean = E(1)
+        #     # parametric_variance = E(2) - E(1) ** 2
         #     # parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
         #     # parametric_kurtosis = (E(4)-4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) /  ((E(2) - E(1) ** 2)) ** 2
+        #     parametric_median = beta / scipy.special.gammaincinv(alpha, 0.5)
+        #     parametric_mode = beta / (alpha + 1)
 
         #     ## System Equations
-        #     eq1 = parametric_mean - continuous_measures.mean
-        #     eq2 = parametric_variance - continuous_measures.variance
+        #     # eq1 = parametric_mean - continuous_measures.mean
+        #     # eq2 = parametric_variance - continuous_measures.variance
         #     # eq3 = parametric_skewness - continuous_measures.skewness
         #     # eq4 = parametric_kurtosis  - continuous_measures.kurtosis
+        #     eq1 = parametric_median - continuous_measures.median
+        #     eq2 = parametric_mode - continuous_measures.mode
 
         #     return (eq1, eq2)
 
+        # x0 = (1, 1)
         # bounds = ((0, 0), (numpy.inf, numpy.inf))
-        # x0 = (5, 1)
-        # args = ([continuous_measures])
-        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds = bnds, args=args)
+        # args = [continuous_measures]
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         # parameters = {"alpha": solution.x[0], "beta": solution.x[1]}
 
-        scipy_params = scipy.stats.invgamma.fit(continuous_measures.data_to_fit)
-        parameters = {"alpha": scipy_params[0], "beta": scipy_params[2]}
+        # solution = scipy.optimize.fsolve(equations, (1, 1), continuous_measures)
+
+        # alpha = (continuous_measures.mode + continuous_measures.mean) / (continuous_measures.mean - continuous_measures.mode)
+        # beta = continuous_measures.mean * (alpha - 1)
+        # parameters = {"alpha": alpha, "beta": beta}
+
+        scipy_parameters = scipy.stats.invgamma.fit(continuous_measures.data_to_fit)
+        parameters = {"alpha": scipy_parameters[0], "beta": scipy_parameters[2]}
         return parameters
 
 
@@ -236,7 +254,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_inverse_gamma.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = INVERSE_GAMMA(continuous_measures)
+    distribution = INVERSE_GAMMA(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")
@@ -251,43 +269,3 @@ if __name__ == "__main__":
     print(f"kurtosis: {distribution.kurtosis} - {continuous_measures.kurtosis}")
     print(f"median: {distribution.median} - {continuous_measures.median}")
     print(f"mode: {distribution.mode} - {continuous_measures.mode}")
-
-    # print("\n========= Time parameter estimation analisys ========")
-
-    # import time
-
-    # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
-    #     ## Variables declaration
-    #     alpha, beta = initial_solution
-
-    #     ## Generatred moments function (not - centered)
-    #     E = lambda k: (beta**k) / numpy.prod(numpy.array([(alpha - i) for i in range(1, k + 1)]))
-
-    #     ## Parametric expected expressions
-    #     parametric_mean = E(1)
-    #     parametric_variance = E(2) - E(1) ** 2
-    #     # parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
-    #     # parametric_kurtosis = (E(4)-4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) /  ((E(2) - E(1) ** 2)) ** 2
-
-    #     ## System Equations
-    #     eq1 = parametric_mean - continuous_measures.mean
-    #     eq2 = parametric_variance - continuous_measures.variance
-    #     # eq3 = parametric_skewness - continuous_measures.skewness
-    #     # eq4 = parametric_kurtosis  - continuous_measures.kurtosis
-
-    #     return (eq1, eq2)
-
-    # ti = time.time()
-    # bounds = ((0, 0), (numpy.inf, numpy.inf))
-    # x0 = (1.1, 1)
-    # args = [continuous_measures]
-    # solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
-    # parameters = {"alpha": solution.x[0], "beta": solution.x[1]}
-    # print(parameters)
-    # print("Solve equations time: ", time.time() - ti)
-
-    # ti = time.time()
-    # scipy_params = scipy.stats.invgamma.fit(continuous_measures.data_to_fit)
-    # parameters = {"alpha": scipy_params[0], "beta": scipy_params[2]}
-    # print(parameters)
-    # print("Scipy time get parameters: ", time.time() - ti)

@@ -10,16 +10,23 @@ class T_STUDENT_3P:
     https://phitter.io/distributions/continuous/t_student_3p
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the T_STUDENT_3P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters T_STUDENT_3P distribution: {"df": *, "loc": *, "scale": *}
         https://phitter.io/distributions/continuous/t_student_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -41,25 +48,25 @@ class T_STUDENT_3P:
         """
         Cumulative distribution function
         """
-        z = lambda t: (t - self.loc) / self.scale
-        # result = scipy.stats.t.cdf(z(x), self.df)
-        result = scipy.special.betainc(self.df / 2, self.df / 2, (z(x) + numpy.sqrt(z(x) ** 2 + self.df)) / (2 * numpy.sqrt(z(x) ** 2 + self.df)))
+        # z = lambda t: (t - self.loc) / self.scale
+        # result = scipy.special.betainc(self.df / 2, self.df / 2, (z(x) + numpy.sqrt(z(x) ** 2 + self.df)) / (2 * numpy.sqrt(z(x) ** 2 + self.df)))
+        result = scipy.stats.t.cdf(x, self.df, loc=self.loc, scale=self.scale)
         return result
 
     def pdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Probability density function
         """
-        z = lambda t: (t - self.loc) / self.scale
-        # result = scipy.stats.t.pdf(z(x), self.df)
-        result = (1 / (numpy.sqrt(self.df) * scipy.special.beta(0.5, self.df / 2))) * (1 + z(x) * z(x) / self.df) ** (-(self.df + 1) / 2)
+        # z = lambda t: (t - self.loc) / self.scale
+        # result = (1 / (numpy.sqrt(self.df) * scipy.special.beta(0.5, self.df / 2))) * (1 + z(x) * z(x) / self.df) ** (-(self.df + 1) / 2)
+        result = scipy.stats.t.pdf(x, self.df, loc=self.loc, scale=self.scale)
         return result
 
     def ppf(self, u):
-        # result = scipy.stats.t.ppf(u, self.df, loc=self.loc, scale=self.scale)
-        result = self.loc + self.scale * numpy.sign(u - 0.5) * numpy.sqrt(
-            self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u]))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u]))
-        )
+        # result = self.loc + self.scale * numpy.sign(u - 0.5) * numpy.sqrt(
+        #     self.df * (1 - scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u]))) / scipy.special.betaincinv(self.df / 2, 0.5, 2 * numpy.min([u, 1 - u]))
+        result = scipy.stats.t.ppf(u, self.df, loc=self.loc, scale=self.scale)
+        # )
         return result
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
@@ -78,7 +85,7 @@ class T_STUDENT_3P:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -163,8 +170,8 @@ class T_STUDENT_3P:
         parameters: {"df": *, "loc": *, "scale": *}
         """
         ## Scipy parameters
-        scipy_params = scipy.stats.t.fit(continuous_measures.data_to_fit)
-        parameters = {"df": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
+        scipy_parameters = scipy.stats.t.fit(continuous_measures.data_to_fit)
+        parameters = {"df": scipy_parameters[0], "loc": scipy_parameters[1], "scale": scipy_parameters[2]}
 
         # loc = continuous_measures.mean
         # df = 4 + 6 / (continuous_measures.kurtosis - 3)
@@ -190,7 +197,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_t_student_3p.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = T_STUDENT_3P(continuous_measures)
+    distribution = T_STUDENT_3P(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

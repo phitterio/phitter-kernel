@@ -1,6 +1,7 @@
 import numpy
 import scipy.optimize
 import scipy.stats
+import scipy.special
 
 
 class FRECHET:
@@ -10,16 +11,23 @@ class FRECHET:
     https://phitter.io/distributions/continuous/frechet
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the FRECHET distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters FRECHET distribution: {"alpha": *, "loc": *, "scale": *}
         https://phitter.io/distributions/continuous/frechet
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -41,17 +49,16 @@ class FRECHET:
         """
         Cumulative distribution function
         """
-        z = lambda t: (t - self.loc) / self.scale
-        # result = scipy.stats.invweibull.pdf(x, self.c, loc = self.loc, scale = self.scale)
-        result = (1 / self.scale) * self.alpha * z(x) ** (-self.alpha - 1) * numpy.exp(-z(x) ** -self.alpha)
+        result = scipy.stats.invweibull.cdf(x, self.alpha, loc=self.loc, scale=self.scale)
         return result
 
     def pdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Probability density function
         """
-        # print(scipy.stats.invweibull.pdf(40.89022608, self.alpha, loc = self.loc, scale = self.scale))
-        return (self.alpha / self.scale) * (((x - self.loc) / self.scale) ** (-1 - self.alpha)) * numpy.exp(-(((x - self.loc) / self.scale) ** (-self.alpha)))
+        # result = (self.alpha / self.scale) * (((x - self.loc) / self.scale) ** (-1 - self.alpha)) * numpy.exp(-(((x - self.loc) / self.scale) ** (-self.alpha)))
+        result = scipy.stats.invweibull.pdf(x, self.alpha, loc=self.loc, scale=self.scale)
+        return result
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         """
@@ -76,7 +83,7 @@ class FRECHET:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -183,8 +190,37 @@ class FRECHET:
         =======
         parameters: {"alpha": *, "loc": *, "scale": *}
         """
-        scipy_params = scipy.stats.invweibull.fit(continuous_measures.data_to_fit)
-        parameters = {"alpha": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
+
+        def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
+            alpha, loc, scale = initial_solution
+
+            E = lambda k: scipy.special.gamma(1 - k / alpha)
+
+            parametric_mean = E(1) * scale + loc
+            parametric_variance = (scale**2) * (E(2) - E(1) ** 2)
+            parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
+            # parametric_kurtosis = (E(4) - 4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) / ((E(2) - E(1) ** 2)) ** 2
+            # parametric_median = loc + scale * (-numpy.log(0.5)) ** (-1 / alpha)
+            # parametric_mode = loc + scale * (alpha / (alpha + 1)) ** (1 / alpha)
+
+            ## System Equations
+            eq1 = parametric_mean - continuous_measures.mean
+            eq2 = parametric_variance - continuous_measures.variance
+            eq3 = parametric_skewness - continuous_measures.skewness
+            # eq3 = parametric_kurtosis - continuous_measures.kurtosis
+            # eq2 = parametric_median - continuous_measures.median
+            # eq3 = parametric_mode - continuous_measures.mode
+
+            return (eq1, eq2, eq3)
+
+        # x0 = (continuous_measures.mean, continuous_measures.mean, continuous_measures.mean)
+        # bounds = ((0, -numpy.inf, 0), (numpy.inf, numpy.inf, numpy.inf))
+        # args = [continuous_measures]
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
+        # parameters = {"alpha": solution.x[0], "loc": solution.x[1], "scale": solution.x[2]}
+
+        scipy_parameters = scipy.stats.invweibull.fit(continuous_measures.data_to_fit)
+        parameters = {"alpha": scipy_parameters[0], "loc": scipy_parameters[1], "scale": scipy_parameters[2]}
         return parameters
 
 
@@ -205,7 +241,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_frechet.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = FRECHET(continuous_measures)
+    distribution = FRECHET(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

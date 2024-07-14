@@ -14,16 +14,23 @@ class GENERALIZED_GAMMA:
     https://phitter.io/distributions/continuous/generalized_gamma
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the GENERALIZED_GAMMA distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GENERALIZED_GAMMA distribution: {"a": *, "d": *, "p": *}
         https://phitter.io/distributions/continuous/generalized_gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -79,7 +86,7 @@ class GENERALIZED_GAMMA:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -213,8 +220,8 @@ class GENERALIZED_GAMMA:
                 solution = response.x
             parameters = {"a": solution[0], "d": solution[1], "p": solution[2]}
         except:
-            scipy_params = scipy.stats.gengamma.fit(continuous_measures.data_to_fit)
-            parameters = {"a": scipy_params[0], "c": scipy_params[1], "mu": scipy_params[2]}
+            scipy_parameters = scipy.stats.gengamma.fit(continuous_measures.data_to_fit)
+            parameters = {"a": scipy_parameters[0], "c": scipy_parameters[1], "mu": scipy_parameters[2]}
 
         return parameters
 
@@ -236,7 +243,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_generalized_gamma.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = GENERALIZED_GAMMA(continuous_measures)
+    distribution = GENERALIZED_GAMMA(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

@@ -9,16 +9,23 @@ class BRADFORD:
     https://phitter.io/distributions/continuous/bradford
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the BRADFORD distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters BRADFORD distribution: {"c": *, "min": *, "max": *}
         https://phitter.io/distributions/continuous/bradford
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -73,7 +80,7 @@ class BRADFORD:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -162,23 +169,38 @@ class BRADFORD:
         parameters: {"c": *, "min": *, "max": *}
         """
 
-        _min = continuous_measures.min - 1e-3
-        _max = continuous_measures.max + 1e-3
+        def equations(
+            initial_solution: tuple[float],
+            continuous_measures,
+            precalculated_parameters: dict[str, int | float],
+        ) -> tuple[float]:
+            ## Precalculated parameters
+            min_ = precalculated_parameters["min"]
+            max_ = precalculated_parameters["max"]
 
-        def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
             ## Variables declaration
             c = initial_solution
 
             ## Parametric expected expressions
-            parametric_mean = (c * (_max - _min) + numpy.log(c + 1) * (_min * (c + 1) - _max)) / (c * numpy.log(c + 1))
+            parametric_mean = (c * (max_ - min_) + numpy.log(c + 1) * (min_ * (c + 1) - max_)) / (c * numpy.log(c + 1))
 
             ## System Equations
             eq1 = parametric_mean - continuous_measures.mean
 
             return eq1
 
-        solution = scipy.optimize.fsolve(equations, (1), continuous_measures)
-        parameters = {"c": solution[0], "min": _min, "max": _max}
+        # solution = scipy.optimize.fsolve(equations, (1), continuous_measures)
+        # parameters = {"c": solution[0], "min": min_, "max": max_}
+
+        min_ = continuous_measures.min - 1e-3
+        max_ = continuous_measures.max + 1e-3
+
+        bounds = ((-numpy.inf), (numpy.inf))
+        x0 = 1
+        args = [continuous_measures, {"min": min_, "max": max_}]
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
+        parameters = {"c": solution.x[0], "min": min_, "max": max_}
+
         return parameters
 
 
@@ -200,7 +222,7 @@ if __name__ == "__main__":
     ## Distribution class
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = BRADFORD(continuous_measures)
+    distribution = BRADFORD(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

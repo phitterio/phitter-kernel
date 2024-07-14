@@ -8,9 +8,10 @@ class DISCRETE_MEASURES:
         self,
         data: list[int],
         confidence_level: float = 0.95,
+        subsample_size: int | None = None,
         subsample_estimation_size: int | None = None,
     ):
-        self.data = numpy.sort(data)
+        self.data = numpy.sort(data) if subsample_size == None else numpy.sort(numpy.random.choice(data, size=subsample_size, replace=False))
         self.size = self.data.size
         self.data_to_fit = self.data if subsample_estimation_size == None else numpy.random.choice(self.data, size=min(self.size, subsample_estimation_size), replace=False)
         self.min = self.data[0]

@@ -71,7 +71,7 @@ from phitter.continuous.continuous_distributions import TRIANGULAR
 from phitter.continuous.continuous_distributions import UNIFORM
 from phitter.continuous.continuous_distributions import WEIBULL
 from phitter.continuous.continuous_distributions import WEIBULL_3P
-from phitter.continuous.continuous_distributions import ALL_CONTINUOUS_DISTRIBUTIONS
+from phitter.continuous.continuous_distributions import CONTINUOUS_DISTRIBUTIONS
 from phitter.continuous.continuous_measures import CONTINUOUS_MEASURES
 from phitter.continuous.continuous_statistical_tests import evaluate_continuous_test_anderson_darling
 from phitter.continuous.continuous_statistical_tests import evaluate_continuous_test_chi_square

@@ -10,16 +10,23 @@ class GENERALIZED_PARETO:
     https://phitter.io/distributions/continuous/generalized_pareto
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the GENERALIZED_PARETO distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GENERALIZED_PARETO distribution: {"c": *, "mu": *, "sigma": *}
         https://phitter.io/distributions/continuous/generalized_pareto
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -79,7 +86,7 @@ class GENERALIZED_PARETO:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -187,15 +194,15 @@ class GENERALIZED_PARETO:
         ## but it's not so much when c < 0.
         ## The solution of system of equation is so good. The problem is that
         ## the continuous_measures of genpareto distributions is not defined from c >  1 / 4 (kurtosis)
-        scipy_params = scipy.stats.genpareto.fit(continuous_measures.data_to_fit)
-        parameters = {"c": scipy_params[0], "mu": scipy_params[1], "sigma": scipy_params[2]}
+        scipy_parameters = scipy.stats.genpareto.fit(continuous_measures.data_to_fit)
+        parameters = {"c": scipy_parameters[0], "mu": scipy_parameters[1], "sigma": scipy_parameters[2]}
 
         if parameters["c"] < 0:
-            scipy_params = scipy.stats.genpareto.fit(continuous_measures.data_to_fit)
-            c0 = scipy_params[0]
+            scipy_parameters = scipy.stats.genpareto.fit(continuous_measures.data_to_fit)
+            c0 = scipy_parameters[0]
             x0 = [c0, continuous_measures.min, 1]
             bounds = ((-numpy.inf, -numpy.inf, 0), (numpy.inf, continuous_measures.min, numpy.inf))
-            solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures]))
+            solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=[continuous_measures])
             parameters = {"c": solution.x[0], "mu": solution.x[1], "sigma": solution.x[2]}
 
             ## When c < 0 the domain of of x is [mu, mu - sigma / c]
@@ -225,7 +232,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_generalized_pareto.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = GENERALIZED_PARETO(continuous_measures)
+    distribution = GENERALIZED_PARETO(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

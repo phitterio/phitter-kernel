@@ -5,17 +5,35 @@ async function getPhitterContinuousCode() {
 }
 
 async function main() {
+    console.time("Total Time");
+    console.time("Pyodide Load Time");
+
     let pyodide = await loadPyodide({
-        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.1/full",
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full",
     });
+
+
+    console.timeEnd("Pyodide Load Time");
+    console.time("SciPy Load Time");
+
     await pyodide.loadPackage(["scipy"]);
 
+    console.timeEnd("SciPy Load Time");
     const continuousCode = await getPhitterContinuousCode();
-    await pyodide.runPython(continuousCode);
+
+    console.time("Python Code Execution Time");
+
+    pyodide.runPython(continuousCode);
 
     pyodide.runPython(`
+        import sys
+        print(sys.version)
+
+        import scipy
+        print(scipy.__version__)
+
         import time
-        data = BETA(init_parameters_examples=True).sample(1000000)
+        data = BETA(init_parameters_examples=True).sample(10000)
 
         ti = time.time()
         print("Init")
@@ -29,8 +47,10 @@ async function main() {
 
         for distribution, results in not_rejected_distributions.items():
             print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")
-    `)
+    `);
+
+    console.timeEnd("Python Code Execution Time");
+    console.timeEnd("Total Time");
 }
 
 main();
-

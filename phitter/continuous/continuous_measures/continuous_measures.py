@@ -6,12 +6,13 @@ import scipy.stats
 class CONTINUOUS_MEASURES:
     def __init__(
         self,
-        data: list[float | int],
+        data: list[int | float] | numpy.ndarray,
         num_bins: int | None = None,
         confidence_level: float = 0.95,
+        subsample_size: int | None = None,
         subsample_estimation_size: int | None = None,
     ):
-        self.data = numpy.sort(data)
+        self.data = numpy.sort(data) if subsample_size == None else numpy.sort(numpy.random.choice(data, size=subsample_size, replace=False))
         self.data_unique = numpy.unique(self.data)
         self.size = self.data.size
         self.data_to_fit = self.data if subsample_estimation_size == None else numpy.random.choice(self.data, size=min(self.size, subsample_estimation_size), replace=False)
@@ -20,8 +21,8 @@ class CONTINUOUS_MEASURES:
         self.mean = numpy.mean(self.data)
         self.variance = numpy.var(self.data, ddof=1)
         self.standard_deviation = numpy.sqrt(self.variance)
-        self.skewness = scipy.stats.moment(self.data, 3) / pow(self.standard_deviation, 3)
-        self.kurtosis = scipy.stats.moment(self.data, 4) / pow(self.standard_deviation, 4)
+        self.skewness = scipy.stats.skew(self.data, bias=False)
+        self.kurtosis = scipy.stats.kurtosis(self.data, fisher=False, bias=False)
         self.median = numpy.median(self.data)
         self.mode = self.calculate_mode()
         self.num_bins = num_bins if num_bins != None else len(numpy.histogram_bin_edges(self.data, bins="doane"))
@@ -47,9 +48,12 @@ class CONTINUOUS_MEASURES:
 
     def calculate_mode(self) -> float:
         distribution = scipy.stats.gaussian_kde(self.data)
+        x = numpy.linspace(self.min, self.max, 10000)
+        y = distribution.pdf(x)
+        return x[numpy.argmax(y)]
         # solution = scipy.optimize.shgo(lambda x: -distribution.pdf(x)[0], bounds=[(self.min, self.max)], n=100 * self.size)
-        solution = scipy.optimize.minimize(lambda x: -distribution.pdf(x)[0], x0=[self.mean], bounds=[(self.min, self.max)])
-        return solution.x[0]
+        # solution = scipy.optimize.minimize(lambda x: -distribution.pdf(x)[0], x0=[self.mean], bounds=[(self.min, self.max)])
+        # return solution.x[0]
 
     def critical_value_chi2(self, freedom_degrees: int):
         return scipy.stats.chi2.ppf(self.confidence_level, freedom_degrees)

@@ -11,16 +11,23 @@ class FOLDED_NORMAL:
     https://phitter.io/distributions/continuous/folded_normal
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the FOLDED_NORMAL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters FOLDED_NORMAL distribution: {"mu": *, "sigma": *}
         https://phitter.io/distributions/continuous/folded_normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -78,7 +85,7 @@ class FOLDED_NORMAL:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -192,7 +199,7 @@ class FOLDED_NORMAL:
 
         x0 = [continuous_measures.mean, continuous_measures.standard_deviation]
         bounds = ((-numpy.inf, 0), (numpy.inf, numpy.inf))
-        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=([continuous_measures]))
+        solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=[continuous_measures])
         parameters = {"mu": solution.x[0], "sigma": solution.x[1]}
 
         return parameters
@@ -215,7 +222,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_folded_normal.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = FOLDED_NORMAL(continuous_measures)
+    distribution = FOLDED_NORMAL(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

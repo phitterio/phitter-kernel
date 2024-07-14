@@ -69,7 +69,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append("../")
-    from continuous_distributions import ALL_CONTINUOUS_DISTRIBUTIONS
+    from continuous_distributions import CONTINUOUS_DISTRIBUTIONS
     from continuous_measures import CONTINUOUS_MEASURES
 
     def get_data(path: str) -> list[float]:
@@ -78,12 +78,12 @@ if __name__ == "__main__":
         sample_distribution_file.close()
         return data
 
-    for distribution_name, distribution_class in ALL_CONTINUOUS_DISTRIBUTIONS.items():
-        print(distribution_name)
-        path = f"../continuous_distributions_sample/sample_{distribution_name}.txt"
+    for id_distribution, distribution_class in CONTINUOUS_DISTRIBUTIONS.items():
+        print(id_distribution)
+        path = f"../continuous_distributions_sample/sample_{id_distribution}.txt"
         data = get_data(path)
 
         ## Init a instance of class
         continuous_measures = CONTINUOUS_MEASURES(data)
-        distribution = distribution_class(continuous_measures)
+        distribution = distribution_class(continuous_measures=continuous_measures)
         print(evaluate_continuous_test_anderson_darling(distribution, continuous_measures))

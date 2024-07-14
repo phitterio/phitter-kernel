@@ -2350,13 +2350,13 @@
 \subsection{Parametric centered moments}
 \begin{equation*} \mu'_{k}=E[X^k]=\int_{-\infty}^{\infty}x^{k}f_{X}\left(x\right)dx=e^{k\mu+k^2\sigma^2/2} \end{equation*}
 \subsection{Parametric mean}
-\begin{equation*} \mathrm{Mean}(X)=\mu'_{1} \end{equation*}
+\begin{equation*} \mathrm{Mean}(X)=\mu'_{1}=e^{\mu + \frac{\sigma^2}{2}} \end{equation*}
 \subsection{Parametric variance}
-\begin{equation*} \mathrm{Variance}(X)=\mu'_{2}-\mu'^{2}_{1} \end{equation*}
+\begin{equation*} \mathrm{Variance}(X)=\mu'_{2}-\mu'^{2}_{1}=e^{2\mu+\sigma^2}(e^{\sigma^2}-1) \end{equation*}
 \subsection{Parametric skewness}
-\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}} \end{equation*}
+\begin{equation*} \mathrm{Skewness}(X)=\frac{\mu'_{3}-3\mu'_{2}\mu'_{1}+2\mu'^{3}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{1.5}}=(e^{\sigma^2}+2)\sqrt{e^{\sigma^2}-1} \end{equation*}
 \subsection{Parametric kurtosis}
-\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}} \end{equation*}
+\begin{equation*} \mathrm{Kurtosis}(X)=\frac{\mu'_{4}-4\mu'_{1}\mu'_{3}+6\mu'^{2}_{1}\mu'_{2}-3\mu'^{4}_{1}}{(\mu'_{2}-\mu'^{2}_{1})^{2}}=e^{4\sigma^2}+2e^{3\sigma^2}+3e^{2\sigma^2}-3 \end{equation*}
 \subsection{Parametric median}
 \begin{equation*} \mathrm{Median}(X)=\exp(\mu) \end{equation*}
 \subsection{Parametric mode}

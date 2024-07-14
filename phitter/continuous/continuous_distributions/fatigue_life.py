@@ -11,16 +11,23 @@ class FATIGUE_LIFE:
     https://phitter.io/distributions/continuous/fatigue_life
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the FATIGUE_LIFE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters FATIGUE_LIFE distribution: {"gamma": *, "loc": *, "scale": *}
         https://phitter.io/distributions/continuous/fatigue_life
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -42,25 +49,26 @@ class FATIGUE_LIFE:
         """
         Cumulative distribution function
         """
-        # result = scipy.stats.fatiguelife.cdf(x, self.gamma, loc=self.loc, scale=self.scale)
-        z = lambda t: numpy.sqrt((t - self.loc) / self.scale)
-        result = scipy.stats.norm.cdf((z(x) - 1 / z(x)) / (self.gamma))
+        # z = lambda t: numpy.sqrt((t - self.loc) / self.scale)
+        # result = scipy.stats.norm.cdf((z(x) - 1 / z(x)) / (self.gamma))
+        result = scipy.stats.fatiguelife.cdf(x, self.gamma, loc=self.loc, scale=self.scale)
         return result
 
     def pdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Probability density function
         """
-        # result = scipy.stats.fatiguelife.pdf(x, self.gamma, loc=self.loc, scale=self.scale)
-        z = lambda t: numpy.sqrt((t - self.loc) / self.scale)
-        result = (z(x) + 1 / z(x)) / (2 * self.gamma * (x - self.loc)) * scipy.stats.norm.pdf((z(x) - 1 / z(x)) / (self.gamma))
+        # z = lambda t: numpy.sqrt((t - self.loc) / self.scale)
+        # result = (z(x) + 1 / z(x)) / (2 * self.gamma * (x - self.loc)) * scipy.stats.norm.pdf((z(x) - 1 / z(x)) / (self.gamma))
+        result = scipy.stats.fatiguelife.pdf(x, self.gamma, loc=self.loc, scale=self.scale)
         return result
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u => PPF[u] = x
         """
-        result = self.loc + (self.scale * (self.gamma * scipy.stats.norm.ppf(u) + numpy.sqrt((self.gamma * scipy.stats.norm.ppf(u)) ** 2 + 4)) ** 2) / 4
+        # result = self.loc + (self.scale * (self.gamma * scipy.stats.norm.ppf(u) + numpy.sqrt((self.gamma * scipy.stats.norm.ppf(u)) ** 2 + 4)) ** 2) / 4
+        result = scipy.stats.fatiguelife.ppf(u, self.gamma, loc=self.loc, scale=self.scale)
         return result
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
@@ -79,7 +87,7 @@ class FATIGUE_LIFE:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -161,27 +169,36 @@ class FATIGUE_LIFE:
         =======
         parameters: {"gamma": *, "loc": *, "scale": *}
         """
+
         ## NO SE ESTÁN RESOLVIENDO LAS ECUACIONES PARA GAMMA = 5, scale = 10, loc = 5
-        # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
-        #     ## Variables declaration
-        #     loc, scale, gamma = initial_solution
+        def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
+            ## Variables declaration
+            gamma, loc, scale = initial_solution
 
-        #     ## Parametric expected expressions
-        #     parametric_mean = loc + scale * (1 + gamma ** 2 / 2)
-        #     parametric_variance = scale ** 2 * gamma ** 2 * (1 + 5 * gamma ** 2 / 4)
-        #     parametric_skewness = 4 * gamma ** 2 * (11 * gamma ** 2 + 6) / ((4 + 5 * gamma ** 2) * numpy.sqrt(gamma ** 2 * (4 + 5 * gamma ** 2)))
+            ## Parametric expected expressions
+            parametric_mean = loc + scale * (1 + gamma**2 / 2)
+            parametric_variance = scale**2 * gamma**2 * (1 + 5 * gamma**2 / 4)
+            # parametric_skewness = 4 * gamma ** 2 * (11 * gamma ** 2 + 6) / ((4 + 5 * gamma ** 2) * numpy.sqrt(gamma ** 2 * (4 + 5 * gamma ** 2)))
+            parametric_kurtosis = 3 + (6 * gamma * gamma * (93 * gamma * gamma + 40)) / (5 * gamma**2 + 4) ** 2
+            parametric_median = loc + (scale * (gamma * scipy.stats.norm.ppf(0.5) + numpy.sqrt((gamma * scipy.stats.norm.ppf(0.5)) ** 2 + 4)) ** 2) / 4
 
-        #     ## System Equations
-        #     eq1 = parametric_mean - continuous_measures.mean
-        #     eq2 = parametric_variance - continuous_measures.variance
-        #     eq3 = parametric_skewness - continuous_measures.skewness
+            ## System Equations
+            eq1 = parametric_mean - continuous_measures.mean
+            eq2 = parametric_variance - continuous_measures.variance
+            # eq3 = parametric_skewness - continuous_measures.skewness
+            eq3 = parametric_kurtosis - continuous_measures.kurtosis
+            # eq3 = parametric_median - continuous_measures.median
 
-        #     return (eq1, eq2, eq3)
+            return (eq1, eq2, eq3)
 
-        # solution = scipy.optimize.fsolve(equations, (1, 1, 1), continuous_measures)
-        # print(solution)
-        scipy_params = scipy.stats.fatiguelife.fit(continuous_measures.data_to_fit)
-        parameters = {"gamma": scipy_params[0], "loc": scipy_params[1], "scale": scipy_params[2]}
+        # x0 = (1, continuous_measures.min, 1)
+        # bounds = [(0, -numpy.inf, 0), (numpy.inf, numpy.inf, numpy.inf)]
+        # args = [continuous_measures]
+        # solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
+        # parameters = {"gamma": solution.x[0], "loc": solution.x[1], "scale": solution.x[2]}
+
+        scipy_parameters = scipy.stats.fatiguelife.fit(continuous_measures.data_to_fit)
+        parameters = {"gamma": scipy_parameters[0], "loc": scipy_parameters[1], "scale": scipy_parameters[2]}
         return parameters
 
 
@@ -202,7 +219,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_fatigue_life.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = FATIGUE_LIFE(continuous_measures)
+    distribution = FATIGUE_LIFE(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

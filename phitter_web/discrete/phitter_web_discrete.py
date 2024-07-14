@@ -6,11 +6,16 @@ import typing
 
 
 class BERNOULLI:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -91,11 +96,16 @@ class BERNOULLI:
 
 
 class BINOMIAL:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -180,11 +190,16 @@ class BINOMIAL:
 
 
 class GEOMETRIC:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -265,11 +280,16 @@ class GEOMETRIC:
 
 
 class HYPERGEOMETRIC:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -370,11 +390,16 @@ class HYPERGEOMETRIC:
 
 
 class LOGARITHMIC:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -466,11 +491,16 @@ class LOGARITHMIC:
 
 
 class NEGATIVE_BINOMIAL:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -555,11 +585,16 @@ class NEGATIVE_BINOMIAL:
 
 
 class POISSON:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -640,11 +675,16 @@ class POISSON:
 
 
 class UNIFORM:
-    def __init__(self, discrete_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        discrete_measures=None,
+        init_parameters_examples=False,
+    ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
-            self.parameters = self.get_parameters(discrete_measures)
+            self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -728,7 +768,7 @@ class UNIFORM:
         return parameters
 
 
-ALL_DISCRETE_DISTRIBUTIONS = {
+DISCRETE_DISTRIBUTIONS = {
     "bernoulli": BERNOULLI,
     "binomial": BINOMIAL,
     "geometric": GEOMETRIC,
@@ -820,17 +860,17 @@ class PHITTER_DISCRETE:
         if distributions_to_fit != "all" and exclude_distributions != "any":
             raise Exception(f"Specify either distributions_to_fit or exclude_distributions, not both.")
         if distributions_to_fit == "all" and exclude_distributions == "any":
-            self.distributions_to_fit = list(ALL_DISCRETE_DISTRIBUTIONS.keys())
+            self.distributions_to_fit = list(DISCRETE_DISTRIBUTIONS.keys())
         if distributions_to_fit != "all" and exclude_distributions == "any":
-            not_distributions_ids = [dist for dist in distributions_to_fit if dist not in ALL_DISCRETE_DISTRIBUTIONS.keys()]
+            not_distributions_ids = [dist for dist in distributions_to_fit if dist not in DISCRETE_DISTRIBUTIONS.keys()]
             if len(not_distributions_ids) > 0:
                 raise Exception(f"{not_distributions_ids} not founded in continuous disributions")
             self.distributions_to_fit = distributions_to_fit
         if distributions_to_fit == "all" and exclude_distributions != "any":
-            not_distributions_ids = [dist for dist in exclude_distributions if dist not in ALL_DISCRETE_DISTRIBUTIONS.keys()]
+            not_distributions_ids = [dist for dist in exclude_distributions if dist not in DISCRETE_DISTRIBUTIONS.keys()]
             if len(not_distributions_ids) > 0:
                 raise Exception(f"{not_distributions_ids} not founded in continuous disributions")
-            self.distributions_to_fit = [dist for dist in ALL_DISCRETE_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
+            self.distributions_to_fit = [dist for dist in DISCRETE_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
         self.discrete_measures = DISCRETE_MEASURES(
             data=data,
             confidence_level=confidence_level,
@@ -839,7 +879,7 @@ class PHITTER_DISCRETE:
         self.minimum_sse = minimum_sse
         self.distribution_results = {}
         self.none_results = {"test_statistic": None, "critical_value": None, "p_value": None, "rejected": None}
-        self.distributions_to_fit = list(ALL_DISCRETE_DISTRIBUTIONS.keys()) if distributions_to_fit == "all" else distributions_to_fit
+        self.distributions_to_fit = list(DISCRETE_DISTRIBUTIONS.keys()) if distributions_to_fit == "all" else distributions_to_fit
         self.sorted_distributions_sse = None
         self.not_rejected_distributions = None
         self.distribution_instances = None
@@ -862,8 +902,8 @@ class PHITTER_DISCRETE:
             self.distribution_results[label] = self.none_results
         return validation_test
 
-    def process_distribution(self, distribution_name: str) -> tuple[str, dict, typing.Any] | None:
-        distribution_class = ALL_DISCRETE_DISTRIBUTIONS[distribution_name]
+    def process_distribution(self, id_distribution: str) -> tuple[str, dict, typing.Any] | None:
+        distribution_class = DISCRETE_DISTRIBUTIONS[id_distribution]
         validate_estimation = True
         sse = 0
         try:
@@ -883,14 +923,14 @@ class PHITTER_DISCRETE:
                     self.distribution_results["kolmogorov_smirnov"]["rejected"] == False
                 )
                 self.distribution_results["n_test_null"] = int(self.distribution_results["chi_square"]["rejected"] == None) + int(self.distribution_results["kolmogorov_smirnov"]["rejected"] == None)
-                return distribution_name, self.distribution_results, distribution
+                return id_distribution, self.distribution_results, distribution
         return None
 
     def fit(self, n_workers: int = 1):
         if n_workers <= 0:
             raise Exception("n_workers must be greater than 1")
         if n_workers == 1:
-            processing_results = [self.process_distribution(distribution_name) for distribution_name in self.distributions_to_fit]
+            processing_results = [self.process_distribution(id_distribution) for id_distribution in self.distributions_to_fit]
         else:
             executor = concurrent.futures.ProcessPoolExecutor(max_workers=n_workers)
             processing_results = list(executor.map(self.process_distribution, self.distributions_to_fit))
@@ -909,7 +949,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
-        plot_renderer: str | None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None,
     ):
         domain = self.discrete_measures.domain
         densities_frequencies = self.discrete_measures.densities_frequencies
@@ -926,7 +966,7 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10), title_font_size=11),
             bargap=plot_bargap,
         )
-        fig.show(renderer=plot_renderer)
+        fig.show(renderer=plotly_plot_renderer)
 
     def plot_histogram_distributions_pmf(
         self,
@@ -940,18 +980,18 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
-        plot_renderer: str | None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None,
     ):
         domain = self.discrete_measures.domain
         densities_frequencies = self.discrete_measures.densities_frequencies
         fig = go.Figure()
         fig.add_trace(go.Bar(x=domain, y=densities_frequencies, marker_color=plot_bar_color, name="Data", showlegend=False))
-        for idx, (distribution_name, result) in enumerate(list(self.sorted_distributions_sse.items())[:n_distributions]):
-            y_plot = self.distribution_instances[distribution_name].pmf(domain)
+        for idx, (id_distribution, result) in enumerate(list(self.sorted_distributions_sse.items())[:n_distributions]):
+            y_plot = self.distribution_instances[id_distribution].pmf(domain)
             distribution_sse = result["sse"]
             is_visible = True if idx + 1 <= n_distributions_visible else "legendonly"
-            is_rejected = "✅" if distribution_name in self.not_rejected_distributions else ""
-            scatter_name = f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"
+            is_rejected = "✅" if id_distribution in self.not_rejected_distributions else ""
+            scatter_name = f"{id_distribution}: {distribution_sse:.4E}{is_rejected}"
             scatter_line = dict(color=px.colors.qualitative.G10[idx], width=2) if idx < len(px.colors.qualitative.G10) else dict(width=2)
             try:
                 fig.add_trace(go.Scatter(x=domain, y=y_plot, mode="lines+markers", visible=is_visible, name=scatter_name, line=scatter_line))
@@ -970,11 +1010,11 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_bargap,
         )
-        fig.show(renderer=plot_renderer)
+        fig.show(renderer=plotly_plot_renderer)
 
     def plot_distribution_pmf(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title: str,
         plot_xaxis_title: str,
         plot_yaxis_title: str,
@@ -985,18 +1025,18 @@ class PHITTER_DISCRETE:
         plot_bargap: float,
         plot_line_color: str,
         plot_line_width: int,
-        plot_renderer: str | None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None,
     ):
-        if distribution_name not in self.distribution_instances:
-            raise Exception(f"{distribution_name} distribution not founded")
+        if id_distribution not in self.distribution_instances:
+            raise Exception(f"{id_distribution} distribution not founded")
         domain = self.discrete_measures.domain
         densities_frequencies = self.discrete_measures.densities_frequencies
         fig = go.Figure()
         fig.add_trace(go.Bar(x=domain, y=densities_frequencies, marker_color=plot_bar_color, name="Data", showlegend=True))
-        y_plot = self.distribution_instances[distribution_name].pmf(domain)
-        distribution_sse = self.sorted_distributions_sse[distribution_name]["sse"]
-        is_rejected = "✅" if distribution_name in self.not_rejected_distributions else ""
-        scatter_name = f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"
+        y_plot = self.distribution_instances[id_distribution].pmf(domain)
+        distribution_sse = self.sorted_distributions_sse[id_distribution]["sse"]
+        is_rejected = "✅" if id_distribution in self.not_rejected_distributions else ""
+        scatter_name = f"{id_distribution}: {distribution_sse:.4E}{is_rejected}"
         scatter_line = dict(color=plot_line_color, width=plot_line_width)
         try:
             fig.add_trace(go.Scatter(x=domain, y=y_plot, mode="lines+markers", name=scatter_name, line=scatter_line))
@@ -1005,7 +1045,7 @@ class PHITTER_DISCRETE:
         fig.update_layout(
             height=plot_height,
             width=plot_width,
-            title=f"{plot_title} - PMF {distribution_name.upper().replace('_', ' ')} DISTRIBUTION",
+            title=f"{plot_title} - PMF {id_distribution.upper().replace('_', ' ')} DISTRIBUTION",
             xaxis_title=plot_xaxis_title,
             yaxis_title=plot_yaxis_title,
             legend_title=plot_legend_title,
@@ -1015,7 +1055,7 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_bargap,
         )
-        fig.show(renderer=plot_renderer)
+        fig.show(renderer=plotly_plot_renderer)
 
     def plot_ecdf(
         self,
@@ -1027,7 +1067,7 @@ class PHITTER_DISCRETE:
         plot_width: int,
         plot_bar_color: str,
         plot_bargap: float,
-        plot_renderer: str | None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None,
     ):
         domain = self.discrete_measures.domain
         ecdf_frequencies = self.discrete_measures.ecdf_frequencies
@@ -1046,11 +1086,11 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_bargap,
         )
-        fig.show(renderer=plot_renderer)
+        fig.show(renderer=plotly_plot_renderer)
 
     def plot_ecdf_distribution(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title: str,
         plot_xaxis_title: str,
         plot_yaxis_title: str,
@@ -1061,33 +1101,33 @@ class PHITTER_DISCRETE:
         plot_empirical_bargap: float,
         plot_distribution_line_color: str,
         plot_distribution_line_width: int,
-        plot_renderer: str | None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None,
     ):
-        if distribution_name not in self.distribution_instances:
-            raise Exception(f"{distribution_name} distribution not founded")
+        if id_distribution not in self.distribution_instances:
+            raise Exception(f"{id_distribution} distribution not founded")
         domain = self.discrete_measures.domain
         ecdf_frequencies = self.discrete_measures.ecdf_frequencies
         fig = go.Figure()
         fig.add_trace(go.Bar(x=domain, y=ecdf_frequencies, marker_color=plot_empirical_bar_color, name="Empirical Distribution", showlegend=True))
-        y_plot = self.distribution_instances[distribution_name].cdf(domain)
-        distribution_sse = self.sorted_distributions_sse[distribution_name]["sse"]
-        is_rejected = "✅" if distribution_name in self.not_rejected_distributions else ""
+        y_plot = self.distribution_instances[id_distribution].cdf(domain)
+        distribution_sse = self.sorted_distributions_sse[id_distribution]["sse"]
+        is_rejected = "✅" if id_distribution in self.not_rejected_distributions else ""
         try:
             fig.add_trace(
                 go.Scatter(
                     x=domain,
                     y=y_plot,
                     mode="lines+markers",
-                    name=f"{distribution_name}: {distribution_sse:.4E}{is_rejected}",
+                    name=f"{id_distribution}: {distribution_sse:.4E}{is_rejected}",
                     line=dict(color=plot_distribution_line_color, width=plot_distribution_line_width),
                 )
             )
         except Exception:
-            fig.add_trace(go.Scatter(x=domain, y=numpy.zeros(len(domain)), mode="lines+markers", name=f"{distribution_name}: {distribution_sse:.4E}{is_rejected}"))
+            fig.add_trace(go.Scatter(x=domain, y=numpy.zeros(len(domain)), mode="lines+markers", name=f"{id_distribution}: {distribution_sse:.4E}{is_rejected}"))
         fig.update_layout(
             height=plot_height,
             width=plot_width,
-            title=f"{plot_title} - CDF {distribution_name.upper().replace('_', ' ')} DISTRIBUTION",
+            title=f"{plot_title} - CDF {id_distribution.upper().replace('_', ' ')} DISTRIBUTION",
             xaxis_title=plot_xaxis_title,
             yaxis_title=plot_yaxis_title,
             legend_title=plot_legend_title,
@@ -1097,11 +1137,11 @@ class PHITTER_DISCRETE:
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
             bargap=plot_empirical_bargap,
         )
-        fig.show(renderer=plot_renderer)
+        fig.show(renderer=plotly_plot_renderer)
 
     def qq_plot(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title: str,
         plot_xaxis_title: str,
         plot_yaxis_title: str,
@@ -1111,18 +1151,18 @@ class PHITTER_DISCRETE:
         qq_marker_name: str,
         qq_marker_color: str,
         qq_marker_size: int,
-        plot_renderer: str | None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None,
     ):
-        if distribution_name not in self.distribution_instances:
-            raise Exception(f"{distribution_name} distribution not founded")
-        x = self.distribution_instances[distribution_name].ppf(self.discrete_measures.qq_arr)
+        if id_distribution not in self.distribution_instances:
+            raise Exception(f"{id_distribution} distribution not founded")
+        x = self.distribution_instances[id_distribution].ppf(self.discrete_measures.qq_arr)
         y = self.discrete_measures.data
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=x, y=y, mode="markers", name=qq_marker_name, marker=dict(color=qq_marker_color, size=qq_marker_size), showlegend=True))
         fig.update_layout(
             height=plot_height,
             width=plot_width,
-            title=f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION",
+            title=f"{plot_title} {id_distribution.upper().replace('_', ' ')} DISTRIBUTION",
             xaxis_title=plot_xaxis_title,
             yaxis_title=plot_yaxis_title,
             legend_title=plot_legend_title,
@@ -1131,11 +1171,11 @@ class PHITTER_DISCRETE:
             yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
-        fig.show(renderer=plot_renderer)
+        fig.show(renderer=plotly_plot_renderer)
 
     def qq_plot_regression(
         self,
-        distribution_name: str,
+        id_distribution: str,
         plot_title: str,
         plot_xaxis_title: str,
         plot_yaxis_title: str,
@@ -1148,11 +1188,11 @@ class PHITTER_DISCRETE:
         regression_line_name: str,
         regression_line_color: str,
         regression_line_width: int,
-        plot_renderer: str | None,
+        plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None,
     ):
-        if distribution_name not in self.distribution_instances:
-            raise Exception(f"{distribution_name} distribution not founded")
-        x = self.distribution_instances[distribution_name].ppf(self.discrete_measures.qq_arr)
+        if id_distribution not in self.distribution_instances:
+            raise Exception(f"{id_distribution} distribution not founded")
+        x = self.distribution_instances[id_distribution].ppf(self.discrete_measures.qq_arr)
         y = self.discrete_measures.data
         linear_regression = scipy.stats.linregress(x, y)
         y_reg = linear_regression.intercept + x * linear_regression.slope
@@ -1162,7 +1202,7 @@ class PHITTER_DISCRETE:
         fig.update_layout(
             height=plot_height,
             width=plot_width,
-            title=f"{plot_title} {distribution_name.upper().replace('_', ' ')} DISTRIBUTION <br><br><sup>Regression: {linear_regression.intercept:.4g} + x * {linear_regression.slope:.4g} • r = {linear_regression.rvalue:.4g}</sup>",
+            title=f"{plot_title} {id_distribution.upper().replace('_', ' ')} DISTRIBUTION <br><br><sup>Regression: {linear_regression.intercept:.4g} + x * {linear_regression.slope:.4g} • r = {linear_regression.rvalue:.4g}</sup>",
             xaxis_title=plot_xaxis_title,
             yaxis_title=plot_yaxis_title,
             legend_title=plot_legend_title,
@@ -1171,4 +1211,4 @@ class PHITTER_DISCRETE:
             yaxis=dict(title_font_size=12, tickfont=dict(size=10)),
             legend=dict(orientation="v", yanchor="auto", y=1, xanchor="left", font=dict(size=10)),
         )
-        fig.show(renderer=plot_renderer)
+        fig.show(renderer=plotly_plot_renderer)

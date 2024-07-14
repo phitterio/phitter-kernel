@@ -72,7 +72,7 @@ from .uniform import UNIFORM
 from .weibull import WEIBULL
 from .weibull_3p import WEIBULL_3P
 
-ALL_CONTINUOUS_DISTRIBUTIONS = {
+CONTINUOUS_DISTRIBUTIONS = {
     "alpha": ALPHA,
     "arcsine": ARCSINE,
     "argus": ARGUS,

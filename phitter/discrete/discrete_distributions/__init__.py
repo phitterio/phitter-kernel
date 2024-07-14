@@ -7,7 +7,7 @@ from .negative_binomial import NEGATIVE_BINOMIAL
 from .poisson import POISSON
 from .uniform import UNIFORM
 
-ALL_DISCRETE_DISTRIBUTIONS = {
+DISCRETE_DISTRIBUTIONS = {
     "bernoulli": BERNOULLI,
     "binomial": BINOMIAL,
     "geometric": GEOMETRIC,

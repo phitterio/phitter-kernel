@@ -10,16 +10,23 @@ class PERT:
     https://phitter.io/distributions/continuous/pert
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the PERT distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters PERT distribution: {"a": *, "b": *, "c": *}
         https://phitter.io/distributions/continuous/pert
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -79,7 +86,7 @@ class PERT:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -145,9 +152,8 @@ class PERT:
         """
         Check parameters restrictions
         """
-        v1 = self.a < self.b
-        v2 = self.b < self.c
-        return v1 and v2
+        v1 = self.a < self.b < self.c
+        return v1
 
     def get_parameters(self, continuous_measures) -> dict[str, float | int]:
         """
@@ -178,19 +184,21 @@ class PERT:
             # parametric_kurtosis = 3 + 6 * ((self.alpha2 - self.alpha1) ** 2 * (self.alpha2 + self.alpha1 + 1) - (self.alpha2 * self.alpha1) * (self.alpha2 + self.alpha1 + 2)) / ((self.alpha2 * self.alpha1) * (self.alpha2 + self.alpha1 + 2) * (self.alpha2 + self.alpha1 + 3))
             # parametric_median = (a + 6 * b + c) / 8
             parametric_median = scipy.special.betaincinv(self.alpha1, self.alpha2, 0.5) * (c - a) + a
+            parametric_mode = b
 
             ## System Equations
             eq1 = parametric_mean - continuous_measures.mean
             eq2 = parametric_variance - continuous_measures.variance
             # eq3 = parametric_skewness - continuous_measures.skewness
             # eq4 = parametric_kurtosis  - continuous_measures.kurtosis
-            eq5 = parametric_median - continuous_measures.median
+            eq3 = parametric_median - continuous_measures.median
+            # eq2 = parametric_mode - continuous_measures.mode
 
-            return (eq1, eq2, eq5)
+            return (eq1, eq2, eq3)
 
         ## Parameters of equations system
-        bounds = ((-numpy.inf, continuous_measures.mean, continuous_measures.min), (continuous_measures.mean, numpy.inf, continuous_measures.max))
-        x0 = (continuous_measures.min, continuous_measures.mean, continuous_measures.max)
+        bounds = ((-numpy.inf, continuous_measures.min, continuous_measures.mode), (continuous_measures.mode, continuous_measures.max, numpy.inf))
+        x0 = (continuous_measures.min, continuous_measures.mode, continuous_measures.max)
         args = [continuous_measures]
 
         ## Solve Equation system
@@ -201,6 +209,7 @@ class PERT:
         parameters["a"] = min(continuous_measures.min - 1e-3, parameters["a"])
         parameters["c"] = max(continuous_measures.max + 1e-3, parameters["c"])
 
+        # parameters = {"a": continuous_measures.min - 1e-3, "b": continuous_measures.mode, "c": continuous_measures.max + 1e-3}
         return parameters
 
 
@@ -221,7 +230,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_pert.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = PERT(continuous_measures)
+    distribution = PERT(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

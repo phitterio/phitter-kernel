@@ -10,16 +10,23 @@ class GIBRAT:
     https://phitter.io/distributions/continuous/gibrat
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the GIBRAT distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters GIBRAT distribution: {"loc": *, "scale": *}
         https://phitter.io/distributions/continuous/gibrat
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -77,7 +84,7 @@ class GIBRAT:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -160,10 +167,14 @@ class GIBRAT:
         =======
         parameters: {"loc": *, "scale": *}
         """
-        # loc = continuous_measures.min - 1e-3
-        # scale = (continuous_measures.mean - loc) / numpy.sqrt(numpy.e)
-        scipy_params = scipy.stats.gibrat.fit(continuous_measures.data_to_fit)
-        parameters = {"loc": scipy_params[0], "scale": scipy_params[1]}
+        ## Parameter Estimation
+        scale = numpy.sqrt(continuous_measures.variance / (numpy.e**2 - numpy.e))
+        loc = continuous_measures.mean - scale * numpy.sqrt(numpy.e)
+        parameters = {"loc": loc, "scale": scale}
+
+        ## Scipy Estimation
+        # scipy_parameters = scipy.stats.gibrat.fit(continuous_measures.data_to_fit)
+        # parameters = {"loc": scipy_parameters[0], "scale": scipy_parameters[1]}
         return parameters
 
 
@@ -184,7 +195,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_gibrat.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = GIBRAT(continuous_measures)
+    distribution = GIBRAT(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

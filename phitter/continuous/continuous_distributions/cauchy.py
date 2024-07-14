@@ -10,16 +10,23 @@ class CAUCHY:
     https://phitter.io/distributions/continuous/cauchy
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the CAUCHY distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters CAUCHY distribution: {"x0": *, "gamma": *}
         https://phitter.io/distributions/continuous/cauchy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -71,7 +78,7 @@ class CAUCHY:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         return None
 
@@ -165,10 +172,10 @@ class CAUCHY:
         # solution = scipy.optimize.minimize(objective, [x0_ini, gamma_ini], method="SLSQP", bounds = [(-numpy.inf, numpy.inf),(0,numpy.inf)])
         # print(solution)
 
-        scipy_params = scipy.stats.cauchy.fit(continuous_measures.data_to_fit)
+        scipy_parameters = scipy.stats.cauchy.fit(continuous_measures.data_to_fit)
 
         ## Results
-        parameters = {"x0": scipy_params[0], "gamma": scipy_params[1]}
+        parameters = {"x0": scipy_parameters[0], "gamma": scipy_parameters[1]}
 
         return parameters
 
@@ -190,7 +197,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_cauchy.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = CAUCHY(continuous_measures)
+    distribution = CAUCHY(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")
@@ -208,7 +215,7 @@ if __name__ == "__main__":
 
     # import time
     # ti = time.time()
-    # print(distribution.get_parameters(continuous_measures))
+    # print(distribution.get_parameters(continuous_measures=continuous_measures))
     # print("Equations: ", time.time()  - ti)
 
     # ti = time.time()

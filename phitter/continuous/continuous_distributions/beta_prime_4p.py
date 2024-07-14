@@ -15,16 +15,23 @@ class BETA_PRIME_4P:
     https://phitter.io/distributions/continuous/beta_prime_4p
     """
 
-    def __init__(self, continuous_measures=None, parameters: dict[str, int | float] = None, init_parameters_examples=False):
+    def __init__(
+        self,
+        parameters: dict[str, int | float] = None,
+        continuous_measures=None,
+        init_parameters_examples=False,
+    ):
         """
         Initializes the BETA_PRIME_4P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
         Parameters BETA_PRIME_4P distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
         https://phitter.io/distributions/continuous/beta_prime_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Continuous Measures [CONTINUOUS_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise ValueError(
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+            )
         if continuous_measures != None:
-            self.parameters = self.get_parameters(continuous_measures)
+            self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
             self.parameters = parameters
         if init_parameters_examples:
@@ -85,7 +92,7 @@ class BETA_PRIME_4P:
 
     def central_moments(self, k: int) -> float | None:
         """
-        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x - µ[1])ᵏ f(x) dx
+        Parametric central moments. µ'[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx
         """
         µ1 = self.non_central_moments(1)
         µ2 = self.non_central_moments(2)
@@ -198,7 +205,7 @@ class BETA_PRIME_4P:
 
         ## In this distribution solve the system is best than scipy estimation.
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
-            alpha, beta, scale, loc = initial_solution
+            alpha, beta, loc, scale = initial_solution
 
             parametric_mean = scale * alpha / (beta - 1) + loc
             parametric_variance = (scale**2) * alpha * (alpha + beta - 1) / ((beta - 1) ** 2 * (beta - 2))
@@ -214,15 +221,15 @@ class BETA_PRIME_4P:
 
             return (eq1, eq2, eq3, eq4)
 
+        scipy_parameters = scipy.stats.betaprime.fit(continuous_measures.data_to_fit)
         try:
-            bounds = ((0, 0, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
-            x0 = (continuous_measures.mean, continuous_measures.mean, scipy_params[3], continuous_measures.mean)
+            x0 = (continuous_measures.mean, continuous_measures.mean, continuous_measures.min, scipy_parameters[3])
+            bounds = ((0, 0, -numpy.inf, 0), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
             args = [continuous_measures]
             solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
-            parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[3], "scale": solution.x[2]}
+            parameters = {"alpha": solution.x[0], "beta": solution.x[1], "loc": solution.x[2], "scale": solution.x[3]}
         except:
-            scipy_params = scipy.stats.betaprime.fit(continuous_measures.data_to_fit)
-            parameters = {"alpha": scipy_params[0], "beta": scipy_params[1], "loc": scipy_params[2], "scale": scipy_params[3]}
+            parameters = {"alpha": scipy_parameters[0], "beta": scipy_parameters[1], "loc": scipy_parameters[2], "scale": scipy_parameters[3]}
 
         return parameters
 
@@ -244,7 +251,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_beta_prime_4p.txt"
     data = get_data(path)
     continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = BETA_PRIME_4P(continuous_measures)
+    distribution = BETA_PRIME_4P(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")
