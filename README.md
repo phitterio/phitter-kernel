@@ -106,6 +106,8 @@ phitter_cont = phitter.PHITTER(data)
 phitter_cont.fit()
 
 ## Global methods and properties
+phitter_cont.summarize(k: int) -> pandas.DataFrame
+phitter_cont.summarize_info(k: int) -> pandas.DataFrame
 phitter_cont.best_distribution -> dict
 phitter_cont.sorted_distributions_sse -> dict
 phitter_cont.not_rejected_distributions -> dict
@@ -113,13 +115,13 @@ phitter_cont.df_sorted_distributions_sse -> pandas.DataFrame
 phitter_cont.df_not_rejected_distributions -> pandas.DataFrame
 
 ## Specific distribution methods and properties
-get_parameters(id_distribution: str) -> dict
-get_test_chi_square(id_distribution: str) -> dict
-get_test_kolmmogorov_smirnov(id_distribution: str) -> dict
-get_test_anderson_darling(id_distribution: str) -> dict
-get_sse(id_distribution: str) -> float
-get_n_test_passed(id_distribution: str) -> int
-get_n_test_null(id_distribution: str) -> int
+phitter_cont.get_parameters(id_distribution: str) -> dict
+phitter_cont.get_test_chi_square(id_distribution: str) -> dict
+phitter_cont.get_test_kolmmogorov_smirnov(id_distribution: str) -> dict
+phitter_cont.get_test_anderson_darling(id_distribution: str) -> dict
+phitter_cont.get_sse(id_distribution: str) -> float
+phitter_cont.get_n_test_passed(id_distribution: str) -> int
+phitter_cont.get_n_test_null(id_distribution: str) -> int
 ```
 
 ### Histogram Plot

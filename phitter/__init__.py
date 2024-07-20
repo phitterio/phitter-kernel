@@ -1,4 +1,4 @@
-__version__ = "0.0.6"
+__version__ = "0.07"
 
 from .main import PHITTER
 from phitter import continuous

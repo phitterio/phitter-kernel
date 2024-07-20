@@ -189,6 +189,66 @@ class PHITTER:
         df.columns = pandas.MultiIndex.from_tuples(df.columns)
         return df
 
+    def summarize(self, k: int = 20):
+        if self.fit_type == "continuous":
+            summarize = []
+            for id_distribution, info in self.phitter_continuous.sorted_distributions_sse.items():
+                summarize.append(
+                    {
+                        "distribution": id_distribution,
+                        "sse": info["sse"],
+                        "parameters": ", ".join([f"'{k}': {v:.4g}" for k, v in info["parameters"].items()]),
+                        "chi_square": "✅" if info["chi_square"]["rejected"] == False else "✖️",
+                        "kolmogorov_smirnov": "✅" if info["kolmogorov_smirnov"]["rejected"] == False else "✖️",
+                        "anderson_darling": "✅" if info["anderson_darling"]["rejected"] == False else "✖️",
+                    }
+                )
+            return pandas.DataFrame(summarize).head(k)
+
+        if self.fit_type == "discrete":
+            summarize = []
+            for id_distribution, info in self.phitter_discrete.sorted_distributions_sse.items():
+                summarize.append(
+                    {
+                        "distribution": id_distribution,
+                        "sse": info["sse"],
+                        "parameters": ", ".join([f"'{k}': {v:.4g}" for k, v in info["parameters"].items()]),
+                        "chi_square": "✅" if info["chi_square"]["rejected"] == False else "✖️",
+                        "kolmogorov_smirnov": "✅" if info["kolmogorov_smirnov"]["rejected"] == False else "✖️",
+                    }
+                )
+            return pandas.DataFrame(summarize).head(k)
+
+    def summarize_info(self, k: int = 10):
+        if self.fit_type == "continuous":
+            summarize = []
+            for id_distribution, info in self.phitter_continuous.sorted_distributions_sse.items():
+                summarize.append(
+                    {
+                        "distribution": id_distribution,
+                        "sse": info["sse"],
+                        "parameters": info["parameters"],
+                        "chi_square": info["chi_square"]["rejected"],
+                        "kolmogorov_smirnov": info["kolmogorov_smirnov"]["rejected"],
+                        "anderson_darling": info["anderson_darling"]["rejected"],
+                    }
+                )
+            return pandas.DataFrame(summarize).head(k)
+
+        if self.fit_type == "discrete":
+            summarize = []
+            for id_distribution, info in self.phitter_discrete.sorted_distributions_sse.items():
+                summarize.append(
+                    {
+                        "distribution": id_distribution,
+                        "sse": info["sse"],
+                        "parameters": info["parameters"],
+                        "chi_square": info["chi_square"]["rejected"],
+                        "kolmogorov_smirnov": info["kolmogorov_smirnov"]["rejected"],
+                    }
+                )
+            return pandas.DataFrame(summarize).head(k)
+
     @property
     def df_sorted_distributions_sse(self) -> pandas.DataFrame | None:
         if self.fit_type == "continuous":
