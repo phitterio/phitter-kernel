@@ -197,7 +197,7 @@ class PHITTER:
                     {
                         "distribution": id_distribution,
                         "sse": info["sse"],
-                        "parameters": ", ".join([f"'{k}': {v:.4g}" for k, v in info["parameters"].items()]),
+                        "parameters": ", ".join([f"{k}: {v:.4g}" for k, v in info["parameters"].items()]),
                         "chi_square": "✅" if info["chi_square"]["rejected"] == False else "✖️",
                         "kolmogorov_smirnov": "✅" if info["kolmogorov_smirnov"]["rejected"] == False else "✖️",
                         "anderson_darling": "✅" if info["anderson_darling"]["rejected"] == False else "✖️",
@@ -212,7 +212,7 @@ class PHITTER:
                     {
                         "distribution": id_distribution,
                         "sse": info["sse"],
-                        "parameters": ", ".join([f"'{k}': {v:.4g}" for k, v in info["parameters"].items()]),
+                        "parameters": ", ".join([f"{k}: {v:.4g}" for k, v in info["parameters"].items()]),
                         "chi_square": "✅" if info["chi_square"]["rejected"] == False else "✖️",
                         "kolmogorov_smirnov": "✅" if info["kolmogorov_smirnov"]["rejected"] == False else "✖️",
                     }
