@@ -7,7 +7,7 @@ import phitter
 
 
 def get_data(path: str) -> list[float | int]:
-    sample_distribution_file = open(path, "r")
+    sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
     sample_distribution_file.close()
     return data
