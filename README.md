@@ -16,6 +16,9 @@
     <a href="https://pypi.org/project/phitter" target="_blank">
         <img src="https://img.shields.io/pypi/pyversions/phitter?color=yellowgreen" alt="Supported Python versions">
     </a>
+    <a href="https://github.com/phitterio/phitter-kernel/actions/workflows/unittest.yml" target="_blank">
+        <img src="https://github.com/phitterio/phitter-kernel/actions/workflows/unittest.yml/badge.svg" alt="Tests">
+    </a>
 </p>
 
 <p>
