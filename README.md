@@ -56,10 +56,12 @@ pip install phitter
 ```python
 import phitter
 
+## Define your dataset
 data: list[int | float] = [...]
 
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+## Make a continuous fit using Phitter
+phi = phitter.PHITTER(data)
+phi.fit()
 ```
 
 ### Full continuous implementation
@@ -67,9 +69,11 @@ phitter_cont.fit()
 ```python
 import phitter
 
+## Define your dataset
 data: list[int | float] = [...]
 
-phitter_cont = phitter.PHITTER(
+## Make a continuous fit using Phitter
+phi = phitter.PHITTER(
     data=data,
     fit_type="continuous",
     num_bins=15,
@@ -77,7 +81,7 @@ phitter_cont = phitter.PHITTER(
     minimum_sse=1e-2,
     distributions_to_fit=["beta", "normal", "fatigue_life", "triangular"],
 )
-phitter_cont.fit(n_workers=6)
+phi.fit(n_workers=6)
 ```
 
 ### Full discrete implementation
@@ -85,43 +89,49 @@ phitter_cont.fit(n_workers=6)
 ```python
 import phitter
 
+## Define your dataset
 data: list[int | float] = [...]
 
-phitter_disc = phitter.PHITTER(
+## Make a discrete fit using Phitter
+phi = phitter.PHITTER(
     data=data,
     fit_type="discrete",
     confidence_level=0.95,
     minimum_sse=1e-2,
     distributions_to_fit=["binomial", "geometric"],
 )
-phitter_disc.fit(n_workers=2)
+phi.fit(n_workers=2)
 ```
 
 ### Phitter: properties and methods
 
 ```python
 import phitter
+
+## Define your dataset
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+
+## Make a fit using Phitter
+phi = phitter.PHITTER(data)
+phi.fit(n_workers=2)
 
 ## Global methods and properties
-phitter_cont.summarize(k: int) -> pandas.DataFrame
-phitter_cont.summarize_info(k: int) -> pandas.DataFrame
-phitter_cont.best_distribution -> dict
-phitter_cont.sorted_distributions_sse -> dict
-phitter_cont.not_rejected_distributions -> dict
-phitter_cont.df_sorted_distributions_sse -> pandas.DataFrame
-phitter_cont.df_not_rejected_distributions -> pandas.DataFrame
+phi.summarize(k: int) -> pandas.DataFrame
+phi.summarize_info(k: int) -> pandas.DataFrame
+phi.best_distribution -> dict
+phi.sorted_distributions_sse -> dict
+phi.not_rejected_distributions -> dict
+phi.df_sorted_distributions_sse -> pandas.DataFrame
+phi.df_not_rejected_distributions -> pandas.DataFrame
 
 ## Specific distribution methods and properties
-phitter_cont.get_parameters(id_distribution: str) -> dict
-phitter_cont.get_test_chi_square(id_distribution: str) -> dict
-phitter_cont.get_test_kolmmogorov_smirnov(id_distribution: str) -> dict
-phitter_cont.get_test_anderson_darling(id_distribution: str) -> dict
-phitter_cont.get_sse(id_distribution: str) -> float
-phitter_cont.get_n_test_passed(id_distribution: str) -> int
-phitter_cont.get_n_test_null(id_distribution: str) -> int
+phi.get_parameters(id_distribution: str) -> dict
+phi.get_test_chi_square(id_distribution: str) -> dict
+phi.get_test_kolmmogorov_smirnov(id_distribution: str) -> dict
+phi.get_test_anderson_darling(id_distribution: str) -> dict
+phi.get_sse(id_distribution: str) -> float
+phi.get_n_test_passed(id_distribution: str) -> int
+phi.get_n_test_null(id_distribution: str) -> int
 ```
 
 ### Histogram Plot
@@ -129,10 +139,10 @@ phitter_cont.get_n_test_null(id_distribution: str) -> int
 ```python
 import phitter
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+phi = phitter.PHITTER(data)
+phi.fit()
 
-phitter_cont.plot_histogram()
+phi.plot_histogram()
 ```
 
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/histogram.png?raw=true" width="500" />
@@ -142,10 +152,10 @@ phitter_cont.plot_histogram()
 ```python
 import phitter
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+phi = phitter.PHITTER(data)
+phi.fit()
 
-phitter_cont.plot_histogram_distributions()
+phi.plot_histogram_distributions()
 ```
 
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/histogram_pdf_distributions.png?raw=true" width="500" />
@@ -155,10 +165,10 @@ phitter_cont.plot_histogram_distributions()
 ```python
 import phitter
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+phi = phitter.PHITTER(data)
+phi.fit()
 
-phitter_cont.plot_distribution("beta")
+phi.plot_distribution("beta")
 ```
 
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/histogram_pdf_distribution.png?raw=true" width="500" />
@@ -168,10 +178,10 @@ phitter_cont.plot_distribution("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+phi = phitter.PHITTER(data)
+phi.fit()
 
-phitter_cont.plot_ecdf()
+phi.plot_ecdf()
 ```
 
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/ecdf.png?raw=true" width="500" />
@@ -181,10 +191,10 @@ phitter_cont.plot_ecdf()
 ```python
 import phitter
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+phi = phitter.PHITTER(data)
+phi.fit()
 
-phitter_cont.plot_ecdf_distribution("beta")
+phi.plot_ecdf_distribution("beta")
 ```
 
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/ecdf_distribution.png?raw=true" width="500" />
@@ -194,10 +204,10 @@ phitter_cont.plot_ecdf_distribution("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+phi = phitter.PHITTER(data)
+phi.fit()
 
-phitter_cont.qq_plot("beta")
+phi.qq_plot("beta")
 ```
 
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/qq_plot_distribution.png?raw=true" width="500" />
@@ -207,15 +217,15 @@ phitter_cont.qq_plot("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phitter_cont = phitter.PHITTER(data)
-phitter_cont.fit()
+phi = phitter.PHITTER(data)
+phi.fit()
 
-phitter_cont.qq_plot_regression("beta")
+phi.qq_plot_regression("beta")
 ```
 
 <img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/qq_plot_distribution_regression.png?raw=true" width="500" />
 
-### Distributions: Methods and properties
+### Working with distributions: Methods and properties
 
 ```python
 import phitter
@@ -272,12 +282,12 @@ distribution.mode # -> 733.3333333333333
 | frechet                   | ▶️[phitter:frechet](https://phitter.io/distributions/continuous/frechet)                                     | 📊[frechet.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/frechet.xlsx)                                     | 🌐[gs:frechet](https://docs.google.com/spreadsheets/d/1PNGvHImwOFIragM_hHrQJcTN7OcqCKFoHKXlPq76fnI)                   |
 | gamma                     | ▶️[phitter:gamma](https://phitter.io/distributions/continuous/gamma)                                         | 📊[gamma.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/gamma.xlsx)                                         | 🌐[gs:gamma](https://docs.google.com/spreadsheets/d/1HgD3a1zOml7Hy9PMVvFwQwrbmbs8iPbH-zQMowH0LVE)                     |
 | gamma_3p                  | ▶️[phitter:gamma_3p](https://phitter.io/distributions/continuous/gamma_3p)                                   | 📊[gamma_3p.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/gamma_3p.xlsx)                                   | 🌐[gs:gamma_3p](https://docs.google.com/spreadsheets/d/1NkyFZFOMzk2V9qkFEI_zhGUGWiGV-K9vU-RLaFB7ip8)                  |
-| generalized_extreme_value | ▶️[phitter:generalized_extreme_value](https://phitter.io/distributions/continuous/generalized_extreme_value) | 📊[generalized_extreme_value.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_extreme_value.xlsx) | 🌐[gs:generalized_extreme_value](https://docs.google.com/spreadsheets/d/19qHvnTJGVVZ7zhi-yhauCOGhu0iAdkYJ5FFgwv1q5OI) |
-| generalized_gamma         | ▶️[phitter:generalized_gamma](https://phitter.io/distributions/continuous/generalized_gamma)                 | 📊[generalized_gamma.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_gamma.xlsx)                 | 🌐[gs:generalized_gamma](https://docs.google.com/spreadsheets/d/1xx8b_VSG4jznZzaKq2yKumw5VcNX5Wj86YqLO7n4S5A)         |
-| generalized_gamma_4p      | ▶️[phitter:generalized_gamma_4p](https://phitter.io/distributions/continuous/generalized_gamma_4p)           | 📊[generalized_gamma_4p.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_gamma_4p.xlsx)           | 🌐[gs:generalized_gamma_4p](https://docs.google.com/spreadsheets/d/1TN72MSkZ2bRyoNy29h4VIxFudXAroSi1PnmFijPvO0M)      |
-| generalized_logistic      | ▶️[phitter:generalized_logistic](https://phitter.io/distributions/continuous/generalized_logistic)           | 📊[generalized_logistic.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_logistic.xlsx)           | 🌐[gs:generalized_logistic](https://docs.google.com/spreadsheets/d/1vwppGjHbwEA3xd3OtV51sPZhpOWyzmPIOV_Tued-I1Y)      |
-| generalized_normal        | ▶️[phitter:generalized_normal](https://phitter.io/distributions/continuous/generalized_normal)               | 📊[generalized_normal.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_normal.xlsx)               | 🌐[gs:generalized_normal](https://docs.google.com/spreadsheets/d/1_77JSp0mhHxqvQugVRRWIoQOTa91WdyNqNmOfDNuSfA)        |
-| generalized_pareto        | ▶️[phitter:generalized_pareto](https://phitter.io/distributions/continuous/generalized_pareto)               | 📊[generalized_pareto.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_pareto.xlsx)               | 🌐[gs:generalized_pareto](https://docs.google.com/spreadsheets/d/1E28WYhX4Ba9Nj-JNxqAm-Gh7o1EOOIOwXIdCFl1PXI0)        |
+| generalized_extreme_value | ▶️[phitter:gen_extreme_value](https://phitter.io/distributions/continuous/generalized_extreme_value) | 📊[gen_extreme_value.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_extreme_value.xlsx) | 🌐[gs:gen_extreme_value](https://docs.google.com/spreadsheets/d/19qHvnTJGVVZ7zhi-yhauCOGhu0iAdkYJ5FFgwv1q5OI) |
+| generalized_gamma         | ▶️[phitter:gen_gamma](https://phitter.io/distributions/continuous/generalized_gamma)                 | 📊[gen_gamma.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_gamma.xlsx)                 | 🌐[gs:gen_gamma](https://docs.google.com/spreadsheets/d/1xx8b_VSG4jznZzaKq2yKumw5VcNX5Wj86YqLO7n4S5A)         |
+| generalized_gamma_4p      | ▶️[phitter:gen_gamma_4p](https://phitter.io/distributions/continuous/generalized_gamma_4p)           | 📊[gen_gamma_4p.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_gamma_4p.xlsx)           | 🌐[gs:gen_gamma_4p](https://docs.google.com/spreadsheets/d/1TN72MSkZ2bRyoNy29h4VIxFudXAroSi1PnmFijPvO0M)      |
+| generalized_logistic      | ▶️[phitter:gen_logistic](https://phitter.io/distributions/continuous/generalized_logistic)           | 📊[gen_logistic.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_logistic.xlsx)           | 🌐[gs:gen_logistic](https://docs.google.com/spreadsheets/d/1vwppGjHbwEA3xd3OtV51sPZhpOWyzmPIOV_Tued-I1Y)      |
+| generalized_normal        | ▶️[phitter:gen_normal](https://phitter.io/distributions/continuous/generalized_normal)               | 📊[gen_normal.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_normal.xlsx)               | 🌐[gs:gen_normal](https://docs.google.com/spreadsheets/d/1_77JSp0mhHxqvQugVRRWIoQOTa91WdyNqNmOfDNuSfA)        |
+| generalized_pareto        | ▶️[phitter:gen_pareto](https://phitter.io/distributions/continuous/generalized_pareto)               | 📊[gen_pareto.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/generalized_pareto.xlsx)               | 🌐[gs:gen_pareto](https://docs.google.com/spreadsheets/d/1E28WYhX4Ba9Nj-JNxqAm-Gh7o1EOOIOwXIdCFl1PXI0)        |
 | gibrat                    | ▶️[phitter:gibrat](https://phitter.io/distributions/continuous/gibrat)                                       | 📊[gibrat.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/gibrat.xlsx)                                       | 🌐[gs:gibrat](https://docs.google.com/spreadsheets/d/1pM7skBPnH8V3GCJo0iSst46Oc2OzqWdX2qATYBqc_GQ)                    |
 | gumbel_left               | ▶️[phitter:gumbel_left](https://phitter.io/distributions/continuous/gumbel_left)                             | 📊[gumbel_left.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/gumbel_left.xlsx)                             | 🌐[gs:gumbel_left](https://docs.google.com/spreadsheets/d/1WoW97haebsHk1sB8smC4Zq8KqW8leJY0bPK757B2IdI)               |
 | gumbel_right              | ▶️[phitter:gumbel_right](https://phitter.io/distributions/continuous/gumbel_right)                           | 📊[gumbel_right.xlsx](https://github.com/phitterio/phitter-files/blob/main/continuous/gumbel_right.xlsx)                           | 🌐[gs:gumbel_right](https://docs.google.com/spreadsheets/d/1CpzfSwAdptFrI8DhV3tWRsEFd9cr6h3Jaj7t3gigims)              |

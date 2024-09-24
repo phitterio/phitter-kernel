@@ -51,7 +51,11 @@ class UNIFORM:
         """
         Probability density function
         """
-        return 1 / (self.b - self.a)
+        pdf_value = 1 / (self.b - self.a)
+        if isinstance(x, numpy.ndarray):
+            return numpy.full_like(x, pdf_value)
+        else:
+            return pdf_value
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         """

@@ -78,7 +78,7 @@ class ERLANG:
         """
         Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx
         """
-        return self.beta**self.k * (scipy.special.gamma(self.k + k) / scipy.special.factorial(k - 1))
+        return self.beta**k * (scipy.special.gamma(self.k + k) / scipy.special.gamma(self.k))
 
     def central_moments(self, k: int) -> float | None:
         """

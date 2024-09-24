@@ -1,5 +1,6 @@
 import numpy
 import scipy.integrate
+import scipy.optimize
 import scipy.special
 import scipy.stats
 
@@ -265,7 +266,7 @@ class NON_CENTRAL_F:
             return (eq1, eq2, eq3)
 
         bounds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
-        x0 = (continuous_measures.mean, 1, 10)
+        x0 = (continuous_measures.mean, continuous_measures.mean, continuous_measures.mean)
         args = [continuous_measures]
         solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"lambda": solution.x[0], "n1": solution.x[1], "n2": solution.x[2]}

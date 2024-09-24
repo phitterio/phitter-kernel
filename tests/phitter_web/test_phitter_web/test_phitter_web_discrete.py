@@ -11,11 +11,12 @@ def get_data(path: str) -> list[int]:
     return data
 
 
-path = "../../../datasets_test/discrete/sample_binomial.txt"
-data = get_data(path)
+if __name__ == "__main__":
+    path = "../../../datasets_test/discrete/sample_binomial.txt"
+    data = get_data(path)
 
-phitter_discrete = PHITTER_DISCRETE(data)
-phitter_discrete.fit()
+    phi = PHITTER_DISCRETE(data)
+    phi.fit()
 
-for distribution, results in phitter_discrete.not_rejected_distributions.items():
-    print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")
+    for distribution, results in phi.not_rejected_distributions.items():
+        print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")

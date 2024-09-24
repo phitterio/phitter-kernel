@@ -184,7 +184,7 @@ class PERT:
             # parametric_kurtosis = 3 + 6 * ((self.alpha2 - self.alpha1) ** 2 * (self.alpha2 + self.alpha1 + 1) - (self.alpha2 * self.alpha1) * (self.alpha2 + self.alpha1 + 2)) / ((self.alpha2 * self.alpha1) * (self.alpha2 + self.alpha1 + 2) * (self.alpha2 + self.alpha1 + 3))
             # parametric_median = (a + 6 * b + c) / 8
             parametric_median = scipy.special.betaincinv(self.alpha1, self.alpha2, 0.5) * (c - a) + a
-            parametric_mode = b
+            # parametric_mode = b
 
             ## System Equations
             eq1 = parametric_mean - continuous_measures.mean
@@ -206,10 +206,9 @@ class PERT:
         parameters = {"a": solution.x[0], "b": solution.x[1], "c": solution.x[2]}
 
         ## Correction of parameters
-        parameters["a"] = min(continuous_measures.min - 1e-3, parameters["a"])
-        parameters["c"] = max(continuous_measures.max + 1e-3, parameters["c"])
+        parameters["a"] = min(continuous_measures.min - 1e-2, parameters["a"])
+        parameters["c"] = max(continuous_measures.max + 1e-2, parameters["c"])
 
-        # parameters = {"a": continuous_measures.min - 1e-3, "b": continuous_measures.mode, "c": continuous_measures.max + 1e-3}
         return parameters
 
 

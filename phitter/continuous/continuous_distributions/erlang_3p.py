@@ -48,7 +48,8 @@ class ERLANG_3P:
         """
         Cumulative distribution function
         """
-        result = scipy.special.gammainc(self.k, (x - self.loc) / self.beta)
+        # result = scipy.special.gammainc(self.k, (x - self.loc) / self.beta)
+        result = scipy.stats.erlang.cdf(x, self.k, scale=self.beta, loc=self.loc)
         return result
 
     def pdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
@@ -78,7 +79,7 @@ class ERLANG_3P:
         """
         Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx
         """
-        return self.beta**self.k * (scipy.special.gamma(k + self.k) / scipy.special.factorial(k - 1))
+        return self.beta**k * (scipy.special.gamma(k + self.k) / scipy.special.gamma(self.k))
 
     def central_moments(self, k: int) -> float | None:
         """

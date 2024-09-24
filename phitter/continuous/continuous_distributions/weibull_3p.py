@@ -199,12 +199,14 @@ class WEIBULL_3P:
             parametric_variance = E(2) - E(1) ** 2
             parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
             # parametric_kurtosis = (E(4)-4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) /  ((E(2) - E(1) ** 2)) ** 2
+            # parametric_median = loc + beta * (numpy.log(2)) ** (1 / alpha)
 
             ## System Equations
             eq1 = parametric_mean - continuous_measures.mean
             eq2 = parametric_variance - continuous_measures.variance
             eq3 = parametric_skewness - continuous_measures.skewness
             # eq4 = parametric_kurtosis  - continuous_measures.kurtosis
+            # eq3 = parametric_median  - continuous_measures.median
 
             return (eq1, eq2, eq3)
 

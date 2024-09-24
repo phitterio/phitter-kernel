@@ -209,7 +209,7 @@ class WEIBULL:
         # parameters = {"alpha": solution[0], "beta": solution[1]}
 
         bounds = ((1e-5, 1e-5), (numpy.inf, numpy.inf))
-        x0 = (1, 1)
+        x0 = (continuous_measures.mean, continuous_measures.mean)
         args = [continuous_measures]
         solution = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
         parameters = {"alpha": solution.x[0], "beta": solution.x[1]}

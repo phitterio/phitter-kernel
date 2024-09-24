@@ -11,14 +11,15 @@ def get_data(path: str) -> list[float | int]:
     return data
 
 
-path = "../../../datasets_test/continuous/data_1000/data_alpha.txt"
-# path = "../datasets_test/discrete/book2.txt"
-# path = "../datasets_test/continuous/data_1000/data_beta.txt"
+if __name__ == "__main__":
+    path = "../../../datasets_test/continuous/data_1000/data_alpha.txt"
+    # path = "../datasets_test/discrete/book2.txt"
+    # path = "../datasets_test/continuous/data_1000/data_beta.txt"
 
-data = get_data(path)
+    data = get_data(path)
 
-phitter_continuous = PHITTER_CONTINUOUS(data)
-phitter_continuous.fit(n_workers=1)
+    phi = PHITTER_CONTINUOUS(data)
+    phi.fit(n_workers=2)
 
-for distribution, results in phitter_continuous.sorted_distributions_sse.items():
-    print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")
+    for distribution, results in phi.sorted_distributions_sse.items():
+        print(f"Distribution: {distribution}, SSE: {results['sse']}, Aprobados: {results['n_test_passed']}")

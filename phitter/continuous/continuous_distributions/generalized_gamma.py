@@ -53,21 +53,24 @@ class GENERALIZED_GAMMA:
         Cumulative distribution function
         """
         # result = scipy.stats.gamma.cdf((x / self.a) ** self.p, a=self.d / self.p, scale=1)
-        result = scipy.special.gammainc(self.d / self.p, (x / self.a) ** self.p)
-
+        # result = scipy.special.gammainc(self.d / self.p, (x / self.a) ** self.p)
+        result = scipy.stats.gengamma.cdf(x, self.d / self.p, self.p, scale=self.a)
         return result
 
     def pdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Probability density function
         """
-        return (self.p / (self.a**self.d)) * (x ** (self.d - 1)) * numpy.exp(-((x / self.a) ** self.p)) / scipy.special.gamma(self.d / self.p)
+        # result = (self.p / (self.a**self.d)) * (x ** (self.d - 1)) * numpy.exp(-((x / self.a) ** self.p)) / scipy.special.gamma(self.d / self.p)
+        result = scipy.stats.gengamma.cdf(x, self.d / self.p, self.p, scale=self.a)
+        return result
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u => PPF[u] = x
         """
-        result = self.a * scipy.special.gammaincinv(self.d / self.p, u) ** (1 / self.p)
+        # result = self.a * scipy.special.gammaincinv(self.d / self.p, u) ** (1 / self.p)
+        result = scipy.stats.gengamma.ppf(u, self.d / self.p, self.p, scale=self.a)
         return result
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
@@ -208,16 +211,11 @@ class GENERALIZED_GAMMA:
             return (eq1, eq2, eq3)
 
         try:
-            ## scipy.optimize.fsolve is 100x faster than least square but sometimes return solutions < 0
-            solution = scipy.optimize.fsolve(equations, (1, 1, 1), continuous_measures)
-
-            ## If return a perameter < 0 then use least_square with restriction
-            if all(x > 0 for x in solution) is False or all(x == 1 for x in solution) is True:
-                bounds = ((0, 0, 0), (numpy.inf, numpy.inf, numpy.inf))
-                x0 = (1, 1, 1)
-                args = [continuous_measures]
-                response = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
-                solution = response.x
+            bounds = ((1e-5, 1e-5, 1e-5), (numpy.inf, numpy.inf, numpy.inf))
+            x0 = (continuous_measures.mean, 1, 1)
+            args = [continuous_measures]
+            response = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
+            solution = response.x
             parameters = {"a": solution[0], "d": solution[1], "p": solution[2]}
         except:
             scipy_parameters = scipy.stats.gengamma.fit(continuous_measures.data_to_fit)

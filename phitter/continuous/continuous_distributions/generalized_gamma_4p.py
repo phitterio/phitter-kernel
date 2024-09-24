@@ -50,20 +50,24 @@ class GENERALIZED_GAMMA_4P:
         Cumulative distribution function
         """
         # result = scipy.stats.gamma.cdf(((x - self.loc) / self.a) ** self.p, a=self.d / self.p, scale=1)
-        result = scipy.special.gammainc(self.d / self.p, ((x - self.loc) / self.a) ** self.p)
+        # result = scipy.special.gammainc(self.d / self.p, ((x - self.loc) / self.a) ** self.p)
+        result = scipy.stats.gengamma.cdf(x, self.d / self.p, self.p, loc=self.loc, scale=self.a)
         return result
 
     def pdf(self, x: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Probability density function
         """
-        return (self.p / (self.a**self.d)) * ((x - self.loc) ** (self.d - 1)) * numpy.exp(-(((x - self.loc) / self.a) ** self.p)) / scipy.special.gamma(self.d / self.p)
+        result = (self.p / (self.a**self.d)) * ((x - self.loc) ** (self.d - 1)) * numpy.exp(-(((x - self.loc) / self.a) ** self.p)) / scipy.special.gamma(self.d / self.p)
+        result = scipy.stats.gengamma.pdf(x, self.d / self.p, self.p, loc=self.loc, scale=self.a)
+        return result
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
         """
         Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u => PPF[u] = x
         """
-        result = self.a * scipy.special.gammaincinv(self.d / self.p, u) ** (1 / self.p)
+        # result = self.a * scipy.special.gammaincinv(self.d / self.p, u) ** (1 / self.p)
+        result = scipy.stats.gengamma.ppf(u, self.d / self.p, self.p, loc=self.loc, scale=self.a)
         return result
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
@@ -192,38 +196,30 @@ class GENERALIZED_GAMMA_4P:
 
             parametric_mean = E(1) + loc
             parametric_variance = E(2) - E(1) ** 2
-            # parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
+            parametric_skewness = (E(3) - 3 * E(2) * E(1) + 2 * E(1) ** 3) / ((E(2) - E(1) ** 2)) ** 1.5
             parametric_kurtosis = (E(4) - 4 * E(1) * E(3) + 6 * E(1) ** 2 * E(2) - 3 * E(1) ** 4) / ((E(2) - E(1) ** 2)) ** 2
-            parametric_median = a * scipy.stats.gamma.ppf(0.5, a=d / p, scale=1) ** (1 / p) + loc
+            # parametric_median = a * scipy.stats.gamma.ppf(0.5, a=d / p, scale=1) ** (1 / p) + loc
             # parametric_mode = loc + a * ((d - 1) / p) ** (1 / p)
 
             ## System Equations
             eq1 = parametric_mean - continuous_measures.mean
             eq2 = parametric_variance - continuous_measures.variance
-            # eq3 = parametric_skewness - continuous_measures.skewness
-            eq3 = parametric_median - continuous_measures.median
+            eq3 = parametric_skewness - continuous_measures.skewness
+            # eq3 = parametric_median - continuous_measures.median
             eq4 = parametric_kurtosis - continuous_measures.kurtosis
 
             return (eq1, eq2, eq3, eq4)
 
-        ## scipy.optimize.fsolve is 100x faster than least square but sometimes return solutions < 0
-        solution = scipy.optimize.fsolve(equations, (1, 1, 1, 1), continuous_measures)
-
-        ## If return a perameter < 0 then use least_square with restriction
-        if all(x > 0 for x in solution) is False or all(x == 1 for x in solution) is True:
-            try:
-                bounds = ((0, 0, 0, 0), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
-                if continuous_measures.mean < 0:
-                    bounds = ((0, 0, 0, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, 0))
-                x0 = (1, 1, 1, continuous_measures.mean)
-                args = [continuous_measures]
-                response = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
-                solution = response.x
-            except:
-                scipy_parameters = scipy.stats.gengamma.fit(continuous_measures.data_to_fit)
-                solution = [scipy_parameters[3], scipy_parameters[0], scipy_parameters[1], scipy_parameters[2]]
-
-        parameters = {"a": solution[0], "d": solution[1], "p": solution[2], "loc": solution[3]}
+        try:
+            bounds = ((1e-5, 1e-5, 1e-5, -numpy.inf), (numpy.inf, numpy.inf, numpy.inf, numpy.inf))
+            x0 = (1, 1, continuous_measures.mean, continuous_measures.mean)
+            args = [continuous_measures]
+            response = scipy.optimize.least_squares(equations, x0=x0, bounds=bounds, args=args)
+            solution = response.x
+            parameters = {"a": solution[0], "d": solution[1], "p": solution[2], "loc": solution[3]}
+        except:
+            scipy_parameters = scipy.stats.gengamma.fit(continuous_measures.data_to_fit)
+            parameters = {"a": scipy_parameters[3], "d": scipy_parameters[0], "p": scipy_parameters[1], "loc": scipy_parameters[2]}
 
         return parameters
 
