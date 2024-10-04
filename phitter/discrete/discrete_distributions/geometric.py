@@ -43,16 +43,16 @@ class GEOMETRIC:
         """
         Cumulative distribution function
         """
-        result = 1 - (1 - self.p) ** numpy.floor(x)
-        # result = scipy.stats.geom.cdf(x, self.p)
+        # result = 1 - (1 - self.p) ** numpy.floor(x)
+        result = scipy.stats.geom.cdf(x, self.p)
         return result
 
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
         """
         Probability mass function
         """
-        result = self.p * (1 - self.p) ** (x - 1)
-        # result = scipy.stats.geom.pmf(x, self.p)
+        # result = self.p * (1 - self.p) ** (x - 1)
+        result = scipy.stats.geom.pmf(x, self.p)
         return result
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
@@ -67,7 +67,7 @@ class GEOMETRIC:
         Sample of n elements of ditribution
         """
         if seed:
-            numpy.random.seed(0)
+            numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
 
     def non_central_moments(self, k: int) -> float | None:
