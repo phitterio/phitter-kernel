@@ -63,7 +63,7 @@ class PHITTER_DISCRETE:
         validation_test = False
         try:
             test = test_function(distribution, self.discrete_measures)
-            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
+            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] >= 0:
                 self.distribution_results[label] = {
                     "test_statistic": test["test_statistic"],
                     "critical_value": test["critical_value"],
