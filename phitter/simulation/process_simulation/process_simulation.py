@@ -6,7 +6,7 @@ from graphviz import Digraph
 from IPython.display import display
 
 
-class Simulation:
+class ProcessSimulation:
     def __init__(self) -> None:
 
         self.process_prob_distr = dict()
