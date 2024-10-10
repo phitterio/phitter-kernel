@@ -2,6 +2,7 @@ import phitter
 import pandas as pd
 import random
 import numpy as np
+import collections
 
 
 class QueueingSimulation:
@@ -57,6 +58,19 @@ class QueueingSimulation:
 
         if d == "PBS":
             self.__label = self.__pbs_distribution[pbs_distribution](pbs_parameters)
+
+        self.result_simulation = pd.DataFrame()
+        self.__simulation_time = 0
+        self.number_probabilities = dict()
+
+    def __str__(self):
+        return self.__result_simulation.to_string()
+
+    def _repr_html_(self):
+        return self.__result_simulation._repr_html_()
+
+    def __getitem__(self, key):
+        return self.__result_simulation[key]
 
     def __verify_variables(
         self,
@@ -141,6 +155,9 @@ class QueueingSimulation:
         Returns:
             tuple: [description]
         """
+
+        self.__simulation_time = simulation_time
+
         if simulation_time <= 0:
             raise ValueError(
                 f"""'simulation_time' has to be a number and cannot be less or equals than zero."""
@@ -176,7 +193,15 @@ class QueueingSimulation:
         elif self.__d == "PBS":
             simulation_results = self.__pbs(simulation_time, simulation_results)
 
-        return simulation_results
+        self.__result_simulation = pd.DataFrame(simulation_results)
+        self.__result_simulation = self.__result_simulation.drop(index=0).reset_index(
+            drop=True
+        )
+
+        # Probabilities
+        self.elements_prob()
+
+        return self.__result_simulation
 
     def __last_not_null(self, array):
         for element in reversed(array):
@@ -937,3 +962,108 @@ class QueueingSimulation:
                     order_idx[last_attended] = idx
 
         return simulation_results
+
+    def to_csv(self, file_name: str, index: bool = True):
+        if len(self.__result_simulation) == 0:
+            raise ValueError(f"""You need to run the simulation to use this""")
+        else:
+            self.__result_simulation.to_csv(file_name, index=index)
+
+    def to_excel(self, file_name: str, sheet_name: str = "Sheet1", index: bool = True):
+        if len(self.__result_simulation) == 0:
+            raise ValueError(f"""You need to run the simulation to use this""")
+        else:
+            self.__result_simulation.to_excel(
+                file_name, index=index, sheet_name=sheet_name
+            )
+
+    def system_utilization(self):
+        return (
+            self.__result_simulation["Time in service"].sum() / self.__simulation_time
+        )
+
+    def no_clients_prob(self):
+        return (
+            1
+            - self.__result_simulation["Time in service"].sum() / self.__simulation_time
+        )
+
+    def elements_prob(self, bins: int = 50000):
+
+        multiplier = 1
+        step = 0
+        while step < 1:
+            # Range to determine probabilities
+            max_val = int(self.__result_simulation["Leave Time"].max() * multiplier)
+            min_val = int(self.__result_simulation["Arrival Time"].min() * multiplier)
+            step = int((max_val - min_val) / bins)
+            if step < 1:
+                multiplier = multiplier * 10
+
+        # Definimos un rango de tiempos para analizar la cantidad de clientes en el sistema
+        time_points = [round(t, 2) for t in range(min_val, max_val, step)]
+
+        # Number of clients in system in each instant
+        customers_at_time = [
+            (
+                (self.__result_simulation["Arrival Time"] <= t / 100)
+                & (self.__result_simulation["Leave Time"] >= t / 100)
+            ).sum()
+            for t in time_points
+        ]
+
+        # Count a number of times each number appears
+        count_customers = collections.Counter(customers_at_time)
+
+        # Calculate probability per number of customer
+        total_points = len(time_points)
+        self.number_probabilities = {
+            k: v / total_points for k, v in count_customers.items()
+        }
+
+        return self.number_probabilities
+
+    def number_elements_prob(self, number: int, prob_type: str):
+        if isinstance(number, int) == False:
+            raise ValueError(f"""number can only be integer""")
+
+        if prob_type == "exact_value":
+            return self.number_probabilities[number]
+        elif prob_type == "greater_equals":
+            return sum(
+                [
+                    self.number_probabilities[key]
+                    for key in self.number_probabilities.keys()
+                    if key >= number
+                ]
+            )
+        elif prob_type == "less_equals":
+            return sum(
+                [
+                    self.number_probabilities[key]
+                    for key in self.number_probabilities.keys()
+                    if key <= number
+                ]
+            )
+        else:
+            raise ValueError(
+                f"""You can only select one of the following prob_type: 'exact_value', 'greater_equals', 'less_equals'"""
+            )
+
+    def average_time_system(self):
+        return (
+            self.__result_simulation["Time in service"]
+            + self.__result_simulation["Time in Line"]
+        ).mean()
+
+    def average_time_queue(self):
+        return self.__result_simulation["Time in Line"].mean()
+
+    def average_elements_system(self):
+        return (
+            self.__result_simulation["Time in service"]
+            + self.__result_simulation["Time in Line"]
+        ).sum() / self.__simulation_time
+
+    def average_elements_queue(self):
+        return (self.__result_simulation["Time in Line"]).sum() / self.__simulation_time
