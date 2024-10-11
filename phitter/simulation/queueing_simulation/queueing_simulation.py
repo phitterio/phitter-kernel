@@ -4,6 +4,8 @@ import random
 import numpy as np
 import collections
 
+import math
+
 
 class QueueingSimulation:
     def __init__(
@@ -41,7 +43,7 @@ class QueueingSimulation:
             | phitter.discrete.DISCRETE_DISTRIBUTIONS
         )
 
-        self.__pbs_distribution = {
+        self.__pbs_distributions = {
             "own_distribution": OwnDistributions
         } | phitter.discrete.DISCRETE_DISTRIBUTIONS
 
@@ -49,15 +51,24 @@ class QueueingSimulation:
 
         self.__verify_variables(a, s, c, k, n, d, pbs_distribution, pbs_parameters)
 
-        self.__a = self.__probability_distribution[a](a_parameters)
-        self.__s = self.__probability_distribution[s](s_parameters)
+        self.__save_a = a
+        self.__save_a_params = a_parameters
+        self.__save_s = s
+        self.__save_s_params = s_parameters
+
+        self.__a = self.__probability_distribution[self.__save_a](self.__save_a_params)
+        self.__s = self.__probability_distribution[self.__save_s](self.__save_s_params)
         self.__c = c
         self.__k = k
         self.__n = n
         self.__d = d
 
+        self.__pbs_parameters = pbs_parameters
+        self.__pbs_distribution = pbs_distribution
         if d == "PBS":
-            self.__label = self.__pbs_distribution[pbs_distribution](pbs_parameters)
+            self.__label = self.__pbs_distributions[self.__pbs_distribution](
+                self.__pbs_parameters
+            )
 
         self.result_simulation = pd.DataFrame()
         self.__simulation_time = 0
@@ -130,9 +141,9 @@ class QueueingSimulation:
 
         if d == "PBS":
             if pbs_distribution != None and pbs_parameters != None:
-                if pbs_distribution not in self.__pbs_distribution:
+                if pbs_distribution not in self.__pbs_distributions:
                     raise ValueError(
-                        f"""You should select one of the following distributions: {self.__pbs_distribution}"""
+                        f"""You should select one of the following distributions: {self.__pbs_distributions}"""
                     )
             elif pbs_distribution == None and pbs_parameters == None:
                 raise ValueError(
@@ -143,9 +154,7 @@ class QueueingSimulation:
                 f"""You can only use 'pbs_distribution' and 'pbs_parameters' with 'd="PBS"'"""
             )
 
-    def run(
-        self, simulation_time: float = float("inf"), number_of_simulations: int = 1
-    ) -> tuple:
+    def run(self, simulation_time: float = float("inf")) -> tuple:
         """Simulation of any queueing model.
 
         Args:
@@ -161,11 +170,6 @@ class QueueingSimulation:
         if simulation_time <= 0:
             raise ValueError(
                 f"""'simulation_time' has to be a number and cannot be less or equals than zero."""
-            )
-
-        if number_of_simulations <= 0:
-            raise ValueError(
-                f"""'number_of_simulations' has to be a number and cannot be less or equals than zero."""
             )
 
         if simulation_time == float("inf"):
@@ -193,12 +197,17 @@ class QueueingSimulation:
         elif self.__d == "PBS":
             simulation_results = self.__pbs(simulation_time, simulation_results)
 
+        # Create a new column that is the same for all d
+        simulation_results["Finish after closed"] = [
+            1 if leave_time > self.__simulation_time else 0
+            for leave_time in simulation_results["Leave Time"]
+        ]
+
         self.__result_simulation = pd.DataFrame(simulation_results)
         self.__result_simulation = self.__result_simulation.drop(index=0).reset_index(
             drop=True
         )
 
-        # Probabilities
         self.elements_prob()
 
         return self.__result_simulation
@@ -1059,6 +1068,21 @@ class QueueingSimulation:
     def average_time_queue(self):
         return self.__result_simulation["Time in Line"].mean()
 
+    def average_time_service(self):
+        return self.__result_simulation["Time in service"].mean()
+
+    def standard_deviation_time_system(self):
+        return (
+            self.__result_simulation["Time in service"]
+            + self.__result_simulation["Time in Line"]
+        ).std()
+
+    def standard_deviation_time_queue(self):
+        return self.__result_simulation["Time in Line"].std()
+
+    def standard_deviation_time_service(self):
+        return self.__result_simulation["Time in service"].std()
+
     def average_elements_system(self):
         return (
             self.__result_simulation["Time in service"]
@@ -1067,3 +1091,175 @@ class QueueingSimulation:
 
     def average_elements_queue(self):
         return (self.__result_simulation["Time in Line"]).sum() / self.__simulation_time
+
+    def probability_to_join_system(self):
+        return (self.__result_simulation["Join the system?"]).sum() / len(
+            self.__result_simulation
+        )
+
+    def probability_to_finish_after_time(self):
+        return (self.__result_simulation["Finish after closed"]).sum() / len(
+            self.__result_simulation
+        )
+
+    def probability_to_wait_in_line(self):
+        result = np.where(self.__result_simulation["Time in Line"] > 0, 1, 0)
+
+        return result.sum() / len(self.__result_simulation)
+
+    def number_probability_summary(self):
+
+        options = ["less_equals", "exact_value", "greater_equals"]
+
+        dictionaty_number = {
+            key: [self.number_elements_prob(int(key), option) for option in options]
+            for key in self.number_probabilities.keys()
+        }
+
+        df = pd.DataFrame.from_dict(dictionaty_number, orient="index").rename(
+            columns={
+                0: "Prob. Less or Equals",
+                1: "Exact Probability",
+                2: "Prob. Greter or equals",
+            }
+        )
+
+        df.index.name = "Number of elements"
+
+        return df.reset_index()
+
+    def metrics_summary(self):
+        metrics = dict()
+        metrics["Average Time in System"] = float(self.average_time_system())
+        metrics["Average Time in Queue"] = float(self.average_time_queue())
+        metrics["Average Time in Service"] = float(self.average_time_service())
+        metrics["Std. Dev. Time in System"] = float(
+            self.standard_deviation_time_system()
+        )
+        metrics["Std. Dev. Time in Queue"] = float(self.standard_deviation_time_queue())
+        metrics["Std. Dev. Time in Service"] = float(
+            self.standard_deviation_time_service()
+        )
+        metrics["Average Elements in System"] = float(self.average_elements_system())
+        metrics["Average Elements in Queue"] = float(self.average_elements_queue())
+        metrics["Probability to join the System"] = float(
+            self.probability_to_join_system()
+        )
+        metrics["Probability to finish after Time"] = float(
+            self.probability_to_finish_after_time()
+        )
+        metrics["Probability to Wait in Line"] = float(
+            self.probability_to_wait_in_line()
+        )
+
+        df = pd.DataFrame.from_dict(metrics, orient="index").rename(
+            columns={0: "Value"}
+        )
+
+        df.index.name = "Metrics"
+
+        return df.reset_index()
+
+    def confidence_interval_metrics(
+        self, simulation_time: int, confidence_level: int = 0.95, replications: int = 30
+    ) -> tuple[pd.DataFrame, pd.DataFrame]:
+        tot_prob = pd.DataFrame()
+        tot_metrics = pd.DataFrame()
+        for _ in range(replications):
+            self.__init__(
+                self.__save_a,
+                self.__save_a_params,
+                self.__save_s,
+                self.__save_s_params,
+                self.__c,
+                self.__k,
+                self.__n,
+                self.__d,
+                self.__pbs_distribution,
+                self.__pbs_parameters,
+            )
+            self.run(simulation_time)
+            number_probability_summary = self.number_probability_summary()
+            metrics_summary = self.metrics_summary()
+            tot_prob = pd.concat([tot_prob, number_probability_summary])
+            tot_metrics = pd.concat([tot_metrics, metrics_summary])
+
+        # First Interval
+        std__ = tot_prob.groupby(["Number of elements"]).std()
+        mean__ = tot_prob.groupby(["Number of elements"]).mean()
+
+        standard_error = std__ / math.sqrt(replications)
+        normal_standard = phitter.continuous.NORMAL({"mu": 0, "sigma": 1})
+        z = normal_standard.ppf((1 + confidence_level) / 2)
+        ## Confidence Interval
+        avg = mean__.copy()
+        lower_bound = (
+            (mean__ - (z * standard_error))
+            .copy()
+            .rename(
+                columns={
+                    "Prob. Less or Equals": "LB - Prob. Less or Equals",
+                    "Exact Probability": "LB - Exact Probability",
+                    "Prob. Greter or equals": "LB - Prob. Greater or equals",
+                }
+            )
+        )
+        upper_bound = (
+            (mean__ + (z * standard_error))
+            .copy()
+            .rename(
+                columns={
+                    "Prob. Less or Equals": "UB - Prob. Less or Equals",
+                    "Exact Probability": "UB - Exact Probability",
+                    "Prob. Greter or equals": "UB - Prob. Greater or equals",
+                }
+            )
+        )
+        avg = avg.rename(
+            columns={
+                "Prob. Less or Equals": "AVG - Prob. Less or Equals",
+                "Exact Probability": "AVG - Exact Probability",
+                "Prob. Greter or equals": "AVG - Prob. Greater or equals",
+            }
+        )
+        tot_prob_interval = pd.concat([lower_bound, avg, upper_bound], axis=1)
+        tot_prob_interval = tot_prob_interval[
+            [
+                "LB - Prob. Less or Equals",
+                "AVG - Prob. Less or Equals",
+                "UB - Prob. Less or Equals",
+                "LB - Exact Probability",
+                "AVG - Exact Probability",
+                "UB - Exact Probability",
+                "LB - Prob. Greater or equals",
+                "AVG - Prob. Greater or equals",
+                "UB - Prob. Greater or equals",
+            ]
+        ]
+
+        # Second Interval
+        std__2 = tot_metrics.groupby(["Metrics"]).std()
+        mean__2 = tot_metrics.groupby(["Metrics"]).mean()
+
+        standard_error = std__2 / math.sqrt(replications)
+        normal_standard = phitter.continuous.NORMAL({"mu": 0, "sigma": 1})
+        z = normal_standard.ppf((1 + confidence_level) / 2)
+        ## Confidence Interval
+        avg__2 = mean__2.copy()
+        lower_bound = (
+            (mean__2 - (z * standard_error))
+            .copy()
+            .rename(columns={"Value": "LB - Value"})
+        )
+        upper_bound = (
+            (mean__2 + (z * standard_error))
+            .copy()
+            .rename(columns={"Value": "UB - Value"})
+        )
+        avg__2 = avg__2.rename(columns={"Value": "AVG - Value"})
+        tot_metrics_interval = pd.concat([lower_bound, avg__2, upper_bound], axis=1)
+        tot_metrics_interval = tot_metrics_interval[
+            ["LB - Value", "AVG - Value", "UB - Value"]
+        ]
+
+        return tot_prob_interval.reset_index(), tot_metrics_interval.reset_index()
