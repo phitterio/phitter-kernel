@@ -38,24 +38,28 @@ class QueueingSimulation:
             pbs_parameters (dict | None, optional): Parameters of the discrete distribution that identifies the label of the pbs, this parameter can only be used with "d='PBS'". If it is 'own-distribution' add labels in the following way (example): {0: 0.5, 1: 0.3, 2: 0.2}. Where the "key" corresponds to the label and the "value" the probability whose total sum must add up to 1; "keys" with greater importances are the smallers and always have to be numeric keys. You can add as labels as you need.
         """
 
+        # All phitter probability distributions
         self.__probability_distribution = (
             phitter.continuous.CONTINUOUS_DISTRIBUTIONS
             | phitter.discrete.DISCRETE_DISTRIBUTIONS
         )
 
+        # Distributions for labels
         self.__pbs_distributions = {
             "own_distribution": OwnDistributions
         } | phitter.discrete.DISCRETE_DISTRIBUTIONS
-
+        # Queue discipline
         self.__queue_discipline = ["FIFO", "LIFO", "PBS"]
-
+        # Verify if all variables are correct
         self.__verify_variables(a, s, c, k, n, d, pbs_distribution, pbs_parameters)
 
+        # Saving input variables
         self.__save_a = a
         self.__save_a_params = a_parameters
         self.__save_s = s
         self.__save_s_params = s_parameters
 
+        # Variables input for simualtion
         self.__a = self.__probability_distribution[self.__save_a](self.__save_a_params)
         self.__s = self.__probability_distribution[self.__save_s](self.__save_s_params)
         self.__c = c
@@ -63,6 +67,10 @@ class QueueingSimulation:
         self.__n = n
         self.__d = d
 
+        # This variables are assigned later
+        self.__simulation_time = 0
+
+        # PBS parameters
         self.__pbs_parameters = pbs_parameters
         self.__pbs_distribution = pbs_distribution
         if d == "PBS":
@@ -70,14 +78,25 @@ class QueueingSimulation:
                 self.__pbs_parameters
             )
 
+        # Simulation results
         self.result_simulation = pd.DataFrame()
         self.__simulation_time = 0
         self.number_probabilities = dict()
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Print dataset
+
+        Returns:
+            str: Dataframe in str mode
+        """
         return self.__result_simulation.to_string()
 
-    def _repr_html_(self):
+    def _repr_html_(self) -> pd.DataFrame:
+        """Print DataFrames in jupyter notebooks
+
+        Returns:
+            pd.DataFrame: Simulation result
+        """
         return self.__result_simulation._repr_html_()
 
     def __getitem__(self, key):
@@ -103,8 +122,8 @@ class QueueingSimulation:
             k (float): Maximum system capacity.
             n (float): Total population of potential customers.
             d (str): Queue discipline.
-            pbs_distribution (str): Label Distribution.
-            pbs_parameters (dict): Parameters of the PBS Distribution
+            pbs_distribution (str): Label Distribution. It can only be used if d='PBS' is selected
+            pbs_parameters (dict): Parameters of the PBS Distribution. It can only be used if d='PBS' is selected
         """
 
         # Verify if a and s belong to a actual probability distribution
@@ -131,30 +150,36 @@ class QueueingSimulation:
                 f"""'n' has to be a number and cannot be less or equals than zero."""
             )
 
+        # Review if the discipline is in the list
         if d not in self.__queue_discipline:
             raise ValueError(
                 f"""'d' has to be one of the following queue discipline: '{"', '".join(self.__queue_discipline)}'."""
             )
 
+        # Maximum number of people should be greater or equals to the number of servers
         if k < c:
             raise ValueError(f"""'k' cannot be less than the number of servers (c)""")
 
+        # PBS logic
         if d == "PBS":
             if pbs_distribution != None and pbs_parameters != None:
+                # Review if the selected distribution was created
                 if pbs_distribution not in self.__pbs_distributions:
                     raise ValueError(
                         f"""You should select one of the following distributions: {self.__pbs_distributions}"""
                     )
+            # Review if PBS is selected if the distribution and parameters exits
             elif pbs_distribution == None and pbs_parameters == None:
                 raise ValueError(
                     f"""You must include 'pbs_distribution' and 'pbs_parameters' if you want to use 'PBS'."""
                 )
+        # You can only use this two parameters if PBS is selected
         elif d != "PBS" and (pbs_distribution != None or pbs_parameters != None):
             raise ValueError(
                 f"""You can only use 'pbs_distribution' and 'pbs_parameters' with 'd="PBS"'"""
             )
 
-    def run(self, simulation_time: float = float("inf")) -> tuple:
+    def run(self, simulation_time: float = float("inf")) -> pd.DataFrame:
         """Simulation of any queueing model.
 
         Args:
@@ -165,13 +190,16 @@ class QueueingSimulation:
             tuple: [description]
         """
 
+        # Create a new variable with the simulation time
         self.__simulation_time = simulation_time
 
+        # Simulation time has to be greater than 0
         if simulation_time <= 0:
             raise ValueError(
                 f"""'simulation_time' has to be a number and cannot be less or equals than zero."""
             )
 
+        # If it is infinity, create a massive number
         if simulation_time == float("inf"):
             # Big number for the actual probabilities
             simulation_time = round(self.__a.ppf(0.9999)) * 1000000
@@ -186,10 +214,11 @@ class QueueingSimulation:
         simulation_results["Time in service"] = [0]
         simulation_results["Leave Time"] = [0]
         simulation_results["Join the system?"] = [0]
-        # Servers Information
+        # Servers Information - Depends on the number in self.__c
         for server in range(1, self.__c + 1):
             simulation_results[f"Time busy server {server}"] = [0]
 
+        # Selections according to the queue discipline
         if self.__d == "FIFO":
             simulation_results = self.__fifo(simulation_time, simulation_results)
         elif self.__d == "LIFO":
@@ -197,37 +226,61 @@ class QueueingSimulation:
         elif self.__d == "PBS":
             simulation_results = self.__pbs(simulation_time, simulation_results)
 
-        # Create a new column that is the same for all d
+        # Create a new column that is the same for all queue disciplines, to determine if that person was attended after the "close time"
         simulation_results["Finish after closed"] = [
             1 if leave_time > self.__simulation_time else 0
             for leave_time in simulation_results["Leave Time"]
         ]
 
+        # Convert result to a DataFrame
         self.__result_simulation = pd.DataFrame(simulation_results)
         self.__result_simulation = self.__result_simulation.drop(index=0).reset_index(
             drop=True
         )
 
+        # Calculte probabilities for each number of elements
         self.elements_prob()
 
         return self.__result_simulation
 
-    def __last_not_null(self, array):
+    def __last_not_null(self, array: list) -> int:
+        """Reviews all elements and returns the last one that is not null
+
+        Args:
+            array (list): Array that we need to identify the last element no null
+
+        Returns:
+            int: last element no null
+        """
         for element in reversed(array):
             if not np.isnan(element):
                 return element
 
-    def __fifo(self, simulation_time, simulation_results):
+    def __fifo(self, simulation_time: int, simulation_results: dict) -> dict:
+        """Simulation of the FIFO queue discipline according to all input parameters
+
+        Args:
+            simulation_time (int): Max. Time the simulation would take
+            simulation_results (dict): Dictionary where all answers will be stored
+
+        Returns:
+            dict: Returns simulation_results input variable with all the calculations
+        """
+
+        # Initialize some variable for this simulation
         arrivals = list()
         arriving_time = 0
         population = 0
-        # Determine all the arrival hours
+
+        # Determine all the arrival hours if the number of people do not exceed the maximum or the arriving time is less than the Max. Simulation Time
         while arriving_time < simulation_time and population < self.__n:
             arrivals.append(self.__a.ppf(random.random()))
             arriving_time += arrivals[-1]
             population += 1
 
+        # Start simulation for each arrival
         for arrival in arrivals:
+            # Include that person time in the result
             simulation_results["Arrival Time"].append(
                 simulation_results["Arrival Time"][-1] + arrival
             )
@@ -244,6 +297,7 @@ class QueueingSimulation:
             # Plus one means that person in the system
             simulation_results["Total Number of people"].append(number_of_people + 1)
 
+            # Calculte the number of people in line at that time
             if simulation_results["Total Number of people"][-1] <= self.__c:
                 simulation_results["Number of people in Line"].append(0)
             else:
@@ -251,9 +305,10 @@ class QueueingSimulation:
                     simulation_results["Total Number of people"][-1] - self.__c
                 )
 
+            # Verify if the number of people is less or equals the max value
             if simulation_results["Total Number of people"][-1] <= self.__k:
 
-                # JOin the system
+                # Join the system
                 simulation_results["Join the system?"].append(1)
 
                 # Attention order
@@ -279,6 +334,7 @@ class QueueingSimulation:
                         first_server_available = server
                         first_server_available_time = last_time_server_not_null
 
+                # Assign the time in line if the arrival time is less the available server then he needed to do the line
                 simulation_results["Time in Line"].append(
                     max(
                         first_server_available_time,
@@ -286,14 +342,17 @@ class QueueingSimulation:
                     )
                     - simulation_results["Arrival Time"][-1]
                 )
+                # Simulate time in service
                 simulation_results["Time in service"].append(
                     self.__s.ppf(random.random())
                 )
+                # Leave time of that person
                 simulation_results["Leave Time"].append(
                     simulation_results["Arrival Time"][-1]
                     + simulation_results["Time in Line"][-1]
                     + simulation_results["Time in service"][-1]
                 )
+                # Same as leave time is the max time busy server
                 simulation_results[f"Time busy server {first_server_available}"].append(
                     simulation_results["Leave Time"][-1]
                 )
@@ -305,6 +364,7 @@ class QueueingSimulation:
                             simulation_results[f"Time busy server {server}"][-1]
                         )
             else:
+                # If the number of people is greater than the maximum allowed, then do not include any stat to that person
                 simulation_results["Join the system?"].append(0)
                 simulation_results["Attention Order"].append(np.nan)
                 simulation_results["Time in Line"].append(np.nan)
@@ -316,20 +376,32 @@ class QueueingSimulation:
 
         return simulation_results
 
-    def __lifo(self, simulation_time, simulation_results):
+    def __lifo(self, simulation_time: int, simulation_results: dict) -> dict:
+        """Simulation of the LIFO queue discipline according to all input parameters
+
+        Args:
+            simulation_time (int): Max. Time the simulation would take
+            simulation_results (dict): Dictionary where all answers will be stored
+
+        Returns:
+            dict: Returns simulation_results input variable with all the calculations
+        """
+
+        # Initialize some variable for this simulation
         arrivals = list()
         arriving_time = 0
         population = 0
 
-        # Dictionary to identify the order, we initialize it with the first row that also is the first one attended (everything it's zero)
+        # Dictionary to identify the order, we initialize it with the first row (value) that also is the first one attended (key) (everything it's zero)
         order_idx = {0: 0}
 
-        # Determine all the arrival hours
+        # Determine all the arrival hours if the number of people do not exceed the maximum or the arriving time is less than the Max. Simulation Time
         while arriving_time < simulation_time and population < self.__n:
             arrivals.append(self.__a.ppf(random.random()))
             arriving_time += arrivals[-1]
             population += 1
 
+        # Start simulation for each arrival
         for arrival in arrivals:
             # Review time of arrival
             simulation_results["Arrival Time"].append(
@@ -355,6 +427,7 @@ class QueueingSimulation:
                     go_to_queue = False
                     break
 
+            # If he needs to go to the line
             if go_to_queue == True:
 
                 ## We should verify the number of people including him!!
@@ -379,8 +452,7 @@ class QueueingSimulation:
 
                 # Can that person enter?
                 if simulation_results["Total Number of people"][-1] <= self.__k:
-                    # Add that person into the queue
-
+                    # Add that person into the queue (send to queue = -1)
                     simulation_results["Join the system?"].append(1)
                     simulation_results["Attention Order"].append(-1)
                     simulation_results["Time in Line"].append(-1)
@@ -391,6 +463,7 @@ class QueueingSimulation:
                         simulation_results[f"Time busy server {server}"].append(-1)
                 # if not
                 else:
+                    # If the number of people is greater than the maximum allowed, then do not include any stat to that person
                     simulation_results["Join the system?"].append(0)
                     simulation_results["Attention Order"].append(np.nan)
                     simulation_results["Time in Line"].append(np.nan)
@@ -402,8 +475,8 @@ class QueueingSimulation:
 
             else:
 
-                ## We need to send the last element that arrived before him to the service, if there was nobody, we send the current person
-
+                ## We need to send the last element that arrived before him to the service, if there was nobody, we send the current person.
+                # Number of people at that time
                 number_of_people = len(
                     list(
                         filter(
@@ -412,7 +485,7 @@ class QueueingSimulation:
                         )
                     )
                 )
-
+                # If there is nobody, we assign that element.
                 if number_of_people == 0:
                     # Plus one means that person that has just arrived into the system
                     simulation_results["Number of people in Line"].append(
@@ -460,21 +533,24 @@ class QueueingSimulation:
                         else:
                             people_being_served += 1
 
+                    # Number of people at that time
                     simulation_results["Total Number of people"].append(
                         people_being_served
                     )
-
+                    # Update order
                     order_idx[max(simulation_results["Attention Order"])] = (
                         len(simulation_results["Attention Order"]) - 1
                     )
 
                 else:
 
-                    # pendiente logica de varias personas y varias maquinas para asignar, la personas de los ultimos a primeros y cada que pase una persona se debe ver si hay maquinas disponibles antes de que llegue la persona de este punto, ahi muere y se manda a esta persona a la fila y se continua el proceso
+                    # The people go from last to first, and each time a person passes, it must be checked if there are machines available before the person reaches this point. If not, the process stops, and this person is sent to the queue, and the process continues.
 
+                    # Review from the end to the beggining without the element that has just arrived
                     for idx in range(
                         len(simulation_results["Attention Order"]) - 1, -1, -1
                     ):
+                        # If that element has not been served
                         if simulation_results["Attention Order"][idx] == -1:
 
                             min_time = float("Inf")
@@ -549,6 +625,7 @@ class QueueingSimulation:
                                 )
                                 order_idx[last_attended] = idx
 
+                    ### If there is no more servers available, we review if the person that has just arrived can join the system, if so we send it to the line
                     # New number of people after assignig to machines
                     number_of_people = len(
                         list(
@@ -581,6 +658,8 @@ class QueueingSimulation:
                         ):
                             people_being_served += 1
 
+                    ## After all send the last person to the queue (person that has just arrived)
+                    # Assign all to queue
                     simulation_results["Number of people in Line"].append(
                         number_of_people + value_to_add
                     )
@@ -602,9 +681,13 @@ class QueueingSimulation:
                         simulation_results[f"Time busy server {server}"].append(-1)
 
         ## Last people to assign
+        # After "closing time" there are people that are not assign yet. This logic assign that people
 
+        # Identify last person attended
         last_attended = max(simulation_results["Attention Order"])
+        # Iterate from the last one to the first one if there is any element not assigned yet
         for idx in range(len(simulation_results["Attention Order"]) - 1, -1, -1):
+            # if that element hasn't been attended yet
             if simulation_results["Attention Order"][idx] == -1:
 
                 min_time = float("Inf")
@@ -667,24 +750,35 @@ class QueueingSimulation:
 
         return simulation_results
 
-    def __pbs(self, simulation_time, simulation_results):
+    def __pbs(self, simulation_time: int, simulation_results: dict) -> dict:
+        """Simulation of the PBS queue discipline according to all input parameters
 
+        Args:
+            simulation_time (int): Max. Time the simulation would take
+            simulation_results (dict): Dictionary where all answers will be stored
+
+        Returns:
+            dict: Returns simulation_results input variable with all the calculations
+        """
+        # Initialize some variable for this simulation
         arrivals = list()
         all_priorities = list()
         arriving_time = 0
         population = 0
+        # A new field for the result dictionary is created because of the PBS logic
         simulation_results["Priority"] = [0]
 
         # Dictionary to identify the order, we initialize it with the first row that also is the first one attended (everything it's zero)
         order_idx = {0: 0}
 
-        # Determine all the arrival hours
+        # Determine all the arrival hours if the number of people do not exceed the maximum or the arriving time is less than the Max. Simulation Time. Also this line determines the priority of each element
         while arriving_time < simulation_time and population < self.__n:
             arrivals.append(self.__a.ppf(random.random()))
             all_priorities.append(self.__label.ppf(random.random()))
             arriving_time += arrivals[-1]
             population += 1
 
+        # Start simulation for each arrival
         for index_arrival, arrival in enumerate(arrivals):
             simulation_results["Arrival Time"].append(
                 simulation_results["Arrival Time"][-1] + arrival
@@ -695,6 +789,7 @@ class QueueingSimulation:
             number_of_people = 0
             start = simulation_results["Arrival Time"][-1]
 
+            # Number of people at that time
             for other_person in range(len(simulation_results["Arrival Time"]) - 1):
                 if (
                     simulation_results["Arrival Time"][other_person] <= start
@@ -704,9 +799,10 @@ class QueueingSimulation:
                 elif simulation_results["Attention Order"][other_person] == -1:
                     number_of_people += 1
 
-            # Plus one means that person in the system
+            # Plus one means that person is in the system
             simulation_results["Total Number of people"].append(number_of_people + 1)
 
+            # Determine the number of people in line at that time
             if simulation_results["Total Number of people"][-1] <= self.__c:
                 simulation_results["Number of people in Line"].append(0)
             else:
@@ -714,6 +810,7 @@ class QueueingSimulation:
                     simulation_results["Total Number of people"][-1] - self.__c
                 )
 
+            # Can that person enter?
             if simulation_results["Total Number of people"][-1] <= self.__k:
 
                 # JOin the system
@@ -738,9 +835,10 @@ class QueueingSimulation:
                         go_to_queue = False
                         break
 
+                # If need to go to the queue
                 if go_to_queue == True:
 
-                    # Add that person into the queue
+                    # Add that person into the queue (-1 means queue)
 
                     simulation_results["Attention Order"].append(-1)
                     simulation_results["Time in Line"].append(-1)
@@ -752,6 +850,7 @@ class QueueingSimulation:
 
                 else:
 
+                    # IF there is nobody that person can be served
                     if simulation_results["Number of people in Line"][-1] == 0:
 
                         # Attention position
@@ -787,15 +886,15 @@ class QueueingSimulation:
                                         simulation_results[f"Time busy server {server}"]
                                     )
                                 )
-
+                        # Update order list
                         order_idx[max(simulation_results["Attention Order"])] = (
                             len(simulation_results["Attention Order"]) - 1
                         )
 
                     else:
 
-                        # Add last person into the queue - This part helps to identify if the person needs to be attended, they coulb be attended first if priority is the highest
-
+                        ## Add last person into the queue - This part helps to identify if the person needs to be attended, they could be attended first if priority is the highest
+                        # Adding that person into the queue (just to verify priority)
                         simulation_results["Attention Order"].append(-1)
                         simulation_results["Time in Line"].append(-1)
                         simulation_results["Time in service"].append(-1)
@@ -809,10 +908,12 @@ class QueueingSimulation:
                             list(set(simulation_results["Priority"])), reverse=True
                         )
 
+                        # Verify priority (starts with bigger numbers)
                         for priority in priority_list:
                             for idx in range(
                                 len(simulation_results["Attention Order"])
                             ):
+                                # Verify if person is in line and its priority
                                 if (
                                     simulation_results["Attention Order"][idx] == -1
                                     and simulation_results["Priority"][idx] == priority
@@ -893,7 +994,9 @@ class QueueingSimulation:
                                         )
                                         order_idx[last_attended] = idx
 
+            # If not
             else:
+                # If the number of people is greater than the maximum allowed, then do not include any stat to that person
                 simulation_results["Join the system?"].append(0)
                 simulation_results["Attention Order"].append(np.nan)
                 simulation_results["Time in Line"].append(np.nan)
@@ -906,8 +1009,9 @@ class QueueingSimulation:
         ## Assign Missing elements
         # Bigger numbers are first priority, smaller numbers are less priority
         priority_list = sorted(list(set(simulation_results["Priority"])), reverse=True)
-
+        # Verify priority (starts with bigger numbers)
         for priority in priority_list:
+            # Verify if that element has not been attended and if belongs to the actual priority
             for idx in range(len(simulation_results["Attention Order"])):
                 if (
                     simulation_results["Attention Order"][idx] == -1
@@ -972,13 +1076,27 @@ class QueueingSimulation:
 
         return simulation_results
 
-    def to_csv(self, file_name: str, index: bool = True):
+    def to_csv(self, file_name: str, index: bool = True) -> None:
+        """Simulation results to CVS
+
+        Args:
+            file_name (str): File Name to add to the CSV file. You should include ".csv" at the end of your file
+            index (bool, optional): Defaults to True. Add index in CSV file.
+        """
         if len(self.__result_simulation) == 0:
             raise ValueError(f"""You need to run the simulation to use this""")
         else:
             self.__result_simulation.to_csv(file_name, index=index)
 
-    def to_excel(self, file_name: str, sheet_name: str = "Sheet1", index: bool = True):
+    def to_excel(
+        self, file_name: str, sheet_name: str = "Sheet1", index: bool = True
+    ) -> None:
+        """Simulation results to Excel File
+
+        Args:
+            file_name (str): File Name to add to the Excel file. You should include ".xlsx" at the end of your file
+            index (bool, optional): Defaults to True. Add index in Excel file.
+        """
         if len(self.__result_simulation) == 0:
             raise ValueError(f"""You need to run the simulation to use this""")
         else:
@@ -986,19 +1104,36 @@ class QueueingSimulation:
                 file_name, index=index, sheet_name=sheet_name
             )
 
-    def system_utilization(self):
+    def system_utilization(self) -> float:
+        """Returns system utilization according to simulation
+
+        Returns:
+            float: System Utilization
+        """
         return (
             self.__result_simulation["Time in service"].sum() / self.__simulation_time
         )
 
-    def no_clients_prob(self):
+    def no_clients_prob(self) -> float:
+        """Probability of no having clients
+
+        Returns:
+            float: No clients probability
+        """
         return (
             1
             - self.__result_simulation["Time in service"].sum() / self.__simulation_time
         )
 
-    def elements_prob(self, bins: int = 50000):
+    def elements_prob(self, bins: int = 50000) -> dict:
+        """Creates the probability for each number of elements. Example: Probability to be 0, prob. to be 1, prob. to be 2... depending on simulation values
 
+        Args:
+            bins (int, optional): Number of intervals to determine the probability to be in each stage. Defaults to 50000.
+
+        Returns:
+            dict: Element and probability result
+        """
         multiplier = 1
         step = 0
         while step < 1:
@@ -1032,9 +1167,18 @@ class QueueingSimulation:
 
         return self.number_probabilities
 
-    def number_elements_prob(self, number: int, prob_type: str):
+    def number_elements_prob(self, number: int, prob_type: str) -> float:
+        """Calculates the probability Exact, less or equals or greater or equals.
+
+        Args:
+            number (int): Number that we want to identify the different probabilities
+            prob_type (str): Could be one of the following options: 'exact_value', 'greater_equals', 'less_equals'
+
+        Returns:
+            float: Probability of the number of elements
+        """
         if isinstance(number, int) == False:
-            raise ValueError(f"""number can only be integer""")
+            raise ValueError(f"""Number can only be integer""")
 
         if prob_type == "exact_value":
             return self.number_probabilities[number]
@@ -1059,55 +1203,115 @@ class QueueingSimulation:
                 f"""You can only select one of the following prob_type: 'exact_value', 'greater_equals', 'less_equals'"""
             )
 
-    def average_time_system(self):
+    def average_time_system(self) -> float:
+        """Average time in system
+
+        Returns:
+            float: Average time in system
+        """
         return (
             self.__result_simulation["Time in service"]
             + self.__result_simulation["Time in Line"]
         ).mean()
 
-    def average_time_queue(self):
+    def average_time_queue(self) -> float:
+        """Average time in queue
+
+        Returns:
+            float: Average time in queue
+        """
         return self.__result_simulation["Time in Line"].mean()
 
-    def average_time_service(self):
+    def average_time_service(self) -> float:
+        """Average time in service
+
+        Returns:
+            float: Average time in service
+        """
         return self.__result_simulation["Time in service"].mean()
 
-    def standard_deviation_time_system(self):
+    def standard_deviation_time_system(self) -> float:
+        """Standard Deviation time in system
+
+        Returns:
+            float: Standard Deviation time in system
+        """
         return (
             self.__result_simulation["Time in service"]
             + self.__result_simulation["Time in Line"]
         ).std()
 
-    def standard_deviation_time_queue(self):
+    def standard_deviation_time_queue(self) -> float:
+        """Standard Deviation time in queue
+
+        Returns:
+            float: Standard Deviation time in queue
+        """
         return self.__result_simulation["Time in Line"].std()
 
-    def standard_deviation_time_service(self):
+    def standard_deviation_time_service(self) -> float:
+        """Standard Deviation time in service
+
+        Returns:
+            float: Standard Deviation time in service
+        """
         return self.__result_simulation["Time in service"].std()
 
-    def average_elements_system(self):
+    def average_elements_system(self) -> float:
+        """Average elements in system
+
+        Returns:
+            float: Average elements in system
+        """
         return (
             self.__result_simulation["Time in service"]
             + self.__result_simulation["Time in Line"]
         ).sum() / self.__simulation_time
 
-    def average_elements_queue(self):
+    def average_elements_queue(self) -> float:
+        """Average elements in queue
+
+        Returns:
+            float: Average elements in queue
+        """
         return (self.__result_simulation["Time in Line"]).sum() / self.__simulation_time
 
-    def probability_to_join_system(self):
+    def probability_to_join_system(self) -> float:
+        """Probability to join the system
+
+        Returns:
+            float: Probability to join the system
+        """
         return (self.__result_simulation["Join the system?"]).sum() / len(
             self.__result_simulation
         )
 
-    def probability_to_finish_after_time(self):
+    def probability_to_finish_after_time(self) -> float:
+        """Probability to finish after time
+
+        Returns:
+            float: Probability to finish after time
+        """
         return (self.__result_simulation["Finish after closed"]).sum() / len(
             self.__result_simulation
         )
 
-    def probability_to_wait_in_line(self):
+    def probability_to_wait_in_line(self) -> float:
+        """Probability to wait in the queue
+
+        Returns:
+            float: Probability to wait in the queue
+        """
         result = np.where(self.__result_simulation["Time in Line"] > 0, 1, 0)
 
         return result.sum() / len(self.__result_simulation)
 
-    def number_probability_summary(self):
+    def number_probability_summary(self) -> pd.DataFrame:
+        """Returns the probability for each element. The probability is Exact, less or equals or greater or equals; represented in each column.
+
+        Returns:
+            pd.DataFrame: Dataframe with all the needed probabilities for each element.
+        """
 
         options = ["less_equals", "exact_value", "greater_equals"]
 
@@ -1128,7 +1332,12 @@ class QueueingSimulation:
 
         return df.reset_index()
 
-    def metrics_summary(self):
+    def metrics_summary(self) -> pd.DataFrame:
+        """Returns the summary of the following metrics: Average Time in System, Average Time in Queue, Average Time in Service, Std. Dev. Time in System, Std. Dev. Time in Queue, Std. Dev. Time in Service, Average Elements in System, Average Elements in Queue, Probability to join the System, Probability to finish after Time, Probability to Wait in Line
+
+        Returns:
+            pd.DataFrame: Returns dataframe with all the information
+        """
         metrics = dict()
         metrics["Average Time in System"] = float(self.average_time_system())
         metrics["Average Time in Queue"] = float(self.average_time_queue())
@@ -1161,11 +1370,27 @@ class QueueingSimulation:
         return df.reset_index()
 
     def confidence_interval_metrics(
-        self, simulation_time: int, confidence_level: int = 0.95, replications: int = 30
+        self,
+        simulation_time: int = float("Inf"),
+        confidence_level: int = 0.95,
+        replications: int = 30,
     ) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Generate a confidence interval for probabilities and metrics.
+
+        Args:
+            simulation_time (int, optional): Simulation time. Defaults to float("Inf)
+            confidence_level (int, optional): Confidence level for the confidence interval for all the metrics and probabilities. Defaults to 0.95.
+            replications (int, optional): Number of samples of simulations to create. Defaults to 30.
+
+        Returns:
+            tuple[pd.DataFrame, pd.DataFrame]: Returns probabilities and metrics dataframe with confidene interval for all metrics.
+        """
+        # Initializa variables
         tot_prob = pd.DataFrame()
         tot_metrics = pd.DataFrame()
+        # Run replications
         for _ in range(replications):
+            # Initialize simulation to avoid issues
             self.__init__(
                 self.__save_a,
                 self.__save_a_params,
@@ -1178,13 +1403,16 @@ class QueueingSimulation:
                 self.__pbs_distribution,
                 self.__pbs_parameters,
             )
+            # Run simulation
             self.run(simulation_time)
+            # Save metrics and probabilities
             number_probability_summary = self.number_probability_summary()
             metrics_summary = self.metrics_summary()
+            # Concat previous results with current results
             tot_prob = pd.concat([tot_prob, number_probability_summary])
             tot_metrics = pd.concat([tot_metrics, metrics_summary])
 
-        # First Interval
+        # First Confidence Interval
         std__ = tot_prob.groupby(["Number of elements"]).std()
         mean__ = tot_prob.groupby(["Number of elements"]).mean()
 
@@ -1237,7 +1465,7 @@ class QueueingSimulation:
             ]
         ]
 
-        # Second Interval
+        # Second Confidence Interval
         std__2 = tot_metrics.groupby(["Metrics"]).std()
         mean__2 = tot_metrics.groupby(["Metrics"]).mean()
 
