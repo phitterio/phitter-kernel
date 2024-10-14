@@ -32,10 +32,8 @@ class QueueingSimulation:
             k (float, optional): Maximum system capacity. This is the maximum number of customers that the system can accommodate at any given time, including both those in service and those waiting in the queue. It defines the limit beyond which arriving customers are either turned away or blocked from entering the system. Defaults to float("inf").
             n (float, optional): Total population of potential customers. This denotes the overall number of potential customers who might require service from the system. It can be finite or infinite and affects the arrival rates and the modeling of the system, especially in closed queueing networks. Defaults to float("inf").
             d (str, optional): Queue discipline. This describes the rule or policy that determines the order in which customers are served. Common disciplines include First-In-First-Out ("FIFO"), Last-In-First-Out ("LIFO"), priority-based service ("PBS"). The queue discipline impacts waiting times and the overall fairness of the system.. Defaults to "FIFO".
-            simulation_time (float, optional): This variable defines the total duration of the simulation. It sets the length of time over which the simulation will model the system's behavior. Defaults to float("inf")
-            number_of_simulations (int, optional): Number of simulations of the process. Can also be considered as the number of days or number of times you want to simulate your scenario. Defaults to 1.
             pbs_distribution (str | None, optional): Discrete distribution that identifies the label of the pbs, this parameter can only be used with "d='PBS'". Distributions that can be used: 'own_distribution', 'bernoulli', 'binomial', 'geometric', 'hypergeometric', 'logarithmic', 'negative_binomial', 'poisson'. Defaults to None.
-            pbs_parameters (dict | None, optional): Parameters of the discrete distribution that identifies the label of the pbs, this parameter can only be used with "d='PBS'". If it is 'own-distribution' add labels in the following way (example): {0: 0.5, 1: 0.3, 2: 0.2}. Where the "key" corresponds to the label and the "value" the probability whose total sum must add up to 1; "keys" with greater importances are the smallers and always have to be numeric keys. You can add as labels as you need.
+            pbs_parameters (dict | None, optional): Parameters of the discrete distribution that identifies the label of the pbs, this parameter can only be used with "d='PBS'". If it is 'own-distribution' add labels in the following way (example): {0: 0.5, 1: 0.3, 2: 0.2}. Where the "key" corresponds to the label and the "value" the probability whose total sum must add up to 1; "keys" with greater importances are the greaters and always have to be numeric keys. You can add as labels as you need.
         """
 
         # All phitter probability distributions
@@ -217,6 +215,8 @@ class QueueingSimulation:
         # Servers Information - Depends on the number in self.__c
         for server in range(1, self.__c + 1):
             simulation_results[f"Time busy server {server}"] = [0]
+        for server in range(1, self.__c + 1):
+            simulation_results[f"Server {server} attended this element?"] = [0]
 
         # Selections according to the queue discipline
         if self.__d == "FIFO":
@@ -274,9 +274,13 @@ class QueueingSimulation:
 
         # Determine all the arrival hours if the number of people do not exceed the maximum or the arriving time is less than the Max. Simulation Time
         while arriving_time < simulation_time and population < self.__n:
-            arrivals.append(self.__a.ppf(random.random()))
-            arriving_time += arrivals[-1]
-            population += 1
+            arr = self.__a.ppf(random.random())
+            if arriving_time + arr < simulation_time:
+                arrivals.append(arr)
+                arriving_time += arrivals[-1]
+                population += 1
+            else:
+                break
 
         # Start simulation for each arrival
         for arrival in arrivals:
@@ -356,13 +360,20 @@ class QueueingSimulation:
                 simulation_results[f"Time busy server {first_server_available}"].append(
                     simulation_results["Leave Time"][-1]
                 )
+                # This server was the enchanged of help the element
+                simulation_results[
+                    f"Server {first_server_available} attended this element?"
+                ].append(1)
 
-                # Keep same finish time to other servers
+                # Keep same finish time to other servers and did not attend those servers
                 for server in range(1, self.__c + 1):
                     if server != first_server_available:
                         simulation_results[f"Time busy server {server}"].append(
                             simulation_results[f"Time busy server {server}"][-1]
                         )
+                        simulation_results[
+                            f"Server {server} attended this element?"
+                        ].append(0)
             else:
                 # If the number of people is greater than the maximum allowed, then do not include any stat to that person
                 simulation_results["Join the system?"].append(0)
@@ -370,9 +381,12 @@ class QueueingSimulation:
                 simulation_results["Time in Line"].append(np.nan)
                 simulation_results["Time in service"].append(np.nan)
                 simulation_results["Leave Time"].append(np.nan)
-                # Keep same finish time to other servers
+                # Keep same finish time to other servers and np.nan for all servers
                 for server in range(1, self.__c + 1):
                     simulation_results[f"Time busy server {server}"].append(np.nan)
+                    simulation_results[
+                        f"Server {server} attended this element?"
+                    ].append(np.nan)
 
         return simulation_results
 
@@ -397,9 +411,13 @@ class QueueingSimulation:
 
         # Determine all the arrival hours if the number of people do not exceed the maximum or the arriving time is less than the Max. Simulation Time
         while arriving_time < simulation_time and population < self.__n:
-            arrivals.append(self.__a.ppf(random.random()))
-            arriving_time += arrivals[-1]
-            population += 1
+            arr = self.__a.ppf(random.random())
+            if arriving_time + arr < simulation_time:
+                arrivals.append(arr)
+                arriving_time += arrivals[-1]
+                population += 1
+            else:
+                break
 
         # Start simulation for each arrival
         for arrival in arrivals:
@@ -461,6 +479,10 @@ class QueueingSimulation:
                     # Keep same finish time to other servers
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(-1)
+                        # This server was the enchanged of help the element
+                        simulation_results[
+                            f"Server {server} attended this element?"
+                        ].append(-1)
                 # if not
                 else:
                     # If the number of people is greater than the maximum allowed, then do not include any stat to that person
@@ -472,6 +494,10 @@ class QueueingSimulation:
                     # Keep same finish time to other servers
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(np.nan)
+                        # This server was the enchanged of help the element
+                        simulation_results[
+                            f"Server {server} attended this element?"
+                        ].append(np.nan)
 
             else:
 
@@ -517,6 +543,10 @@ class QueueingSimulation:
                     simulation_results[
                         f"Time busy server {first_server_available}"
                     ].append(simulation_results["Leave Time"][-1])
+                    # This server was the enchanged of help the element
+                    simulation_results[
+                        f"Server {first_server_available} attended this element?"
+                    ].append(1)
 
                     # Keep same finish time to other servers
                     people_being_served = 0
@@ -525,6 +555,10 @@ class QueueingSimulation:
                             simulation_results[f"Time busy server {server}"].append(
                                 max(simulation_results[f"Time busy server {server}"])
                             )
+                            # This server was the enchanged of help the element
+                            simulation_results[
+                                f"Server {server} attended this element?"
+                            ].append(0)
                             if (
                                 simulation_results[f"Time busy server {server}"][-1]
                                 >= simulation_results["Arrival Time"][-1]
@@ -607,6 +641,10 @@ class QueueingSimulation:
                                 simulation_results[
                                     f"Time busy server {first_server_available}"
                                 ][idx] = simulation_results["Leave Time"][idx]
+                                # This server was the enchanged of help the element
+                                simulation_results[
+                                    f"Server {first_server_available} attended this element?"
+                                ][idx] = 1
 
                                 # Keep same finish time to other servers
                                 for others_servers in range(1, self.__c + 1):
@@ -618,6 +656,10 @@ class QueueingSimulation:
                                                 f"Time busy server {others_servers}"
                                             ]
                                         )
+                                        # This server was the enchanged of help the element
+                                        simulation_results[
+                                            f"Server {others_servers} attended this element?"
+                                        ][idx] = 0
 
                                 # Assign last attended as this one
                                 last_attended = max(
@@ -676,9 +718,12 @@ class QueueingSimulation:
                     simulation_results["Time in Line"].append(-1)
                     simulation_results["Time in service"].append(-1)
                     simulation_results["Leave Time"].append(-1)
-                    # Keep same finish time to other servers
+                    # Keep same finish time to other servers and servers have not attended this user
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(-1)
+                        simulation_results[
+                            f"Server {server} attended this element?"
+                        ].append(-1)
 
         ## Last people to assign
         # After "closing time" there are people that are not assign yet. This logic assign that people
@@ -734,6 +779,9 @@ class QueueingSimulation:
                 simulation_results[f"Time busy server {first_server_available}"][
                     idx
                 ] = simulation_results["Leave Time"][idx]
+                simulation_results[
+                    f"Server {first_server_available} attended this element?"
+                ][idx] = 1
 
                 # Keep same finish time to other servers
                 for others_servers in range(1, self.__c + 1):
@@ -743,6 +791,9 @@ class QueueingSimulation:
                         ] = max(
                             simulation_results[f"Time busy server {others_servers}"]
                         )
+                        simulation_results[
+                            f"Server {others_servers} attended this element?"
+                        ][idx] = 0
 
                 # Assign last attended as this one
                 last_attended = max(simulation_results["Attention Order"])
@@ -773,10 +824,14 @@ class QueueingSimulation:
 
         # Determine all the arrival hours if the number of people do not exceed the maximum or the arriving time is less than the Max. Simulation Time. Also this line determines the priority of each element
         while arriving_time < simulation_time and population < self.__n:
-            arrivals.append(self.__a.ppf(random.random()))
-            all_priorities.append(self.__label.ppf(random.random()))
-            arriving_time += arrivals[-1]
-            population += 1
+            arr = self.__a.ppf(random.random())
+            if arriving_time + arr < simulation_time:
+                arrivals.append(arr)
+                all_priorities.append(self.__label.ppf(random.random()))
+                arriving_time += arrivals[-1]
+                population += 1
+            else:
+                break
 
         # Start simulation for each arrival
         for index_arrival, arrival in enumerate(arrivals):
@@ -847,6 +902,9 @@ class QueueingSimulation:
                     # Keep same finish time to other servers
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(-1)
+                        simulation_results[
+                            f"Server {server} attended this element?"
+                        ].append(-1)
 
                 else:
 
@@ -877,6 +935,9 @@ class QueueingSimulation:
                         simulation_results[
                             f"Time busy server {first_server_available}"
                         ].append(simulation_results["Leave Time"][-1])
+                        simulation_results[
+                            f"Server {first_server_available} attended this element?"
+                        ].append(1)
 
                         # Keep same finish time to other servers
                         for server in range(1, self.__c + 1):
@@ -886,6 +947,9 @@ class QueueingSimulation:
                                         simulation_results[f"Time busy server {server}"]
                                     )
                                 )
+                                simulation_results[
+                                    f"Server {server} attended this element?"
+                                ].append(0)
                         # Update order list
                         order_idx[max(simulation_results["Attention Order"])] = (
                             len(simulation_results["Attention Order"]) - 1
@@ -902,6 +966,9 @@ class QueueingSimulation:
                         # Keep same finish time to other servers
                         for server in range(1, self.__c + 1):
                             simulation_results[f"Time busy server {server}"].append(-1)
+                            simulation_results[
+                                f"Server {server} attended this element?"
+                            ].append(-1)
 
                         # Bigger numbers are first priority, smaller numbers are less priority
                         priority_list = sorted(
@@ -976,6 +1043,9 @@ class QueueingSimulation:
                                         simulation_results[
                                             f"Time busy server {first_server_available}"
                                         ][idx] = simulation_results["Leave Time"][idx]
+                                        simulation_results[
+                                            f"Server {first_server_available} attended this element?"
+                                        ][idx] = 1
 
                                         # Keep same finish time to other servers
                                         for others_servers in range(1, self.__c + 1):
@@ -987,6 +1057,9 @@ class QueueingSimulation:
                                                         f"Time busy server {others_servers}"
                                                     ]
                                                 )
+                                                simulation_results[
+                                                    f"Server {others_servers} attended this element?"
+                                                ][idx] = 0
 
                                         # Assign last attended as this one
                                         last_attended = max(
@@ -1005,6 +1078,9 @@ class QueueingSimulation:
                 # Keep same finish time to other servers
                 for server in range(1, self.__c + 1):
                     simulation_results[f"Time busy server {server}"].append(np.nan)
+                    simulation_results[
+                        f"Server {server} attended this element?"
+                    ].append(np.nan)
 
         ## Assign Missing elements
         # Bigger numbers are first priority, smaller numbers are less priority
@@ -1060,6 +1136,9 @@ class QueueingSimulation:
                     simulation_results[f"Time busy server {first_server_available}"][
                         idx
                     ] = simulation_results["Leave Time"][idx]
+                    simulation_results[
+                        f"Server {first_server_available} attended this element?"
+                    ][idx] = 1
 
                     # Keep same finish time to other servers
                     for others_servers in range(1, self.__c + 1):
@@ -1069,6 +1148,9 @@ class QueueingSimulation:
                             ] = max(
                                 simulation_results[f"Time busy server {others_servers}"]
                             )
+                            simulation_results[
+                                f"Server {others_servers} attended this element?"
+                            ][idx] = 0
 
                     # Assign last attended as this one
                     last_attended = max(simulation_results["Attention Order"])
@@ -1306,6 +1388,29 @@ class QueueingSimulation:
 
         return result.sum() / len(self.__result_simulation)
 
+    def servers_utilization(self) -> pd.DataFrame:
+        """Determine the server utilization according to the simulation result
+
+        Returns:
+            pd.DataFrame: Utilization of all servers, you can find the server number in the rows
+        """
+        # Calculate server utilization
+        serv_util_dict = {
+            f"Utilization Server #{server}": self.__result_simulation[
+                f"Server {server} attended this element?"
+            ].sum()
+            / len(self.__result_simulation)
+            for server in range(1, self.__c + 1)
+        }
+        # Convert into a DataFrame
+        df = pd.DataFrame.from_dict(serv_util_dict, orient="index").rename(
+            columns={0: "Value"}
+        )
+
+        df.index.name = "Metrics"
+
+        return df.reset_index()
+
     def number_probability_summary(self) -> pd.DataFrame:
         """Returns the probability for each element. The probability is Exact, less or equals or greater or equals; represented in each column.
 
@@ -1367,7 +1472,13 @@ class QueueingSimulation:
 
         df.index.name = "Metrics"
 
-        return df.reset_index()
+        df = df.reset_index()
+
+        df_2 = self.servers_utilization()
+
+        df = pd.concat([df, df_2], axis=0)
+
+        return df.reset_index(drop=True)
 
     def confidence_interval_metrics(
         self,
