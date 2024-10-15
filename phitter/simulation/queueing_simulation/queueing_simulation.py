@@ -6,6 +6,8 @@ import collections
 
 import math
 
+from phitter.simulation.own_distribution import OwnDistributions
+
 
 class QueueingSimulation:
     def __init__(
