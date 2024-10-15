@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "phitter"
 version = "0.0.8"
 description = "Find the best probability distribution for your dataset"
-authors = [{name = "Sebastián José Herrera Monterrosa", email = "phitter.email@gmail.com"}]
+authors = [{name = "Sebastián José Herrera Monterrosa",  email = "phitter.email@gmail.com"}, {name = "Carlos Andrés Másmela Pinilla",  email = "phitter.email@gmail.com"}]
 readme = "README.md"
 requires-python = ">=3.9"
 license = {file = "LICENSE"}

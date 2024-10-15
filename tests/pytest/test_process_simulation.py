@@ -2,7 +2,8 @@ import pytest
 import phitter
 
 
-def wrong_simulation_name():
+# Test that adding a process with a wrong function name raises a ValueError
+def test_wrong_simulation_name():
     simulation = phitter.simulation.ProcessSimulation()
     with pytest.raises(ValueError):
         simulation.add_process(
@@ -14,7 +15,8 @@ def wrong_simulation_name():
         )
 
 
-def simulation_running_assert():
+# Test to ensure the simulation runs correctly and returns a list of the correct length
+def test_simulation_running():
     simulation = phitter.simulation.ProcessSimulation()
     simulation.add_process(
         "normal", {"mu": 5, "sigma": 2}, "first", new_branch=True, number_of_products=10
@@ -30,7 +32,6 @@ def simulation_running_assert():
     )
 
     simulation.add_process("gamma", {"alpha": 15, "beta": 3}, "third", new_branch=True)
-    # simulation.add_process("exponential", {"lambda": 4.3}, "nn", previous_ids=["third"])
     simulation.add_process(
         "beta",
         {"alpha": 1, "beta": 1, "A": 2, "B": 3},
@@ -56,10 +57,12 @@ def simulation_running_assert():
 
     result = simulation.run(10)
 
-    assert len(result) == 10 and type(result) == list
+    assert len(result) == 10
+    assert isinstance(result, list)
 
 
-def simulation_confidence_interval_assert():
+# Test to check if the confidence interval results are as expected
+def test_simulation_confidence_interval():
     simulation = phitter.simulation.ProcessSimulation()
     simulation.add_process(
         "normal", {"mu": 5, "sigma": 2}, "first", new_branch=True, number_of_products=10
@@ -75,7 +78,6 @@ def simulation_confidence_interval_assert():
     )
 
     simulation.add_process("gamma", {"alpha": 15, "beta": 3}, "third", new_branch=True)
-    # simulation.add_process("exponential", {"lambda": 4.3}, "nn", previous_ids=["third"])
     simulation.add_process(
         "beta",
         {"alpha": 1, "beta": 1, "A": 2, "B": 3},
@@ -101,4 +103,5 @@ def simulation_confidence_interval_assert():
 
     result = simulation.run_confidence_interval(number_of_simulations=100)
 
-    assert len(result) == 4 and type(result) == tuple
+    assert len(result) == 4
+    assert isinstance(result, tuple)

@@ -1,9 +1,11 @@
-import phitter
-import random
-import numpy as np
 import math
+import random
+
+import numpy as np
 from graphviz import Digraph
 from IPython.display import display
+
+import phitter
 
 
 class ProcessSimulation:
