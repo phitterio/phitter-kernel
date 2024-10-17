@@ -10,6 +10,7 @@ import phitter
 
 class ProcessSimulation:
     def __init__(self) -> None:
+        """Build the object Process Simulation"""
 
         self.process_prob_distr = dict()
         self.branches = dict()
@@ -41,19 +42,23 @@ class ProcessSimulation:
             new_branch (bool ,optional): Required if you want to start a new process that does not have previous processes. You cannot use this parameter at the same time with "previous_id". Defaults to False.
             previous_id (list[str], optional): Required if you have previous processes that are before this process. You cannot use this parameter at the same time with "new_branch". Defaults to None.
         """
-
+        # Verify if the probability is created in phitter
         if prob_distribution not in self.probability_distribution.keys():
             raise ValueError(
                 f"""Please select one of the following probability distributions: '{"', '".join(self.probability_distribution.keys())}'."""
             )
         else:
+            # Verify unique id name for each process
             if process_id not in self.order.keys():
+                # Verify that at least is one element needed for the simulation in that stage
                 if number_of_products >= 1:
+                    # Verify that if you create a new branch, it's impossible to have a previous id (or preceding process). One of those is incorrect
                     if new_branch == True and previous_ids != None:
                         raise ValueError(
                             f"""You cannot select 'new_branch' is equals to True if 'previous_id' is not empty. OR you cannot add 'previous_ids' if 'new_branch' is equals to True."""
                         )
                     else:
+                        # If it is a new branch then initialize all the needed paramters
                         if new_branch == True:
                             branch_id = len(self.branches)
                             self.branches[branch_id] = process_id
@@ -65,6 +70,7 @@ class ProcessSimulation:
                                 )
                             )
                             self.next_process[process_id] = 0
+                        # If it is NOT a new branch then initialize all the needed paramters
                         elif previous_ids != None and all(
                             id in self.order.keys() for id in previous_ids
                         ):
@@ -78,6 +84,7 @@ class ProcessSimulation:
                             self.next_process[process_id] = 0
                             for prev_id in previous_ids:
                                 self.next_process[prev_id] += 1
+                        # if something is incorrect then raise an error
                         else:
                             raise ValueError(
                                 f"""Please create a new_brach == True if you need a new process or specify the previous process/processes (previous_ids) that are before this one. Processes that have been added: '{"', '".join(self.order.keys())}'."""
@@ -100,34 +107,48 @@ class ProcessSimulation:
         Returns:
             list[float]: Results of every simulation requested
         """
+        # Create simulation list
         simulation_result = list()
+        # Start all possible simulations
         for simulation in range(number_of_simulations):
+            # Create dictionaries for identifing processes
             simulation_partial_result = dict()
             simulation_accumulative_result = dict()
+            # For every single "new branch" process
             for key in self.branches.keys():
                 partial_result = 0
+                # Simulate the time it took to create each product needed
                 for _ in range(self.number_of_products[self.branches[key]]):
                     partial_result += self.process_prob_distr[self.branches[key]].ppf(
                         random.random()
                     )
+                # Add all simulation time according to the time it took to create all products in that stage
                 simulation_partial_result[self.branches[key]] = partial_result
+                # Because we are simulating the "new branch" or first processes, accumulative it's the same as partial result
                 simulation_accumulative_result[self.branches[key]] = (
                     simulation_partial_result[self.branches[key]]
                 )
+            # For every process
             for key in self.process_prob_distr.keys():
+                # Only consider the ones that are not "New Branches"
                 if isinstance(self.order[key], list):
                     partial_result = 0
+                    # Simulate all products time
                     for _ in range(self.number_of_products[key]):
                         partial_result += self.process_prob_distr[key].ppf(
                             random.random()
                         )
+                    # Save partial result
                     simulation_partial_result[key] = partial_result
+                    # Accumulate this partial result plus the previous processes of this process
                     simulation_accumulative_result[key] = (
                         simulation_partial_result[key]
                         + simulation_accumulative_result[
                             max(self.order[key], key=simulation_accumulative_result.get)
                         ]
                     )
+
+            # Save the max time of the simulation
             simulation_result.append(
                 simulation_accumulative_result[
                     max(
@@ -180,10 +201,13 @@ class ProcessSimulation:
             graph_direction (str, optional): You can show the graph in two ways: 'LR' left to right OR 'TB' top to bottom. Defaults to 'LR'.
             save_graph_pdf (bool, optional): You can save the process graph in a PDF file. Defaults to False.
         """
+        # Create graph instance
         graph = Digraph(comment="Simulation Process Steb-by-Step")
 
+        # Add all nodes
         for node in set(self.order.keys()):
             print(node)
+            # Identify if this is a "New branch"
             if isinstance(self.order[node], int):
                 graph.node(
                     node, node, shape="circle", style="filled", fillcolor="lightgreen"
@@ -200,6 +224,7 @@ class ProcessSimulation:
                 graph.node(node, node, shape="box")
 
         for node in set(self.order.keys()):
+            # Identify if this is a "Previous id"
             if isinstance(self.order[node], list):
                 for previous_node in self.order[node]:
                     graph.edge(
@@ -209,12 +234,15 @@ class ProcessSimulation:
                         fontsize="10",
                     )
 
+        # Graph direction
         if graph_direction == "TB":
             graph.attr(rankdir="TB")
         else:
             graph.attr(rankdir="LR")
 
+        # If needed save graph in pdf
         if save_graph_pdf:
             graph.render("Simulation Process Steb-by-Step", view=True)
 
+        # Show graph
         display(graph)
