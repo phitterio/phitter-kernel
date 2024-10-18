@@ -74,6 +74,7 @@ simulation.add_process(prob_distribution = "normal", # Probability Distribution
                        parameters = {"mu": 5, "sigma": 2}, # Parameters
                        process_id = "first_process", # Process name
                        number_of_products = 10, # Number of products to be simulated in this stage
+                       number_of_servers = 3, # Number of servers in that process
                        new_branch=True) # New branch
 
 ```
@@ -99,6 +100,7 @@ simulation.add_process(prob_distribution = "normal", # Probability Distribution
                        parameters = {"mu": 5, "sigma": 2}, # Parameters
                        process_id = "first_process", # Process name
                        number_of_products = 10, # Number of products to be simulated in this stage
+                       number_of_servers = 3, # Number of servers in that process
                        new_branch=True) # New branch
 
 # Add a new process with preceding process
@@ -151,19 +153,37 @@ You can simulate and have different simulation time values or you can create a c
 
 #### Run Simulation
 
+Simulate several scenarios of your complete process
+
 ```python
-# Graph your process
-simulation.run(number_of_simulations = 3) # -> [144.69982028694696, 121.8579230094202, 109.54433760798509]
+# Run Simulation
+simulation.run(number_of_simulations = 100)
+simulation
+
+# -> df
+```
+
+### Review Simulation Metrics by Stage
+
+If you want to review average time and standard deviation by stage run this line of code
+
+```python
+# Review simulation metrics
+simulation.simulation_metrics()
+
+# -> df
 ```
 
 #### Run confidence interval
 
+If you want to have a confidence interval for the simulation metrics, run the following line of code
+
 ```python
-# Graph your process
+# Confidence interval for Simulation metrics
 simulation.run_confidence_interval(confidence_level = 0.99,
-                                   number_of_simulations = 3,
+                                   number_of_simulations = 100,
                                    replications = 10)
-# -> (111.95874067073376, 114.76076000500356, 117.56277933927336, 3.439965191759079) - Lower bound, average, upper bound and standard deviation
+# -> df
 ```
 
 ## Queue Simulation
