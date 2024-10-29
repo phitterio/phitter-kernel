@@ -1,7 +1,6 @@
 import math
 import random
 
-import numpy as np
 import pandas as pd
 from graphviz import Digraph
 from IPython.display import display
@@ -19,10 +18,7 @@ class ProcessSimulation:
         self.number_of_products = dict()
         self.process_positions = dict()
         self.next_process = dict()
-        self.probability_distribution = (
-            phitter.continuous.CONTINUOUS_DISTRIBUTIONS
-            | phitter.discrete.DISCRETE_DISTRIBUTIONS
-        )
+        self.probability_distribution = phitter.continuous.CONTINUOUS_DISTRIBUTIONS | phitter.discrete.DISCRETE_DISTRIBUTIONS
         self.servers = dict()
 
         self.simulation_result = dict()
@@ -72,9 +68,7 @@ class ProcessSimulation:
         """
         # Verify if the probability is created in phitter
         if prob_distribution not in self.probability_distribution.keys():
-            raise ValueError(
-                f"""Please select one of the following probability distributions: '{"', '".join(self.probability_distribution.keys())}'."""
-            )
+            raise ValueError(f"""Please select one of the following probability distributions: '{"', '".join(self.probability_distribution.keys())}'.""")
         else:
             # Verify unique id name for each process
             if process_id not in self.order.keys():
@@ -84,9 +78,7 @@ class ProcessSimulation:
                     if number_of_servers >= 1:
                         # Verify that if you create a new branch, it's impossible to have a previous id (or preceding process). One of those is incorrect
                         if new_branch == True and previous_ids != None:
-                            raise ValueError(
-                                f"""You cannot select 'new_branch' is equals to True if 'previous_id' is not empty. OR you cannot add 'previous_ids' if 'new_branch' is equals to True."""
-                            )
+                            raise ValueError(f"""You cannot select 'new_branch' is equals to True if 'previous_id' is not empty. OR you cannot add 'previous_ids' if 'new_branch' is equals to True.""")
                         else:
                             # If it is a new branch then initialize all the needed paramters
                             if new_branch == True:
@@ -95,27 +87,17 @@ class ProcessSimulation:
                                 self.order[process_id] = branch_id
                                 self.number_of_products[process_id] = number_of_products
                                 self.servers[process_id] = number_of_servers
-                                self.process_prob_distr[process_id] = (
-                                    self.probability_distribution[prob_distribution](
-                                        parameters
-                                    )
-                                )
+                                self.process_prob_distr[process_id] = self.probability_distribution[prob_distribution](parameters)
                                 self.next_process[process_id] = 0
                                 # Create id of that process in the simulation result
                                 self.simulation_result[process_id] = []
 
                             # If it is NOT a new branch then initialize all the needed paramters
-                            elif previous_ids != None and all(
-                                id in self.order.keys() for id in previous_ids
-                            ):
+                            elif previous_ids != None and all(id in self.order.keys() for id in previous_ids):
                                 self.order[process_id] = previous_ids
                                 self.number_of_products[process_id] = number_of_products
                                 self.servers[process_id] = number_of_servers
-                                self.process_prob_distr[process_id] = (
-                                    self.probability_distribution[prob_distribution](
-                                        parameters
-                                    )
-                                )
+                                self.process_prob_distr[process_id] = self.probability_distribution[prob_distribution](parameters)
                                 self.next_process[process_id] = 0
                                 # Create id of that process in the simulation result
                                 self.simulation_result[process_id] = []
@@ -127,17 +109,11 @@ class ProcessSimulation:
                                     f"""Please create a new_brach == True if you need a new process or specify the previous process/processes (previous_ids) that are before this one. Processes that have been added: '{"', '".join(self.order.keys())}'."""
                                 )
                     else:
-                        raise ValueError(
-                            f"""You must add number_of_servers grater or equals than 1."""
-                        )
+                        raise ValueError(f"""You must add number_of_servers grater or equals than 1.""")
                 else:
-                    raise ValueError(
-                        f"""You must add number_of_products grater or equals than 1."""
-                    )
+                    raise ValueError(f"""You must add number_of_products grater or equals than 1.""")
             else:
-                raise ValueError(
-                    f"""You need to create diferent process_id for each process, '{process_id}' already exists."""
-                )
+                raise ValueError(f"""You need to create diferent process_id for each process, '{process_id}' already exists.""")
 
     def run(self, number_of_simulations: int = 1) -> list[float]:
         """Simulation of the described process
@@ -166,38 +142,25 @@ class ProcessSimulation:
                 if self.servers[self.branches[key]] == 1:
                     # Simulate the time it took to create each product needed
                     for _ in range(self.number_of_products[self.branches[key]]):
-                        partial_result += self.process_prob_distr[
-                            self.branches[key]
-                        ].ppf(random.random())
+                        partial_result += self.process_prob_distr[self.branches[key]].ppf(random.random())
                     # Add all simulation time according to the time it took to create all products in that stage
                     simulation_partial_result[self.branches[key]] = partial_result
                     # Add this partial result to see the average time of this specific process
-                    self.simulation_result[self.branches[key]].append(
-                        simulation_partial_result[self.branches[key]]
-                    )
+                    self.simulation_result[self.branches[key]].append(simulation_partial_result[self.branches[key]])
                     # Because we are simulating the "new branch" or first processes, accumulative it's the same as partial result
-                    simulation_accumulative_result[self.branches[key]] = (
-                        simulation_partial_result[self.branches[key]]
-                    )
+                    simulation_accumulative_result[self.branches[key]] = simulation_partial_result[self.branches[key]]
                 # If there are more than one servers in that process
                 else:
                     # Simulate the time it took to create each product needed
-                    products_times = [
-                        self.process_prob_distr[self.branches[key]].ppf(random.random())
-                        for _ in range(self.number_of_products[self.branches[key]])
-                    ]
+                    products_times = [self.process_prob_distr[self.branches[key]].ppf(random.random()) for _ in range(self.number_of_products[self.branches[key]])]
 
                     # Initialize dictionary
-                    servers_dictionary = {
-                        server: 0 for server in range(self.servers[self.branches[key]])
-                    }
+                    servers_dictionary = {server: 0 for server in range(self.servers[self.branches[key]])}
 
                     # Organize times according to the number of machines you have
                     for product in products_times:
                         # Identify server with the shortest time of all
-                        min_server_time = min(
-                            servers_dictionary, key=servers_dictionary.get
-                        )
+                        min_server_time = min(servers_dictionary, key=servers_dictionary.get)
                         # Add product time to that server
                         servers_dictionary[min_server_time] += product
 
@@ -207,13 +170,9 @@ class ProcessSimulation:
                     # Add all simulation time according to the time it took to create all products in that stage
                     simulation_partial_result[self.branches[key]] = partial_result
                     # Add this partial result to see the average time of this specific process
-                    self.simulation_result[self.branches[key]].append(
-                        simulation_partial_result[self.branches[key]]
-                    )
+                    self.simulation_result[self.branches[key]].append(simulation_partial_result[self.branches[key]])
                     # Because we are simulating the "new branch" or first processes, accumulative it's the same as partial result
-                    simulation_accumulative_result[self.branches[key]] = (
-                        simulation_partial_result[self.branches[key]]
-                    )
+                    simulation_accumulative_result[self.branches[key]] = simulation_partial_result[self.branches[key]]
 
             # For every process
             for key in self.process_prob_distr.keys():
@@ -224,15 +183,11 @@ class ProcessSimulation:
                     if self.servers[key] == 1:
                         # Simulate all products time
                         for _ in range(self.number_of_products[key]):
-                            partial_result += self.process_prob_distr[key].ppf(
-                                random.random()
-                            )
+                            partial_result += self.process_prob_distr[key].ppf(random.random())
                         # Save partial result
                         simulation_partial_result[key] = partial_result
                         # Add this partial result to see the average time of this specific process
-                        self.simulation_result[key].append(
-                            simulation_partial_result[key]
-                        )
+                        self.simulation_result[key].append(simulation_partial_result[key])
                         # Accumulate this partial result plus the previous processes of this process
                         simulation_accumulative_result[key] = (
                             simulation_partial_result[key]
@@ -246,22 +201,15 @@ class ProcessSimulation:
                     # If there are more than one servers in that process
                     else:
                         # Simulate the time it took to create each product needed
-                        products_times = [
-                            self.process_prob_distr[key].ppf(random.random())
-                            for _ in range(self.number_of_products[key])
-                        ]
+                        products_times = [self.process_prob_distr[key].ppf(random.random()) for _ in range(self.number_of_products[key])]
 
                         # Initialize dictionary
-                        servers_dictionary = {
-                            server: 0 for server in range(self.servers[key])
-                        }
+                        servers_dictionary = {server: 0 for server in range(self.servers[key])}
 
                         # Organize times according to the number of machines you have
                         for product in products_times:
                             # Identify server with the shortest time of all
-                            min_server_time = min(
-                                servers_dictionary, key=servers_dictionary.get
-                            )
+                            min_server_time = min(servers_dictionary, key=servers_dictionary.get)
                             # Add product time to that server
                             servers_dictionary[min_server_time] += product
 
@@ -271,9 +219,7 @@ class ProcessSimulation:
                         # Save partial result
                         simulation_partial_result[key] = partial_result
                         # Add this partial result to see the average time of this specific process
-                        self.simulation_result[key].append(
-                            simulation_partial_result[key]
-                        )
+                        self.simulation_result[key].append(simulation_partial_result[key])
                         # Accumulate this partial result plus the previous processes of this process
                         simulation_accumulative_result[key] = (
                             simulation_partial_result[key]
@@ -311,15 +257,11 @@ class ProcessSimulation:
 
         # Calculate all metrics
         metrics_dict_1 = {f"Avg. {column}": df[column].mean() for column in df.columns}
-        metrics_dict_2 = {
-            f"Std. Dev. {column}": df[column].std() for column in df.columns
-        }
+        metrics_dict_2 = {f"Std. Dev. {column}": df[column].std() for column in df.columns}
         metrics_dict = metrics_dict_1 | metrics_dict_2
 
         # Create result dataframe
-        metrics = pd.DataFrame.from_dict(metrics_dict, orient="index").rename(
-            columns={0: "Value"}
-        )
+        metrics = pd.DataFrame.from_dict(metrics_dict, orient="index").rename(columns={0: "Value"})
 
         metrics.index.name = "Metrics"
 
@@ -360,27 +302,15 @@ class ProcessSimulation:
         z = normal_standard.ppf((1 + confidence_level) / 2)
         ## Confidence Interval
         avg__2 = mean__2.copy()
-        lower_bound = (
-            (mean__2 - (z * standard_error))
-            .copy()
-            .rename(columns={"Value": "LB - Value"})
-        )
-        upper_bound = (
-            (mean__2 + (z * standard_error))
-            .copy()
-            .rename(columns={"Value": "UB - Value"})
-        )
+        lower_bound = (mean__2 - (z * standard_error)).copy().rename(columns={"Value": "LB - Value"})
+        upper_bound = (mean__2 + (z * standard_error)).copy().rename(columns={"Value": "UB - Value"})
         avg__2 = avg__2.rename(columns={"Value": "AVG - Value"})
         tot_metrics_interval = pd.concat([lower_bound, avg__2, upper_bound], axis=1)
-        tot_metrics_interval = tot_metrics_interval[
-            ["LB - Value", "AVG - Value", "UB - Value"]
-        ]
+        tot_metrics_interval = tot_metrics_interval[["LB - Value", "AVG - Value", "UB - Value"]]
         # Return confidence interval
         return tot_metrics_interval.reset_index()
 
-    def process_graph(
-        self, graph_direction: str = "LR", save_graph_pdf: bool = False
-    ) -> None:
+    def process_graph(self, graph_direction: str = "LR", save_graph_pdf: bool = False) -> None:
         """Generates the graph of the process
 
         Args:
