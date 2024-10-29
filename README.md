@@ -72,10 +72,6 @@ pending
 
 
 
-
-
-
-
 <details>
 
 <summary style="font-size: 16px; font-weight: bold;">Documentation Fit Module</summary>
