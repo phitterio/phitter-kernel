@@ -47,11 +47,9 @@ python: >=3.9
 pip install phitter
 ```
 
-
-
 ## Usage
 
-### ***1. Fit Notebook's Tutorials***
+### **_1. Fit Notebook's Tutorials_**
 
 |             Tutorial             |                                                                                                                  Notebooks                                                                                                                   |
 | :------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -61,22 +59,15 @@ pip install phitter
 |   **Fit Specific Disribution**   | <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit_specefic_distribution.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 |     **Working Distribution**     |   <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/working_distribution.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>    |
 
-### ***2. Simulation Notebook's Tutorials***
-pending
+### **_2. Simulation Notebook's Tutorials_**
+
+Pending
 
 ## Documentation
-
-
-
-
-
-
 
 <details>
 
 <summary style="font-size: 16px; font-weight: bold;">Documentation Fit Module</summary>
-
-
 
 ### General Fit
 
@@ -489,18 +480,8 @@ distribution.mode # -> 733.3333333333333
 
 </details>
 
-
-
-
-
-
-
-
-
 <details>
 <summary style="font-size: 16px; font-weight: bold;">Documentation Simulation Module</summary>
-
-
 
 ## Process Simulation
 
@@ -518,8 +499,8 @@ simulation = simulation.ProcessSimulation()
 
 There are two ways to add processes to your simulation instance:
 
--   Adding a **process _without_ preceding process (new branch)**
--   Adding a **process _with_ preceding process (with previous ids)**
+- Adding a **process _without_ preceding process (new branch)**
+- Adding a **process _with_ preceding process (with previous ids)**
 
 #### Process _without_ preceding process (new branch)
 
