@@ -4,9 +4,13 @@ on:
     push:
         branches:
             - main
+        paths:
+            - "phitter/**"
     pull_request:
         branches:
             - main
+        paths:
+            - "phitter/**"
 
 jobs:
     test:
