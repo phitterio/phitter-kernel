@@ -1,5 +1,6 @@
 import pytest
 import phitter
+import pandas as pd
 
 
 # Test that adding a process with a wrong function name raises a ValueError
@@ -55,10 +56,11 @@ def test_simulation_running():
         previous_ids=["fifth", "sixth", "ni_idea_2"],
     )
 
-    result = simulation.run(10)
+    result = simulation.run(100)
 
-    assert len(result) == 10
-    assert isinstance(result, list)
+    assert isinstance(result, pd.DataFrame)
+    assert len(result["Total Simulation Time"]) == 100
+    assert len(result.columns) == 11
 
 
 # Test to check if the confidence interval results are as expected
@@ -103,5 +105,5 @@ def test_simulation_confidence_interval():
 
     result = simulation.run_confidence_interval(number_of_simulations=100)
 
-    assert len(result) == 4
-    assert isinstance(result, tuple)
+    assert len(result.columns) == 4
+    assert isinstance(result, pd.DataFrame)
