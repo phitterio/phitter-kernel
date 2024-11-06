@@ -39,15 +39,10 @@ class QueueingSimulation:
         """
 
         # All phitter probability distributions
-        self.__probability_distribution = (
-            phitter.continuous.CONTINUOUS_DISTRIBUTIONS
-            | phitter.discrete.DISCRETE_DISTRIBUTIONS
-        )
+        self.__probability_distribution = phitter.continuous.CONTINUOUS_DISTRIBUTIONS | phitter.discrete.DISCRETE_DISTRIBUTIONS
 
         # Distributions for labels
-        self.__pbs_distributions = {
-            "own_distribution": OwnDistributions
-        } | phitter.discrete.DISCRETE_DISTRIBUTIONS
+        self.__pbs_distributions = {"own_distribution": OwnDistributions} | phitter.discrete.DISCRETE_DISTRIBUTIONS
         # Queue discipline
         self.__queue_discipline = ["FIFO", "LIFO", "PBS"]
         # Verify if all variables are correct
@@ -74,9 +69,7 @@ class QueueingSimulation:
         self.__pbs_parameters = pbs_parameters
         self.__pbs_distribution = pbs_distribution
         if d == "PBS":
-            self.__label = self.__pbs_distributions[self.__pbs_distribution](
-                self.__pbs_parameters
-            )
+            self.__label = self.__pbs_distributions[self.__pbs_distribution](self.__pbs_parameters)
 
         # Simulation results
         self.result_simulation = pd.DataFrame()
@@ -127,34 +120,21 @@ class QueueingSimulation:
         """
 
         # Verify if a and s belong to a actual probability distribution
-        if (
-            a not in self.__probability_distribution.keys()
-            or s not in self.__probability_distribution.keys()
-        ):
-            raise ValueError(
-                f"""Please select one of the following probability distributions: '{"', '".join(self.__probability_distribution.keys())}'."""
-            )
+        if a not in self.__probability_distribution.keys() or s not in self.__probability_distribution.keys():
+            raise ValueError(f"""Please select one of the following probability distributions: '{"', '".join(self.__probability_distribution.keys())}'.""")
         # Verify Number of Servers
         if c <= 0:
-            raise ValueError(
-                f"""'c' has to be a number and cannot be less or equals than zero."""
-            )
+            raise ValueError(f"""'c' has to be a number and cannot be less or equals than zero.""")
         # Verify Maximum System Capacity
         if k <= 0:
-            raise ValueError(
-                f"""'k' has to be a number and cannot be less or equals than zero."""
-            )
+            raise ValueError(f"""'k' has to be a number and cannot be less or equals than zero.""")
         # Verify Total population of potential customers.
         if n <= 0:
-            raise ValueError(
-                f"""'n' has to be a number and cannot be less or equals than zero."""
-            )
+            raise ValueError(f"""'n' has to be a number and cannot be less or equals than zero.""")
 
         # Review if the discipline is in the list
         if d not in self.__queue_discipline:
-            raise ValueError(
-                f"""'d' has to be one of the following queue discipline: '{"', '".join(self.__queue_discipline)}'."""
-            )
+            raise ValueError(f"""'d' has to be one of the following queue discipline: '{"', '".join(self.__queue_discipline)}'.""")
 
         # Maximum number of people should be greater or equals to the number of servers
         if k < c:
@@ -165,19 +145,13 @@ class QueueingSimulation:
             if pbs_distribution != None and pbs_parameters != None:
                 # Review if the selected distribution was created
                 if pbs_distribution not in self.__pbs_distributions:
-                    raise ValueError(
-                        f"""You should select one of the following distributions: {self.__pbs_distributions}"""
-                    )
+                    raise ValueError(f"""You should select one of the following distributions: {self.__pbs_distributions}""")
             # Review if PBS is selected if the distribution and parameters exits
             elif pbs_distribution == None and pbs_parameters == None:
-                raise ValueError(
-                    f"""You must include 'pbs_distribution' and 'pbs_parameters' if you want to use 'PBS'."""
-                )
+                raise ValueError(f"""You must include 'pbs_distribution' and 'pbs_parameters' if you want to use 'PBS'.""")
         # You can only use this two parameters if PBS is selected
         elif d != "PBS" and (pbs_distribution != None or pbs_parameters != None):
-            raise ValueError(
-                f"""You can only use 'pbs_distribution' and 'pbs_parameters' with 'd="PBS"'"""
-            )
+            raise ValueError(f"""You can only use 'pbs_distribution' and 'pbs_parameters' with 'd="PBS"'""")
 
     def run(self, simulation_time: float = float("inf")) -> pd.DataFrame:
         """Simulation of any queueing model.
@@ -195,9 +169,7 @@ class QueueingSimulation:
 
         # Simulation time has to be greater than 0
         if simulation_time <= 0:
-            raise ValueError(
-                f"""'simulation_time' has to be a number and cannot be less or equals than zero."""
-            )
+            raise ValueError(f"""'simulation_time' has to be a number and cannot be less or equals than zero.""")
 
         # If it is infinity, create a massive number
         if simulation_time == float("inf"):
@@ -229,16 +201,11 @@ class QueueingSimulation:
             simulation_results = self.__pbs(simulation_time, simulation_results)
 
         # Create a new column that is the same for all queue disciplines, to determine if that person was attended after the "close time"
-        simulation_results["Finish after closed"] = [
-            1 if leave_time > self.__simulation_time else 0
-            for leave_time in simulation_results["Leave Time"]
-        ]
+        simulation_results["Finish after closed"] = [1 if leave_time > self.__simulation_time else 0 for leave_time in simulation_results["Leave Time"]]
 
         # Convert result to a DataFrame
         self.__result_simulation = pd.DataFrame(simulation_results)
-        self.__result_simulation = self.__result_simulation.drop(index=0).reset_index(
-            drop=True
-        )
+        self.__result_simulation = self.__result_simulation.drop(index=0).reset_index(drop=True)
 
         # Calculte probabilities for each number of elements
         self.elements_prob()
@@ -287,18 +254,13 @@ class QueueingSimulation:
         # Start simulation for each arrival
         for arrival in arrivals:
             # Include that person time in the result
-            simulation_results["Arrival Time"].append(
-                simulation_results["Arrival Time"][-1] + arrival
-            )
+            simulation_results["Arrival Time"].append(simulation_results["Arrival Time"][-1] + arrival)
 
             # Number of people at that time
             number_of_people = 0
             start = simulation_results["Arrival Time"][-1]
             for other_person in range(len(simulation_results["Arrival Time"]) - 1):
-                if (
-                    simulation_results["Arrival Time"][other_person] <= start
-                    and simulation_results["Leave Time"][other_person] >= start
-                ):
+                if simulation_results["Arrival Time"][other_person] <= start and simulation_results["Leave Time"][other_person] >= start:
                     number_of_people += 1
             # Plus one means that person in the system
             simulation_results["Total Number of people"].append(number_of_people + 1)
@@ -307,9 +269,7 @@ class QueueingSimulation:
             if simulation_results["Total Number of people"][-1] <= self.__c:
                 simulation_results["Number of people in Line"].append(0)
             else:
-                simulation_results["Number of people in Line"].append(
-                    simulation_results["Total Number of people"][-1] - self.__c
-                )
+                simulation_results["Number of people in Line"].append(simulation_results["Total Number of people"][-1] - self.__c)
 
             # Verify if the number of people is less or equals the max value
             if simulation_results["Total Number of people"][-1] <= self.__k:
@@ -318,21 +278,14 @@ class QueueingSimulation:
                 simulation_results["Join the system?"].append(1)
 
                 # Attention order
-                simulation_results["Attention Order"].append(
-                    max(simulation_results["Attention Order"]) + 1
-                )
+                simulation_results["Attention Order"].append(max(simulation_results["Attention Order"]) + 1)
 
                 # Review shortest time among all servers and choosing the first server that is available
                 first_server_available = 0
                 first_server_available_time = float("Inf")
                 for server in range(1, self.__c + 1):
-                    last_time_server_not_null = self.__last_not_null(
-                        simulation_results[f"Time busy server {server}"]
-                    )
-                    if (
-                        last_time_server_not_null
-                        <= simulation_results["Arrival Time"][-1]
-                    ):
+                    last_time_server_not_null = self.__last_not_null(simulation_results[f"Time busy server {server}"])
+                    if last_time_server_not_null <= simulation_results["Arrival Time"][-1]:
                         first_server_available = server
                         first_server_available_time = last_time_server_not_null
                         break
@@ -349,33 +302,19 @@ class QueueingSimulation:
                     - simulation_results["Arrival Time"][-1]
                 )
                 # Simulate time in service
-                simulation_results["Time in service"].append(
-                    self.__s.ppf(random.random())
-                )
+                simulation_results["Time in service"].append(self.__s.ppf(random.random()))
                 # Leave time of that person
-                simulation_results["Leave Time"].append(
-                    simulation_results["Arrival Time"][-1]
-                    + simulation_results["Time in Line"][-1]
-                    + simulation_results["Time in service"][-1]
-                )
+                simulation_results["Leave Time"].append(simulation_results["Arrival Time"][-1] + simulation_results["Time in Line"][-1] + simulation_results["Time in service"][-1])
                 # Same as leave time is the max time busy server
-                simulation_results[f"Time busy server {first_server_available}"].append(
-                    simulation_results["Leave Time"][-1]
-                )
+                simulation_results[f"Time busy server {first_server_available}"].append(simulation_results["Leave Time"][-1])
                 # This server was the enchanged of help the element
-                simulation_results[
-                    f"Server {first_server_available} attended this element?"
-                ].append(1)
+                simulation_results[f"Server {first_server_available} attended this element?"].append(1)
 
                 # Keep same finish time to other servers and did not attend those servers
                 for server in range(1, self.__c + 1):
                     if server != first_server_available:
-                        simulation_results[f"Time busy server {server}"].append(
-                            simulation_results[f"Time busy server {server}"][-1]
-                        )
-                        simulation_results[
-                            f"Server {server} attended this element?"
-                        ].append(0)
+                        simulation_results[f"Time busy server {server}"].append(simulation_results[f"Time busy server {server}"][-1])
+                        simulation_results[f"Server {server} attended this element?"].append(0)
             else:
                 # If the number of people is greater than the maximum allowed, then do not include any stat to that person
                 simulation_results["Join the system?"].append(0)
@@ -386,9 +325,7 @@ class QueueingSimulation:
                 # Keep same finish time to other servers and np.nan for all servers
                 for server in range(1, self.__c + 1):
                     simulation_results[f"Time busy server {server}"].append(np.nan)
-                    simulation_results[
-                        f"Server {server} attended this element?"
-                    ].append(np.nan)
+                    simulation_results[f"Server {server} attended this element?"].append(np.nan)
 
         return simulation_results
 
@@ -424,9 +361,7 @@ class QueueingSimulation:
         # Start simulation for each arrival
         for arrival in arrivals:
             # Review time of arrival
-            simulation_results["Arrival Time"].append(
-                simulation_results["Arrival Time"][-1] + arrival
-            )
+            simulation_results["Arrival Time"].append(simulation_results["Arrival Time"][-1] + arrival)
 
             # Last person that was served
             last_attended = max(simulation_results["Attention Order"])
@@ -434,16 +369,9 @@ class QueueingSimulation:
             # If person that arrives time is greater than end of services of at least one machine, we can review people in line or this person to take the service, if not, go to the line
             go_to_queue = True
             for server in range(1, self.__c + 1):
-                if (
-                    simulation_results["Arrival Time"][-1]
-                    > simulation_results[f"Time busy server {server}"][
-                        order_idx[last_attended]
-                    ]
-                ):
+                if simulation_results["Arrival Time"][-1] > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]:
                     first_server_available = server
-                    first_server_available_time = simulation_results[
-                        f"Time busy server {server}"
-                    ][order_idx[last_attended]]
+                    first_server_available_time = simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                     go_to_queue = False
                     break
 
@@ -462,13 +390,9 @@ class QueueingSimulation:
                     )
                 )
                 # Plus one means that person that has just arrived into the system
-                simulation_results["Number of people in Line"].append(
-                    number_of_people + 1
-                )
+                simulation_results["Number of people in Line"].append(number_of_people + 1)
                 # Total people
-                simulation_results["Total Number of people"].append(
-                    simulation_results["Number of people in Line"][-1] + self.__c
-                )
+                simulation_results["Total Number of people"].append(simulation_results["Number of people in Line"][-1] + self.__c)
 
                 # Can that person enter?
                 if simulation_results["Total Number of people"][-1] <= self.__k:
@@ -482,9 +406,7 @@ class QueueingSimulation:
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(-1)
                         # This server was the enchanged of help the element
-                        simulation_results[
-                            f"Server {server} attended this element?"
-                        ].append(-1)
+                        simulation_results[f"Server {server} attended this element?"].append(-1)
                 # if not
                 else:
                     # If the number of people is greater than the maximum allowed, then do not include any stat to that person
@@ -497,9 +419,7 @@ class QueueingSimulation:
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(np.nan)
                         # This server was the enchanged of help the element
-                        simulation_results[
-                            f"Server {server} attended this element?"
-                        ].append(np.nan)
+                        simulation_results[f"Server {server} attended this element?"].append(np.nan)
 
             else:
 
@@ -516,15 +436,11 @@ class QueueingSimulation:
                 # If there is nobody, we assign that element.
                 if number_of_people == 0:
                     # Plus one means that person that has just arrived into the system
-                    simulation_results["Number of people in Line"].append(
-                        number_of_people
-                    )
+                    simulation_results["Number of people in Line"].append(number_of_people)
                     simulation_results["Join the system?"].append(1)
 
                     # Attention position
-                    simulation_results["Attention Order"].append(
-                        max(simulation_results["Attention Order"]) + 1
-                    )
+                    simulation_results["Attention Order"].append(max(simulation_results["Attention Order"]) + 1)
 
                     # Add the service time and additional information
                     simulation_results["Time in Line"].append(
@@ -534,58 +450,35 @@ class QueueingSimulation:
                         )
                         - simulation_results["Arrival Time"][-1]
                     )
-                    simulation_results["Time in service"].append(
-                        self.__s.ppf(random.random())
-                    )
-                    simulation_results["Leave Time"].append(
-                        simulation_results["Arrival Time"][-1]
-                        + simulation_results["Time in Line"][-1]
-                        + simulation_results["Time in service"][-1]
-                    )
-                    simulation_results[
-                        f"Time busy server {first_server_available}"
-                    ].append(simulation_results["Leave Time"][-1])
+                    simulation_results["Time in service"].append(self.__s.ppf(random.random()))
+                    simulation_results["Leave Time"].append(simulation_results["Arrival Time"][-1] + simulation_results["Time in Line"][-1] + simulation_results["Time in service"][-1])
+                    simulation_results[f"Time busy server {first_server_available}"].append(simulation_results["Leave Time"][-1])
                     # This server was the enchanged of help the element
-                    simulation_results[
-                        f"Server {first_server_available} attended this element?"
-                    ].append(1)
+                    simulation_results[f"Server {first_server_available} attended this element?"].append(1)
 
                     # Keep same finish time to other servers
                     people_being_served = 0
                     for server in range(1, self.__c + 1):
                         if server != first_server_available:
-                            simulation_results[f"Time busy server {server}"].append(
-                                max(simulation_results[f"Time busy server {server}"])
-                            )
+                            simulation_results[f"Time busy server {server}"].append(max(simulation_results[f"Time busy server {server}"]))
                             # This server was the enchanged of help the element
-                            simulation_results[
-                                f"Server {server} attended this element?"
-                            ].append(0)
-                            if (
-                                simulation_results[f"Time busy server {server}"][-1]
-                                >= simulation_results["Arrival Time"][-1]
-                            ):
+                            simulation_results[f"Server {server} attended this element?"].append(0)
+                            if simulation_results[f"Time busy server {server}"][-1] >= simulation_results["Arrival Time"][-1]:
                                 people_being_served += 1
                         else:
                             people_being_served += 1
 
                     # Number of people at that time
-                    simulation_results["Total Number of people"].append(
-                        people_being_served
-                    )
+                    simulation_results["Total Number of people"].append(people_being_served)
                     # Update order
-                    order_idx[max(simulation_results["Attention Order"])] = (
-                        len(simulation_results["Attention Order"]) - 1
-                    )
+                    order_idx[max(simulation_results["Attention Order"])] = len(simulation_results["Attention Order"]) - 1
 
                 else:
 
                     # The people go from last to first, and each time a person passes, it must be checked if there are machines available before the person reaches this point. If not, the process stops, and this person is sent to the queue, and the process continues.
 
                     # Review from the end to the beggining without the element that has just arrived
-                    for idx in range(
-                        len(simulation_results["Attention Order"]) - 1, -1, -1
-                    ):
+                    for idx in range(len(simulation_results["Attention Order"]) - 1, -1, -1):
                         # If that element has not been served
                         if simulation_results["Attention Order"][idx] == -1:
 
@@ -595,20 +488,12 @@ class QueueingSimulation:
                             for server in range(1, self.__c + 1):
                                 # Review if servers are available (before last arrival (-1))
                                 if (
-                                    simulation_results["Arrival Time"][-1]
-                                    > simulation_results[f"Time busy server {server}"][
-                                        order_idx[last_attended]
-                                    ]
-                                    and min_time
-                                    > simulation_results[f"Time busy server {server}"][
-                                        order_idx[last_attended]
-                                    ]
+                                    simulation_results["Arrival Time"][-1] > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
+                                    and min_time > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                                 ):
                                     # Find Server number and time
                                     first_server_available = server
-                                    first_server_available_time = simulation_results[
-                                        f"Time busy server {server}"
-                                    ][order_idx[last_attended]]
+                                    first_server_available_time = simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                                     min_time = first_server_available_time
                                     # Let's review again
                                     no_servers_available = False
@@ -620,9 +505,7 @@ class QueueingSimulation:
 
                                 ## Assigning
                                 # Attention position
-                                simulation_results["Attention Order"][idx] = (
-                                    max(simulation_results["Attention Order"]) + 1
-                                )
+                                simulation_results["Attention Order"][idx] = max(simulation_results["Attention Order"]) + 1
 
                                 # Add the service time and additional information
                                 simulation_results["Time in Line"][idx] = (
@@ -632,41 +515,21 @@ class QueueingSimulation:
                                     )
                                     - simulation_results["Arrival Time"][idx]
                                 )
-                                simulation_results["Time in service"][idx] = (
-                                    self.__s.ppf(random.random())
-                                )
-                                simulation_results["Leave Time"][idx] = (
-                                    simulation_results["Arrival Time"][idx]
-                                    + simulation_results["Time in Line"][idx]
-                                    + simulation_results["Time in service"][idx]
-                                )
-                                simulation_results[
-                                    f"Time busy server {first_server_available}"
-                                ][idx] = simulation_results["Leave Time"][idx]
+                                simulation_results["Time in service"][idx] = self.__s.ppf(random.random())
+                                simulation_results["Leave Time"][idx] = simulation_results["Arrival Time"][idx] + simulation_results["Time in Line"][idx] + simulation_results["Time in service"][idx]
+                                simulation_results[f"Time busy server {first_server_available}"][idx] = simulation_results["Leave Time"][idx]
                                 # This server was the enchanged of help the element
-                                simulation_results[
-                                    f"Server {first_server_available} attended this element?"
-                                ][idx] = 1
+                                simulation_results[f"Server {first_server_available} attended this element?"][idx] = 1
 
                                 # Keep same finish time to other servers
                                 for others_servers in range(1, self.__c + 1):
                                     if others_servers != first_server_available:
-                                        simulation_results[
-                                            f"Time busy server {others_servers}"
-                                        ][idx] = max(
-                                            simulation_results[
-                                                f"Time busy server {others_servers}"
-                                            ]
-                                        )
+                                        simulation_results[f"Time busy server {others_servers}"][idx] = max(simulation_results[f"Time busy server {others_servers}"])
                                         # This server was the enchanged of help the element
-                                        simulation_results[
-                                            f"Server {others_servers} attended this element?"
-                                        ][idx] = 0
+                                        simulation_results[f"Server {others_servers} attended this element?"][idx] = 0
 
                                 # Assign last attended as this one
-                                last_attended = max(
-                                    simulation_results["Attention Order"]
-                                )
+                                last_attended = max(simulation_results["Attention Order"])
                                 order_idx[last_attended] = idx
 
                     ### If there is no more servers available, we review if the person that has just arrived can join the system, if so we send it to the line
@@ -687,33 +550,16 @@ class QueueingSimulation:
                     people_being_served = 0
                     for server in range(1, self.__c + 1):
                         # Review if servers are available (before last arrival (-1)) we do not add a "1" in Number of people in line
-                        if (
-                            simulation_results["Arrival Time"][-1]
-                            > simulation_results[f"Time busy server {server}"][
-                                order_idx[last_attended]
-                            ]
-                        ):
+                        if simulation_results["Arrival Time"][-1] > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]:
                             value_to_add = 0
-                        elif (
-                            simulation_results[f"Time busy server {server}"][
-                                order_idx[last_attended]
-                            ]
-                            >= simulation_results["Arrival Time"][-1]
-                        ):
+                        elif simulation_results[f"Time busy server {server}"][order_idx[last_attended]] >= simulation_results["Arrival Time"][-1]:
                             people_being_served += 1
 
                     ## After all send the last person to the queue (person that has just arrived)
                     # Assign all to queue
-                    simulation_results["Number of people in Line"].append(
-                        number_of_people + value_to_add
-                    )
+                    simulation_results["Number of people in Line"].append(number_of_people + value_to_add)
                     simulation_results["Total Number of people"].append(
-                        simulation_results["Number of people in Line"][-1]
-                        + people_being_served
-                        + 1
-                        if value_to_add == 0
-                        else simulation_results["Number of people in Line"][-1]
-                        + people_being_served
+                        simulation_results["Number of people in Line"][-1] + people_being_served + 1 if value_to_add == 0 else simulation_results["Number of people in Line"][-1] + people_being_served
                     )
                     simulation_results["Join the system?"].append(1)
                     simulation_results["Attention Order"].append(-1)
@@ -723,9 +569,7 @@ class QueueingSimulation:
                     # Keep same finish time to other servers and servers have not attended this user
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(-1)
-                        simulation_results[
-                            f"Server {server} attended this element?"
-                        ].append(-1)
+                        simulation_results[f"Server {server} attended this element?"].append(-1)
 
         ## Last people to assign
         # After "closing time" there are people that are not assign yet. This logic assign that people
@@ -741,26 +585,15 @@ class QueueingSimulation:
                 # Search in all Servers which is available
                 for server in range(1, self.__c + 1):
                     # Review if servers are available (before last arrival (-1))
-                    if (
-                        min_time
-                        > simulation_results[f"Time busy server {server}"][
-                            order_idx[last_attended]
-                        ]
-                    ):
+                    if min_time > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]:
                         # Find Server number and time
-                        min_time = simulation_results[f"Time busy server {server}"][
-                            order_idx[last_attended]
-                        ]
+                        min_time = simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                         first_server_available = server
-                        first_server_available_time = simulation_results[
-                            f"Time busy server {server}"
-                        ][order_idx[last_attended]]
+                        first_server_available_time = simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
 
                 ## Assigning
                 # Attention position
-                simulation_results["Attention Order"][idx] = (
-                    max(simulation_results["Attention Order"]) + 1
-                )
+                simulation_results["Attention Order"][idx] = max(simulation_results["Attention Order"]) + 1
 
                 # Add the service time and additional information
                 simulation_results["Time in Line"][idx] = (
@@ -770,32 +603,16 @@ class QueueingSimulation:
                     )
                     - simulation_results["Arrival Time"][idx]
                 )
-                simulation_results["Time in service"][idx] = self.__s.ppf(
-                    random.random()
-                )
-                simulation_results["Leave Time"][idx] = (
-                    simulation_results["Arrival Time"][idx]
-                    + simulation_results["Time in Line"][idx]
-                    + simulation_results["Time in service"][idx]
-                )
-                simulation_results[f"Time busy server {first_server_available}"][
-                    idx
-                ] = simulation_results["Leave Time"][idx]
-                simulation_results[
-                    f"Server {first_server_available} attended this element?"
-                ][idx] = 1
+                simulation_results["Time in service"][idx] = self.__s.ppf(random.random())
+                simulation_results["Leave Time"][idx] = simulation_results["Arrival Time"][idx] + simulation_results["Time in Line"][idx] + simulation_results["Time in service"][idx]
+                simulation_results[f"Time busy server {first_server_available}"][idx] = simulation_results["Leave Time"][idx]
+                simulation_results[f"Server {first_server_available} attended this element?"][idx] = 1
 
                 # Keep same finish time to other servers
                 for others_servers in range(1, self.__c + 1):
                     if others_servers != first_server_available:
-                        simulation_results[f"Time busy server {others_servers}"][
-                            idx
-                        ] = max(
-                            simulation_results[f"Time busy server {others_servers}"]
-                        )
-                        simulation_results[
-                            f"Server {others_servers} attended this element?"
-                        ][idx] = 0
+                        simulation_results[f"Time busy server {others_servers}"][idx] = max(simulation_results[f"Time busy server {others_servers}"])
+                        simulation_results[f"Server {others_servers} attended this element?"][idx] = 0
 
                 # Assign last attended as this one
                 last_attended = max(simulation_results["Attention Order"])
@@ -837,9 +654,7 @@ class QueueingSimulation:
 
         # Start simulation for each arrival
         for index_arrival, arrival in enumerate(arrivals):
-            simulation_results["Arrival Time"].append(
-                simulation_results["Arrival Time"][-1] + arrival
-            )
+            simulation_results["Arrival Time"].append(simulation_results["Arrival Time"][-1] + arrival)
             simulation_results["Priority"].append(all_priorities[index_arrival])
 
             # Number of people at that time
@@ -848,10 +663,7 @@ class QueueingSimulation:
 
             # Number of people at that time
             for other_person in range(len(simulation_results["Arrival Time"]) - 1):
-                if (
-                    simulation_results["Arrival Time"][other_person] <= start
-                    and simulation_results["Leave Time"][other_person] >= start
-                ):
+                if simulation_results["Arrival Time"][other_person] <= start and simulation_results["Leave Time"][other_person] >= start:
                     number_of_people += 1
                 elif simulation_results["Attention Order"][other_person] == -1:
                     number_of_people += 1
@@ -863,9 +675,7 @@ class QueueingSimulation:
             if simulation_results["Total Number of people"][-1] <= self.__c:
                 simulation_results["Number of people in Line"].append(0)
             else:
-                simulation_results["Number of people in Line"].append(
-                    simulation_results["Total Number of people"][-1] - self.__c
-                )
+                simulation_results["Number of people in Line"].append(simulation_results["Total Number of people"][-1] - self.__c)
 
             # Can that person enter?
             if simulation_results["Total Number of people"][-1] <= self.__k:
@@ -879,16 +689,9 @@ class QueueingSimulation:
                 # If person that arrives time is greater than end of services of at least one machine, we can review people in line or this person to take the service, if not, go to the line
                 go_to_queue = True
                 for server in range(1, self.__c + 1):
-                    if (
-                        simulation_results["Arrival Time"][-1]
-                        > simulation_results[f"Time busy server {server}"][
-                            order_idx[last_attended]
-                        ]
-                    ):
+                    if simulation_results["Arrival Time"][-1] > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]:
                         first_server_available = server
-                        first_server_available_time = simulation_results[
-                            f"Time busy server {server}"
-                        ][order_idx[last_attended]]
+                        first_server_available_time = simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                         go_to_queue = False
                         break
 
@@ -904,9 +707,7 @@ class QueueingSimulation:
                     # Keep same finish time to other servers
                     for server in range(1, self.__c + 1):
                         simulation_results[f"Time busy server {server}"].append(-1)
-                        simulation_results[
-                            f"Server {server} attended this element?"
-                        ].append(-1)
+                        simulation_results[f"Server {server} attended this element?"].append(-1)
 
                 else:
 
@@ -914,9 +715,7 @@ class QueueingSimulation:
                     if simulation_results["Number of people in Line"][-1] == 0:
 
                         # Attention position
-                        simulation_results["Attention Order"].append(
-                            max(simulation_results["Attention Order"]) + 1
-                        )
+                        simulation_results["Attention Order"].append(max(simulation_results["Attention Order"]) + 1)
 
                         # Add the service time and additional information
                         simulation_results["Time in Line"].append(
@@ -926,36 +725,18 @@ class QueueingSimulation:
                             )
                             - simulation_results["Arrival Time"][-1]
                         )
-                        simulation_results["Time in service"].append(
-                            self.__s.ppf(random.random())
-                        )
-                        simulation_results["Leave Time"].append(
-                            simulation_results["Arrival Time"][-1]
-                            + simulation_results["Time in Line"][-1]
-                            + simulation_results["Time in service"][-1]
-                        )
-                        simulation_results[
-                            f"Time busy server {first_server_available}"
-                        ].append(simulation_results["Leave Time"][-1])
-                        simulation_results[
-                            f"Server {first_server_available} attended this element?"
-                        ].append(1)
+                        simulation_results["Time in service"].append(self.__s.ppf(random.random()))
+                        simulation_results["Leave Time"].append(simulation_results["Arrival Time"][-1] + simulation_results["Time in Line"][-1] + simulation_results["Time in service"][-1])
+                        simulation_results[f"Time busy server {first_server_available}"].append(simulation_results["Leave Time"][-1])
+                        simulation_results[f"Server {first_server_available} attended this element?"].append(1)
 
                         # Keep same finish time to other servers
                         for server in range(1, self.__c + 1):
                             if server != first_server_available:
-                                simulation_results[f"Time busy server {server}"].append(
-                                    max(
-                                        simulation_results[f"Time busy server {server}"]
-                                    )
-                                )
-                                simulation_results[
-                                    f"Server {server} attended this element?"
-                                ].append(0)
+                                simulation_results[f"Time busy server {server}"].append(max(simulation_results[f"Time busy server {server}"]))
+                                simulation_results[f"Server {server} attended this element?"].append(0)
                         # Update order list
-                        order_idx[max(simulation_results["Attention Order"])] = (
-                            len(simulation_results["Attention Order"]) - 1
-                        )
+                        order_idx[max(simulation_results["Attention Order"])] = len(simulation_results["Attention Order"]) - 1
 
                     else:
 
@@ -968,25 +749,16 @@ class QueueingSimulation:
                         # Keep same finish time to other servers
                         for server in range(1, self.__c + 1):
                             simulation_results[f"Time busy server {server}"].append(-1)
-                            simulation_results[
-                                f"Server {server} attended this element?"
-                            ].append(-1)
+                            simulation_results[f"Server {server} attended this element?"].append(-1)
 
                         # Bigger numbers are first priority, smaller numbers are less priority
-                        priority_list = sorted(
-                            list(set(simulation_results["Priority"])), reverse=True
-                        )
+                        priority_list = sorted(list(set(simulation_results["Priority"])), reverse=True)
 
                         # Verify priority (starts with bigger numbers)
                         for priority in priority_list:
-                            for idx in range(
-                                len(simulation_results["Attention Order"])
-                            ):
+                            for idx in range(len(simulation_results["Attention Order"])):
                                 # Verify if person is in line and its priority
-                                if (
-                                    simulation_results["Attention Order"][idx] == -1
-                                    and simulation_results["Priority"][idx] == priority
-                                ):
+                                if simulation_results["Attention Order"][idx] == -1 and simulation_results["Priority"][idx] == priority:
 
                                     min_time = float("Inf")
                                     no_servers_available = True
@@ -994,22 +766,12 @@ class QueueingSimulation:
                                     for server in range(1, self.__c + 1):
                                         # Review if servers are available (before last arrival (-1))
                                         if (
-                                            simulation_results["Arrival Time"][-1]
-                                            > simulation_results[
-                                                f"Time busy server {server}"
-                                            ][order_idx[last_attended]]
-                                            and min_time
-                                            > simulation_results[
-                                                f"Time busy server {server}"
-                                            ][order_idx[last_attended]]
+                                            simulation_results["Arrival Time"][-1] > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
+                                            and min_time > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                                         ):
                                             # Find Server number and time
                                             first_server_available = server
-                                            first_server_available_time = (
-                                                simulation_results[
-                                                    f"Time busy server {server}"
-                                                ][order_idx[last_attended]]
-                                            )
+                                            first_server_available_time = simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                                             min_time = first_server_available_time
                                             # Let's review again
                                             no_servers_available = False
@@ -1021,10 +783,7 @@ class QueueingSimulation:
 
                                         ## Assigning
                                         # Attention position
-                                        simulation_results["Attention Order"][idx] = (
-                                            max(simulation_results["Attention Order"])
-                                            + 1
-                                        )
+                                        simulation_results["Attention Order"][idx] = max(simulation_results["Attention Order"]) + 1
 
                                         # Add the service time and additional information
                                         simulation_results["Time in Line"][idx] = (
@@ -1034,39 +793,21 @@ class QueueingSimulation:
                                             )
                                             - simulation_results["Arrival Time"][idx]
                                         )
-                                        simulation_results["Time in service"][idx] = (
-                                            self.__s.ppf(random.random())
-                                        )
+                                        simulation_results["Time in service"][idx] = self.__s.ppf(random.random())
                                         simulation_results["Leave Time"][idx] = (
-                                            simulation_results["Arrival Time"][idx]
-                                            + simulation_results["Time in Line"][idx]
-                                            + simulation_results["Time in service"][idx]
+                                            simulation_results["Arrival Time"][idx] + simulation_results["Time in Line"][idx] + simulation_results["Time in service"][idx]
                                         )
-                                        simulation_results[
-                                            f"Time busy server {first_server_available}"
-                                        ][idx] = simulation_results["Leave Time"][idx]
-                                        simulation_results[
-                                            f"Server {first_server_available} attended this element?"
-                                        ][idx] = 1
+                                        simulation_results[f"Time busy server {first_server_available}"][idx] = simulation_results["Leave Time"][idx]
+                                        simulation_results[f"Server {first_server_available} attended this element?"][idx] = 1
 
                                         # Keep same finish time to other servers
                                         for others_servers in range(1, self.__c + 1):
                                             if others_servers != first_server_available:
-                                                simulation_results[
-                                                    f"Time busy server {others_servers}"
-                                                ][idx] = max(
-                                                    simulation_results[
-                                                        f"Time busy server {others_servers}"
-                                                    ]
-                                                )
-                                                simulation_results[
-                                                    f"Server {others_servers} attended this element?"
-                                                ][idx] = 0
+                                                simulation_results[f"Time busy server {others_servers}"][idx] = max(simulation_results[f"Time busy server {others_servers}"])
+                                                simulation_results[f"Server {others_servers} attended this element?"][idx] = 0
 
                                         # Assign last attended as this one
-                                        last_attended = max(
-                                            simulation_results["Attention Order"]
-                                        )
+                                        last_attended = max(simulation_results["Attention Order"])
                                         order_idx[last_attended] = idx
 
             # If not
@@ -1080,9 +821,7 @@ class QueueingSimulation:
                 # Keep same finish time to other servers
                 for server in range(1, self.__c + 1):
                     simulation_results[f"Time busy server {server}"].append(np.nan)
-                    simulation_results[
-                        f"Server {server} attended this element?"
-                    ].append(np.nan)
+                    simulation_results[f"Server {server} attended this element?"].append(np.nan)
 
         ## Assign Missing elements
         # Bigger numbers are first priority, smaller numbers are less priority
@@ -1091,33 +830,21 @@ class QueueingSimulation:
         for priority in priority_list:
             # Verify if that element has not been attended and if belongs to the actual priority
             for idx in range(len(simulation_results["Attention Order"])):
-                if (
-                    simulation_results["Attention Order"][idx] == -1
-                    and simulation_results["Priority"][idx] == priority
-                ):
+                if simulation_results["Attention Order"][idx] == -1 and simulation_results["Priority"][idx] == priority:
 
                     min_time = float("Inf")
                     # Search in all Servers which is available
                     for server in range(1, self.__c + 1):
                         # Review if servers are available (before last arrival (-1))
-                        if (
-                            min_time
-                            > simulation_results[f"Time busy server {server}"][
-                                order_idx[last_attended]
-                            ]
-                        ):
+                        if min_time > simulation_results[f"Time busy server {server}"][order_idx[last_attended]]:
                             # Find Server number and time
                             first_server_available = server
-                            first_server_available_time = simulation_results[
-                                f"Time busy server {server}"
-                            ][order_idx[last_attended]]
+                            first_server_available_time = simulation_results[f"Time busy server {server}"][order_idx[last_attended]]
                             min_time = first_server_available_time
 
                     ## Assigning
                     # Attention position
-                    simulation_results["Attention Order"][idx] = (
-                        max(simulation_results["Attention Order"]) + 1
-                    )
+                    simulation_results["Attention Order"][idx] = max(simulation_results["Attention Order"]) + 1
 
                     # Add the service time and additional information
                     simulation_results["Time in Line"][idx] = (
@@ -1127,32 +854,16 @@ class QueueingSimulation:
                         )
                         - simulation_results["Arrival Time"][idx]
                     )
-                    simulation_results["Time in service"][idx] = self.__s.ppf(
-                        random.random()
-                    )
-                    simulation_results["Leave Time"][idx] = (
-                        simulation_results["Arrival Time"][idx]
-                        + simulation_results["Time in Line"][idx]
-                        + simulation_results["Time in service"][idx]
-                    )
-                    simulation_results[f"Time busy server {first_server_available}"][
-                        idx
-                    ] = simulation_results["Leave Time"][idx]
-                    simulation_results[
-                        f"Server {first_server_available} attended this element?"
-                    ][idx] = 1
+                    simulation_results["Time in service"][idx] = self.__s.ppf(random.random())
+                    simulation_results["Leave Time"][idx] = simulation_results["Arrival Time"][idx] + simulation_results["Time in Line"][idx] + simulation_results["Time in service"][idx]
+                    simulation_results[f"Time busy server {first_server_available}"][idx] = simulation_results["Leave Time"][idx]
+                    simulation_results[f"Server {first_server_available} attended this element?"][idx] = 1
 
                     # Keep same finish time to other servers
                     for others_servers in range(1, self.__c + 1):
                         if others_servers != first_server_available:
-                            simulation_results[f"Time busy server {others_servers}"][
-                                idx
-                            ] = max(
-                                simulation_results[f"Time busy server {others_servers}"]
-                            )
-                            simulation_results[
-                                f"Server {others_servers} attended this element?"
-                            ][idx] = 0
+                            simulation_results[f"Time busy server {others_servers}"][idx] = max(simulation_results[f"Time busy server {others_servers}"])
+                            simulation_results[f"Server {others_servers} attended this element?"][idx] = 0
 
                     # Assign last attended as this one
                     last_attended = max(simulation_results["Attention Order"])
@@ -1172,9 +883,7 @@ class QueueingSimulation:
         else:
             self.__result_simulation.to_csv(file_name, index=index)
 
-    def to_excel(
-        self, file_name: str, sheet_name: str = "Sheet1", index: bool = True
-    ) -> None:
+    def to_excel(self, file_name: str, sheet_name: str = "Sheet1", index: bool = True) -> None:
         """Simulation results to Excel File
 
         Args:
@@ -1184,9 +893,7 @@ class QueueingSimulation:
         if len(self.__result_simulation) == 0:
             raise ValueError(f"""You need to run the simulation to use this""")
         else:
-            self.__result_simulation.to_excel(
-                file_name, index=index, sheet_name=sheet_name
-            )
+            self.__result_simulation.to_excel(file_name, index=index, sheet_name=sheet_name)
 
     def system_utilization(self) -> float:
         """Returns system utilization according to simulation
@@ -1194,9 +901,7 @@ class QueueingSimulation:
         Returns:
             float: System Utilization
         """
-        return (
-            self.__result_simulation["Time in service"].sum() / self.__simulation_time
-        )
+        return self.__result_simulation["Time in service"].sum() / self.__simulation_time
 
     def no_clients_prob(self) -> float:
         """Probability of no having clients
@@ -1204,10 +909,7 @@ class QueueingSimulation:
         Returns:
             float: No clients probability
         """
-        return (
-            1
-            - self.__result_simulation["Time in service"].sum() / self.__simulation_time
-        )
+        return 1 - self.__result_simulation["Time in service"].sum() / self.__simulation_time
 
     def elements_prob(self, bins: int = 50000) -> dict:
         """Creates the probability for each number of elements. Example: Probability to be 0, prob. to be 1, prob. to be 2... depending on simulation values
@@ -1232,22 +934,14 @@ class QueueingSimulation:
         time_points = [round(t, 2) for t in range(min_val, max_val, step)]
 
         # Number of clients in system in each instant
-        customers_at_time = [
-            (
-                (self.__result_simulation["Arrival Time"] <= t / 100)
-                & (self.__result_simulation["Leave Time"] >= t / 100)
-            ).sum()
-            for t in time_points
-        ]
+        customers_at_time = [((self.__result_simulation["Arrival Time"] <= t / 100) & (self.__result_simulation["Leave Time"] >= t / 100)).sum() for t in time_points]
 
         # Count a number of times each number appears
         count_customers = collections.Counter(customers_at_time)
 
         # Calculate probability per number of customer
         total_points = len(time_points)
-        self.number_probabilities = {
-            k: v / total_points for k, v in count_customers.items()
-        }
+        self.number_probabilities = {k: v / total_points for k, v in count_customers.items()}
 
         return self.number_probabilities
 
@@ -1267,25 +961,11 @@ class QueueingSimulation:
         if prob_type == "exact_value":
             return self.number_probabilities[number]
         elif prob_type == "greater_equals":
-            return sum(
-                [
-                    self.number_probabilities[key]
-                    for key in self.number_probabilities.keys()
-                    if key >= number
-                ]
-            )
+            return sum([self.number_probabilities[key] for key in self.number_probabilities.keys() if key >= number])
         elif prob_type == "less_equals":
-            return sum(
-                [
-                    self.number_probabilities[key]
-                    for key in self.number_probabilities.keys()
-                    if key <= number
-                ]
-            )
+            return sum([self.number_probabilities[key] for key in self.number_probabilities.keys() if key <= number])
         else:
-            raise ValueError(
-                f"""You can only select one of the following prob_type: 'exact_value', 'greater_equals', 'less_equals'"""
-            )
+            raise ValueError(f"""You can only select one of the following prob_type: 'exact_value', 'greater_equals', 'less_equals'""")
 
     def average_time_system(self) -> float:
         """Average time in system
@@ -1293,10 +973,7 @@ class QueueingSimulation:
         Returns:
             float: Average time in system
         """
-        return (
-            self.__result_simulation["Time in service"]
-            + self.__result_simulation["Time in Line"]
-        ).mean()
+        return (self.__result_simulation["Time in service"] + self.__result_simulation["Time in Line"]).mean()
 
     def average_time_queue(self) -> float:
         """Average time in queue
@@ -1320,10 +997,7 @@ class QueueingSimulation:
         Returns:
             float: Standard Deviation time in system
         """
-        return (
-            self.__result_simulation["Time in service"]
-            + self.__result_simulation["Time in Line"]
-        ).std()
+        return (self.__result_simulation["Time in service"] + self.__result_simulation["Time in Line"]).std()
 
     def standard_deviation_time_queue(self) -> float:
         """Standard Deviation time in queue
@@ -1347,10 +1021,7 @@ class QueueingSimulation:
         Returns:
             float: Average elements in system
         """
-        return (
-            self.__result_simulation["Time in service"]
-            + self.__result_simulation["Time in Line"]
-        ).sum() / self.__simulation_time
+        return (self.__result_simulation["Time in service"] + self.__result_simulation["Time in Line"]).sum() / self.__simulation_time
 
     def average_elements_queue(self) -> float:
         """Average elements in queue
@@ -1366,9 +1037,7 @@ class QueueingSimulation:
         Returns:
             float: Probability to join the system
         """
-        return (self.__result_simulation["Join the system?"]).sum() / len(
-            self.__result_simulation
-        )
+        return (self.__result_simulation["Join the system?"]).sum() / len(self.__result_simulation)
 
     def probability_to_finish_after_time(self) -> float:
         """Probability to finish after time
@@ -1376,9 +1045,7 @@ class QueueingSimulation:
         Returns:
             float: Probability to finish after time
         """
-        return (self.__result_simulation["Finish after closed"]).sum() / len(
-            self.__result_simulation
-        )
+        return (self.__result_simulation["Finish after closed"]).sum() / len(self.__result_simulation)
 
     def probability_to_wait_in_line(self) -> float:
         """Probability to wait in the queue
@@ -1398,16 +1065,10 @@ class QueueingSimulation:
         """
         # Calculate server utilization
         serv_util_dict = {
-            f"Utilization Server #{server}": self.__result_simulation[
-                f"Server {server} attended this element?"
-            ].sum()
-            / len(self.__result_simulation)
-            for server in range(1, self.__c + 1)
+            f"Utilization Server #{server}": self.__result_simulation[f"Server {server} attended this element?"].sum() / len(self.__result_simulation) for server in range(1, self.__c + 1)
         }
         # Convert into a DataFrame
-        df = pd.DataFrame.from_dict(serv_util_dict, orient="index").rename(
-            columns={0: "Value"}
-        )
+        df = pd.DataFrame.from_dict(serv_util_dict, orient="index").rename(columns={0: "Value"})
 
         df.index.name = "Metrics"
 
@@ -1422,10 +1083,7 @@ class QueueingSimulation:
 
         options = ["less_equals", "exact_value", "greater_equals"]
 
-        dictionaty_number = {
-            key: [self.number_elements_prob(int(key), option) for option in options]
-            for key in self.number_probabilities.keys()
-        }
+        dictionaty_number = {key: [self.number_elements_prob(int(key), option) for option in options] for key in self.number_probabilities.keys()}
 
         df = pd.DataFrame.from_dict(dictionaty_number, orient="index").rename(
             columns={
@@ -1449,28 +1107,16 @@ class QueueingSimulation:
         metrics["Average Time in System"] = float(self.average_time_system())
         metrics["Average Time in Queue"] = float(self.average_time_queue())
         metrics["Average Time in Service"] = float(self.average_time_service())
-        metrics["Std. Dev. Time in System"] = float(
-            self.standard_deviation_time_system()
-        )
+        metrics["Std. Dev. Time in System"] = float(self.standard_deviation_time_system())
         metrics["Std. Dev. Time in Queue"] = float(self.standard_deviation_time_queue())
-        metrics["Std. Dev. Time in Service"] = float(
-            self.standard_deviation_time_service()
-        )
+        metrics["Std. Dev. Time in Service"] = float(self.standard_deviation_time_service())
         metrics["Average Elements in System"] = float(self.average_elements_system())
         metrics["Average Elements in Queue"] = float(self.average_elements_queue())
-        metrics["Probability to join the System"] = float(
-            self.probability_to_join_system()
-        )
-        metrics["Probability to finish after Time"] = float(
-            self.probability_to_finish_after_time()
-        )
-        metrics["Probability to Wait in Line"] = float(
-            self.probability_to_wait_in_line()
-        )
+        metrics["Probability to join the System"] = float(self.probability_to_join_system())
+        metrics["Probability to finish after Time"] = float(self.probability_to_finish_after_time())
+        metrics["Probability to Wait in Line"] = float(self.probability_to_wait_in_line())
 
-        df = pd.DataFrame.from_dict(metrics, orient="index").rename(
-            columns={0: "Value"}
-        )
+        df = pd.DataFrame.from_dict(metrics, orient="index").rename(columns={0: "Value"})
 
         df.index.name = "Metrics"
 
@@ -1587,20 +1233,10 @@ class QueueingSimulation:
         z = normal_standard.ppf((1 + confidence_level) / 2)
         ## Confidence Interval
         avg__2 = mean__2.copy()
-        lower_bound = (
-            (mean__2 - (z * standard_error))
-            .copy()
-            .rename(columns={"Value": "LB - Value"})
-        )
-        upper_bound = (
-            (mean__2 + (z * standard_error))
-            .copy()
-            .rename(columns={"Value": "UB - Value"})
-        )
+        lower_bound = (mean__2 - (z * standard_error)).copy().rename(columns={"Value": "LB - Value"})
+        upper_bound = (mean__2 + (z * standard_error)).copy().rename(columns={"Value": "UB - Value"})
         avg__2 = avg__2.rename(columns={"Value": "AVG - Value"})
         tot_metrics_interval = pd.concat([lower_bound, avg__2, upper_bound], axis=1)
-        tot_metrics_interval = tot_metrics_interval[
-            ["LB - Value", "AVG - Value", "UB - Value"]
-        ]
+        tot_metrics_interval = tot_metrics_interval[["LB - Value", "AVG - Value", "UB - Value"]]
 
         return tot_prob_interval.reset_index(), tot_metrics_interval.reset_index()
