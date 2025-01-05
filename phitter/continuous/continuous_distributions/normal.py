@@ -98,7 +98,7 @@ class NORMAL:
         """
         Parametric variance
         """
-        return self.sigma * 3
+        return self.sigma ** 2
 
     @property
     def standard_deviation(self) -> float:
