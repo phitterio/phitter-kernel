@@ -298,7 +298,7 @@ class ProcessSimulation:
         mean__2 = tot_metrics.groupby(["Metrics"]).mean()
 
         standard_error = std__2 / math.sqrt(replications)
-        normal_standard = phitter.continuous.NORMAL({"mu": 0, "sigma": 1})
+        normal_standard = phitter.continuous.Normal({"mu": 0, "sigma": 1})
         z = normal_standard.ppf((1 + confidence_level) / 2)
         ## Confidence Interval
         avg__2 = mean__2.copy()

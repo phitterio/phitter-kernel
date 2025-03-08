@@ -5,7 +5,7 @@ import scipy.stats
 import typing
 
 
-class BERNOULLI:
+class Bernoulli:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -13,7 +13,7 @@ class BERNOULLI:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -95,7 +95,7 @@ class BERNOULLI:
         return parameters
 
 
-class BINOMIAL:
+class Binomial:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -103,7 +103,7 @@ class BINOMIAL:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -189,7 +189,7 @@ class BINOMIAL:
         return parameters
 
 
-class GEOMETRIC:
+class Geometric:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -197,7 +197,7 @@ class GEOMETRIC:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -215,11 +215,11 @@ class GEOMETRIC:
         return {"p": 0.2973}
 
     def cdf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
-        result = 1 - (1 - self.p) ** numpy.floor(x)
+        result = scipy.stats.geom.cdf(x, self.p)
         return result
 
     def pmf(self, x: int | numpy.ndarray) -> float | numpy.ndarray:
-        result = self.p * (1 - self.p) ** (x - 1)
+        result = scipy.stats.geom.pmf(x, self.p)
         return result
 
     def ppf(self, u: float | numpy.ndarray) -> float | numpy.ndarray:
@@ -228,7 +228,7 @@ class GEOMETRIC:
 
     def sample(self, n: int, seed: int | None = None) -> numpy.ndarray:
         if seed:
-            numpy.random.seed(0)
+            numpy.random.seed(seed)
         return self.ppf(numpy.random.rand(n))
 
     def non_central_moments(self, k: int) -> float | None:
@@ -279,7 +279,7 @@ class GEOMETRIC:
         return parameters
 
 
-class HYPERGEOMETRIC:
+class Hypergeometric:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -287,7 +287,7 @@ class HYPERGEOMETRIC:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -388,7 +388,7 @@ class HYPERGEOMETRIC:
         return parameters
 
 
-class LOGARITHMIC:
+class Logarithmic:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -396,7 +396,7 @@ class LOGARITHMIC:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -484,7 +484,7 @@ class LOGARITHMIC:
         return parameters
 
 
-class NEGATIVE_BINOMIAL:
+class NegativeBinomial:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -492,7 +492,7 @@ class NEGATIVE_BINOMIAL:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -578,7 +578,7 @@ class NEGATIVE_BINOMIAL:
         return parameters
 
 
-class POISSON:
+class Poisson:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -586,7 +586,7 @@ class POISSON:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -668,7 +668,7 @@ class POISSON:
         return parameters
 
 
-class UNIFORM:
+class Uniform:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -676,7 +676,7 @@ class UNIFORM:
         init_parameters_examples=False,
     ):
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -763,18 +763,18 @@ class UNIFORM:
 
 
 DISCRETE_DISTRIBUTIONS = {
-    "bernoulli": BERNOULLI,
-    "binomial": BINOMIAL,
-    "geometric": GEOMETRIC,
-    "hypergeometric": HYPERGEOMETRIC,
-    "logarithmic": LOGARITHMIC,
-    "negative_binomial": NEGATIVE_BINOMIAL,
-    "poisson": POISSON,
-    "uniform": UNIFORM,
+    "bernoulli": Bernoulli,
+    "binomial": Binomial,
+    "geometric": Geometric,
+    "hypergeometric": Hypergeometric,
+    "logarithmic": Logarithmic,
+    "negative_binomial": NegativeBinomial,
+    "poisson": Poisson,
+    "uniform": Uniform,
 }
 
 
-class DISCRETE_MEASURES:
+class DiscreteMeasures:
     def __init__(
         self,
         data: list[int],
@@ -842,7 +842,7 @@ def evaluate_discrete_test_kolmogorov_smirnov(distribution, discrete_measures):
     return result_test_ks
 
 
-class PHITTER_DISCRETE:
+class PhitterDiscrete:
     def __init__(
         self,
         data: list[int | float] | numpy.ndarray,
@@ -867,7 +867,7 @@ class PHITTER_DISCRETE:
             if len(not_distributions_ids) > 0:
                 raise ValueError(f"The following distributions to exclude are not found in the discrete distributions list: {not_distributions_ids}")
             self.distributions_to_fit = [dist for dist in DISCRETE_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
-        self.discrete_measures = DISCRETE_MEASURES(
+        self.discrete_measures = DiscreteMeasures(
             data=data,
             confidence_level=confidence_level,
             subsample_size=subsample_size,
@@ -884,7 +884,7 @@ class PHITTER_DISCRETE:
         validation_test = False
         try:
             test = test_function(distribution, self.discrete_measures)
-            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
+            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] >= 0:
                 self.distribution_results[label] = {
                     "test_statistic": test["test_statistic"],
                     "critical_value": test["critical_value"],

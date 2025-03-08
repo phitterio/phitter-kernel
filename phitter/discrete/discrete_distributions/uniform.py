@@ -1,10 +1,10 @@
 import numpy
 
 
-class UNIFORM:
+class Uniform:
     """
     Uniform distribution
-    Parameters UNIFORM distribution: {"a": *, "b": *}
+    Parameters Uniform Distribution: {"a": *, "b": *}
     https://phitter.io/distributions/discrete/uniform
     """
 
@@ -15,12 +15,12 @@ class UNIFORM:
         init_parameters_examples=False,
     ):
         """
-        Initializes the UNIFORM distribution by either providing a Discrete Measures instance [DISCRETE_MEASURES] or a dictionary with the distribution's parameters.
-        The UNIFORM distribution parameters are: {"a": *, "b": *}.
+        Initializes the Uniform Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        The Uniform distribution parameters are: {"a": *, "b": *}.
         https://phitter.io/distributions/continuous/uniform
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
-            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DISCRETE_MEASURES] instance or a dictionary of the distribution's parameters.")
+            raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")
         if discrete_measures != None:
             self.parameters = self.get_parameters(discrete_measures=discrete_measures)
         if parameters != None:
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append("../")
-    from discrete_measures import DISCRETE_MEASURES
+    from discrete_measures import DiscreteMeasures
 
     ## Import function to get discrete_measures
     def get_data(path: str) -> list[int]:
@@ -182,8 +182,8 @@ if __name__ == "__main__":
 
     ## Distribution class
     data = get_data(path)
-    discrete_measures = DISCRETE_MEASURES(data)
-    distribution = UNIFORM(discrete_measures=discrete_measures)
+    discrete_measures = DiscreteMeasures(data)
+    distribution = Uniform(discrete_measures=discrete_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

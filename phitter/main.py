@@ -5,11 +5,11 @@ import numpy
 import pandas
 
 sys.path.append("../")
-from phitter.continuous.phitter_continuous import PHITTER_CONTINUOUS
-from phitter.discrete.phitter_discrete import PHITTER_DISCRETE
+from phitter.continuous.phitter_continuous import PhitterContinuous
+from phitter.discrete.phitter_discrete import PhitterDiscrete
 
 
-class PHITTER:
+class Phitter:
     """
     Fit continuous or discrete distributions to a given dataset.
     """
@@ -89,7 +89,7 @@ class PHITTER:
             The number of workers to use for fitting the distributions (default is 1).
         """
         if self.fit_type == "continuous":
-            self.phitter_continuous = PHITTER_CONTINUOUS(
+            self.phitter_continuous = PhitterContinuous(
                 data=self.data,
                 num_bins=self.num_bins,
                 confidence_level=self.confidence_level,
@@ -102,7 +102,7 @@ class PHITTER:
             self.phitter_continuous.fit(n_workers=n_workers)
 
         if self.fit_type == "discrete":
-            self.phitter_discrete = PHITTER_DISCRETE(
+            self.phitter_discrete = PhitterDiscrete(
                 data=self.data,
                 confidence_level=self.confidence_level,
                 minimum_sse=self.minimum_sse,
@@ -906,7 +906,7 @@ if __name__ == "__main__":
     sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.strip().replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
-    phitter = PHITTER(data, fit_type="discrete")
+    phitter = Phitter(data, fit_type="discrete")
     phitter.fit(n_workers=2)
 
     print(f"Best Distribution: {phitter.best_distribution}")

@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("../../../phitter_web/continuous/")
-from phitter_web_continuous import PHITTER_CONTINUOUS
+from phitter_web_continuous import PhitterContinuous
 
 
 def get_data(path: str) -> list[float | int]:
@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     data = get_data(path)
 
-    phi = PHITTER_CONTINUOUS(data)
+    phi = PhitterContinuous(data)
     phi.fit(n_workers=2)
 
     for distribution, results in phi.sorted_distributions_sse.items():

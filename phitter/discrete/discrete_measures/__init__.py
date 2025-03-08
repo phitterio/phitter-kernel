@@ -1,1 +1,1 @@
-from .discrete_measures import DISCRETE_MEASURES
+from .discrete_measures import DiscreteMeasures

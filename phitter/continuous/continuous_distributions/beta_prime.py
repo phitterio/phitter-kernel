@@ -8,10 +8,10 @@ import scipy.stats
 warnings.filterwarnings("ignore")
 
 
-class BETA_PRIME:
+class BetaPrime:
     """
     Beta Prime Distribution
-    Parameters BETA_PRIME distribution: {"alpha": *, "beta": *}
+    Parameters BetaPrime Distribution: {"alpha": *, "beta": *}
     https://phitter.io/distributions/continuous/beta_prime
     """
 
@@ -22,13 +22,13 @@ class BETA_PRIME:
         init_parameters_examples=False,
     ):
         """
-        Initializes the BETA_PRIME distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        Parameters BETA_PRIME distribution: {"alpha": *, "beta": *}
+        Initializes the BetaPrime Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        Parameters BetaPrime Distribution: {"alpha": *, "beta": *}
         https://phitter.io/distributions/continuous/beta_prime
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
-                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True."
             )
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
@@ -231,7 +231,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append("../")
-    from continuous_measures import CONTINUOUS_MEASURES
+    from continuous_measures import ContinuousMeasures
 
     ## Import function to get continuous_measures
     def get_data(path: str) -> list[float]:
@@ -243,8 +243,8 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../continuous_distributions_sample/sample_beta_prime.txt"
     data = get_data(path)
-    continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = BETA_PRIME(continuous_measures=continuous_measures)
+    continuous_measures = ContinuousMeasures(data)
+    distribution = BetaPrime(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

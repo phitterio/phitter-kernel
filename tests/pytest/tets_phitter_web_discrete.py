@@ -3,7 +3,7 @@ import random
 
 import pytest
 
-from phitter_web.discrete.phitter_web_discrete import PHITTER_DISCRETE
+from phitter_web.discrete.phitter_web_discrete import PhitterDiscrete
 
 
 def get_data(path: str) -> list[float | int]:
@@ -25,7 +25,7 @@ def test_phitter_analysis(random_file_path):
     data = get_data(random_file_path)
 
     ## Fit dataset
-    phi = PHITTER_DISCRETE(data)
+    phi = PhitterDiscrete(data)
     phi.fit(n_workers=2)
 
     assert len(phi.sorted_distributions_sse) > 0, "sorted_distributions_sse should not be empty"

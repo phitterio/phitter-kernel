@@ -12,12 +12,12 @@ import scipy.stats
 
 sys.path.append("../..")
 from phitter.discrete.discrete_distributions import DISCRETE_DISTRIBUTIONS
-from phitter.discrete.discrete_measures import DISCRETE_MEASURES
+from phitter.discrete.discrete_measures import DiscreteMeasures
 from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_chi_square
 from phitter.discrete.discrete_statistical_tests import evaluate_discrete_test_kolmogorov_smirnov
 
 
-class PHITTER_DISCRETE:
+class PhitterDiscrete:
     def __init__(
         self,
         data: list[int | float] | numpy.ndarray,
@@ -46,7 +46,7 @@ class PHITTER_DISCRETE:
                 raise ValueError(f"The following distributions to exclude are not found in the discrete distributions list: {not_distributions_ids}")
             self.distributions_to_fit = [dist for dist in DISCRETE_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
 
-        self.discrete_measures = DISCRETE_MEASURES(
+        self.discrete_measures = DiscreteMeasures(
             data=data,
             confidence_level=confidence_level,
             subsample_size=subsample_size,
@@ -666,7 +666,7 @@ class PHITTER_DISCRETE:
 
 if __name__ == "__main__":
     from discrete_distributions import DISCRETE_DISTRIBUTIONS
-    from discrete_measures import DISCRETE_MEASURES
+    from discrete_measures import DiscreteMeasures
     from discrete_statistical_tests import evaluate_discrete_test_chi_square, evaluate_discrete_test_kolmogorov_smirnov
 
     path = "../../datasets_test/discrete/sample_binomial.txt"
@@ -674,7 +674,7 @@ if __name__ == "__main__":
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
     sample_distribution_file.close()
 
-    phitter_discrete = PHITTER_DISCRETE(data)
+    phitter_discrete = PhitterDiscrete(data)
     phitter_discrete.fit()
 
     for distribution, results in phitter_discrete.sorted_distributions_sse.items():

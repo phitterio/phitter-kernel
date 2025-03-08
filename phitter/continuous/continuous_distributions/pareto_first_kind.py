@@ -3,10 +3,10 @@ import scipy.optimize
 import scipy.stats
 
 
-class PARETO_FIRST_KIND:
+class ParetoFirstKind:
     """
     Pareto first kind distribution distribution
-    Parameters PARETO_FIRST_KIND distribution: {"alpha": *, "xm": *, "loc": *}
+    Parameters ParetoFirstKind Distribution: {"alpha": *, "xm": *, "loc": *}
     https://phitter.io/distributions/continuous/pareto_first_kind
     """
 
@@ -17,13 +17,13 @@ class PARETO_FIRST_KIND:
         init_parameters_examples=False,
     ):
         """
-        Initializes the PARETO_FIRST_KIND distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        Parameters PARETO_FIRST_KIND distribution: {"alpha": *, "xm": *, "loc": *}
+        Initializes the ParetoFirstKind Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        Parameters ParetoFirstKind Distribution: {"alpha": *, "xm": *, "loc": *}
         https://phitter.io/distributions/continuous/pareto_first_kind
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
-                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True."
             )
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     import numpy
 
     sys.path.append("../")
-    from continuous_measures import CONTINUOUS_MEASURES
+    from continuous_measures import ContinuousMeasures
 
     # Import function to get continuous_measures
     def get_data(path: str) -> list[float]:
@@ -256,8 +256,8 @@ if __name__ == "__main__":
     # Distribution class
     path = "../continuous_distributions_sample/sample_pareto_first_kind.txt"
     data = get_data(path)
-    continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = PARETO_FIRST_KIND(continuous_measures=continuous_measures)
+    continuous_measures = ContinuousMeasures(data)
+    distribution = ParetoFirstKind(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

@@ -25,7 +25,7 @@ def test_phitter_analysis(random_file_path):
     data = get_data(random_file_path)
 
     ## Fit dataset
-    phi = phitter.PHITTER(data, fit_type="discrete")
+    phi = phitter.Phitter(data, fit_type="discrete")
     phi.fit(n_workers=2)
 
     assert len(phi.sorted_distributions_sse) > 0, "sorted_distributions_sse should not be empty"

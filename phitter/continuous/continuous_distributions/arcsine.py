@@ -2,10 +2,10 @@ import numpy
 import scipy.special
 
 
-class ARCSINE:
+class Arcsine:
     """
     Arcsine distribution
-    Parameters ARCSINE distribution: {"a": *, "b": *}
+    Parameters Arcsine Distribution: {"a": *, "b": *}
     https://phitter.io/distributions/continuous/arcsine
     """
 
@@ -16,13 +16,13 @@ class ARCSINE:
         init_parameters_examples=False,
     ):
         """
-        Initializes the ARCSINE distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        Parameters ARCSINE distribution: {"a": *, "b": *}
+        Initializes the Arcsine Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        Parameters Arcsine Distribution: {"a": *, "b": *}
         https://phitter.io/distributions/continuous/arcsine
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
-                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True."
             )
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
@@ -194,7 +194,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append("../")
-    from continuous_measures import CONTINUOUS_MEASURES
+    from continuous_measures import ContinuousMeasures
 
     ## Import function to get continuous_measures
     def get_data(path: str) -> list[float]:
@@ -207,8 +207,8 @@ if __name__ == "__main__":
 
     ## Distribution class
     data = get_data(path)
-    continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = ARCSINE(continuous_measures=continuous_measures)
+    continuous_measures = ContinuousMeasures(data)
+    distribution = Arcsine(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

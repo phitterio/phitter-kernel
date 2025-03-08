@@ -15,7 +15,7 @@ def get_data(path: str) -> list[float | int]:
 def test_distribution_methods(id_distribution):
     distribution_class = phitter.continuous.CONTINUOUS_DISTRIBUTIONS[id_distribution]
     data = get_data(f"./phitter/continuous/continuous_distributions_sample/sample_{id_distribution}.txt")
-    continuous_measures = phitter.continuous.CONTINUOUS_MEASURES(data)
+    continuous_measures = phitter.continuous.ContinuousMeasures(data)
     distribution = distribution_class(continuous_measures=continuous_measures)
 
     try:

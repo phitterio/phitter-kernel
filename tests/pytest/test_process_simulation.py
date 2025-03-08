@@ -20,19 +20,37 @@ def test_wrong_simulation_name():
 def test_simulation_running():
     simulation = phitter.simulation.ProcessSimulation()
     simulation.add_process(
-        "normal", {"mu": 5, "sigma": 2}, "first", new_branch=True, number_of_products=10
+        "normal",
+        {"mu": 5, "sigma": 2},
+        "first",
+        new_branch=True,
+        number_of_products=10,
     )
     simulation.add_process(
-        "exponential", {"lambda": 4}, "second", previous_ids=["first"]
+        "exponential",
+        {"lambda": 4},
+        "second",
+        previous_ids=["first"],
     )
     simulation.add_process(
-        "exponential", {"lambda": 4}, "ni_idea", previous_ids=["first"]
+        "exponential",
+        {"lambda": 4},
+        "ni_idea",
+        previous_ids=["first"],
     )
     simulation.add_process(
-        "exponential", {"lambda": 4}, "ni_idea_2", previous_ids=["first"]
+        "exponential",
+        {"lambda": 4},
+        "ni_idea_2",
+        previous_ids=["first"],
     )
 
-    simulation.add_process("gamma", {"alpha": 15, "beta": 3}, "third", new_branch=True)
+    simulation.add_process(
+        "gamma",
+        {"alpha": 15, "beta": 3},
+        "third",
+        new_branch=True,
+    )
     simulation.add_process(
         "beta",
         {"alpha": 1, "beta": 1, "A": 2, "B": 3},
@@ -66,18 +84,10 @@ def test_simulation_running():
 # Test to check if the confidence interval results are as expected
 def test_simulation_confidence_interval():
     simulation = phitter.simulation.ProcessSimulation()
-    simulation.add_process(
-        "normal", {"mu": 5, "sigma": 2}, "first", new_branch=True, number_of_products=10
-    )
-    simulation.add_process(
-        "exponential", {"lambda": 4}, "second", previous_ids=["first"]
-    )
-    simulation.add_process(
-        "exponential", {"lambda": 4}, "ni_idea", previous_ids=["first"]
-    )
-    simulation.add_process(
-        "exponential", {"lambda": 4}, "ni_idea_2", previous_ids=["first"]
-    )
+    simulation.add_process("normal", {"mu": 5, "sigma": 2}, "first", new_branch=True, number_of_products=10)
+    simulation.add_process("exponential", {"lambda": 4}, "second", previous_ids=["first"])
+    simulation.add_process("exponential", {"lambda": 4}, "ni_idea", previous_ids=["first"])
+    simulation.add_process("exponential", {"lambda": 4}, "ni_idea_2", previous_ids=["first"])
 
     simulation.add_process("gamma", {"alpha": 15, "beta": 3}, "third", new_branch=True)
     simulation.add_process(

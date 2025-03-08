@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-class ALPHA:
+class Alpha:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -18,7 +18,7 @@ class ALPHA:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -126,7 +126,7 @@ class ALPHA:
         return parameters
 
 
-class ARCSINE:
+class Arcsine:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -134,7 +134,7 @@ class ARCSINE:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -240,7 +240,7 @@ class ARCSINE:
         return parameters
 
 
-class ARGUS:
+class Argus:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -248,7 +248,7 @@ class ARGUS:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -370,7 +370,7 @@ class ARGUS:
         return parameters
 
 
-class BETA:
+class Beta:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -378,7 +378,7 @@ class BETA:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -489,7 +489,7 @@ class BETA:
 warnings.filterwarnings("ignore")
 
 
-class BETA_PRIME:
+class BetaPrime:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -497,7 +497,7 @@ class BETA_PRIME:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -616,7 +616,7 @@ class BETA_PRIME:
 warnings.filterwarnings("ignore")
 
 
-class BETA_PRIME_4P:
+class BetaPrime4P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -624,7 +624,7 @@ class BETA_PRIME_4P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -753,7 +753,7 @@ class BETA_PRIME_4P:
         return parameters
 
 
-class BRADFORD:
+class Bradford:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -761,7 +761,7 @@ class BRADFORD:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -872,7 +872,7 @@ class BRADFORD:
 warnings.filterwarnings("ignore")
 
 
-class BURR:
+class Burr:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -880,7 +880,7 @@ class BURR:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -985,7 +985,7 @@ class BURR:
 warnings.filterwarnings("ignore")
 
 
-class BURR_4P:
+class Burr4P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -993,7 +993,7 @@ class BURR_4P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1096,7 +1096,7 @@ class BURR_4P:
         return parameters
 
 
-class CAUCHY:
+class Cauchy:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1104,7 +1104,7 @@ class CAUCHY:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1185,7 +1185,7 @@ class CAUCHY:
         return parameters
 
 
-class CHI_SQUARE:
+class ChiSquare:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1193,7 +1193,7 @@ class CHI_SQUARE:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1275,7 +1275,7 @@ class CHI_SQUARE:
         return parameters
 
 
-class CHI_SQUARE_3P:
+class ChiSquare3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1283,7 +1283,7 @@ class CHI_SQUARE_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1386,7 +1386,7 @@ class CHI_SQUARE_3P:
         return parameters
 
 
-class DAGUM:
+class Dagum:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1394,7 +1394,7 @@ class DAGUM:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1531,7 +1531,7 @@ class DAGUM:
 warnings.filterwarnings("ignore")
 
 
-class DAGUM_4P:
+class Dagum4P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1539,7 +1539,7 @@ class DAGUM_4P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1677,7 +1677,7 @@ class DAGUM_4P:
                 return parameters_ls
 
 
-class ERLANG:
+class Erlang:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1685,7 +1685,7 @@ class ERLANG:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1788,7 +1788,7 @@ class ERLANG:
         return parameters
 
 
-class ERLANG_3P:
+class Erlang3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1796,7 +1796,7 @@ class ERLANG_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1901,7 +1901,7 @@ class ERLANG_3P:
         return parameters
 
 
-class ERROR_FUNCTION:
+class ErrorFunction:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1909,7 +1909,7 @@ class ERROR_FUNCTION:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -1989,7 +1989,7 @@ class ERROR_FUNCTION:
         return parameters
 
 
-class EXPONENTIAL:
+class Exponential:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -1997,7 +1997,7 @@ class EXPONENTIAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2077,7 +2077,7 @@ class EXPONENTIAL:
         return parameters
 
 
-class EXPONENTIAL_2P:
+class Exponential2P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2085,7 +2085,7 @@ class EXPONENTIAL_2P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2175,7 +2175,7 @@ class F:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2277,7 +2277,7 @@ class F:
         return parameters
 
 
-class FATIGUE_LIFE:
+class FatigueLife:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2285,7 +2285,7 @@ class FATIGUE_LIFE:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2381,7 +2381,7 @@ class FATIGUE_LIFE:
         return parameters
 
 
-class FOLDED_NORMAL:
+class FoldedNormal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2389,7 +2389,7 @@ class FOLDED_NORMAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2499,7 +2499,7 @@ class FOLDED_NORMAL:
         return parameters
 
 
-class FRECHET:
+class Frechet:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2507,7 +2507,7 @@ class FRECHET:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2626,7 +2626,7 @@ class FRECHET:
         return parameters
 
 
-class F_4P:
+class F4P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2634,7 +2634,7 @@ class F_4P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2759,7 +2759,7 @@ class F_4P:
         return parameters
 
 
-class GAMMA:
+class Gamma:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2767,7 +2767,7 @@ class GAMMA:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2869,7 +2869,7 @@ class GAMMA:
         return parameters
 
 
-class GAMMA_3P:
+class Gamma3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2877,7 +2877,7 @@ class GAMMA_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -2981,7 +2981,7 @@ class GAMMA_3P:
         return parameters
 
 
-class GENERALIZED_EXTREME_VALUE:
+class GeneralizedExtremeValue:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -2989,7 +2989,7 @@ class GENERALIZED_EXTREME_VALUE:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3118,7 +3118,7 @@ class GENERALIZED_EXTREME_VALUE:
 warnings.filterwarnings("ignore")
 
 
-class GENERALIZED_GAMMA:
+class GeneralizedGamma:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3126,7 +3126,7 @@ class GENERALIZED_GAMMA:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3248,7 +3248,7 @@ class GENERALIZED_GAMMA:
         return parameters
 
 
-class GENERALIZED_GAMMA_4P:
+class GeneralizedGamma4P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3256,7 +3256,7 @@ class GENERALIZED_GAMMA_4P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3382,7 +3382,7 @@ class GENERALIZED_GAMMA_4P:
         return parameters
 
 
-class GENERALIZED_LOGISTIC:
+class GeneralizedLogistic:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3390,7 +3390,7 @@ class GENERALIZED_LOGISTIC:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3487,7 +3487,7 @@ class GENERALIZED_LOGISTIC:
         return parameters
 
 
-class GENERALIZED_NORMAL:
+class GeneralizedNormal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3495,7 +3495,7 @@ class GENERALIZED_NORMAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3578,7 +3578,7 @@ class GENERALIZED_NORMAL:
         return parameters
 
 
-class GENERALIZED_PARETO:
+class GeneralizedPareto:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3586,7 +3586,7 @@ class GENERALIZED_PARETO:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3692,7 +3692,7 @@ class GENERALIZED_PARETO:
         return parameters
 
 
-class GIBRAT:
+class Gibrat:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3700,7 +3700,7 @@ class GIBRAT:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3784,7 +3784,7 @@ class GIBRAT:
         return parameters
 
 
-class GUMBEL_LEFT:
+class GumbelLeft:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3792,7 +3792,7 @@ class GUMBEL_LEFT:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3885,7 +3885,7 @@ class GUMBEL_LEFT:
         return parameters
 
 
-class GUMBEL_RIGHT:
+class GumbelRight:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3893,7 +3893,7 @@ class GUMBEL_RIGHT:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -3986,7 +3986,7 @@ class GUMBEL_RIGHT:
         return parameters
 
 
-class HALF_NORMAL:
+class HalfNormal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -3994,7 +3994,7 @@ class HALF_NORMAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4080,7 +4080,7 @@ class HALF_NORMAL:
         return parameters
 
 
-class HYPERBOLIC_SECANT:
+class HyperbolicSecant:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4088,7 +4088,7 @@ class HYPERBOLIC_SECANT:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4172,7 +4172,7 @@ class HYPERBOLIC_SECANT:
         return parameters
 
 
-class INVERSE_GAMMA:
+class InverseGamma:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4180,7 +4180,7 @@ class INVERSE_GAMMA:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4289,7 +4289,7 @@ class INVERSE_GAMMA:
         return parameters
 
 
-class INVERSE_GAMMA_3P:
+class InverseGamma3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4297,7 +4297,7 @@ class INVERSE_GAMMA_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4407,7 +4407,7 @@ class INVERSE_GAMMA_3P:
         return parameters
 
 
-class INVERSE_GAUSSIAN:
+class InverseGaussian:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4415,7 +4415,7 @@ class INVERSE_GAUSSIAN:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4500,7 +4500,7 @@ class INVERSE_GAUSSIAN:
         return parameters
 
 
-class INVERSE_GAUSSIAN_3P:
+class InverseGaussian3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4508,7 +4508,7 @@ class INVERSE_GAUSSIAN_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4595,7 +4595,7 @@ class INVERSE_GAUSSIAN_3P:
         return parameters
 
 
-class JOHNSON_SB:
+class JohnsonSB:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4603,7 +4603,7 @@ class JOHNSON_SB:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4711,7 +4711,7 @@ class JOHNSON_SB:
         return parameters
 
 
-class JOHNSON_SU:
+class JohnsonSU:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4719,7 +4719,7 @@ class JOHNSON_SU:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4836,7 +4836,7 @@ class JOHNSON_SU:
         return parameters
 
 
-class KUMARASWAMY:
+class Kumaraswamy:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4844,7 +4844,7 @@ class KUMARASWAMY:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -4971,7 +4971,7 @@ class KUMARASWAMY:
         return parameters
 
 
-class LAPLACE:
+class Laplace:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -4979,7 +4979,7 @@ class LAPLACE:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5061,7 +5061,7 @@ class LAPLACE:
         return parameters
 
 
-class LEVY:
+class Levy:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5069,7 +5069,7 @@ class LEVY:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5153,7 +5153,7 @@ class LEVY:
         return parameters
 
 
-class LOGGAMMA:
+class LogGamma:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5161,7 +5161,7 @@ class LOGGAMMA:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5261,7 +5261,7 @@ class LOGGAMMA:
         return parameters
 
 
-class LOGISTIC:
+class Logistic:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5269,7 +5269,7 @@ class LOGISTIC:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5355,7 +5355,7 @@ class LOGISTIC:
         return parameters
 
 
-class LOGLOGISTIC:
+class LogLogistic:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5363,7 +5363,7 @@ class LOGLOGISTIC:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5476,7 +5476,7 @@ class LOGLOGISTIC:
         return parameters
 
 
-class LOGLOGISTIC_3P:
+class LogLogistic3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5484,7 +5484,7 @@ class LOGLOGISTIC_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5601,7 +5601,7 @@ class LOGLOGISTIC_3P:
         return parameters
 
 
-class LOGNORMAL:
+class LogNormal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5609,7 +5609,7 @@ class LOGNORMAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5693,7 +5693,7 @@ class LOGNORMAL:
         return parameters
 
 
-class MAXWELL:
+class Maxwell:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5701,7 +5701,7 @@ class MAXWELL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5787,7 +5787,7 @@ class MAXWELL:
         return parameters
 
 
-class MOYAL:
+class Moyal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5795,7 +5795,7 @@ class MOYAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5881,7 +5881,7 @@ class MOYAL:
         return parameters
 
 
-class NAKAGAMI:
+class Nakagami:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5889,7 +5889,7 @@ class NAKAGAMI:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -5979,7 +5979,7 @@ class NAKAGAMI:
         return parameters
 
 
-class NON_CENTRAL_CHI_SQUARE:
+class NonCentralChiSquare:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -5987,7 +5987,7 @@ class NON_CENTRAL_CHI_SQUARE:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6072,7 +6072,7 @@ class NON_CENTRAL_CHI_SQUARE:
         return parameters
 
 
-class NON_CENTRAL_F:
+class NonCentralF:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6080,7 +6080,7 @@ class NON_CENTRAL_F:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6211,7 +6211,7 @@ class NON_CENTRAL_F:
         return parameters
 
 
-class NON_CENTRAL_T_STUDENT:
+class NonCentralTStudent:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6219,7 +6219,7 @@ class NON_CENTRAL_T_STUDENT:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6355,7 +6355,7 @@ class NON_CENTRAL_T_STUDENT:
         return parameters
 
 
-class NORMAL:
+class Normal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6363,7 +6363,7 @@ class NORMAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6411,7 +6411,7 @@ class NORMAL:
 
     @property
     def variance(self) -> float:
-        return self.sigma * 3
+        return self.sigma**2
 
     @property
     def standard_deviation(self) -> float:
@@ -6448,7 +6448,7 @@ class NORMAL:
         return parameters
 
 
-class PARETO_FIRST_KIND:
+class ParetoFirstKind:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6456,7 +6456,7 @@ class PARETO_FIRST_KIND:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6558,7 +6558,7 @@ class PARETO_FIRST_KIND:
         return parameters
 
 
-class PARETO_SECOND_KIND:
+class ParetoSecondKind:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6566,7 +6566,7 @@ class PARETO_SECOND_KIND:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6671,7 +6671,7 @@ class PARETO_SECOND_KIND:
         return parameters
 
 
-class PERT:
+class Pert:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6679,7 +6679,7 @@ class PERT:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6782,7 +6782,7 @@ class PERT:
         return parameters
 
 
-class POWER_FUNCTION:
+class PowerFunction:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6790,7 +6790,7 @@ class POWER_FUNCTION:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -6916,7 +6916,7 @@ class POWER_FUNCTION:
         return parameters
 
 
-class RAYLEIGH:
+class Rayleigh:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -6924,7 +6924,7 @@ class RAYLEIGH:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7008,7 +7008,7 @@ class RAYLEIGH:
         return parameters
 
 
-class RECIPROCAL:
+class Reciprocal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7016,7 +7016,7 @@ class RECIPROCAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7115,7 +7115,7 @@ class RECIPROCAL:
         return parameters
 
 
-class RICE:
+class Rice:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7123,7 +7123,7 @@ class RICE:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7258,7 +7258,7 @@ class RICE:
         return parameters
 
 
-class SEMICIRCULAR:
+class Semicircular:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7266,7 +7266,7 @@ class SEMICIRCULAR:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7356,7 +7356,7 @@ class SEMICIRCULAR:
         return parameters
 
 
-class TRAPEZOIDAL:
+class Trapezoidal:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7364,7 +7364,7 @@ class TRAPEZOIDAL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7478,7 +7478,7 @@ class TRAPEZOIDAL:
         return parameters
 
 
-class TRIANGULAR:
+class Triangular:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7486,7 +7486,7 @@ class TRIANGULAR:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7572,7 +7572,7 @@ class TRIANGULAR:
         return parameters
 
 
-class T_STUDENT:
+class TStudent:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7580,7 +7580,7 @@ class T_STUDENT:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7662,7 +7662,7 @@ class T_STUDENT:
         return parameters
 
 
-class T_STUDENT_3P:
+class TStudent3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7670,7 +7670,7 @@ class T_STUDENT_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7755,7 +7755,7 @@ class T_STUDENT_3P:
         return parameters
 
 
-class UNIFORM:
+class Uniform:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7763,7 +7763,7 @@ class UNIFORM:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7849,7 +7849,7 @@ class UNIFORM:
         return parameters
 
 
-class WEIBULL:
+class Weibull:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7857,7 +7857,7 @@ class WEIBULL:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -7970,7 +7970,7 @@ class WEIBULL:
         return parameters
 
 
-class WEIBULL_3P:
+class Weibull3P:
     def __init__(
         self,
         parameters: dict[str, int | float] = None,
@@ -7978,7 +7978,7 @@ class WEIBULL_3P:
         init_parameters_examples=False,
     ):
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
-            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True.")
+            raise ValueError("You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True.")
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
         if parameters != None:
@@ -8097,83 +8097,83 @@ class WEIBULL_3P:
 
 
 CONTINUOUS_DISTRIBUTIONS = {
-    "alpha": ALPHA,
-    "arcsine": ARCSINE,
-    "argus": ARGUS,
-    "beta": BETA,
-    "beta_prime": BETA_PRIME,
-    "beta_prime_4p": BETA_PRIME_4P,
-    "bradford": BRADFORD,
-    "burr": BURR,
-    "burr_4p": BURR_4P,
-    "cauchy": CAUCHY,
-    "chi_square": CHI_SQUARE,
-    "chi_square_3p": CHI_SQUARE_3P,
-    "dagum": DAGUM,
-    "dagum_4p": DAGUM_4P,
-    "erlang": ERLANG,
-    "erlang_3p": ERLANG_3P,
-    "error_function": ERROR_FUNCTION,
-    "exponential": EXPONENTIAL,
-    "exponential_2p": EXPONENTIAL_2P,
+    "alpha": Alpha,
+    "arcsine": Arcsine,
+    "argus": Argus,
+    "beta": Beta,
+    "beta_prime": BetaPrime,
+    "beta_prime_4p": BetaPrime4P,
+    "bradford": Bradford,
+    "burr": Burr,
+    "burr_4p": Burr4P,
+    "cauchy": Cauchy,
+    "chi_square": ChiSquare,
+    "chi_square_3p": ChiSquare3P,
+    "dagum": Dagum,
+    "dagum_4p": Dagum4P,
+    "erlang": Erlang,
+    "erlang_3p": Erlang3P,
+    "error_function": ErrorFunction,
+    "exponential": Exponential,
+    "exponential_2p": Exponential2P,
     "f": F,
-    "fatigue_life": FATIGUE_LIFE,
-    "folded_normal": FOLDED_NORMAL,
-    "frechet": FRECHET,
-    "f_4p": F_4P,
-    "gamma": GAMMA,
-    "gamma_3p": GAMMA_3P,
-    "generalized_extreme_value": GENERALIZED_EXTREME_VALUE,
-    "generalized_gamma": GENERALIZED_GAMMA,
-    "generalized_gamma_4p": GENERALIZED_GAMMA_4P,
-    "generalized_logistic": GENERALIZED_LOGISTIC,
-    "generalized_normal": GENERALIZED_NORMAL,
-    "generalized_pareto": GENERALIZED_PARETO,
-    "gibrat": GIBRAT,
-    "gumbel_left": GUMBEL_LEFT,
-    "gumbel_right": GUMBEL_RIGHT,
-    "half_normal": HALF_NORMAL,
-    "hyperbolic_secant": HYPERBOLIC_SECANT,
-    "inverse_gamma": INVERSE_GAMMA,
-    "inverse_gamma_3p": INVERSE_GAMMA_3P,
-    "inverse_gaussian": INVERSE_GAUSSIAN,
-    "inverse_gaussian_3p": INVERSE_GAUSSIAN_3P,
-    "johnson_sb": JOHNSON_SB,
-    "johnson_su": JOHNSON_SU,
-    "kumaraswamy": KUMARASWAMY,
-    "laplace": LAPLACE,
-    "levy": LEVY,
-    "loggamma": LOGGAMMA,
-    "logistic": LOGISTIC,
-    "loglogistic": LOGLOGISTIC,
-    "loglogistic_3p": LOGLOGISTIC_3P,
-    "lognormal": LOGNORMAL,
-    "maxwell": MAXWELL,
-    "moyal": MOYAL,
-    "nakagami": NAKAGAMI,
-    "non_central_chi_square": NON_CENTRAL_CHI_SQUARE,
-    "non_central_f": NON_CENTRAL_F,
-    "non_central_t_student": NON_CENTRAL_T_STUDENT,
-    "normal": NORMAL,
-    "pareto_first_kind": PARETO_FIRST_KIND,
-    "pareto_second_kind": PARETO_SECOND_KIND,
-    "pert": PERT,
-    "power_function": POWER_FUNCTION,
-    "rayleigh": RAYLEIGH,
-    "reciprocal": RECIPROCAL,
-    "rice": RICE,
-    "semicircular": SEMICIRCULAR,
-    "trapezoidal": TRAPEZOIDAL,
-    "triangular": TRIANGULAR,
-    "t_student": T_STUDENT,
-    "t_student_3p": T_STUDENT_3P,
-    "uniform": UNIFORM,
-    "weibull": WEIBULL,
-    "weibull_3p": WEIBULL_3P,
+    "fatigue_life": FatigueLife,
+    "folded_normal": FoldedNormal,
+    "frechet": Frechet,
+    "f_4p": F4P,
+    "gamma": Gamma,
+    "gamma_3p": Gamma3P,
+    "generalized_extreme_value": GeneralizedExtremeValue,
+    "generalized_gamma": GeneralizedGamma,
+    "generalized_gamma_4p": GeneralizedGamma4P,
+    "generalized_logistic": GeneralizedLogistic,
+    "generalized_normal": GeneralizedNormal,
+    "generalized_pareto": GeneralizedPareto,
+    "gibrat": Gibrat,
+    "gumbel_left": GumbelLeft,
+    "gumbel_right": GumbelRight,
+    "half_normal": HalfNormal,
+    "hyperbolic_secant": HyperbolicSecant,
+    "inverse_gamma": InverseGamma,
+    "inverse_gamma_3p": InverseGamma3P,
+    "inverse_gaussian": InverseGaussian,
+    "inverse_gaussian_3p": InverseGaussian3P,
+    "johnson_sb": JohnsonSB,
+    "johnson_su": JohnsonSU,
+    "kumaraswamy": Kumaraswamy,
+    "laplace": Laplace,
+    "levy": Levy,
+    "loggamma": LogGamma,
+    "logistic": Logistic,
+    "loglogistic": LogLogistic,
+    "loglogistic_3p": LogLogistic3P,
+    "lognormal": LogNormal,
+    "maxwell": Maxwell,
+    "moyal": Moyal,
+    "nakagami": Nakagami,
+    "non_central_chi_square": NonCentralChiSquare,
+    "non_central_f": NonCentralF,
+    "non_central_t_student": NonCentralTStudent,
+    "normal": Normal,
+    "pareto_first_kind": ParetoFirstKind,
+    "pareto_second_kind": ParetoSecondKind,
+    "pert": Pert,
+    "power_function": PowerFunction,
+    "rayleigh": Rayleigh,
+    "reciprocal": Reciprocal,
+    "rice": Rice,
+    "semicircular": Semicircular,
+    "trapezoidal": Trapezoidal,
+    "triangular": Triangular,
+    "t_student": TStudent,
+    "t_student_3p": TStudent3P,
+    "uniform": Uniform,
+    "weibull": Weibull,
+    "weibull_3p": Weibull3P,
 }
 
 
-class CONTINUOUS_MEASURES:
+class ContinuousMeasures:
     def __init__(
         self,
         data: list[int | float] | numpy.ndarray,
@@ -8296,7 +8296,7 @@ def evaluate_continuous_test_anderson_darling(distribution, continuous_measures)
     return result_test_ad
 
 
-class PHITTER_CONTINUOUS:
+class PhitterContinuous:
     def __init__(
         self,
         data: list[int | float] | numpy.ndarray,
@@ -8322,7 +8322,7 @@ class PHITTER_CONTINUOUS:
             if len(not_distributions_ids) > 0:
                 raise ValueError(f"The following distributions to exclude are not found in the continuous distributions list: {not_distributions_ids}")
             self.distributions_to_fit = [dist for dist in CONTINUOUS_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
-        self.continuous_measures = CONTINUOUS_MEASURES(
+        self.continuous_measures = ContinuousMeasures(
             data=data,
             num_bins=num_bins,
             confidence_level=confidence_level,
@@ -8340,7 +8340,7 @@ class PHITTER_CONTINUOUS:
         validation_test = False
         try:
             test = test_function(distribution, self.continuous_measures)
-            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] > 0:
+            if numpy.isnan(test["test_statistic"]) == False and numpy.isinf(test["test_statistic"]) == False and test["test_statistic"] >= 0:
                 self.distribution_results[label] = {
                     "test_statistic": test["test_statistic"],
                     "critical_value": test["critical_value"],

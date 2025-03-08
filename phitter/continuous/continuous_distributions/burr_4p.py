@@ -8,10 +8,10 @@ import scipy.stats
 warnings.filterwarnings("ignore")
 
 
-class BURR_4P:
+class Burr4P:
     """
     Burr distribution
-    Parameters BURR_4P distribution: {"A": *, "B": *, "C": *, "loc": *}
+    Parameters Burr4P Distribution: {"A": *, "B": *, "C": *, "loc": *}
     https://phitter.io/distributions/continuous/burr_4p
     """
 
@@ -22,13 +22,13 @@ class BURR_4P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the BURR_4P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        Parameters BURR_4P distribution: {"A": *, "B": *, "C": *, "loc": *}
+        Initializes the Burr4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        Parameters Burr4P Distribution: {"A": *, "B": *, "C": *, "loc": *}
         https://phitter.io/distributions/continuous/burr_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
-                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True."
             )
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
@@ -236,7 +236,7 @@ if __name__ == "__main__":
     import numpy
 
     sys.path.append("../")
-    from continuous_measures import CONTINUOUS_MEASURES
+    from continuous_measures import ContinuousMeasures
 
     ## Import function to get continuous_measures
     def get_data(path: str) -> list[float]:
@@ -248,8 +248,8 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../continuous_distributions_sample/sample_burr_4p.txt"
     data = get_data(path)
-    continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = BURR_4P(continuous_measures=continuous_measures)
+    continuous_measures = ContinuousMeasures(data)
+    distribution = Burr4P(continuous_measures=continuous_measures)
     print(distribution.get_parameters(continuous_measures=continuous_measures))
 
     print(f"{distribution.name} distribution")

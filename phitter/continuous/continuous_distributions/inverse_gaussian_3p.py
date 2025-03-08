@@ -2,11 +2,11 @@ import numpy
 import scipy.stats
 
 
-class INVERSE_GAUSSIAN_3P:
+class InverseGaussian3P:
     """
-    Inverse Gaussian distribution
+    Inverse Gaussian Distribution
     Also known like Wald distribution
-    Parameters INVERSE_GAUSSIAN_3P distribution: {"mu": *, "lambda": *, "loc": *}
+    Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
     https://phitter.io/distributions/continuous/inverse_gaussian_3p
     """
 
@@ -17,13 +17,13 @@ class INVERSE_GAUSSIAN_3P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the INVERSE_GAUSSIAN_3P distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        Parameters INVERSE_GAUSSIAN_3P distribution: {"mu": *, "lambda": *, "loc": *}
+        Initializes the InverseGaussian3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
         https://phitter.io/distributions/continuous/inverse_gaussian_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
-                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True."
             )
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
@@ -177,7 +177,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append("../")
-    from continuous_measures import CONTINUOUS_MEASURES
+    from continuous_measures import ContinuousMeasures
 
     ## Import function to get continuous_measures
     def get_data(path: str) -> list[float]:
@@ -189,8 +189,8 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../continuous_distributions_sample/sample_inverse_gaussian_3p.txt"
     data = get_data(path)
-    continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = INVERSE_GAUSSIAN_3P(continuous_measures=continuous_measures)
+    continuous_measures = ContinuousMeasures(data)
+    distribution = InverseGaussian3P(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

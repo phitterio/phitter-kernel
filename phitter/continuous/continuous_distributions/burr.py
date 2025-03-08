@@ -8,10 +8,10 @@ import scipy.stats
 warnings.filterwarnings("ignore")
 
 
-class BURR:
+class Burr:
     """
     Burr distribution
-    Parameters BURR distribution: {"A": *, "B": *, "C": *}
+    Parameters Burr Distribution: {"A": *, "B": *, "C": *}
     https://phitter.io/distributions/continuous/burr
     """
 
@@ -22,13 +22,13 @@ class BURR:
         init_parameters_examples=False,
     ):
         """
-        Initializes the BURR distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        Parameters BURR distribution: {"A": *, "B": *, "C": *}
+        Initializes the Burr Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        Parameters Burr Distribution: {"A": *, "B": *, "C": *}
         https://phitter.io/distributions/continuous/burr
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
-                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True."
             )
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append("../")
-    from continuous_measures import CONTINUOUS_MEASURES
+    from continuous_measures import ContinuousMeasures
 
     ## Import function to get continuous_measures
     def get_data(path: str) -> list[float]:
@@ -246,8 +246,8 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../continuous_distributions_sample/sample_burr.txt"
     data = get_data(path)
-    continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = BURR(continuous_measures=continuous_measures)
+    continuous_measures = ContinuousMeasures(data)
+    distribution = Burr(continuous_measures=continuous_measures)
     print(distribution.get_parameters(continuous_measures=continuous_measures))
 
     print(f"{distribution.name} distribution")

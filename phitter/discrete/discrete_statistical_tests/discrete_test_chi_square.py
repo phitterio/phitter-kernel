@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     sys.path.append("../")
     from discrete_distributions import DISCRETE_DISTRIBUTIONS
-    from discrete_measures import DISCRETE_MEASURES
+    from discrete_measures import DiscreteMeasures
 
     def get_data(path: str) -> list[int]:
         sample_distribution_file = open(path, "r")
@@ -74,6 +74,6 @@ if __name__ == "__main__":
         data = get_data(path)
 
         ## Init a instance of class
-        discrete_measures = DISCRETE_MEASURES(data)
+        discrete_measures = DiscreteMeasures(data)
         distribution = distribution_class(discrete_measures=discrete_measures)
         print(evaluate_discrete_test_chi_square(distribution, discrete_measures))

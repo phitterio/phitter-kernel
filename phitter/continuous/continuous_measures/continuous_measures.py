@@ -3,7 +3,7 @@ import scipy.optimize
 import scipy.stats
 
 
-class CONTINUOUS_MEASURES:
+class ContinuousMeasures:
     def __init__(
         self,
         data: list[int | float] | numpy.ndarray,
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     path = "../continuous_distributions_sample/sample_exponential.txt"
     data = get_data(path)
 
-    continuous_measures = CONTINUOUS_MEASURES(data)
+    continuous_measures = ContinuousMeasures(data)
 
     print(f"Size: {continuous_measures.size}")
     print(f"Min: {continuous_measures.min}")

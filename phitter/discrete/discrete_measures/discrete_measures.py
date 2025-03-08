@@ -3,7 +3,7 @@ import scipy.optimize
 import scipy.stats
 
 
-class DISCRETE_MEASURES:
+class DiscreteMeasures:
     def __init__(
         self,
         data: list[int],
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     path = "../discrete_distributions_sample/sample_geometric.txt"
     data = get_data(path)
 
-    discrete_measures = DISCRETE_MEASURES(data)
+    discrete_measures = DiscreteMeasures(data)
 
     print("size: ", discrete_measures.size)
     print("Min: ", discrete_measures.min)

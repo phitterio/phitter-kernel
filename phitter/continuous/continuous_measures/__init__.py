@@ -1,1 +1,1 @@
-from .continuous_measures import CONTINUOUS_MEASURES
+from .continuous_measures import ContinuousMeasures

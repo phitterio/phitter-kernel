@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("../../../phitter_web/discrete/")
-from phitter_web_discrete import PHITTER_DISCRETE
+from phitter_web_discrete import PhitterDiscrete
 
 
 def get_data(path: str) -> list[int]:
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     path = "../../../datasets_test/discrete/sample_binomial.txt"
     data = get_data(path)
 
-    phi = PHITTER_DISCRETE(data)
+    phi = PhitterDiscrete(data)
     phi.fit()
 
     for distribution, results in phi.not_rejected_distributions.items():

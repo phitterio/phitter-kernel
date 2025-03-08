@@ -12,13 +12,13 @@ import scipy.stats
 
 sys.path.append("../..")
 from phitter.continuous.continuous_distributions import CONTINUOUS_DISTRIBUTIONS
-from phitter.continuous.continuous_measures import CONTINUOUS_MEASURES
+from phitter.continuous.continuous_measures import ContinuousMeasures
 from phitter.continuous.continuous_statistical_tests import evaluate_continuous_test_anderson_darling
 from phitter.continuous.continuous_statistical_tests import evaluate_continuous_test_chi_square
 from phitter.continuous.continuous_statistical_tests import evaluate_continuous_test_kolmogorov_smirnov
 
 
-class PHITTER_CONTINUOUS:
+class PhitterContinuous:
     def __init__(
         self,
         data: list[int | float] | numpy.ndarray,
@@ -48,7 +48,7 @@ class PHITTER_CONTINUOUS:
                 raise ValueError(f"The following distributions to exclude are not found in the continuous distributions list: {not_distributions_ids}")
             self.distributions_to_fit = [dist for dist in CONTINUOUS_DISTRIBUTIONS.keys() if dist not in exclude_distributions]
 
-        self.continuous_measures = CONTINUOUS_MEASURES(
+        self.continuous_measures = ContinuousMeasures(
             data=data,
             num_bins=num_bins,
             confidence_level=confidence_level,
@@ -694,7 +694,7 @@ if __name__ == "__main__":
     data = [float(x.replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
     sample_distribution_file.close()
 
-    phitter_continuous = PHITTER_CONTINUOUS(data, distributions_to_fit="all")
+    phitter_continuous = PhitterContinuous(data, distributions_to_fit="all")
     phitter_continuous.fit(n_workers=2)
 
     for distribution, results in phitter_continuous.sorted_distributions_sse.items():

@@ -3,10 +3,10 @@ import scipy.special
 import scipy.stats
 
 
-class GENERALIZED_NORMAL:
+class GeneralizedNormal:
     """
     Generalized normal distribution
-    Parameters GENERALIZED_NORMAL distribution: {"beta": *, "mu": *, "alpha": *}
+    Parameters GeneralizedNormal Distribution: {"beta": *, "mu": *, "alpha": *}
     https://phitter.io/distributions/continuous/generalized_normal    This distribution is known whit the following names:
     * Error Distribution
     * Exponential Power Distribution
@@ -22,13 +22,13 @@ class GENERALIZED_NORMAL:
         init_parameters_examples=False,
     ):
         """
-        Initializes the GENERALIZED_NORMAL distribution by either providing a Continuous Measures instance [CONTINUOUS_MEASURES] or a dictionary with the distribution's parameters.
-        Parameters GENERALIZED_NORMAL distribution: {"beta": *, "mu": *, "alpha": *}
+        Initializes the GeneralizedNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        Parameters GeneralizedNormal Distribution: {"beta": *, "mu": *, "alpha": *}
         https://phitter.io/distributions/continuous/generalized_normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
-                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [CONTINUOUS_MEASURES] instance, or by setting init_parameters_examples to True."
+                "You must initialize the distribution by providing one of the following: distribution parameters, a Continuous Measures [ContinuousMeasures] instance, or by setting init_parameters_examples to True."
             )
         if continuous_measures != None:
             self.parameters = self.get_parameters(continuous_measures=continuous_measures)
@@ -177,7 +177,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append("../")
-    from continuous_measures import CONTINUOUS_MEASURES
+    from continuous_measures import ContinuousMeasures
 
     ## Import function to get continuous_measures
     def get_data(path: str) -> list[float]:
@@ -189,8 +189,8 @@ if __name__ == "__main__":
     ## Distribution class
     path = "../continuous_distributions_sample/sample_generalized_normal.txt"
     data = get_data(path)
-    continuous_measures = CONTINUOUS_MEASURES(data)
-    distribution = GENERALIZED_NORMAL(continuous_measures=continuous_measures)
+    continuous_measures = ContinuousMeasures(data)
+    distribution = GeneralizedNormal(continuous_measures=continuous_measures)
 
     print(f"{distribution.name} distribution")
     print(f"Parameters: {distribution.parameters}")

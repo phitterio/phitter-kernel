@@ -1,19 +1,19 @@
-from .bernoulli import BERNOULLI
-from .binomial import BINOMIAL
-from .geometric import GEOMETRIC
-from .hypergeometric import HYPERGEOMETRIC
-from .logarithmic import LOGARITHMIC
-from .negative_binomial import NEGATIVE_BINOMIAL
-from .poisson import POISSON
-from .uniform import UNIFORM
+from .bernoulli import Bernoulli
+from .binomial import Binomial
+from .geometric import Geometric
+from .hypergeometric import Hypergeometric
+from .logarithmic import Logarithmic
+from .negative_binomial import NegativeBinomial
+from .poisson import Poisson
+from .uniform import Uniform
 
 DISCRETE_DISTRIBUTIONS = {
-    "bernoulli": BERNOULLI,
-    "binomial": BINOMIAL,
-    "geometric": GEOMETRIC,
-    "hypergeometric": HYPERGEOMETRIC,
-    "logarithmic": LOGARITHMIC,
-    "negative_binomial": NEGATIVE_BINOMIAL,
-    "poisson": POISSON,
-    "uniform": UNIFORM,
+    "bernoulli": Bernoulli,
+    "binomial": Binomial,
+    "geometric": Geometric,
+    "hypergeometric": Hypergeometric,
+    "logarithmic": Logarithmic,
+    "negative_binomial": NegativeBinomial,
+    "poisson": Poisson,
+    "uniform": Uniform,
 }

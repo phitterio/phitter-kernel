@@ -78,7 +78,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a continuous fit using Phitter
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 ```
 
@@ -91,7 +91,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a continuous fit using Phitter
-phi = phitter.PHITTER(
+phi = phitter.Phitter(
     data=data,
     fit_type="continuous",
     num_bins=15,
@@ -111,7 +111,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a discrete fit using Phitter
-phi = phitter.PHITTER(
+phi = phitter.Phitter(
     data=data,
     fit_type="discrete",
     confidence_level=0.95,
@@ -130,7 +130,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a fit using Phitter
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit(n_workers=2)
 
 ## Global methods and properties
@@ -157,7 +157,7 @@ phi.get_n_test_null(id_distribution: str) -> int
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 
 phi.plot_histogram()
@@ -170,7 +170,7 @@ phi.plot_histogram()
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 
 phi.plot_histogram_distributions()
@@ -183,7 +183,7 @@ phi.plot_histogram_distributions()
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 
 phi.plot_distribution("beta")
@@ -196,7 +196,7 @@ phi.plot_distribution("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 
 phi.plot_ecdf()
@@ -209,7 +209,7 @@ phi.plot_ecdf()
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 
 phi.plot_ecdf_distribution("beta")
@@ -222,7 +222,7 @@ phi.plot_ecdf_distribution("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 
 phi.qq_plot("beta")
@@ -235,7 +235,7 @@ phi.qq_plot("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.PHITTER(data)
+phi = phitter.Phitter(data)
 phi.fit()
 
 phi.qq_plot_regression("beta")
@@ -248,7 +248,7 @@ phi.qq_plot_regression("beta")
 ```python
 import phitter
 
-distribution = phitter.continuous.BETA({"alpha": 5, "beta": 3, "A": 200, "B": 1000})
+distribution = phitter.continuous.Beta({"alpha": 5, "beta": 3, "A": 200, "B": 1000})
 
 ## CDF, PDF, PPF, PMF receive float or numpy.ndarray. For discrete distributions PMF instead of PDF. Parameters notation are in description of ditribution
 distribution.cdf(752) # -> 0.6242831129533498
