@@ -51,17 +51,23 @@ pip install phitter
 
 ### **_1. Fit Notebook's Tutorials_**
 
-|             Tutorial             |                                                                                                                  Notebooks                                                                                                                   |
-| :------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|        **Fit Continuous**        |    <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit_continuous_ncdb.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>    |
-|         **Fit Discrete**         | <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit_discrete_galton_board.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| **Fit Accelerate [Sample>100K]** |      <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit_accelerate.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>       |
-|   **Fit Specific Distribution**   | <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit_specific_distribution.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-|     **Working Distribution**     |   <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/working_distribution.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>    |
+|             Tutorial             |                                                                                                                    Notebooks                                                                                                                     |
+| :------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|        **Fit Continuous**        |    <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit/fit_continuous_ncdb.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>    |
+|         **Fit Discrete**         | <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit/fit_discrete_galton_board.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+| **Fit Accelerate [Sample>100K]** |      <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit/fit_accelerate.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>       |
+|  **Fit Specific Distribution**   | <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit/fit_specific_distribution.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+|     **Working Distribution**     |   <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/fit/working_distribution.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>    |
 
 ### **_2. Simulation Notebook's Tutorials_**
 
-Pending
+|                     Tutorial                      |                                                                                                                         Notebooks                                                                                                                          |
+| :-----------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|              **Process Simulation**               |      <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/simulation/process_simulation.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>      |
+|               **Own Distribution**                | <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/simulation/own_distribution_explanation.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+|  **Queue Simulation First-In-First-Out (FIFO)**   |    <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/simulation/queue_simulation_fifo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>     |
+|   **Queue Simulation Last-In-First-Out (LIFO)**   |    <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/simulation/queue_simulation_lifo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>     |
+| **Queue Simulation Priority-Based Service (PBS)** |     <a target="_blank" href="https://colab.research.google.com/github/phitterio/phitter-kernel/blob/main/examples/simulation/queue_simulation_pbs.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>     |
 
 ## Documentation
 
@@ -646,7 +652,7 @@ from phitter import simulation
 # Create a simulation process instance
 simulation = simulation.QueueingSimulation(
     a="exponential",
-    a_paramters={"lambda": 5},
+    a_parameters={"lambda": 5},
     s="exponential",
     s_parameters={"lambda": 20},
     c=3,
@@ -663,8 +669,7 @@ If you want to have the simulation results
 
 ```python
 # Run simulation
-simulation = simulation.run(simulation_time = 2000)
-simulation: pandas.Dataframe
+simulation.run(simulation_time = 2000)
 ```
 
 If you want to see some metrics and probabilities from this simulation you should use::
@@ -674,7 +679,7 @@ If you want to see some metrics and probabilities from this simulation you shoul
 simulation.metrics_summary() -> pandas.Dataframe
 
 # Calculate probabilities
-number_probability_summary() -> pandas.Dataframe
+simulation.number_probability_summary() -> pandas.Dataframe
 ```
 
 ### Run Confidence Interval for metrics and probabilities
