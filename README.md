@@ -26,7 +26,7 @@
 </p>
 
 <p>
-    In addition, Phitter offers the capability to perform process simulations, allowing users to graph and observe minimum times for specific observations. It also supports queue simulations with flexibility to configure various parameters, such as the number of servers, maximum population size, system capacity, and different queue disciplines, including First-In-First-Out (FIFO), Last-In-First-Out (LIFO), and priority-based service (PBS).
+    Additionally, Phitter enables advanced process simulations, allowing to model and visualize key performance metrics such as minimum observation times. It facilitates the simulation of queuing systems with configurable parameters, including the number of servers, system capacity, maximum population size, and service discipline. Supported queuing models encompass FIFO, LIFO and PBS, ensuring adaptability to various operational and research applications.
 </p>
 
 <p>
@@ -84,7 +84,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a continuous fit using Phitter
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 ```
 
@@ -136,7 +136,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a fit using Phitter
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit(n_workers=2)
 
 ## Global methods and properties
@@ -163,7 +163,7 @@ phi.get_n_test_null(id_distribution: str) -> int
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_histogram()
@@ -176,7 +176,7 @@ phi.plot_histogram()
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_histogram_distributions()
@@ -189,7 +189,7 @@ phi.plot_histogram_distributions()
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_distribution("beta")
@@ -202,7 +202,7 @@ phi.plot_distribution("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_ecdf()
@@ -215,7 +215,7 @@ phi.plot_ecdf()
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_ecdf_distribution("beta")
@@ -228,7 +228,7 @@ phi.plot_ecdf_distribution("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.qq_plot("beta")
@@ -241,7 +241,7 @@ phi.qq_plot("beta")
 ```python
 import phitter
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.qq_plot_regression("beta")

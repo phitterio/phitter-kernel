@@ -7,7 +7,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a continuous fit using Phitter
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 ```
 
@@ -59,7 +59,7 @@ import phitter
 data: list[int | float] = [...]
 
 ## Make a fit using Phitter
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit(n_workers=2)
 
 ## Global methods and properties
@@ -87,41 +87,41 @@ phi.get_n_test_null(id_distribution: str) -> int
 import phitter
 
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_histogram()
 ```
 
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/histogram.png?raw=true" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/plot_histogram.png?raw=true" width="500" />
 
-### Histogram PDF Dsitributions Plot
+### Histogram PDF Distributions Plot
 
 ```python
 import phitter
 
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_histogram_distributions()
 ```
 
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/histogram_pdf_distributions.png?raw=true" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/plot_histogram_distributions.png?raw=true" width="500" />
 
-### Histogram PDF Dsitribution Plot
+### Histogram PDF Distribution Plot
 
 ```python
 import phitter
 
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_distribution("beta")
 ```
 
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/histogram_pdf_distribution.png?raw=true" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/plot_one_distribution.png?raw=true" width="500" />
 
 ### ECDF Plot
 
@@ -129,13 +129,13 @@ phi.plot_distribution("beta")
 import phitter
 
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_ecdf()
 ```
 
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/ecdf.png?raw=true" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/plot_ecdf.png?raw=true" width="500" />
 
 ### ECDF Distribution Plot
 
@@ -143,13 +143,13 @@ phi.plot_ecdf()
 import phitter
 
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.plot_ecdf_distribution("beta")
 ```
 
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/ecdf_distribution.png?raw=true" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/plot_ecdf_distribution.png?raw=true" width="500" />
 
 ### QQ Plot
 
@@ -157,13 +157,13 @@ phi.plot_ecdf_distribution("beta")
 import phitter
 
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.qq_plot("beta")
 ```
 
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/qq_plot_distribution.png?raw=true" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/plot_qq.png?raw=true" width="500" />
 
 ### QQ - Regression Plot
 
@@ -171,13 +171,13 @@ phi.qq_plot("beta")
 import phitter
 
 data: list[int | float] = [...]
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 
 phi.qq_plot_regression("beta")
 ```
 
-<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/qq_plot_distribution_regression.png?raw=true" width="500" />
+<img alt="phitter_histogram" src="https://github.com/phitterio/phitter-kernel/blob/main/multimedia/plot_qq_regression.png?raw=true" width="500" />
 
 ### Working with distributions: Methods and properties
 
@@ -303,7 +303,7 @@ distribution.mode # -> 733.3333333333333
 
 ## Benchmarks
 
-### _Fit time continuous distributions_
+### _Continuous fit time: Sample Size vs Workers_
 
 | Sample Size / Workers |     1     |    2     |    6     |    10    |    20    |
 | :-------------------: | :-------: | :------: | :------: | :------: | :------: |
@@ -313,7 +313,7 @@ distribution.mode # -> 733.3333333333333
 |       **500K**        | 914.9291  | 640.8153 | 370.0323 | 267.4597 | 257.7534 |
 |        **1M**         | 1580.8501 | 972.3985 | 573.5429 | 496.5569 | 425.7809 |
 
-### _Estimation time parameters discrete distributions_
+### _Discrete fit time: Sample Size vs Workers_
 
 | Sample Size / Workers |    1    |    2    |    4    |
 | :-------------------: | :-----: | :-----: | :-----: |

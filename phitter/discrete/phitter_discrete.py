@@ -395,7 +395,6 @@ class PhitterDiscrete:
         plot_height: int,
         plot_width: int,
         plot_bar_color: str,
-        plot_bargap: float,
     ):
         plt.style.use("ggplot")
 

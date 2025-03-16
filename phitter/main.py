@@ -577,7 +577,7 @@ class Phitter:
 
     def plot_ecdf(
         self,
-        plot_title="ECDF",
+        plot_title="EMPIRICAL CUMULATIVE DISTRIBUTION FUNCTION",
         plot_xaxis_title="Domain",
         plot_yaxis_title="Cumulative Distribution Function",
         plot_xaxis_min_offset=0.3,
@@ -589,7 +589,6 @@ class Phitter:
         plot_line_width=2,
         plot_line_name="Empirical Distribution",
         plot_bar_color="rgba(128,128,128,1)",
-        plot_bargap=0.15,
         plotly_plot_renderer: typing.Literal["png", "jpeg", "svg"] | None = None,
         plot_engine: typing.Literal["plotly", "matplotlib"] = "plotly",
     ):
@@ -634,7 +633,6 @@ class Phitter:
                     plot_height=plot_height,
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
-                    plot_bargap=plot_bargap,
                 )
             else:
                 self.phitter_discrete.plot_ecdf_plotly(
@@ -645,7 +643,6 @@ class Phitter:
                     plot_height=plot_height,
                     plot_width=plot_width,
                     plot_bar_color=plot_bar_color,
-                    plot_bargap=plot_bargap,
                     plotly_plot_renderer=plotly_plot_renderer,
                 )
 
@@ -742,7 +739,7 @@ class Phitter:
         self,
         id_distribution: str,
         plot_title="QQ PLOT",
-        plot_xaxis_title="Theorical Quantiles",
+        plot_xaxis_title="Theoretical Quantiles",
         plot_yaxis_title="Sample Quantiles",
         plot_legend_title: str | None = None,
         plot_height=400,
@@ -815,7 +812,7 @@ class Phitter:
         self,
         id_distribution: str,
         plot_title="QQ PLOT",
-        plot_xaxis_title="Theorical Quantiles",
+        plot_xaxis_title="Theoretical Quantiles",
         plot_yaxis_title="Sample Quantiles",
         plot_legend_title: str | None = None,
         plot_height=400,
@@ -906,7 +903,7 @@ if __name__ == "__main__":
     sample_distribution_file = open(path, "r", encoding="utf-8-sig")
     data = [float(x.strip().replace(",", ".")) for x in sample_distribution_file.read().splitlines()]
 
-    phitter = Phitter(data, fit_type="discrete")
+    phitter = Phitter(data=data, fit_type="discrete")
     phitter.fit(n_workers=2)
 
     print(f"Best Distribution: {phitter.best_distribution}")

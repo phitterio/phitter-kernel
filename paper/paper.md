@@ -60,7 +60,7 @@ Basic usage involves creating a `PHITTER` object with a dataset and calling the 
 import phitter
 
 data = [...]  # Your dataset
-phi = phitter.Phitter(data)
+phi = phitter.Phitter(data=data)
 phi.fit()
 ```
 
