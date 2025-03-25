@@ -4,8 +4,8 @@ import numpy
 class HyperbolicSecant:
     """
     Hyperbolic Secant distribution
-    Parameters HyperbolicSecant Distribution: {"mu": *, "sigma": *}
-    https://phitter.io/distributions/continuous/hyperbolic_secant
+    - Parameters HyperbolicSecant Distribution: {"mu": *, "sigma": *}
+    - https://phitter.io/distributions/continuous/hyperbolic_secant
     """
 
     def __init__(
@@ -15,9 +15,9 @@ class HyperbolicSecant:
         init_parameters_examples=False,
     ):
         """
-        Initializes the HyperbolicSecant Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters HyperbolicSecant Distribution: {"mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/hyperbolic_secant
+        - Initializes the HyperbolicSecant Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters HyperbolicSecant Distribution: {"mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/hyperbolic_secant
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

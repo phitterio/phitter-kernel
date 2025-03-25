@@ -11,8 +11,8 @@ warnings.filterwarnings("ignore")
 class Alpha:
     """
     Alpha distribution
-    Parameters Alpha Distribution: {"alpha": *, "loc": *, "scale": *}
-    https://phitter.io/distributions/continuous/alpha
+    - Parameters Alpha Distribution: {"alpha": *, "loc": *, "scale": *}
+    - https://phitter.io/distributions/continuous/alpha
     """
 
     def __init__(
@@ -22,9 +22,9 @@ class Alpha:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Alpha Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Alpha Distribution: {"alpha": *, "loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/alpha
+        - Initializes the Alpha Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Alpha Distribution: {"alpha": *, "loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/alpha
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

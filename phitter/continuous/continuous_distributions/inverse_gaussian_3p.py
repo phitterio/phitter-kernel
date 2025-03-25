@@ -6,8 +6,8 @@ class InverseGaussian3P:
     """
     Inverse Gaussian Distribution
     Also known like Wald distribution
-    Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
-    https://phitter.io/distributions/continuous/inverse_gaussian_3p
+    - Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
+    - https://phitter.io/distributions/continuous/inverse_gaussian_3p
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class InverseGaussian3P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the InverseGaussian3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
-        https://phitter.io/distributions/continuous/inverse_gaussian_3p
+        - Initializes the InverseGaussian3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
+        - https://phitter.io/distributions/continuous/inverse_gaussian_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

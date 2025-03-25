@@ -1,5 +1,3 @@
-import sys
-
 import numpy
 import scipy.stats
 

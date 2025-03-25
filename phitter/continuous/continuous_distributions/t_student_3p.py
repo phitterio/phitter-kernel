@@ -6,8 +6,8 @@ import scipy.stats
 class TStudent3P:
     """
     T distribution
-    Parameters TStudent3P Distribution: {"df": *, "loc": *, "scale": *}
-    https://phitter.io/distributions/continuous/t_student_3p
+    - Parameters TStudent3P Distribution: {"df": *, "loc": *, "scale": *}
+    - https://phitter.io/distributions/continuous/t_student_3p
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class TStudent3P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the TStudent3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters TStudent3P Distribution: {"df": *, "loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/t_student_3p
+        - Initializes the TStudent3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters TStudent3P Distribution: {"df": *, "loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/t_student_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

@@ -5,8 +5,8 @@ import scipy.optimize
 class Bradford:
     """
     Bradford distribution
-    Parameters Bradford Distribution: {"c": *, "min": *, "max": *}
-    https://phitter.io/distributions/continuous/bradford
+    - Parameters Bradford Distribution: {"c": *, "min": *, "max": *}
+    - https://phitter.io/distributions/continuous/bradford
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Bradford:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Bradford Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Bradford Distribution: {"c": *, "min": *, "max": *}
-        https://phitter.io/distributions/continuous/bradford
+        - Initializes the Bradford Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Bradford Distribution: {"c": *, "min": *, "max": *}
+        - https://phitter.io/distributions/continuous/bradford
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

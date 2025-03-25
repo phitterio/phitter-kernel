@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 class GeneralizedGamma:
     """
     Generalized Gamma Distribution
-    https://phitter.io/distributions/continuous/generalized_gamma
+    - https://phitter.io/distributions/continuous/generalized_gamma
     """
 
     def __init__(
@@ -21,9 +21,9 @@ class GeneralizedGamma:
         init_parameters_examples=False,
     ):
         """
-        Initializes the GeneralizedGamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters GeneralizedGamma Distribution: {"a": *, "d": *, "p": *}
-        https://phitter.io/distributions/continuous/generalized_gamma
+        - Initializes the GeneralizedGamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters GeneralizedGamma Distribution: {"a": *, "d": *, "p": *}
+        - https://phitter.io/distributions/continuous/generalized_gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

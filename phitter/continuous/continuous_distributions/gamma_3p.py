@@ -6,8 +6,8 @@ import scipy.stats
 class Gamma3P:
     """
     Gamma distribution
-    Parameters Gamma3P Distribution: {"alpha": *, "loc": *, "beta": *}
-    https://phitter.io/distributions/continuous/gamma_3p
+    - Parameters Gamma3P Distribution: {"alpha": *, "loc": *, "beta": *}
+    - https://phitter.io/distributions/continuous/gamma_3p
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Gamma3P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Gamma3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Gamma3P Distribution: {"alpha": *, "loc": *, "beta": *}
-        https://phitter.io/distributions/continuous/gamma_3p
+        - Initializes the Gamma3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Gamma3P Distribution: {"alpha": *, "loc": *, "beta": *}
+        - https://phitter.io/distributions/continuous/gamma_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

@@ -6,8 +6,8 @@ import scipy.stats
 class Gibrat:
     """
     Gibrat distribution
-    Parameters Gibrat Distribution: {"loc": *, "scale": *}
-    https://phitter.io/distributions/continuous/gibrat
+    - Parameters Gibrat Distribution: {"loc": *, "scale": *}
+    - https://phitter.io/distributions/continuous/gibrat
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Gibrat:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Gibrat Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Gibrat Distribution: {"loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/gibrat
+        - Initializes the Gibrat Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Gibrat Distribution: {"loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/gibrat
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

@@ -7,8 +7,8 @@ import scipy.special
 class Kumaraswamy:
     """
     Kumaraswami distribution
-    Parameters Kumaraswamy Distribution: {"alpha": *, "beta": *, "min": *, "max": *}
-    https://phitter.io/distributions/continuous/kumaraswamy
+    - Parameters Kumaraswamy Distribution: {"alpha": *, "beta": *, "min": *, "max": *}
+    - https://phitter.io/distributions/continuous/kumaraswamy
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class Kumaraswamy:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Kumaraswamy Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Kumaraswamy Distribution: {"alpha": *, "beta": *, "min": *, "max": *}
-        https://phitter.io/distributions/continuous/kumaraswamy
+        - Initializes the Kumaraswamy Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Kumaraswamy Distribution: {"alpha": *, "beta": *, "min": *, "max": *}
+        - https://phitter.io/distributions/continuous/kumaraswamy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

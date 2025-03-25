@@ -8,7 +8,7 @@ class GeneralizedLogistic:
     """
     Generalized Logistic Distribution
 
-    https://phitter.io/distributions/continuous/generalized_logistic
+    - https://phitter.io/distributions/continuous/generalized_logistic
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class GeneralizedLogistic:
         init_parameters_examples=False,
     ):
         """
-        Initializes the GeneralizedLogistic Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters GeneralizedLogistic Distribution: {"loc": *, "scale": *, "c": *}
-        https://phitter.io/distributions/continuous/generalized_logistic
+        - Initializes the GeneralizedLogistic Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters GeneralizedLogistic Distribution: {"loc": *, "scale": *, "c": *}
+        - https://phitter.io/distributions/continuous/generalized_logistic
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

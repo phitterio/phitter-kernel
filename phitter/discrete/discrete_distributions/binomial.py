@@ -5,8 +5,8 @@ import scipy.stats
 class Binomial:
     """
     Binomial distribution
-    Parameters Binomial Distribution: {"n": *, "p": *}
-    https://phitter.io/distributions/discrete/binomial
+    - Parameters Binomial Distribution: {"n": *, "p": *}
+    - https://phitter.io/distributions/discrete/binomial
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Binomial:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Binomial Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The Binomial distribution parameters are: {"n": *, "p": *}.
-        https://phitter.io/distributions/continuous/binomial
+        - Initializes the Binomial Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Binomial Distribution: {"n": *, "p": *}
+        - https://phitter.io/distributions/continuous/binomial
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

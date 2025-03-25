@@ -11,8 +11,8 @@ warnings.filterwarnings("ignore")
 class Burr:
     """
     Burr distribution
-    Parameters Burr Distribution: {"A": *, "B": *, "C": *}
-    https://phitter.io/distributions/continuous/burr
+    - Parameters Burr Distribution: {"A": *, "B": *, "C": *}
+    - https://phitter.io/distributions/continuous/burr
     """
 
     def __init__(
@@ -22,9 +22,9 @@ class Burr:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Burr Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Burr Distribution: {"A": *, "B": *, "C": *}
-        https://phitter.io/distributions/continuous/burr
+        - Initializes the Burr Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Burr Distribution: {"A": *, "B": *, "C": *}
+        - https://phitter.io/distributions/continuous/burr
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

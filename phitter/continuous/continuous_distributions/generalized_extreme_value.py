@@ -6,7 +6,7 @@ import scipy.stats
 class GeneralizedExtremeValue:
     """
     Generalized Extreme Value Distribution
-    https://phitter.io/distributions/continuous/generalized_extreme_value
+    - https://phitter.io/distributions/continuous/generalized_extreme_value
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class GeneralizedExtremeValue:
         init_parameters_examples=False,
     ):
         """
-        Initializes the GeneralizedExtremeValue Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters GeneralizedExtremeValue Distribution: {"xi": *, "mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/generalized_extreme_value
+        - Initializes the GeneralizedExtremeValue Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters GeneralizedExtremeValue Distribution: {"xi": *, "mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/generalized_extreme_value
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

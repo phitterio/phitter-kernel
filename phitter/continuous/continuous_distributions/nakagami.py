@@ -5,8 +5,8 @@ import scipy.special
 class Nakagami:
     """
     Nakagami distribution
-    Parameters Nakagami Distribution: {"m": *, "omega": *}
-    https://phitter.io/distributions/continuous/nakagami
+    - Parameters Nakagami Distribution: {"m": *, "omega": *}
+    - https://phitter.io/distributions/continuous/nakagami
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Nakagami:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Nakagami Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Nakagami Distribution: {"m": *, "omega": *}
-        https://phitter.io/distributions/continuous/nakagami
+        - Initializes the Nakagami Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Nakagami Distribution: {"m": *, "omega": *}
+        - https://phitter.io/distributions/continuous/nakagami
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

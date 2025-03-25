@@ -4,8 +4,8 @@ import numpy
 class Exponential2P:
     """
     Exponential distribution
-    Parameters Exponential2P Distribution: {"lambda": *, "loc": *}
-    https://phitter.io/distributions/continuous/exponential_2p
+    - Parameters Exponential2P Distribution: {"lambda": *, "loc": *}
+    - https://phitter.io/distributions/continuous/exponential_2p
     """
 
     def __init__(
@@ -15,9 +15,9 @@ class Exponential2P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Exponential2P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Exponential2P Distribution: {"lambda": *, "loc": *}
-        https://phitter.io/distributions/continuous/exponential_2p
+        - Initializes the Exponential2P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Exponential2P Distribution: {"lambda": *, "loc": *}
+        - https://phitter.io/distributions/continuous/exponential_2p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

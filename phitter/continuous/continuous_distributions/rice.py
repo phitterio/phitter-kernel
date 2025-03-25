@@ -7,8 +7,8 @@ import scipy.stats
 class Rice:
     """
     Rice distribution
-    Parameters Rice Distribution: {"v": *, "sigma": *}
-    https://phitter.io/distributions/continuous/rice
+    - Parameters Rice Distribution: {"v": *, "sigma": *}
+    - https://phitter.io/distributions/continuous/rice
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class Rice:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Rice Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Rice Distribution: {"v": *, "sigma": *}
-        https://phitter.io/distributions/continuous/rice
+        - Initializes the Rice Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Rice Distribution: {"v": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/rice
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
@@ -52,7 +52,7 @@ class Rice:
         # def Q(M: float, a: float, b: float) -> float:
         #     """
         #     Marcum Q - function
-        #     https://en.wikipedia.org/wiki/Marcum_Q - function
+        #     - https://en.wikipedia.org/wiki/Marcum_Q - function
         #     """
         #     k = 1 - M
         #     x = (a / b) ** k * scipy.special.iv(k, a * b)

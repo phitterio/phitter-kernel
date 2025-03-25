@@ -8,8 +8,8 @@ class InverseGamma:
     """
     Inverse Gamma Distribution
     Also known Pearson Type 5 distribution
-    Parameters InverseGamma Distribution: {"alpha": *, "beta": *}
-    https://phitter.io/distributions/continuous/inverse_gamma
+    - Parameters InverseGamma Distribution: {"alpha": *, "beta": *}
+    - https://phitter.io/distributions/continuous/inverse_gamma
     """
 
     def __init__(
@@ -19,9 +19,9 @@ class InverseGamma:
         init_parameters_examples=False,
     ):
         """
-        Initializes the InverseGamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters InverseGamma Distribution: {"alpha": *, "beta": *}
-        https://phitter.io/distributions/continuous/inverse_gamma
+        - Initializes the InverseGamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters InverseGamma Distribution: {"alpha": *, "beta": *}
+        - https://phitter.io/distributions/continuous/inverse_gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

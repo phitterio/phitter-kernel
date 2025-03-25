@@ -6,8 +6,8 @@ import scipy.stats
 class Logistic:
     """
     Logistic distribution
-    Parameters Logistic Distribution: {"mu": *, "sigma": *}
-    https://phitter.io/distributions/continuous/logistic
+    - Parameters Logistic Distribution: {"mu": *, "sigma": *}
+    - https://phitter.io/distributions/continuous/logistic
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Logistic:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Logistic Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Logistic Distribution: {"mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/logistic
+        - Initializes the Logistic Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Logistic Distribution: {"mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/logistic
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

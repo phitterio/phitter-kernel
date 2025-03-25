@@ -6,8 +6,8 @@ import scipy.stats
 class PowerFunction:
     """
     Power function distribution
-    Parameters PowerFunction Distribution: {"alpha": *, "a": *, "b": *}
-    https://phitter.io/distributions/continuous/power_function
+    - Parameters PowerFunction Distribution: {"alpha": *, "a": *, "b": *}
+    - https://phitter.io/distributions/continuous/power_function
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class PowerFunction:
         init_parameters_examples=False,
     ):
         """
-        Initializes the PowerFunction Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters PowerFunction Distribution: {"alpha": *, "a": *, "b": *}
-        https://phitter.io/distributions/continuous/power_function
+        - Initializes the PowerFunction Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters PowerFunction Distribution: {"alpha": *, "a": *, "b": *}
+        - https://phitter.io/distributions/continuous/power_function
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

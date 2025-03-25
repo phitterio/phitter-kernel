@@ -6,8 +6,8 @@ import scipy.stats
 class Logarithmic:
     """
     Logarithmic distribution
-    Parameters Logarithmic Distribution: {"p": *}
-    https://phitter.io/distributions/discrete/logarithmic
+    - Parameters Logarithmic Distribution: {"p": *}
+    - https://phitter.io/distributions/discrete/logarithmic
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Logarithmic:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Logarithmic Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The Logarithmic distribution parameters are: {"p": *}.
-        https://phitter.io/distributions/continuous/logarithmic
+        - Initializes the Logarithmic Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Logarithmic Distribution: {"p": *}
+        - https://phitter.io/distributions/continuous/logarithmic
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

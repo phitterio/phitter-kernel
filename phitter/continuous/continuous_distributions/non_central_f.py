@@ -8,8 +8,8 @@ import scipy.stats
 class NonCentralF:
     """
     Non-Central F distribution
-    Parameters NonCentralF Distribution: {"lambda": *, "n1": *, "n2": *}
-    https://phitter.io/distributions/continuous/non_central_f
+    - Parameters NonCentralF Distribution: {"lambda": *, "n1": *, "n2": *}
+    - https://phitter.io/distributions/continuous/non_central_f
     """
 
     def __init__(
@@ -19,9 +19,9 @@ class NonCentralF:
         init_parameters_examples=False,
     ):
         """
-        Initializes the NonCentralF Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters NonCentralF Distribution: {"lambda": *, "n1": *, "n2": *}
-        https://phitter.io/distributions/continuous/non_central_f
+        - Initializes the NonCentralF Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters NonCentralF Distribution: {"lambda": *, "n1": *, "n2": *}
+        - https://phitter.io/distributions/continuous/non_central_f
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

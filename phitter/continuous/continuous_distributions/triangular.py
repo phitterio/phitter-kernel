@@ -5,8 +5,8 @@ import scipy.stats
 class Triangular:
     """
     Triangular distribution
-    Parameters Triangular Distribution: {"a": *, "b": *, "c": *}
-    https://phitter.io/distributions/continuous/triangular
+    - Parameters Triangular Distribution: {"a": *, "b": *, "c": *}
+    - https://phitter.io/distributions/continuous/triangular
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Triangular:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Triangular Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Triangular Distribution: {"a": *, "b": *, "c": *}
-        https://phitter.io/distributions/continuous/triangular
+        - Initializes the Triangular Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Triangular Distribution: {"a": *, "b": *, "c": *}
+        - https://phitter.io/distributions/continuous/triangular
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
@@ -205,7 +205,7 @@ class Triangular:
         c = 3 * continuous_measures.mean - a - b
 
         ## Third method
-        ## https://phitter.io/distributions/continuous/triangular        # q_1_16 = numpy.quantile(continuous_measures.data, 1 / 16)
+        ## - https://phitter.io/distributions/continuous/triangular        # q_1_16 = numpy.quantile(continuous_measures.data, 1 / 16)
         # q_1_4 = numpy.quantile(continuous_measures.data, 1 / 4)
         # q_3_4 = numpy.quantile(continuous_measures.data, 3 / 4)
         # q_15_16 = numpy.quantile(continuous_measures.data, 15 / 16)

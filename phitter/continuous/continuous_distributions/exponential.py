@@ -4,8 +4,8 @@ import numpy
 class Exponential:
     """
     Exponential distribution
-    Parameters Exponential Distribution: {"lambda": *}
-    https://phitter.io/distributions/continuous/exponential
+    - Parameters Exponential Distribution: {"lambda": *}
+    - https://phitter.io/distributions/continuous/exponential
     """
 
     def __init__(
@@ -15,9 +15,9 @@ class Exponential:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Exponential Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Exponential Distribution: {"lambda": *}
-        https://phitter.io/distributions/continuous/exponential
+        - Initializes the Exponential Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Exponential Distribution: {"lambda": *}
+        - https://phitter.io/distributions/continuous/exponential
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

@@ -8,8 +8,8 @@ import scipy.optimize
 class Argus:
     """
     Argus distribution
-    Parameters Argus Distribution: {"chi": *, "loc": *, "scale": *}
-    https://phitter.io/distributions/continuous/argus
+    - Parameters Argus Distribution: {"chi": *, "loc": *, "scale": *}
+    - https://phitter.io/distributions/continuous/argus
     """
 
     def __init__(
@@ -19,9 +19,9 @@ class Argus:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Argus Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Argus Distribution: {"chi": *, "loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/argus
+        - Initializes the Argus Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Argus Distribution: {"chi": *, "loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/argus
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

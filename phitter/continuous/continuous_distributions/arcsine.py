@@ -5,8 +5,8 @@ import scipy.special
 class Arcsine:
     """
     Arcsine distribution
-    Parameters Arcsine Distribution: {"a": *, "b": *}
-    https://phitter.io/distributions/continuous/arcsine
+    - Parameters Arcsine Distribution: {"a": *, "b": *}
+    - https://phitter.io/distributions/continuous/arcsine
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Arcsine:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Arcsine Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Arcsine Distribution: {"a": *, "b": *}
-        https://phitter.io/distributions/continuous/arcsine
+        - Initializes the Arcsine Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Arcsine Distribution: {"a": *, "b": *}
+        - https://phitter.io/distributions/continuous/arcsine
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

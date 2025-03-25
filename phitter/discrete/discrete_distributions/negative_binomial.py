@@ -5,8 +5,8 @@ import scipy.stats
 class NegativeBinomial:
     """
     Negative binomial distribution
-    Parameters NegativeBinomial Distribution: {"r": *, "p": *}
-    https://phitter.io/distributions/discrete/negative_binomial
+    - Parameters NegativeBinomial Distribution: {"r": *, "p": *}
+    - https://phitter.io/distributions/discrete/negative_binomial
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class NegativeBinomial:
         init_parameters_examples=False,
     ):
         """
-        Initializes the NegativeBinomial Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The NegativeBinomial distribution parameters are: {"r": *, "p": *}.
-        https://phitter.io/distributions/continuous/negative_binomial
+        - Initializes the NegativeBinomial Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters NegativeBinomial Distribution: {"r": *, "p": *}
+        - https://phitter.io/distributions/continuous/negative_binomial
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

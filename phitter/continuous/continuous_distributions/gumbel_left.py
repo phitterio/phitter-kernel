@@ -7,7 +7,7 @@ class GumbelLeft:
     Gumbel Left Distribution
     Gumbel Min Distribution
     Extreme Value Minimum Distribution
-    https://phitter.io/distributions/continuous/gumbel_left
+    - https://phitter.io/distributions/continuous/gumbel_left
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class GumbelLeft:
         init_parameters_examples=False,
     ):
         """
-        Initializes the GumbelLeft Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters GumbelLeft Distribution: {"mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/gumbel_left
+        - Initializes the GumbelLeft Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters GumbelLeft Distribution: {"mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/gumbel_left
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

@@ -6,8 +6,8 @@ import scipy.stats
 class Gamma:
     """
     Gamma distribution
-    Parameters Gamma Distribution: {"alpha": *, "beta": *}
-    https://phitter.io/distributions/continuous/gamma
+    - Parameters Gamma Distribution: {"alpha": *, "beta": *}
+    - https://phitter.io/distributions/continuous/gamma
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Gamma:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Gamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Gamma Distribution: {"alpha": *, "beta": *}
-        https://phitter.io/distributions/continuous/gamma
+        - Initializes the Gamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Gamma Distribution: {"alpha": *, "beta": *}
+        - https://phitter.io/distributions/continuous/gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

@@ -7,8 +7,8 @@ import scipy.stats
 class Beta:
     """
     Beta distribution
-    Parameters Beta Distribution: {"alpha": *, "beta": *, "A": *, "B": *}
-    https://phitter.io/distributions/continuous/beta
+    - Parameters Beta Distribution: {"alpha": *, "beta": *, "A": *, "B": *}
+    - https://phitter.io/distributions/continuous/beta
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class Beta:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Beta Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Beta Distribution: {"alpha": *, "beta": *, "A": *, "B": *}
-        https://phitter.io/distributions/continuous/beta
+        - Initializes the Beta Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Beta Distribution: {"alpha": *, "beta": *, "A": *, "B": *}
+        - https://phitter.io/distributions/continuous/beta
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

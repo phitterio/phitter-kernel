@@ -11,8 +11,8 @@ warnings.filterwarnings("ignore")
 class Burr4P:
     """
     Burr distribution
-    Parameters Burr4P Distribution: {"A": *, "B": *, "C": *, "loc": *}
-    https://phitter.io/distributions/continuous/burr_4p
+    - Parameters Burr4P Distribution: {"A": *, "B": *, "C": *, "loc": *}
+    - https://phitter.io/distributions/continuous/burr_4p
     """
 
     def __init__(
@@ -22,9 +22,9 @@ class Burr4P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Burr4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Burr4P Distribution: {"A": *, "B": *, "C": *, "loc": *}
-        https://phitter.io/distributions/continuous/burr_4p
+        - Initializes the Burr4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Burr4P Distribution: {"A": *, "B": *, "C": *, "loc": *}
+        - https://phitter.io/distributions/continuous/burr_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

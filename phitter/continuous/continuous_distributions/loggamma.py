@@ -7,8 +7,8 @@ import scipy.stats
 class LogGamma:
     """
     LogGamma distribution
-    Parameters LogGamma Distribution: {"c": *, "mu": *, "sigma": *}
-    https://phitter.io/distributions/continuous/loggamma
+    - Parameters LogGamma Distribution: {"c": *, "mu": *, "sigma": *}
+    - https://phitter.io/distributions/continuous/loggamma
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class LogGamma:
         init_parameters_examples=False,
     ):
         """
-        Initializes the LogGamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters LogGamma Distribution: {"c": *, "mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/loggamma
+        - Initializes the LogGamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters LogGamma Distribution: {"c": *, "mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/loggamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

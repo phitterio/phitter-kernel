@@ -7,8 +7,8 @@ import scipy.stats
 class Moyal:
     """
     Moyal distribution
-    Parameters Moyal Distribution: {"mu": *, "sigma": *}
-    https://phitter.io/distributions/continuous/moyal
+    - Parameters Moyal Distribution: {"mu": *, "sigma": *}
+    - https://phitter.io/distributions/continuous/moyal
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class Moyal:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Moyal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Moyal Distribution: {"mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/moyal
+        - Initializes the Moyal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Moyal Distribution: {"mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/moyal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

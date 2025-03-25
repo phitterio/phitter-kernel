@@ -7,8 +7,8 @@ import scipy.stats
 class ChiSquare:
     """
     Chi Square distribution
-    Parameters ChiSquare Distribution: {"df": *}
-    https://phitter.io/distributions/continuous/chi_square
+    - Parameters ChiSquare Distribution: {"df": *}
+    - https://phitter.io/distributions/continuous/chi_square
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class ChiSquare:
         init_parameters_examples=False,
     ):
         """
-        Initializes the ChiSquare Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters ChiSquare Distribution: {"df": *}
-        https://phitter.io/distributions/continuous/chi_square
+        - Initializes the ChiSquare Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters ChiSquare Distribution: {"df": *}
+        - https://phitter.io/distributions/continuous/chi_square
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

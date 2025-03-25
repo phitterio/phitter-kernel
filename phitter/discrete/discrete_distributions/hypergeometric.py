@@ -6,8 +6,8 @@ import scipy.stats
 class Hypergeometric:
     """
     Hypergeometric_distribution
-    Parameters Hypergeometric Distribution: {"N": *, "K": *, "n": *}
-    https://phitter.io/distributions/discrete/hypergeometric
+    - Parameters Hypergeometric Distribution: {"N": *, "K": *, "n": *}
+    - https://phitter.io/distributions/discrete/hypergeometric
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Hypergeometric:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Hypergeometric Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The Hypergeometric distribution parameters are: {"N": *, "K": *, "n": *}.
-        https://phitter.io/distributions/continuous/hypergeometric
+        - Initializes the Hypergeometric Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Hypergeometric Distribution: {"N": *, "K": *, "n": *}
+        - https://phitter.io/distributions/continuous/hypergeometric
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

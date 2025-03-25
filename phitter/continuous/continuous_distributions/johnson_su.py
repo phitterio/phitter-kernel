@@ -6,8 +6,8 @@ import scipy.stats
 class JohnsonSU:
     """
     Johnson SU distribution
-    Parameters JohnsonSU Distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
-    https://phitter.io/distributions/continuous/johnson_su
+    - Parameters JohnsonSU Distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
+    - https://phitter.io/distributions/continuous/johnson_su
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class JohnsonSU:
         init_parameters_examples=False,
     ):
         """
-        Initializes the JohnsonSU Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters JohnsonSU Distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
-        https://phitter.io/distributions/continuous/johnson_su
+        - Initializes the JohnsonSU Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters JohnsonSU Distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
+        - https://phitter.io/distributions/continuous/johnson_su
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

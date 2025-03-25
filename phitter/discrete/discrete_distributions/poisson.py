@@ -5,8 +5,8 @@ import scipy.stats
 class Poisson:
     """
     Poisson distribution
-    Parameters Poisson Distribution: {"lambda": *}
-    https://phitter.io/distributions/discrete/poisson
+    - Parameters Poisson Distribution: {"lambda": *}
+    - https://phitter.io/distributions/discrete/poisson
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Poisson:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Poisson Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The Poisson distribution parameters are: {"lambda": *}.
-        https://phitter.io/distributions/continuous/poisson
+        - Initializes the Poisson Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Poisson Distribution: {"lambda": *}
+        - https://phitter.io/distributions/continuous/poisson
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

@@ -6,8 +6,8 @@ import scipy.stats
 class F:
     """
     F distribution
-    Parameters F Distribution: {"df1": *, "df2": *}
-    https://phitter.io/distributions/continuous/f
+    - Parameters F Distribution: {"df1": *, "df2": *}
+    - https://phitter.io/distributions/continuous/f
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class F:
         init_parameters_examples=False,
     ):
         """
-        Initializes the F Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters F Distribution: {"df1": *, "df2": *}
-        https://phitter.io/distributions/continuous/f
+        - Initializes the F Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters F Distribution: {"df1": *, "df2": *}
+        - https://phitter.io/distributions/continuous/f
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

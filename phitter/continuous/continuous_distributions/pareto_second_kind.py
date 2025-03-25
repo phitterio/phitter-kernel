@@ -7,7 +7,7 @@ class ParetoSecondKind:
     """
     Pareto second kind distribution Distribution
     Also known as Lomax Distribution or Pareto Type II distributions
-    https://phitter.io/distributions/continuous/pareto_second_kind
+    - https://phitter.io/distributions/continuous/pareto_second_kind
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class ParetoSecondKind:
         init_parameters_examples=False,
     ):
         """
-        Initializes the ParetoSecondKind Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters ParetoSecondKind Distribution: {"alpha": *, "xm": *, "loc": *}
-        https://phitter.io/distributions/continuous/pareto_second_kind
+        - Initializes the ParetoSecondKind Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters ParetoSecondKind Distribution: {"alpha": *, "xm": *, "loc": *}
+        - https://phitter.io/distributions/continuous/pareto_second_kind
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

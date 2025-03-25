@@ -5,8 +5,8 @@ import scipy.stats
 class ErrorFunction:
     """
     Error Function distribution
-    Parameters ErrorFunction Distribution: {"h": *}
-    https://phitter.io/distributions/continuous/error_function
+    - Parameters ErrorFunction Distribution: {"h": *}
+    - https://phitter.io/distributions/continuous/error_function
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class ErrorFunction:
         init_parameters_examples=False,
     ):
         """
-        Initializes the ErrorFunction Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters ErrorFunction Distribution: {"h": *}
-        https://phitter.io/distributions/continuous/error_function
+        - Initializes the ErrorFunction Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters ErrorFunction Distribution: {"h": *}
+        - https://phitter.io/distributions/continuous/error_function
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

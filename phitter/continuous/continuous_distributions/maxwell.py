@@ -5,8 +5,8 @@ import scipy.special
 class Maxwell:
     """
     Maxwell distribution
-    Parameters Maxwell Distribution: {"alpha": *, "loc": *}
-    https://phitter.io/distributions/continuous/maxwell
+    - Parameters Maxwell Distribution: {"alpha": *, "loc": *}
+    - https://phitter.io/distributions/continuous/maxwell
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Maxwell:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Maxwell Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Maxwell Distribution: {"alpha": *, "loc": *}
-        https://phitter.io/distributions/continuous/maxwell
+        - Initializes the Maxwell Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Maxwell Distribution: {"alpha": *, "loc": *}
+        - https://phitter.io/distributions/continuous/maxwell
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

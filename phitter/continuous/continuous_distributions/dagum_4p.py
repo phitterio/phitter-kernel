@@ -10,8 +10,8 @@ warnings.filterwarnings("ignore")
 class Dagum4P:
     """
     Dagum distribution
-    Parameters Dagum4P Distribution: {"a": *, "b": *, "p": *, "loc": *}
-    https://phitter.io/distributions/continuous/dagum_4p
+    - Parameters Dagum4P Distribution: {"a": *, "b": *, "p": *, "loc": *}
+    - https://phitter.io/distributions/continuous/dagum_4p
     """
 
     def __init__(
@@ -21,9 +21,9 @@ class Dagum4P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Dagum4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Dagum4P Distribution: {"a": *, "b": *, "p": *, "loc": *}
-        https://phitter.io/distributions/continuous/dagum_4p
+        - Initializes the Dagum4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Dagum4P Distribution: {"a": *, "b": *, "p": *, "loc": *}
+        - https://phitter.io/distributions/continuous/dagum_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

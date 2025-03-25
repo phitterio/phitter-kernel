@@ -6,8 +6,8 @@ import scipy.stats
 class Erlang3P:
     """
     Erlang 3p distribution
-    Parameters Erlang3P Distribution: {"k": *, "beta": *, "loc": *}
-    https://phitter.io/distributions/continuous/erlang_3p
+    - Parameters Erlang3P Distribution: {"k": *, "beta": *, "loc": *}
+    - https://phitter.io/distributions/continuous/erlang_3p
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Erlang3P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Erlang3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Erlang3P Distribution: {"k": *, "beta": *, "loc": *}
-        https://phitter.io/distributions/continuous/erlang_3p
+        - Initializes the Erlang3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Erlang3P Distribution: {"k": *, "beta": *, "loc": *}
+        - https://phitter.io/distributions/continuous/erlang_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

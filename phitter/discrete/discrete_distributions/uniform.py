@@ -4,8 +4,8 @@ import numpy
 class Uniform:
     """
     Uniform distribution
-    Parameters Uniform Distribution: {"a": *, "b": *}
-    https://phitter.io/distributions/discrete/uniform
+    - Parameters Uniform Distribution: {"a": *, "b": *}
+    - https://phitter.io/distributions/discrete/uniform
     """
 
     def __init__(
@@ -15,9 +15,9 @@ class Uniform:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Uniform Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The Uniform distribution parameters are: {"a": *, "b": *}.
-        https://phitter.io/distributions/continuous/uniform
+        - Initializes the Uniform Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Uniform Distribution: {"a": *, "b": *}
+        - https://phitter.io/distributions/continuous/uniform
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

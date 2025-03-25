@@ -11,8 +11,8 @@ warnings.filterwarnings("ignore")
 class BetaPrime:
     """
     Beta Prime Distribution
-    Parameters BetaPrime Distribution: {"alpha": *, "beta": *}
-    https://phitter.io/distributions/continuous/beta_prime
+    - Parameters BetaPrime Distribution: {"alpha": *, "beta": *}
+    - https://phitter.io/distributions/continuous/beta_prime
     """
 
     def __init__(
@@ -22,9 +22,9 @@ class BetaPrime:
         init_parameters_examples=False,
     ):
         """
-        Initializes the BetaPrime Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters BetaPrime Distribution: {"alpha": *, "beta": *}
-        https://phitter.io/distributions/continuous/beta_prime
+        - Initializes the BetaPrime Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters BetaPrime Distribution: {"alpha": *, "beta": *}
+        - https://phitter.io/distributions/continuous/beta_prime
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

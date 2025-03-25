@@ -5,8 +5,8 @@ import scipy.stats
 class Bernoulli:
     """
     Bernoulli distribution
-    Parameters Bernoulli Distribution: {"p": *}
-    https://phitter.io/distributions/discrete/bernoulli
+    - Parameters Bernoulli Distribution: {"p": *}
+    - https://phitter.io/distributions/discrete/bernoulli
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Bernoulli:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Bernoulli Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The Bernoulli distribution parameters are: {"p": *}.
-        https://phitter.io/distributions/discrete/bernoulli
+        - Initializes the Bernoulli Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Bernoulli Distribution: {"p": *}
+        - https://phitter.io/distributions/discrete/bernoulli
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

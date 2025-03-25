@@ -5,8 +5,8 @@ import scipy.stats
 class LogNormal:
     """
     Lognormal distribution
-    Parameters LogNormal Distribution: {"mu": *, "sigma": *}
-    https://phitter.io/distributions/continuous/lognormal
+    - Parameters LogNormal Distribution: {"mu": *, "sigma": *}
+    - https://phitter.io/distributions/continuous/lognormal
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class LogNormal:
         init_parameters_examples=False,
     ):
         """
-        Initializes the LogNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters LogNormal Distribution: {"mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/lognormal
+        - Initializes the LogNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters LogNormal Distribution: {"mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/lognormal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

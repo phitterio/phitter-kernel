@@ -8,7 +8,7 @@ class GumbelRight:
     Gumbel Max Distribution
     Extreme Value Maximum Distribution
 
-    https://phitter.io/distributions/continuous/gumbel_right
+    - https://phitter.io/distributions/continuous/gumbel_right
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class GumbelRight:
         init_parameters_examples=False,
     ):
         """
-        Initializes the GumbelRight Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters GumbelRight Distribution: {"mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/gumbel_right
+        - Initializes the GumbelRight Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters GumbelRight Distribution: {"mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/gumbel_right
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

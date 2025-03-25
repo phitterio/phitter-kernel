@@ -7,8 +7,8 @@ import scipy.stats
 class Dagum:
     """
     Dagum distribution
-    Parameters Dagum Distribution: {"a": *, "b": *, "p": *}
-    https://phitter.io/distributions/continuous/dagum
+    - Parameters Dagum Distribution: {"a": *, "b": *, "p": *}
+    - https://phitter.io/distributions/continuous/dagum
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class Dagum:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Dagum Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Dagum Distribution: {"a": *, "b": *, "p": *}
-        https://phitter.io/distributions/continuous/dagum
+        - Initializes the Dagum Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Dagum Distribution: {"a": *, "b": *, "p": *}
+        - https://phitter.io/distributions/continuous/dagum
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

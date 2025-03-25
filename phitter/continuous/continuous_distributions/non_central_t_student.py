@@ -8,8 +8,8 @@ import scipy.stats
 class NonCentralTStudent:
     """
     Non-Central T Student distribution
-    Parameters NonCentralTStudent Distribution: {"lambda": *, "n": *, "loc": *, "scale": *}
-    https://phitter.io/distributions/continuous/non_central_t_student    Hand-book on Statistical Distributions (pag.116) ... Christian Walck
+    - Parameters NonCentralTStudent Distribution: {"lambda": *, "n": *, "loc": *, "scale": *}
+    - https://phitter.io/distributions/continuous/non_central_t_student    Hand-book on Statistical Distributions (pag.116) ... Christian Walck
     """
 
     def __init__(
@@ -19,9 +19,9 @@ class NonCentralTStudent:
         init_parameters_examples=False,
     ):
         """
-        Initializes the NonCentralTStudent Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters NonCentralTStudent Distribution: {"lambda": *, "n": *, "loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/non_central_t_student
+        - Initializes the NonCentralTStudent Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters NonCentralTStudent Distribution: {"lambda": *, "n": *, "loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/non_central_t_student
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

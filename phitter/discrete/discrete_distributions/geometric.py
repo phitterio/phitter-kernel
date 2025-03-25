@@ -5,8 +5,8 @@ import scipy.stats
 class Geometric:
     """
     Geometric distribution
-    Parameters Geometric Distribution: {"p": *}
-    https://phitter.io/distributions/discrete/geometric
+    - Parameters Geometric Distribution: {"p": *}
+    - https://phitter.io/distributions/discrete/geometric
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class Geometric:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Geometric Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        The Geometric distribution parameters are: {"p": *}.
-        https://phitter.io/distributions/continuous/geometric
+        - Initializes the Geometric Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Geometric Distribution: {"p": *}
+        - https://phitter.io/distributions/continuous/geometric
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
             raise Exception("You must initialize the distribution by either providing the Discrete Measures [DiscreteMeasures] instance or a dictionary of the distribution's parameters.")

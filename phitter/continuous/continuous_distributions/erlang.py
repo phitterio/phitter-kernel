@@ -7,8 +7,8 @@ import scipy.stats
 class Erlang:
     """
     Erlang distribution
-    Parameters Erlang Distribution: {"k": *, "beta": *}
-    https://phitter.io/distributions/continuous/erlang
+    - Parameters Erlang Distribution: {"k": *, "beta": *}
+    - https://phitter.io/distributions/continuous/erlang
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class Erlang:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Erlang Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Erlang Distribution: {"k": *, "beta": *}
-        https://phitter.io/distributions/continuous/erlang
+        - Initializes the Erlang Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Erlang Distribution: {"k": *, "beta": *}
+        - https://phitter.io/distributions/continuous/erlang
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

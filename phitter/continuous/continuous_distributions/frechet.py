@@ -8,7 +8,7 @@ class Frechet:
     """
     Fréchet Distribution
     Also known as inverse Weibull distribution (Scipy name)
-    https://phitter.io/distributions/continuous/frechet
+    - https://phitter.io/distributions/continuous/frechet
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class Frechet:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Frechet Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Frechet Distribution: {"alpha": *, "loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/frechet
+        - Initializes the Frechet Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Frechet Distribution: {"alpha": *, "loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/frechet
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

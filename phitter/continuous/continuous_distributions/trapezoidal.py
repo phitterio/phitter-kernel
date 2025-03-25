@@ -6,8 +6,8 @@ import scipy.stats
 class Trapezoidal:
     """
     Trapezoidal distribution
-    Parameters Trapezoidal Distribution: {"a": *, "b": *, "c": *, "d": *}
-    https://phitter.io/distributions/continuous/trapezoidal
+    - Parameters Trapezoidal Distribution: {"a": *, "b": *, "c": *, "d": *}
+    - https://phitter.io/distributions/continuous/trapezoidal
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Trapezoidal:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Trapezoidal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Trapezoidal Distribution: {"a": *, "b": *, "c": *, "d": *}
-        https://phitter.io/distributions/continuous/trapezoidal
+        - Initializes the Trapezoidal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Trapezoidal Distribution: {"a": *, "b": *, "c": *, "d": *}
+        - https://phitter.io/distributions/continuous/trapezoidal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

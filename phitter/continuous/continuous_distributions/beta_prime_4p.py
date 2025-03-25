@@ -11,8 +11,8 @@ warnings.filterwarnings("ignore")
 class BetaPrime4P:
     """
     Beta Prime 4P Distribution
-    Parameters BetaPrime4P Distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
-    https://phitter.io/distributions/continuous/beta_prime_4p
+    - Parameters BetaPrime4P Distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
+    - https://phitter.io/distributions/continuous/beta_prime_4p
     """
 
     def __init__(
@@ -22,9 +22,9 @@ class BetaPrime4P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the BetaPrime4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters BetaPrime4P Distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/beta_prime_4p
+        - Initializes the BetaPrime4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters BetaPrime4P Distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/beta_prime_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

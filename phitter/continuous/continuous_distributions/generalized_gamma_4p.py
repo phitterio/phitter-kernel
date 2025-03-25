@@ -7,7 +7,7 @@ import scipy.stats
 class GeneralizedGamma4P:
     """
     Generalized Gamma Distribution
-    https://phitter.io/distributions/continuous/generalized_gamma_4p
+    - https://phitter.io/distributions/continuous/generalized_gamma_4p
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class GeneralizedGamma4P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the GeneralizedGamma4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters GeneralizedGamma4P Distribution: {"a": *, "d": *, "p": *, "loc": *}
-        https://phitter.io/distributions/continuous/generalized_gamma_4p
+        - Initializes the GeneralizedGamma4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters GeneralizedGamma4P Distribution: {"a": *, "d": *, "p": *, "loc": *}
+        - https://phitter.io/distributions/continuous/generalized_gamma_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

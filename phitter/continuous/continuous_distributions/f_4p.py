@@ -7,8 +7,8 @@ import scipy.stats
 class F4P:
     """
     F distribution
-    Parameters F4P Distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
-    https://phitter.io/distributions/continuous/f_4p
+    - Parameters F4P Distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
+    - https://phitter.io/distributions/continuous/f_4p
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class F4P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the F4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters F4P Distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
-        https://phitter.io/distributions/continuous/f_4p
+        - Initializes the F4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters F4P Distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
+        - https://phitter.io/distributions/continuous/f_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

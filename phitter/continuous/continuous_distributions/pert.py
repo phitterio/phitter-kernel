@@ -6,8 +6,8 @@ import scipy.special
 class Pert:
     """
     Pert distribution
-    Parameters Pert Distribution: {"a": *, "b": *, "c": *}
-    https://phitter.io/distributions/continuous/pert
+    - Parameters Pert Distribution: {"a": *, "b": *, "c": *}
+    - https://phitter.io/distributions/continuous/pert
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Pert:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Pert Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Pert Distribution: {"a": *, "b": *, "c": *}
-        https://phitter.io/distributions/continuous/pert
+        - Initializes the Pert Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Pert Distribution: {"a": *, "b": *, "c": *}
+        - https://phitter.io/distributions/continuous/pert
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
@@ -196,7 +196,7 @@ class Pert:
 
             return (eq1, eq2, eq3)
 
-        ## Parameters of equations system
+        ## - Parameters of equations system
         bounds = ((-numpy.inf, continuous_measures.min, continuous_measures.mode), (continuous_measures.mode, continuous_measures.max, numpy.inf))
         x0 = (continuous_measures.min, continuous_measures.mode, continuous_measures.max)
         args = [continuous_measures]

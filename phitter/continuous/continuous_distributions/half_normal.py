@@ -6,7 +6,7 @@ import scipy.stats
 class HalfNormal:
     """
     Half Normal Distribution
-    https://phitter.io/distributions/continuous/half_normal
+    - https://phitter.io/distributions/continuous/half_normal
     """
 
     def __init__(
@@ -16,9 +16,9 @@ class HalfNormal:
         init_parameters_examples=False,
     ):
         """
-        Initializes the HalfNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters HalfNormal Distribution: {"mu": *, "sigma": *}
-        https://phitter.io/distributions/continuous/half_normal
+        - Initializes the HalfNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters HalfNormal Distribution: {"mu": *, "sigma": *}
+        - https://phitter.io/distributions/continuous/half_normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

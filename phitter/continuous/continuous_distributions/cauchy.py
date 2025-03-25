@@ -6,8 +6,8 @@ import scipy.stats
 class Cauchy:
     """
     Cauchy distribution
-    Parameters Cauchy Distribution: {"x0": *, "gamma": *}
-    https://phitter.io/distributions/continuous/cauchy
+    - Parameters Cauchy Distribution: {"x0": *, "gamma": *}
+    - https://phitter.io/distributions/continuous/cauchy
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class Cauchy:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Cauchy Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Cauchy Distribution: {"x0": *, "gamma": *}
-        https://phitter.io/distributions/continuous/cauchy
+        - Initializes the Cauchy Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Cauchy Distribution: {"x0": *, "gamma": *}
+        - https://phitter.io/distributions/continuous/cauchy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

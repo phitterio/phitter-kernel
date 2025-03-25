@@ -5,7 +5,7 @@ import scipy.special
 class Semicircular:
     """
     Semicicrcular Distribution
-    https://phitter.io/distributions/continuous/semicircular
+    - https://phitter.io/distributions/continuous/semicircular
     """
 
     def __init__(
@@ -15,9 +15,9 @@ class Semicircular:
         init_parameters_examples=False,
     ):
         """
-        Initializes the Semicircular Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters Semicircular Distribution: {"loc": *, "R": *}
-        https://phitter.io/distributions/continuous/semicircular
+        - Initializes the Semicircular Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters Semicircular Distribution: {"loc": *, "R": *}
+        - https://phitter.io/distributions/continuous/semicircular
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

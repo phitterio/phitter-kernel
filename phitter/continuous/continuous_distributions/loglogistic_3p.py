@@ -6,8 +6,8 @@ import scipy.stats
 class LogLogistic3P:
     """
     Loglogistic distribution
-    Parameters LogLogistic3P Distribution: {"loc": *, "alpha": *, "beta": *}
-    https://phitter.io/distributions/continuous/loglogistic_3p
+    - Parameters LogLogistic3P Distribution: {"loc": *, "alpha": *, "beta": *}
+    - https://phitter.io/distributions/continuous/loglogistic_3p
     """
 
     def __init__(
@@ -17,9 +17,9 @@ class LogLogistic3P:
         init_parameters_examples=False,
     ):
         """
-        Initializes the LogLogistic3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters LogLogistic3P Distribution: {"loc": *, "alpha": *, "beta": *}
-        https://phitter.io/distributions/continuous/loglogistic_3p
+        - Initializes the LogLogistic3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters LogLogistic3P Distribution: {"loc": *, "alpha": *, "beta": *}
+        - https://phitter.io/distributions/continuous/loglogistic_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(

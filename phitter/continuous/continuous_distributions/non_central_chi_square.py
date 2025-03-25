@@ -7,8 +7,8 @@ import scipy.stats
 class NonCentralChiSquare:
     """
     Non-Central Chi Square distribution
-    Parameters NonCentralChiSquare Distribution: {"lambda": *, "n": *}
-    https://phitter.io/distributions/continuous/non_central_chi_square
+    - Parameters NonCentralChiSquare Distribution: {"lambda": *, "n": *}
+    - https://phitter.io/distributions/continuous/non_central_chi_square
     """
 
     def __init__(
@@ -18,9 +18,9 @@ class NonCentralChiSquare:
         init_parameters_examples=False,
     ):
         """
-        Initializes the NonCentralChiSquare Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        Parameters NonCentralChiSquare Distribution: {"lambda": *, "n": *}
-        https://phitter.io/distributions/continuous/non_central_chi_square
+        - Initializes the NonCentralChiSquare Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
+        - Parameters NonCentralChiSquare Distribution: {"lambda": *, "n": *}
+        - https://phitter.io/distributions/continuous/non_central_chi_square
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
             raise ValueError(
@@ -52,7 +52,7 @@ class NonCentralChiSquare:
         # def Q(M: float, a: float, b: float) -> float:
         #     """
         #     Marcum Q - function
-        #     https://en.wikipedia.org/wiki/Marcum_Q-function
+        #     - https://en.wikipedia.org/wiki/Marcum_Q-function
         #     """
         #     k = 1 - M
         #     x = (a / b) ** k * scipy.special.iv(k, a * b)
