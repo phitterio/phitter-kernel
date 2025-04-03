@@ -45,8 +45,8 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://phitter.io"
-Documentation = "https://github.com/phitterio/phitter-kernel"
-Repository = "https://github.com/phitterio/phitter-kernel"
+Documentation = "https://github.com/phitter-core/phitter-kernel"
+Repository = "https://github.com/phitter-core/phitter-kernel"
 
 [tool.setuptools]
 packages = ["phitter", "phitter.continuous", "phitter.continuous.continuous_distributions", "phitter.continuous.continuous_measures", "phitter.continuous.continuous_statistical_tests", "phitter.discrete", "phitter.discrete.discrete_distributions", "phitter.discrete.discrete_measures", "phitter.discrete.discrete_statistical_tests", "phitter.simulation", "phitter.simulation.own_distribution", "phitter.simulation.process_simulation", "phitter.simulation.queueing_simulation"]
