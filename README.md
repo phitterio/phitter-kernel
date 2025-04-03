@@ -33,6 +33,10 @@
     This repository contains the implementation of the python library and the kernel of <a href="https://phitter.io">Phitter Web</a>
 </p>
 
+## 📄 Documentation
+
+Find the complete Phitter documentation [here](https://docs-phitter-kernel.netlify.app/).
+
 ## Installation
 
 ### Requirements
