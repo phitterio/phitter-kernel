@@ -1,18 +1,20 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=77.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "phitter"
 version = "1.0.2"
 description = "Find the best probability distribution for your dataset and simulate processes and queues"
-authors = [{name = "Sebastián José Herrera Monterrosa",  email = "phitter.email@gmail.com"}, {name = "Carlos Andrés Másmela Pinilla",  email = "phitter.email@gmail.com"}]
+authors = [
+    {name = "Sebastián José Herrera Monterrosa", email = "phitter.email@gmail.com"},
+    {name = "Carlos Andrés Másmela Pinilla", email = "phitter.email@gmail.com"}
+]
 readme = "README.md"
 requires-python = ">=3.9"
-license = {file = "LICENSE"}
+license = "MIT"
 keywords = ["scientific", "engineering", "mathematics", "artificial intelligence", "software development", "python modules"]
 classifiers = [
-    "License :: OSI Approved :: MIT License",
     "Intended Audience :: Education",
     "Intended Audience :: End Users/Desktop",
     "Intended Audience :: Developers",
@@ -30,9 +32,8 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-]
-
+    "Programming Language :: Python :: 3.12"
+]  # Removed license classifier
 dependencies = [
     "scipy>=1.1.0",
     "plotly>=5.14.0",
@@ -45,8 +46,22 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://phitter.io"
-Documentation = "https://github.com/phitter-core/phitter-kernel"
+Documentation = "https://docs-phitter-kernel.netlify.app/"
 Repository = "https://github.com/phitter-core/phitter-kernel"
 
 [tool.setuptools]
-packages = ["phitter", "phitter.continuous", "phitter.continuous.continuous_distributions", "phitter.continuous.continuous_measures", "phitter.continuous.continuous_statistical_tests", "phitter.discrete", "phitter.discrete.discrete_distributions", "phitter.discrete.discrete_measures", "phitter.discrete.discrete_statistical_tests", "phitter.simulation", "phitter.simulation.own_distribution", "phitter.simulation.process_simulation", "phitter.simulation.queueing_simulation"]
+packages = [
+    "phitter",
+    "phitter.continuous",
+    "phitter.continuous.continuous_distributions",
+    "phitter.continuous.continuous_measures",
+    "phitter.continuous.continuous_statistical_tests",
+    "phitter.discrete",
+    "phitter.discrete.discrete_distributions",
+    "phitter.discrete.discrete_measures",
+    "phitter.discrete.discrete_statistical_tests",
+    "phitter.simulation",
+    "phitter.simulation.own_distribution",
+    "phitter.simulation.process_simulation",
+    "phitter.simulation.queueing_simulation"
+]

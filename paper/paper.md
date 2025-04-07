@@ -3,17 +3,20 @@ title: "Phitter: A Python Library for Probability Distribution Fitting and Analy
 tags:
     - Python
     - Statistics
-    - probability distributions
-    - data analysis
-    - machine learning
-    - simulation
-    - monte carlo
+    - Probability Distributions
+    - Data Analysis
+    - Machine Learning
+    - Simulation
+    - Monte Carlo
 authors:
     - name: Sebastián José Herrera Monterrosa
       orcid: 0009-0002-2766-642X
       affiliation: 1
+    - name: Carlos Andrés Masmela Pinilla
+      orcid: 0009-0000-0390-1558
+      affiliation: 1
 affiliations:
-    - name: Pontificia Universidad Javeriana
+    - name: "Pontificia Universidad Javeriana"
       index: 1
 date: 26 March 2024
 bibliography: paper.bib
@@ -21,53 +24,52 @@ bibliography: paper.bib
 
 # Summary
 
-Phitter is a Python library designed to analyze datasets and determine the best analytical probability distributions that represent them. It provides a comprehensive suite of tools for fitting and analyzing over 80 probability distributions, both continuous and discrete. Phitter implements three goodness-of-fit tests and offers interactive visualizations to aid in the analysis process. For each selected probability distribution, Phitter provides a standard modeling guide along with detailed spreadsheets that outline the methodology for using the chosen distribution in various fields such as data science, operations research, and artificial intelligence.
+Phitter is an open-source Python library that streamlines the process of fitting and analyzing probability distributions across various domains—including statistics, data science, operations research, and machine learning—by offering a comprehensive catalog of over 80 continuous and discrete distributions, multiple goodness-of-fit measures (Chi-Square, Kolmogorov-Smirnov, and Anderson-Darling), interactive visualizations for exploratory data analysis and model validation, and detailed modeling guides and spreadsheets to assist users in applying the chosen distribution for simulation or predictive tasks, thus reducing the complexity of distribution fitting and helping researchers and practitioners identify distributions that most closely model their data.
 
 # Statement of Need
 
-In the fields of data science, statistics, and machine learning, understanding the underlying probability distributions of datasets is crucial for accurate modeling and prediction. However, identifying the most appropriate distribution for a given dataset can be a complex and time-consuming task. Phitter addresses this need by providing a user-friendly, efficient, and comprehensive tool for probability distribution fitting and analysis.
+Fitting probability distributions to empirical data is a fundamental task in various scientific and engineering disciplines, crucial for applications such as stochastic modeling, risk assessment, and event simulation [@vose2008risk]. While methods exist for fitting specific distributions where parameters are easily derived from sample statistics (e.g., the normal distribution), the process becomes significantly more complex when aiming to identify the best-fitting distribution among a large set of candidates or when dealing with distributions requiring non-trivial parameter estimation techniques.
 
-Phitter stands out from existing tools by offering:
+Although commercial software packages exist that automate distribution fitting, their commercial nature and cost limit accessibility for many researchers and practitioners. Within the open-source scientific Python ecosystem, the `scipy.stats` module [@2020SciPy-NMeth] offers a powerful foundation, providing implementations for numerous probability distributions and parameter estimation capabilities.
 
-1. A wide range of over 80 probability distributions, including both continuous and discrete options.
-2. Implementation of multiple goodness-of-fit tests (Chi-Square, Kolmogorov-Smirnov, and Anderson-Darling).
-3. Interactive visualizations for better understanding and interpretation of results.
-4. Accelerated fitting capabilities for large datasets (over 100K samples).
-5. Detailed modeling guides and spreadsheets for practical application in various fields.
+Therefore, there is a need for an accessible, open-source Python library specifically designed for automated probability distribution fitting that:
 
-# Features and Functionality
+1.  Provides implementations for a wide range of common distributions.
+2.  Implements efficient parameter estimation techniques, prioritizing th time estimation.
+3.  Provide an easy-to-use interface for fitting distributions and analyzing and visualizing results.
 
-Phitter offers a range of features designed to streamline the process of probability distribution analysis:
+Phitter has been developed to address these needs, providing the scientific community with a dedicated tool that simplifies and standardizes the process of probability distribution fitting, bridging the gap left by existing general-purpose statistical libraries and proprietary software.
 
--   **Flexible Fitting**: Users can fit both continuous and discrete distributions to their data.
--   **Customizable Analysis**: Options to specify the number of bins, confidence level, and distributions to fit.
--   **Parallel Processing**: Support for multi-threaded fitting to improve performance.
--   **Comprehensive Output**: Detailed summaries of fitted distributions, including parameters, test statistics, and rankings.
--   **Visualization Tools**: Functions to plot histograms, PDFs, ECDFs, and Q-Q plots for visual analysis.
--   **Distribution Utilities**: Methods to work with individual distributions, including CDF, PDF, PPF, and sampling functions.
+# Key Features
 
-# Implementation and Usage
+1. Phitter implements probability distributions as standardized as possible according to the following sources: [@walck1996hand], [@mclaughlin2001compendium], [@wiki:List_of_probability_distributions]
 
-Phitter is implemented in Python and is available via PyPI. It requires Python 3.9 or higher. The library can be easily installed using pip:
+2. **Accelerated Parameter Estimation:** For a subset of implemented distributions, Phitter utilizes direct solving of the distribution's parametric equation system. This approach offers significant computational speed advantages compared to iterative methods like standard Maximum Likelihood Estimation (MLE), particularly beneficial for large datasets. Performance benchmarks detailing estimation times are provided [Estimation Time Parameters for Continuous Distributions](https://docs-phitter-kernel.netlify.app/documentation/benchmarks/continuous/continuous-parameters-estimation.html). Where direct parametric solutions are not implemented or feasible, Phitter seamlessly integrates with and leverages the well-established MLE implementation provided by the SciPy library (`scipy.stats.rv_continuous.fit` and related methods). This ensures broad applicability across a wide range of distributions while prioritizing speed where possible.
 
-```
-pip install phitter
-```
+3. **Anderson Darling:** Phitter evaluetes de Anderson Darling distribution according this article [@marsaglia2004evaluating].
 
-Basic usage involves creating a `PHITTER` object with a dataset and calling the `fit()` method:
+4. **Comprehensive Distribution Documentation:** Phitter is accompanied by detailed documentation for both continuous and discrete distributions [Continuous Distributions](https://docs-phitter-kernel.netlify.app/documentation/distributions/continuous-distributions.html) and [Discrete Distributions](https://docs-phitter-kernel.netlify.app/documentation/distributions/discrete-distributions.html). This documentation outlines the mathematical formulations used and provides Excel and Google Sheet implemetation for each distribution.
 
-```python
-import phitter
+5. **Fit characteristics:**
 
-data = [...]  # Your dataset
-phi = phitter.Phitter(data=data)
-phi.fit()
-```
+-   **Extensive Distribution Library:** Access to over 80 continuous and discrete probability distributions.
+-   **Multiple Goodness-of-Fit Tests:** Offers a choice of Kolmogorov-Smirnov (K-S), Chi-Square, and Anderson-Darling (A-D) tests for quantitative fit evaluation.
+-   **Parallel Processing:** Utilizes multiprocessing for faster evaluation of multiple distributions, particularly effective for large datasets (e.g., 100K+ samples).
+-   **Integrated Visualizations:** Provides built-in plotting functions (Histogram/PDF overlay, ECDF vs. CDF, Q-Q plots) for visual assessment of distribution fits.
+-   **Automated Modeling Guides:** Generates detailed reports for best-fit distributions, including parameters, key formulas (PDF, CDF, PPF), usage recommendations, and implementation details.
 
-More advanced usage allows for customization of fitting parameters and specific distribution analysis.
+6. **Simulation**: Phitter not only incorporates a robust set of functionalities for fitting and analyzing over 80 probability distributions, both continuous and discrete, but also offers capabilities for simulating processes and queues: FIFO, LIFO and PBS.
 
-# Conclusion
+# Comparison with Existing Tools
 
-Phitter provides researchers, data scientists, and statisticians with a powerful tool for probability distribution analysis. By offering a comprehensive set of distributions, multiple goodness-of-fit tests, and interactive visualizations, Phitter simplifies the process of identifying and working with probability distributions in various data-driven fields.
+-   **distfit**  
+    distfit iterates over some or all scipy distributions. With large samples, it is significantly slower. It does not support parallelism.
+
+-   **fitter**  
+    fitter iterates over some or all scipy distributions. With large samples, it is significantly slower. It supports parallelism.
+
+# Documentation
+
+Find the complete Phitter documentation [here](https://docs-phitter-kernel.netlify.app/).
 
 # References
