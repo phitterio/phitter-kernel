@@ -36,21 +36,28 @@ def evaluate_continuous_test_kolmogorov_smirnov(distribution, continuous_measure
             distribution. If it's true, no.
     """
 
-    ## Parameters and preparations
-    N = continuous_measures.size
-
     ## Calculation of errors
     Fn = distribution.cdf(continuous_measures.data)
-    errors = numpy.abs(continuous_measures.Sn_ks[continuous_measures.idx_ks] - Fn[continuous_measures.idx_ks])
-    
+
+    errors_before = numpy.abs(continuous_measures.Sn_ks_before[continuous_measures.idx_ks] - Fn[continuous_measures.idx_ks])
+    errors_after = numpy.abs(continuous_measures.Sn_ks_after[continuous_measures.idx_ks] - Fn[continuous_measures.idx_ks])
+
     ## Calculation of indicators
-    statistic_ks = numpy.max(errors)
+    statistic_ks = max(numpy.max(errors_before), numpy.max(errors_after))
     critical_value = continuous_measures.critical_value_ks
-    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
+    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, continuous_measures.size)
     rejected = statistic_ks >= critical_value
 
+    ## This equal to the previous
+    # statistic_ks_, p_value_ = scipy.stats.kstest(continuous_measures.data, distribution.cdf)
+
     ## Construction of answer
-    result_test_ks = {"test_statistic": statistic_ks, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_ks = {
+        "test_statistic": statistic_ks,
+        "critical_value": critical_value,
+        "p-value": p_value,
+        "rejected": rejected,
+    }
 
     return result_test_ks
 
@@ -69,12 +76,11 @@ if __name__ == "__main__":
         return data
 
     for id_distribution, distribution_class in CONTINUOUS_DISTRIBUTIONS.items():
-        if id_distribution == "argus":
-            print(id_distribution)
-            path = f"../continuous_distributions_sample/sample_{id_distribution}.txt"
-            data = get_data(path)
+        print(id_distribution)
+        path = f"../continuous_distributions_sample/sample_{id_distribution}.txt"
+        data = get_data(path)
 
-            ## Init a instance of class
-            continuous_measures = ContinuousMeasures(data)
-            distribution = distribution_class(continuous_measures=continuous_measures)
-            print(evaluate_continuous_test_kolmogorov_smirnov(distribution, continuous_measures))
+        ## Init a instance of class
+        continuous_measures = ContinuousMeasures(data)
+        distribution = distribution_class(continuous_measures=continuous_measures)
+        print(evaluate_continuous_test_kolmogorov_smirnov(distribution, continuous_measures))

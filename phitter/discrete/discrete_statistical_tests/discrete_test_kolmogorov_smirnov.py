@@ -35,17 +35,18 @@ def evaluate_discrete_test_kolmogorov_smirnov(distribution, discrete_measures):
             considered that the sample is distributed according to the probability
             distribution. If it's true, no.
     """
-    ## Parameters and preparations
-    N = discrete_measures.size
-
     ## Calculation of errors
     Fn = distribution.cdf(discrete_measures.data)
-    errors = numpy.abs(discrete_measures.Sn_ks[discrete_measures.idx_ks] - Fn[discrete_measures.idx_ks])
+    errors_before = numpy.abs(discrete_measures.Sn_ks_before[discrete_measures.idx_ks] - Fn[discrete_measures.idx_ks])
+    errors_after = numpy.abs(discrete_measures.Sn_ks_after[discrete_measures.idx_ks] - Fn[discrete_measures.idx_ks])
+    
+    ## This is not equal to the previous
+    # statistic_ks, p_value = scipy.stats.kstest(discrete_measures.data, distribution.cdf)
 
     ## Calculation of indicators
-    statistic_ks = numpy.max(errors)
+    statistic_ks = max(numpy.max(errors_before), numpy.max(errors_after))
     critical_value = discrete_measures.critical_value_ks
-    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
+    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, discrete_measures.size)
     rejected = statistic_ks >= critical_value
 
     ## Construction of answer

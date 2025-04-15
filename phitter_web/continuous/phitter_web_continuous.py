@@ -8200,7 +8200,8 @@ class ContinuousMeasures:
         self.densities_frequencies, _ = numpy.histogram(self.data, self.num_bins, density=True)
         self.central_values = (self.bin_edges[:-1] + self.bin_edges[1:]) / 2
         self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.size - 1]])
-        self.Sn_ks = (numpy.arange(self.size) + 1) / self.size
+        self.Sn_ks_before = (numpy.arange(self.size)) / self.size
+        self.Sn_ks_after = (numpy.arange(self.size) + 1) / self.size
         self.confidence_level = confidence_level
         self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.size)
         self.critical_value_ad = self.ad_critical_value(self.confidence_level, self.size)
@@ -8269,19 +8270,29 @@ def evaluate_continuous_test_chi_square(distribution, continuous_measures):
     critical_value = continuous_measures.critical_value_chi2(freedom_degrees)
     p_value = 1 - scipy.stats.chi2.cdf(statistic_chi2, freedom_degrees)
     rejected = statistic_chi2 >= critical_value
-    result_test_chi2 = {"test_statistic": statistic_chi2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_chi2 = {
+        "test_statistic": statistic_chi2,
+        "critical_value": critical_value,
+        "p-value": p_value,
+        "rejected": rejected,
+    }
     return result_test_chi2
 
 
 def evaluate_continuous_test_kolmogorov_smirnov(distribution, continuous_measures):
-    N = continuous_measures.size
     Fn = distribution.cdf(continuous_measures.data)
-    errors = numpy.abs(continuous_measures.Sn_ks[continuous_measures.idx_ks] - Fn[continuous_measures.idx_ks])
-    statistic_ks = numpy.max(errors)
+    errors_before = numpy.abs(continuous_measures.Sn_ks_before[continuous_measures.idx_ks] - Fn[continuous_measures.idx_ks])
+    errors_after = numpy.abs(continuous_measures.Sn_ks_after[continuous_measures.idx_ks] - Fn[continuous_measures.idx_ks])
+    statistic_ks = max(numpy.max(errors_before), numpy.max(errors_after))
     critical_value = continuous_measures.critical_value_ks
-    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
+    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, continuous_measures.size)
     rejected = statistic_ks >= critical_value
-    result_test_ks = {"test_statistic": statistic_ks, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_ks = {
+        "test_statistic": statistic_ks,
+        "critical_value": critical_value,
+        "p-value": p_value,
+        "rejected": rejected,
+    }
     return result_test_ks
 
 
@@ -8292,7 +8303,12 @@ def evaluate_continuous_test_anderson_darling(distribution, continuous_measures)
     critical_value = continuous_measures.critical_value_ad
     p_value = continuous_measures.ad_p_value(N, A2)
     rejected = A2 >= critical_value
-    result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_ad = {
+        "test_statistic": A2,
+        "critical_value": critical_value,
+        "p-value": p_value,
+        "rejected": rejected,
+    }
     return result_test_ad
 
 

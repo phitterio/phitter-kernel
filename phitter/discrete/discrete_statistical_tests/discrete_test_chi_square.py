@@ -50,7 +50,12 @@ def evaluate_discrete_test_chi_square(distribution, discrete_measures):
     rejected = statistic_chi2 >= critical_value
 
     ## Construction of answer
-    result_test_chi2 = {"test_statistic": statistic_chi2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_chi2 = {
+        "test_statistic": statistic_chi2,
+        "critical_value": critical_value,
+        "p-value": p_value,
+        "rejected": rejected,
+    }
 
     return result_test_chi2
 

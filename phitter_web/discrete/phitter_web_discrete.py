@@ -798,7 +798,8 @@ class DiscreteMeasures:
         self.absolutes_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=False)
         self.densities_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=True)
         self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.size - 1]])
-        self.Sn_ks = (numpy.arange(self.size) + 1) / self.size
+        self.Sn_ks_before = (numpy.arange(self.size)) / self.size
+        self.Sn_ks_after = (numpy.arange(self.size) + 1) / self.size
         self.confidence_level = confidence_level
         self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.size)
         self.ecdf_frequencies = numpy.cumsum(self.densities_frequencies)
@@ -826,17 +827,22 @@ def evaluate_discrete_test_chi_square(distribution, discrete_measures):
     critical_value = discrete_measures.critical_value_chi2(freedom_degrees)
     p_value = 1 - scipy.stats.chi2.cdf(statistic_chi2, freedom_degrees)
     rejected = statistic_chi2 >= critical_value
-    result_test_chi2 = {"test_statistic": statistic_chi2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_chi2 = {
+        "test_statistic": statistic_chi2,
+        "critical_value": critical_value,
+        "p-value": p_value,
+        "rejected": rejected,
+    }
     return result_test_chi2
 
 
 def evaluate_discrete_test_kolmogorov_smirnov(distribution, discrete_measures):
-    N = discrete_measures.size
     Fn = distribution.cdf(discrete_measures.data)
-    errors = numpy.abs(discrete_measures.Sn_ks[discrete_measures.idx_ks] - Fn[discrete_measures.idx_ks])
-    statistic_ks = numpy.max(errors)
+    errors_before = numpy.abs(discrete_measures.Sn_ks_before[discrete_measures.idx_ks] - Fn[discrete_measures.idx_ks])
+    errors_after = numpy.abs(discrete_measures.Sn_ks_after[discrete_measures.idx_ks] - Fn[discrete_measures.idx_ks])
+    statistic_ks = max(numpy.max(errors_before), numpy.max(errors_after))
     critical_value = discrete_measures.critical_value_ks
-    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, N)
+    p_value = 1 - scipy.stats.kstwo.cdf(statistic_ks, discrete_measures.size)
     rejected = statistic_ks >= critical_value
     result_test_ks = {"test_statistic": statistic_ks, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
     return result_test_ks

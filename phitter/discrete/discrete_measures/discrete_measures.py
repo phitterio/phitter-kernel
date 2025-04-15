@@ -1,5 +1,4 @@
 import numpy
-import scipy.optimize
 import scipy.stats
 
 
@@ -27,7 +26,8 @@ class DiscreteMeasures:
         self.absolutes_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=False)
         self.densities_frequencies, _ = numpy.histogram(self.data, bins=numpy.arange(self.min, self.max + 2) - 0.5, density=True)
         self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.size - 1]])
-        self.Sn_ks = (numpy.arange(self.size) + 1) / self.size
+        self.Sn_ks_before = (numpy.arange(self.size)) / self.size
+        self.Sn_ks_after = (numpy.arange(self.size) + 1) / self.size
         self.confidence_level = confidence_level
         self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.size)
         self.ecdf_frequencies = numpy.cumsum(self.densities_frequencies)
@@ -60,15 +60,15 @@ if __name__ == "__main__":
 
     discrete_measures = DiscreteMeasures(data)
 
-    print("size: ", discrete_measures.size)
-    print("Min: ", discrete_measures.min)
-    print("Max: ", discrete_measures.max)
-    print("Mean: ", discrete_measures.mean)
-    print("Variance: ", discrete_measures.variance)
-    print("Skewness: ", discrete_measures.skewness)
-    print("Kurtosis: ", discrete_measures.kurtosis)
-    print("Median: ", discrete_measures.median)
-    print("Mode: ", discrete_measures.mode)
-    print("Domain: ", discrete_measures.domain)
-    print("Absolutes Frequencies: ", discrete_measures.absolutes_frequencies)
-    print("Densities Frequencies: ", discrete_measures.densities_frequencies)
+    print(f"size: {discrete_measures.size}")
+    print(f"Min: {discrete_measures.min}")
+    print(f"Max: {discrete_measures.max}")
+    print(f"Mean: {discrete_measures.mean}")
+    print(f"Variance: {discrete_measures.variance}")
+    print(f"Skewness: {discrete_measures.skewness}")
+    print(f"Kurtosis: {discrete_measures.kurtosis}")
+    print(f"Median: {discrete_measures.median}")
+    print(f"Mode: {discrete_measures.mode}")
+    print(f"Domain: {discrete_measures.domain}")
+    print(f"Absolutes Frequencies: {discrete_measures.absolutes_frequencies}")
+    print(f"Densities Frequencies: {discrete_measures.densities_frequencies}")

@@ -60,7 +60,12 @@ def evaluate_continuous_test_anderson_darling(distribution, continuous_measures)
     rejected = A2 >= critical_value
 
     ## Construction of answer
-    result_test_ad = {"test_statistic": A2, "critical_value": critical_value, "p-value": p_value, "rejected": rejected}
+    result_test_ad = {
+        "test_statistic": A2,
+        "critical_value": critical_value,
+        "p-value": p_value,
+        "rejected": rejected,
+    }
 
     return result_test_ad
 

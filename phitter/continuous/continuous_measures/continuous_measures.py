@@ -30,7 +30,8 @@ class ContinuousMeasures:
         self.densities_frequencies, _ = numpy.histogram(self.data, self.num_bins, density=True)
         self.central_values = (self.bin_edges[:-1] + self.bin_edges[1:]) / 2
         self.idx_ks = numpy.concatenate([numpy.where(self.data[:-1] != self.data[1:])[0], [self.size - 1]])
-        self.Sn_ks = (numpy.arange(self.size) + 1) / self.size
+        self.Sn_ks_before = (numpy.arange(self.size)) / self.size
+        self.Sn_ks_after = (numpy.arange(self.size) + 1) / self.size
         self.confidence_level = confidence_level
         self.critical_value_ks = scipy.stats.kstwo.ppf(self.confidence_level, self.size)
         self.critical_value_ad = self.ad_critical_value(self.confidence_level, self.size)
