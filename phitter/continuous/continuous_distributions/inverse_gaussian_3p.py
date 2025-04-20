@@ -6,7 +6,7 @@ class InverseGaussian3P:
     """
     Inverse Gaussian Distribution
     Also known like Wald distribution
-    - Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
+    - Parameters InverseGaussian3P Distribution: {"mu": \*, "lambda": \*, "loc": \*}
     - https://phitter.io/distributions/continuous/inverse_gaussian_3p
     """
 
@@ -18,7 +18,7 @@ class InverseGaussian3P:
     ):
         """
         - Initializes the InverseGaussian3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters InverseGaussian3P Distribution: {"mu": *, "lambda": *, "loc": *}
+        - Parameters InverseGaussian3P Distribution: {"mu": \*, "lambda": \*, "loc": \*}
         - https://phitter.io/distributions/continuous/inverse_gaussian_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -159,11 +159,11 @@ class InverseGaussian3P:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "lambda": *, "loc": *}
+        parameters: {"mu": \*, "lambda": \*, "loc": \*}
         """
         mu = 3 * numpy.sqrt(continuous_measures.variance / (continuous_measures.skewness**2))
         lambda_ = mu**3 / continuous_measures.variance

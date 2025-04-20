@@ -5,7 +5,7 @@ import scipy.special
 class Arcsine:
     """
     Arcsine distribution
-    - Parameters Arcsine Distribution: {"a": *, "b": *}
+    - Parameters Arcsine Distribution: {"a": \*, "b": \*}
     - https://phitter.io/distributions/continuous/arcsine
     """
 
@@ -17,7 +17,7 @@ class Arcsine:
     ):
         """
         - Initializes the Arcsine Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Arcsine Distribution: {"a": *, "b": *}
+        - Parameters Arcsine Distribution: {"a": \*, "b": \*}
         - https://phitter.io/distributions/continuous/arcsine
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -182,7 +182,7 @@ class Arcsine:
 
         Returns
         =======
-        parameters: {"a": *, "b": *}
+        parameters: {"a": \*, "b": \*}
         """
         a = continuous_measures.min - 1e-3
         b = continuous_measures.max + 1e-3

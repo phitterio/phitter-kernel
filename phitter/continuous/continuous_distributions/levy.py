@@ -7,7 +7,7 @@ import scipy.stats
 class Levy:
     """
     Levy distribution
-    - Parameters Levy Distribution: {"mu": *, "c": *}
+    - Parameters Levy Distribution: {"mu": \*, "c": \*}
     - https://phitter.io/distributions/continuous/levy
     """
 
@@ -19,7 +19,7 @@ class Levy:
     ):
         """
         - Initializes the Levy Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Levy Distribution: {"mu": *, "c": *}
+        - Parameters Levy Distribution: {"mu": \*, "c": \*}
         - https://phitter.io/distributions/continuous/levy
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -165,7 +165,7 @@ class Levy:
 
         Returns
         =======
-        parameters: {"mu": *, "c": *}
+        parameters: {"mu": \*, "c": \*}
         """
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
         #     ## Variables declaration

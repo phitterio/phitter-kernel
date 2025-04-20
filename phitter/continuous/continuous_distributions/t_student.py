@@ -6,7 +6,7 @@ import scipy.stats
 class TStudent:
     """
     T distribution
-    - Parameters TStudent Distribution: {"df": *}
+    - Parameters TStudent Distribution: {"df": \*}
     - https://phitter.io/distributions/continuous/t_student
     """
 
@@ -18,7 +18,7 @@ class TStudent:
     ):
         """
         - Initializes the TStudent Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters TStudent Distribution: {"df": *}
+        - Parameters TStudent Distribution: {"df": \*}
         - https://phitter.io/distributions/continuous/t_student
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -165,7 +165,7 @@ class TStudent:
 
         Returns
         =======
-        parameters: {"df": *}
+        parameters: {"df": \*}
         """
         df = 2 * continuous_measures.variance / (continuous_measures.variance - 1)
         parameters = {"df": df}

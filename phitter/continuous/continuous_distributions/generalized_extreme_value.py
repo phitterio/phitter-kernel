@@ -17,7 +17,7 @@ class GeneralizedExtremeValue:
     ):
         """
         - Initializes the GeneralizedExtremeValue Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters GeneralizedExtremeValue Distribution: {"xi": *, "mu": *, "sigma": *}
+        - Parameters GeneralizedExtremeValue Distribution: {"xi": \*, "mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/generalized_extreme_value
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -205,7 +205,7 @@ class GeneralizedExtremeValue:
 
         Returns
         =======
-        parameters: {"xi": *, "mu": *, "sigma": *}
+        parameters: {"xi": \*, "mu": \*, "sigma": \*}
         """
         scipy_parameters = scipy.stats.genextreme.fit(continuous_measures.data_to_fit)
         parameters = {"xi": -scipy_parameters[0], "mu": scipy_parameters[1], "sigma": scipy_parameters[2]}

@@ -7,7 +7,7 @@ import scipy.stats
 class Dagum:
     """
     Dagum distribution
-    - Parameters Dagum Distribution: {"a": *, "b": *, "p": *}
+    - Parameters Dagum Distribution: {"a": \*, "b": \*, "p": \*}
     - https://phitter.io/distributions/continuous/dagum
     """
 
@@ -19,7 +19,7 @@ class Dagum:
     ):
         """
         - Initializes the Dagum Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Dagum Distribution: {"a": *, "b": *, "p": *}
+        - Parameters Dagum Distribution: {"a": \*, "b": \*, "p": \*}
         - https://phitter.io/distributions/continuous/dagum
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -184,7 +184,7 @@ class Dagum:
 
         Returns
         =======
-        parameters: {"a": *, "b": *, "p": *}
+        parameters: {"a": \*, "b": \*, "p": \*}
         """
 
         def sse(parameters: dict) -> float:

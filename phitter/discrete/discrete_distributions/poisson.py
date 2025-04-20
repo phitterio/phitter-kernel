@@ -5,7 +5,7 @@ import scipy.stats
 class Poisson:
     """
     Poisson distribution
-    - Parameters Poisson Distribution: {"lambda": *}
+    - Parameters Poisson Distribution: {"lambda": \*}
     - https://phitter.io/distributions/discrete/poisson
     """
 
@@ -17,7 +17,7 @@ class Poisson:
     ):
         """
         - Initializes the Poisson Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Poisson Distribution: {"lambda": *}
+        - Parameters Poisson Distribution: {"lambda": \*}
         - https://phitter.io/distributions/continuous/poisson
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
@@ -156,7 +156,7 @@ class Poisson:
 
         Returns
         =======
-        parameters: {"lambda": *}
+        parameters: {"lambda": \*}
         """
         lambda_ = discrete_measures.mean
         parameters = {"lambda": lambda_}

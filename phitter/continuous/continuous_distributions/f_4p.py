@@ -7,7 +7,7 @@ import scipy.stats
 class F4P:
     """
     F distribution
-    - Parameters F4P Distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
+    - Parameters F4P Distribution: {"df1": \*, "df2": \*, "loc": \*, "scale": \*}
     - https://phitter.io/distributions/continuous/f_4p
     """
 
@@ -19,7 +19,7 @@ class F4P:
     ):
         """
         - Initializes the F4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters F4P Distribution: {"df1": *, "df2": *, "loc": *, "scale": *}
+        - Parameters F4P Distribution: {"df1": \*, "df2": \*, "loc": \*, "scale": \*}
         - https://phitter.io/distributions/continuous/f_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -194,7 +194,7 @@ class F4P:
 
         Returns
         =======
-        parameters: {"df1": *, "df2": *, "loc": *, "scale": *}
+        parameters: {"df1": \*, "df2": \*, "loc": \*, "scale": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

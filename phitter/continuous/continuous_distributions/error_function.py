@@ -5,7 +5,7 @@ import scipy.stats
 class ErrorFunction:
     """
     Error Function distribution
-    - Parameters ErrorFunction Distribution: {"h": *}
+    - Parameters ErrorFunction Distribution: {"h": \*}
     - https://phitter.io/distributions/continuous/error_function
     """
 
@@ -17,7 +17,7 @@ class ErrorFunction:
     ):
         """
         - Initializes the ErrorFunction Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters ErrorFunction Distribution: {"h": *}
+        - Parameters ErrorFunction Distribution: {"h": \*}
         - https://phitter.io/distributions/continuous/error_function
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -155,7 +155,7 @@ class ErrorFunction:
 
         Returns
         =======
-        parameters: {"h": *}
+        parameters: {"h": \*}
         """
         h = numpy.sqrt(1 / (2 * continuous_measures.variance))
 

@@ -5,7 +5,7 @@ import scipy.stats
 class LogNormal:
     """
     Lognormal distribution
-    - Parameters LogNormal Distribution: {"mu": *, "sigma": *}
+    - Parameters LogNormal Distribution: {"mu": \*, "sigma": \*}
     - https://phitter.io/distributions/continuous/lognormal
     """
 
@@ -17,7 +17,7 @@ class LogNormal:
     ):
         """
         - Initializes the LogNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters LogNormal Distribution: {"mu": *, "sigma": *}
+        - Parameters LogNormal Distribution: {"mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/lognormal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -155,11 +155,11 @@ class LogNormal:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "sigma": *}
+        parameters: {"mu": \*, "sigma": \*}
         """
 
         mu = numpy.log(continuous_measures.mean**2 / numpy.sqrt(continuous_measures.mean**2 + continuous_measures.variance))

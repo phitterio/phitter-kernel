@@ -7,7 +7,7 @@ class FatigueLife:
     """
     Fatigue life Distribution
     Also known as Birnbaum-Saunders distribution
-    - Parameters FatigueLife Distribution: {"gamma": *, "loc": *, "scale": *}
+    - Parameters FatigueLife Distribution: {"gamma": \*, "loc": \*, "scale": \*}
     - https://phitter.io/distributions/continuous/fatigue_life
     """
 
@@ -19,7 +19,7 @@ class FatigueLife:
     ):
         """
         - Initializes the FatigueLife Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters FatigueLife Distribution: {"gamma": *, "loc": *, "scale": *}
+        - Parameters FatigueLife Distribution: {"gamma": \*, "loc": \*, "scale": \*}
         - https://phitter.io/distributions/continuous/fatigue_life
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -167,7 +167,7 @@ class FatigueLife:
 
         Returns
         =======
-        parameters: {"gamma": *, "loc": *, "scale": *}
+        parameters: {"gamma": \*, "loc": \*, "scale": \*}
         """
 
         ## NO SE ESTÁN RESOLVIENDO LAS ECUACIONES PARA GAMMA = 5, scale = 10, loc = 5

@@ -6,7 +6,7 @@ import scipy.stats
 class LogLogistic3P:
     """
     Loglogistic distribution
-    - Parameters LogLogistic3P Distribution: {"loc": *, "alpha": *, "beta": *}
+    - Parameters LogLogistic3P Distribution: {"loc": \*, "alpha": \*, "beta": \*}
     - https://phitter.io/distributions/continuous/loglogistic_3p
     """
 
@@ -18,7 +18,7 @@ class LogLogistic3P:
     ):
         """
         - Initializes the LogLogistic3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters LogLogistic3P Distribution: {"loc": *, "alpha": *, "beta": *}
+        - Parameters LogLogistic3P Distribution: {"loc": \*, "alpha": \*, "beta": \*}
         - https://phitter.io/distributions/continuous/loglogistic_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -183,7 +183,7 @@ class LogLogistic3P:
 
         Returns
         =======
-        parameters: {"loc": *, "alpha": *, "beta": *}
+        parameters: {"loc": \*, "alpha": \*, "beta": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

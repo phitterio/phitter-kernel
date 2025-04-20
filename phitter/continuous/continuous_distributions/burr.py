@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 class Burr:
     """
     Burr distribution
-    - Parameters Burr Distribution: {"A": *, "B": *, "C": *}
+    - Parameters Burr Distribution: {"A": \*, "B": \*, "C": \*}
     - https://phitter.io/distributions/continuous/burr
     """
 
@@ -23,7 +23,7 @@ class Burr:
     ):
         """
         - Initializes the Burr Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Burr Distribution: {"A": *, "B": *, "C": *}
+        - Parameters Burr Distribution: {"A": \*, "B": \*, "C": \*}
         - https://phitter.io/distributions/continuous/burr
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -191,7 +191,7 @@ class Burr:
 
         Returns
         =======
-        parameters: {"A": *, "B": *, "C": *}
+        parameters: {"A": \*, "B": \*, "C": \*}
         """
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
         #     ## Variables declaration

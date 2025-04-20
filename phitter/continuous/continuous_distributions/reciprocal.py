@@ -4,7 +4,7 @@ import numpy
 class Reciprocal:
     """
     Reciprocal distribution
-    - Parameters Reciprocal Distribution: {"a": *, "b": *}
+    - Parameters Reciprocal Distribution: {"a": \*, "b": \*}
     - https://phitter.io/distributions/continuous/reciprocal
     """
 
@@ -16,7 +16,7 @@ class Reciprocal:
     ):
         """
         - Initializes the Reciprocal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Reciprocal Distribution: {"a": *, "b": *}
+        - Parameters Reciprocal Distribution: {"a": \*, "b": \*}
         - https://phitter.io/distributions/continuous/reciprocal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -174,7 +174,7 @@ class Reciprocal:
 
         Returns
         =======
-        parameters: {"a": *, "b": *}
+        parameters: {"a": \*, "b": \*}
         """
 
         a = continuous_measures.min - 1e-8

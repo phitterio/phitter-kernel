@@ -8,7 +8,7 @@ class InverseGamma3P:
     """
     Inverse Gamma Distribution
     Also known Pearson Type 5 distribution
-    - Parameters InverseGamma3P Distribution: {"alpha": *, "beta": *, "loc": *}
+    - Parameters InverseGamma3P Distribution: {"alpha": \*, "beta": \*, "loc": \*}
     - https://phitter.io/distributions/continuous/inverse_gamma_3p
     """
 
@@ -20,7 +20,7 @@ class InverseGamma3P:
     ):
         """
         - Initializes the InverseGamma3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters InverseGamma3P Distribution: {"alpha": *, "beta": *, "loc": *}
+        - Parameters InverseGamma3P Distribution: {"alpha": \*, "beta": \*, "loc": \*}
         - https://phitter.io/distributions/continuous/inverse_gamma_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -193,7 +193,7 @@ class InverseGamma3P:
 
         Returns
         =======
-        parameters: {"alpha": *, "beta": *, "loc": *}
+        parameters: {"alpha": \*, "beta": \*, "loc": \*}
         """
 
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

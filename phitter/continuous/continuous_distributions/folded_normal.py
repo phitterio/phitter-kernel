@@ -19,7 +19,7 @@ class FoldedNormal:
     ):
         """
         - Initializes the FoldedNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters FoldedNormal Distribution: {"mu": *, "sigma": *}
+        - Parameters FoldedNormal Distribution: {"mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/folded_normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -176,11 +176,11 @@ class FoldedNormal:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "sigma": *}
+        parameters: {"mu": \*, "sigma": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

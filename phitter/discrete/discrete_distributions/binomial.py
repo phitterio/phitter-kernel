@@ -5,7 +5,7 @@ import scipy.stats
 class Binomial:
     """
     Binomial distribution
-    - Parameters Binomial Distribution: {"n": *, "p": *}
+    - Parameters Binomial Distribution: {"n": \*, "p": \*}
     - https://phitter.io/distributions/discrete/binomial
     """
 
@@ -17,7 +17,7 @@ class Binomial:
     ):
         """
         - Initializes the Binomial Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Binomial Distribution: {"n": *, "p": *}
+        - Parameters Binomial Distribution: {"n": \*, "p": \*}
         - https://phitter.io/distributions/continuous/binomial
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
@@ -159,7 +159,7 @@ class Binomial:
 
         Returns
         =======
-        parameters: {"n": *, "p": *}
+        parameters: {"n": \*, "p": \*}
         """
         p = 1 - discrete_measures.variance / discrete_measures.mean
         n = int(round(discrete_measures.mean / p, 0))

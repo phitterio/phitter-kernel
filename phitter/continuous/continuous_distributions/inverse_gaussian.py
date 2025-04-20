@@ -6,7 +6,7 @@ class InverseGaussian:
     """
     Inverse Gaussian Distribution
     Also known like Wald distribution
-    - Parameters InverseGaussian Distribution: {"mu": *, "lambda": *}
+    - Parameters InverseGaussian Distribution: {"mu": \*, "lambda": \*}
     - https://phitter.io/distributions/continuous/inverse_gaussian
     """
 
@@ -18,7 +18,7 @@ class InverseGaussian:
     ):
         """
         - Initializes the InverseGaussian Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters InverseGaussian Distribution: {"mu": *, "lambda": *}
+        - Parameters InverseGaussian Distribution: {"mu": \*, "lambda": \*}
         - https://phitter.io/distributions/continuous/inverse_gaussian
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -158,11 +158,11 @@ class InverseGaussian:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "lambda": *}
+        parameters: {"mu": \*, "lambda": \*}
         """
         mu = continuous_measures.mean
         lambda_ = mu**3 / continuous_measures.variance

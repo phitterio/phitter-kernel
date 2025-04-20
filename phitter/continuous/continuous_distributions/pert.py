@@ -6,7 +6,7 @@ import scipy.special
 class Pert:
     """
     Pert distribution
-    - Parameters Pert Distribution: {"a": *, "b": *, "c": *}
+    - Parameters Pert Distribution: {"a": \*, "b": \*, "c": \*}
     - https://phitter.io/distributions/continuous/pert
     """
 
@@ -18,7 +18,7 @@ class Pert:
     ):
         """
         - Initializes the Pert Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Pert Distribution: {"a": *, "b": *, "c": *}
+        - Parameters Pert Distribution: {"a": \*, "b": \*, "c": \*}
         - https://phitter.io/distributions/continuous/pert
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -165,11 +165,11 @@ class Pert:
         Parameters
         ==========
         continuous_measures : dict
-            {"mean": * , "variance": * , "skewness": * , "kurtosis": * , "median": * , "b": * }
+            {"mean": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "median": \* , "b": \* }
 
         Returns
         =======
-        parameters: {"a": *, "b": *, "c": *}
+        parameters: {"a": \*, "b": \*, "c": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

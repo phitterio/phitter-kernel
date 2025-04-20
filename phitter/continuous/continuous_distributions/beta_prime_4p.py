@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 class BetaPrime4P:
     """
     Beta Prime 4P Distribution
-    - Parameters BetaPrime4P Distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
+    - Parameters BetaPrime4P Distribution: {"alpha": \*, "beta": \*, "loc": \*, "scale": \*}
     - https://phitter.io/distributions/continuous/beta_prime_4p
     """
 
@@ -23,7 +23,7 @@ class BetaPrime4P:
     ):
         """
         - Initializes the BetaPrime4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters BetaPrime4P Distribution: {"alpha": *, "beta": *, "loc": *, "scale": *}
+        - Parameters BetaPrime4P Distribution: {"alpha": \*, "beta": \*, "loc": \*, "scale": \*}
         - https://phitter.io/distributions/continuous/beta_prime_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -200,7 +200,7 @@ class BetaPrime4P:
 
         Returns
         =======
-        parameters: {"alpha": *, "beta": *, "loc": *, "scale": *}
+        parameters: {"alpha": \*, "beta": \*, "loc": \*, "scale": \*}
         """
 
         ## In this distribution solve the system is best than scipy estimation.

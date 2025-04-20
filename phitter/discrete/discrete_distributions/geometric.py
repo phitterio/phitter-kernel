@@ -5,7 +5,7 @@ import scipy.stats
 class Geometric:
     """
     Geometric distribution
-    - Parameters Geometric Distribution: {"p": *}
+    - Parameters Geometric Distribution: {"p": \*}
     - https://phitter.io/distributions/discrete/geometric
     """
 
@@ -17,7 +17,7 @@ class Geometric:
     ):
         """
         - Initializes the Geometric Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Geometric Distribution: {"p": *}
+        - Parameters Geometric Distribution: {"p": \*}
         - https://phitter.io/distributions/continuous/geometric
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
@@ -157,7 +157,7 @@ class Geometric:
 
         Returns
         =======
-        parameters: {"p": *}
+        parameters: {"p": \*}
         """
         p = 1 / discrete_measures.mean
         parameters = {"p": p}

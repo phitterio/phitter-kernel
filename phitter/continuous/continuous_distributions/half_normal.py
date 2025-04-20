@@ -17,7 +17,7 @@ class HalfNormal:
     ):
         """
         - Initializes the HalfNormal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters HalfNormal Distribution: {"mu": *, "sigma": *}
+        - Parameters HalfNormal Distribution: {"mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/half_normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -156,11 +156,11 @@ class HalfNormal:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "sigma": *}
+        parameters: {"mu": \*, "sigma": \*}
         """
 
         sigma = numpy.sqrt(continuous_measures.variance / (1 - 2 / numpy.pi))

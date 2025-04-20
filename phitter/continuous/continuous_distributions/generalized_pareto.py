@@ -6,7 +6,7 @@ import scipy.stats
 class GeneralizedPareto:
     """
     Generalized Pareto distribution
-    - Parameters GeneralizedPareto Distribution: {"c": *, "mu": *, "sigma": *}
+    - Parameters GeneralizedPareto Distribution: {"c": \*, "mu": \*, "sigma": \*}
     - https://phitter.io/distributions/continuous/generalized_pareto
     """
 
@@ -18,7 +18,7 @@ class GeneralizedPareto:
     ):
         """
         - Initializes the GeneralizedPareto Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters GeneralizedPareto Distribution: {"c": *, "mu": *, "sigma": *}
+        - Parameters GeneralizedPareto Distribution: {"c": \*, "mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/generalized_pareto
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -165,7 +165,7 @@ class GeneralizedPareto:
 
         Returns
         =======
-        parameters: {"c": *, "mu": *, "sigma": *}
+        parameters: {"c": \*, "mu": \*, "sigma": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

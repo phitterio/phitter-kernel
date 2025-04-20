@@ -6,7 +6,7 @@ import scipy.stats
 class PowerFunction:
     """
     Power function distribution
-    - Parameters PowerFunction Distribution: {"alpha": *, "a": *, "b": *}
+    - Parameters PowerFunction Distribution: {"alpha": \*, "a": \*, "b": \*}
     - https://phitter.io/distributions/continuous/power_function
     """
 
@@ -18,7 +18,7 @@ class PowerFunction:
     ):
         """
         - Initializes the PowerFunction Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters PowerFunction Distribution: {"alpha": *, "a": *, "b": *}
+        - Parameters PowerFunction Distribution: {"alpha": \*, "a": \*, "b": \*}
         - https://phitter.io/distributions/continuous/power_function
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -196,7 +196,7 @@ class PowerFunction:
 
         Returns
         =======
-        parameters: {"alpha": *, "a": *, "b": *}
+        parameters: {"alpha": \*, "a": \*, "b": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

@@ -7,7 +7,7 @@ import scipy.stats
 class Beta:
     """
     Beta distribution
-    - Parameters Beta Distribution: {"alpha": *, "beta": *, "A": *, "B": *}
+    - Parameters Beta Distribution: {"alpha": \*, "beta": \*, "A": \*, "B": \*}
     - https://phitter.io/distributions/continuous/beta
     """
 
@@ -19,7 +19,7 @@ class Beta:
     ):
         """
         - Initializes the Beta Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Beta Distribution: {"alpha": *, "beta": *, "A": *, "B": *}
+        - Parameters Beta Distribution: {"alpha": \*, "beta": \*, "A": \*, "B": \*}
         - https://phitter.io/distributions/continuous/beta
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -173,7 +173,7 @@ class Beta:
 
         Returns
         =======
-        parameters: {"alpha": *, "beta": *, "A": *, "B": *}
+        parameters: {"alpha": \*, "beta": \*, "A": \*, "B": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

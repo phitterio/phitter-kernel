@@ -5,7 +5,7 @@ import scipy.stats
 class Rayleigh:
     """
     Rayleigh distribution
-    - Parameters Rayleigh Distribution: {"gamma": *, "sigma": *}
+    - Parameters Rayleigh Distribution: {"gamma": \*, "sigma": \*}
     - https://phitter.io/distributions/continuous/rayleigh
     """
 
@@ -17,7 +17,7 @@ class Rayleigh:
     ):
         """
         - Initializes the Rayleigh Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Rayleigh Distribution: {"gamma": *, "sigma": *}
+        - Parameters Rayleigh Distribution: {"gamma": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/rayleigh
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -160,7 +160,7 @@ class Rayleigh:
 
         Returns
         =======
-        parameters: {"gamma": *, "sigma": *}
+        parameters: {"gamma": \*, "sigma": \*}
         """
         ## Scipy Rayleigh estimation
         # scipy_parameters = scipy.stats.rayleigh.fit(continuous_measures.data_to_fit)

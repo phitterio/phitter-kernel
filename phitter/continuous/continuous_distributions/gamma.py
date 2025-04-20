@@ -6,7 +6,7 @@ import scipy.stats
 class Gamma:
     """
     Gamma distribution
-    - Parameters Gamma Distribution: {"alpha": *, "beta": *}
+    - Parameters Gamma Distribution: {"alpha": \*, "beta": \*}
     - https://phitter.io/distributions/continuous/gamma
     """
 
@@ -18,7 +18,7 @@ class Gamma:
     ):
         """
         - Initializes the Gamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Gamma Distribution: {"alpha": *, "beta": *}
+        - Parameters Gamma Distribution: {"alpha": \*, "beta": \*}
         - https://phitter.io/distributions/continuous/gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -185,7 +185,7 @@ class Gamma:
 
         Returns
         =======
-        parameters: {"alpha": *, "beta": *}
+        parameters: {"alpha": \*, "beta": \*}
         """
         alpha = continuous_measures.mean**2 / continuous_measures.variance
         beta = continuous_measures.variance / continuous_measures.mean

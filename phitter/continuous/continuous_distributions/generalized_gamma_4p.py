@@ -18,7 +18,7 @@ class GeneralizedGamma4P:
     ):
         """
         - Initializes the GeneralizedGamma4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters GeneralizedGamma4P Distribution: {"a": *, "d": *, "p": *, "loc": *}
+        - Parameters GeneralizedGamma4P Distribution: {"a": \*, "d": \*, "p": \*, "loc": \*}
         - https://phitter.io/distributions/continuous/generalized_gamma_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -186,7 +186,7 @@ class GeneralizedGamma4P:
 
         Returns
         =======
-        parameters: {"a": *, "d": *, "p": *, "loc": *}
+        parameters: {"a": \*, "d": \*, "p": \*, "loc": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

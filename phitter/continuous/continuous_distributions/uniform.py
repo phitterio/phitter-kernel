@@ -4,7 +4,7 @@ import numpy
 class Uniform:
     """
     Uniform distribution
-    - Parameters Uniform Distribution: {"a": *, "b": *}
+    - Parameters Uniform Distribution: {"a": \*, "b": \*}
     - https://phitter.io/distributions/continuous/uniform
     """
 
@@ -16,7 +16,7 @@ class Uniform:
     ):
         """
         - Initializes the Uniform Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Uniform Distribution: {"a": *, "b": *}
+        - Parameters Uniform Distribution: {"a": \*, "b": \*}
         - https://phitter.io/distributions/continuous/uniform
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -159,7 +159,7 @@ class Uniform:
 
         Returns
         =======
-        parameters: {"a": *, "b": *}
+        parameters: {"a": \*, "b": \*}
         """
 
         a = continuous_measures.min - 1e-8

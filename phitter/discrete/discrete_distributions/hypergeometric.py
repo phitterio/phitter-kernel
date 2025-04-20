@@ -6,7 +6,7 @@ import scipy.stats
 class Hypergeometric:
     """
     Hypergeometric_distribution
-    - Parameters Hypergeometric Distribution: {"N": *, "K": *, "n": *}
+    - Parameters Hypergeometric Distribution: {"N": \*, "K": \*, "n": \*}
     - https://phitter.io/distributions/discrete/hypergeometric
     """
 
@@ -18,7 +18,7 @@ class Hypergeometric:
     ):
         """
         - Initializes the Hypergeometric Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Hypergeometric Distribution: {"N": *, "K": *, "n": *}
+        - Parameters Hypergeometric Distribution: {"N": \*, "K": \*, "n": \*}
         - https://phitter.io/distributions/continuous/hypergeometric
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
@@ -164,7 +164,7 @@ class Hypergeometric:
 
         Returns
         =======
-        parameters: {"N": *, "K": *, "n": *}
+        parameters: {"N": \*, "K": \*, "n": \*}
         """
 
         def equations(initial_solution: tuple[float], discrete_measures) -> tuple[float]:

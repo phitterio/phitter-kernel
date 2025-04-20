@@ -7,7 +7,7 @@ import scipy.stats
 class Rice:
     """
     Rice distribution
-    - Parameters Rice Distribution: {"v": *, "sigma": *}
+    - Parameters Rice Distribution: {"v": \*, "sigma": \*}
     - https://phitter.io/distributions/continuous/rice
     """
 
@@ -19,7 +19,7 @@ class Rice:
     ):
         """
         - Initializes the Rice Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Rice Distribution: {"v": *, "sigma": *}
+        - Parameters Rice Distribution: {"v": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/rice
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -233,7 +233,7 @@ class Rice:
 
         Returns
         =======
-        parameters: {"v": *, "sigma": *}
+        parameters: {"v": \*, "sigma": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

@@ -6,7 +6,7 @@ import scipy.stats
 class JohnsonSB:
     """
     Johnson SB distribution
-    - Parameters JohnsonSB Distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
+    - Parameters JohnsonSB Distribution: {"xi": \*, "lambda": \*, "gamma": \*, "delta": \*}
     - https://phitter.io/distributions/continuous/johnson_sb
     """
 
@@ -18,7 +18,7 @@ class JohnsonSB:
     ):
         """
         - Initializes the JohnsonSB Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters JohnsonSB Distribution: {"xi": *, "lambda": *, "gamma": *, "delta": *}
+        - Parameters JohnsonSB Distribution: {"xi": \*, "lambda": \*, "gamma": \*, "delta": \*}
         - https://phitter.io/distributions/continuous/johnson_sb
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -191,8 +191,8 @@ class JohnsonSB:
 
         Returns
         =======
-        parameters: {"xi": *, "lambda": *, "gamma": *, "delta": *}
-            {"xi": * , "lambda": * , "gamma": * , "delta": * }
+        parameters: {"xi": \*, "lambda": \*, "gamma": \*, "delta": \*}
+            {"xi": \* , "lambda": \* , "gamma": \* , "delta": \* }
 
         References
         ==========

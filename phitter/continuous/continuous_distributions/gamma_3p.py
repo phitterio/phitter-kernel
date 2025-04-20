@@ -6,7 +6,7 @@ import scipy.stats
 class Gamma3P:
     """
     Gamma distribution
-    - Parameters Gamma3P Distribution: {"alpha": *, "loc": *, "beta": *}
+    - Parameters Gamma3P Distribution: {"alpha": \*, "loc": \*, "beta": \*}
     - https://phitter.io/distributions/continuous/gamma_3p
     """
 
@@ -18,7 +18,7 @@ class Gamma3P:
     ):
         """
         - Initializes the Gamma3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Gamma3P Distribution: {"alpha": *, "loc": *, "beta": *}
+        - Parameters Gamma3P Distribution: {"alpha": \*, "loc": \*, "beta": \*}
         - https://phitter.io/distributions/continuous/gamma_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -186,7 +186,7 @@ class Gamma3P:
 
         Returns
         =======
-        parameters: {"alpha": *, "loc": *, "beta": *}
+        parameters: {"alpha": \*, "loc": \*, "beta": \*}
         """
         alpha = (2 / continuous_measures.skewness) ** 2
         beta = numpy.sqrt(continuous_measures.variance / alpha)

@@ -7,7 +7,7 @@ import scipy.stats
 class ChiSquare3P:
     """
     Chi Square distribution
-    - Parameters ChiSquare3P Distribution: {"df": *, "loc": *, "scale": *}
+    - Parameters ChiSquare3P Distribution: {"df": \*, "loc": \*, "scale": \*}
     - https://phitter.io/distributions/continuous/chi_square_3p
     """
 
@@ -19,7 +19,7 @@ class ChiSquare3P:
     ):
         """
         - Initializes the ChiSquare3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters ChiSquare3P Distribution: {"df": *, "loc": *, "scale": *}
+        - Parameters ChiSquare3P Distribution: {"df": \*, "loc": \*, "scale": \*}
         - https://phitter.io/distributions/continuous/chi_square_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -168,7 +168,7 @@ class ChiSquare3P:
 
         Returns
         =======
-        parameters: {"df": *, "loc": *, "scale": *}
+        parameters: {"df": \*, "loc": \*, "scale": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

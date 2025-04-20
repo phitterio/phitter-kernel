@@ -8,7 +8,7 @@ import scipy.stats
 class NonCentralTStudent:
     """
     Non-Central T Student distribution
-    - Parameters NonCentralTStudent Distribution: {"lambda": *, "n": *, "loc": *, "scale": *}
+    - Parameters NonCentralTStudent Distribution: {"lambda": \*, "n": \*, "loc": \*, "scale": \*}
     - https://phitter.io/distributions/continuous/non_central_t_student    Hand-book on Statistical Distributions (pag.116) ... Christian Walck
     """
 
@@ -20,7 +20,7 @@ class NonCentralTStudent:
     ):
         """
         - Initializes the NonCentralTStudent Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters NonCentralTStudent Distribution: {"lambda": *, "n": *, "loc": *, "scale": *}
+        - Parameters NonCentralTStudent Distribution: {"lambda": \*, "n": \*, "loc": \*, "scale": \*}
         - https://phitter.io/distributions/continuous/non_central_t_student
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -230,7 +230,7 @@ class NonCentralTStudent:
 
         Returns
         =======
-        parameters: {"lambda": *, "n": *, "loc": *, "scale": *}
+        parameters: {"lambda": \*, "n": \*, "loc": \*, "scale": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

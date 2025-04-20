@@ -7,7 +7,7 @@ import scipy.stats
 class Erlang:
     """
     Erlang distribution
-    - Parameters Erlang Distribution: {"k": *, "beta": *}
+    - Parameters Erlang Distribution: {"k": \*, "beta": \*}
     - https://phitter.io/distributions/continuous/erlang
     """
 
@@ -19,7 +19,7 @@ class Erlang:
     ):
         """
         - Initializes the Erlang Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Erlang Distribution: {"k": *, "beta": *}
+        - Parameters Erlang Distribution: {"k": \*, "beta": \*}
         - https://phitter.io/distributions/continuous/erlang
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -182,7 +182,7 @@ class Erlang:
 
         Returns
         =======
-        parameters: {"k": *, "beta": *}
+        parameters: {"k": \*, "beta": \*}
         """
         k = round(continuous_measures.mean**2 / continuous_measures.variance)
         beta = continuous_measures.variance / continuous_measures.mean

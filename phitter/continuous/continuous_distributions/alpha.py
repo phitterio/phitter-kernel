@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 class Alpha:
     """
     Alpha distribution
-    - Parameters Alpha Distribution: {"alpha": *, "loc": *, "scale": *}
+    - Parameters Alpha Distribution: {"alpha": \*, "loc": \*, "scale": \*}
     - https://phitter.io/distributions/continuous/alpha
     """
 
@@ -23,7 +23,7 @@ class Alpha:
     ):
         """
         - Initializes the Alpha Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Alpha Distribution: {"alpha": *, "loc": *, "scale": *}
+        - Parameters Alpha Distribution: {"alpha": \*, "loc": \*, "scale": \*}
         - https://phitter.io/distributions/continuous/alpha
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -197,7 +197,7 @@ class Alpha:
 
         Returns
         =======
-        parameters: {"alpha": *, "loc": *, "scale": *}
+        parameters: {"alpha": \*, "loc": \*, "scale": \*}
         """
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
         #     alpha, loc, scale = initial_solution

@@ -19,7 +19,7 @@ class GeneralizedLogistic:
     ):
         """
         - Initializes the GeneralizedLogistic Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters GeneralizedLogistic Distribution: {"loc": *, "scale": *, "c": *}
+        - Parameters GeneralizedLogistic Distribution: {"loc": \*, "scale": \*, "c": \*}
         - https://phitter.io/distributions/continuous/generalized_logistic
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -164,7 +164,7 @@ class GeneralizedLogistic:
 
         Returns
         =======
-        parameters: {"loc": *, "scale": *, "c": *}
+        parameters: {"loc": \*, "scale": \*, "c": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

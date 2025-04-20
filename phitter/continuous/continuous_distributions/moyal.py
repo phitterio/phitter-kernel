@@ -7,7 +7,7 @@ import scipy.stats
 class Moyal:
     """
     Moyal distribution
-    - Parameters Moyal Distribution: {"mu": *, "sigma": *}
+    - Parameters Moyal Distribution: {"mu": \*, "sigma": \*}
     - https://phitter.io/distributions/continuous/moyal
     """
 
@@ -19,7 +19,7 @@ class Moyal:
     ):
         """
         - Initializes the Moyal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Moyal Distribution: {"mu": *, "sigma": *}
+        - Parameters Moyal Distribution: {"mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/moyal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -161,11 +161,11 @@ class Moyal:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "sigma": *}
+        parameters: {"mu": \*, "sigma": \*}
         """
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:
         #     ## Variables declaration

@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore")
 class Dagum4P:
     """
     Dagum distribution
-    - Parameters Dagum4P Distribution: {"a": *, "b": *, "p": *, "loc": *}
+    - Parameters Dagum4P Distribution: {"a": \*, "b": \*, "p": \*, "loc": \*}
     - https://phitter.io/distributions/continuous/dagum_4p
     """
 
@@ -22,7 +22,7 @@ class Dagum4P:
     ):
         """
         - Initializes the Dagum4P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Dagum4P Distribution: {"a": *, "b": *, "p": *, "loc": *}
+        - Parameters Dagum4P Distribution: {"a": \*, "b": \*, "p": \*, "loc": \*}
         - https://phitter.io/distributions/continuous/dagum_4p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -188,7 +188,7 @@ class Dagum4P:
 
         Returns
         =======
-        parameters: {"a": *, "b": *, "p": *, "loc": *}
+        parameters: {"a": \*, "b": \*, "p": \*, "loc": \*}
         """
 
         def sse(parameters: dict) -> float:

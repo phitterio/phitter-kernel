@@ -7,7 +7,7 @@ import scipy.special
 class Weibull3P:
     """
     Weibull distribution
-    - Parameters Weibull3P Distribution: {"alpha": *, "loc": *, "beta": *}
+    - Parameters Weibull3P Distribution: {"alpha": \*, "loc": \*, "beta": \*}
     - https://phitter.io/distributions/continuous/weibull_3p
     """
 
@@ -19,7 +19,7 @@ class Weibull3P:
     ):
         """
         - Initializes the Weibull3P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Weibull3P Distribution: {"alpha": *, "loc": *, "beta": *}
+        - Parameters Weibull3P Distribution: {"alpha": \*, "loc": \*, "beta": \*}
         - https://phitter.io/distributions/continuous/weibull_3p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -184,7 +184,7 @@ class Weibull3P:
 
         Returns
         =======
-        parameters: {"alpha": *, "loc": *, "beta": *}
+        parameters: {"alpha": \*, "loc": \*, "beta": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

@@ -5,7 +5,7 @@ import scipy.stats
 class Triangular:
     """
     Triangular distribution
-    - Parameters Triangular Distribution: {"a": *, "b": *, "c": *}
+    - Parameters Triangular Distribution: {"a": \*, "b": \*, "c": \*}
     - https://phitter.io/distributions/continuous/triangular
     """
 
@@ -17,7 +17,7 @@ class Triangular:
     ):
         """
         - Initializes the Triangular Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Triangular Distribution: {"a": *, "b": *, "c": *}
+        - Parameters Triangular Distribution: {"a": \*, "b": \*, "c": \*}
         - https://phitter.io/distributions/continuous/triangular
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -179,7 +179,7 @@ class Triangular:
 
         Returns
         =======
-        parameters: {"a": *, "b": *, "c": *}
+        parameters: {"a": \*, "b": \*, "c": \*}
         """
         ## Solve equations for estimation parameters
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

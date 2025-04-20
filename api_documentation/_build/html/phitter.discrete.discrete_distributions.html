@@ -1,0 +1,1452 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phitter.discrete.discrete_distributions package &mdash; Project name not set  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="phitter.discrete.discrete_measures package" href="phitter.discrete.discrete_measures.html" />
+    <link rel="prev" title="phitter.discrete package" href="phitter.discrete.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Project name not set
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">phitter</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="phitter.html">phitter package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="phitter.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="phitter.continuous.html">phitter.continuous package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="phitter.discrete.html">phitter.discrete package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phitter.simulation.html">phitter.simulation package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phitter.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phitter.html#module-phitter.main">phitter.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phitter.html#module-phitter">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Project name not set</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">phitter</a></li>
+          <li class="breadcrumb-item"><a href="phitter.html">phitter package</a></li>
+          <li class="breadcrumb-item"><a href="phitter.discrete.html">phitter.discrete package</a></li>
+      <li class="breadcrumb-item active">phitter.discrete.discrete_distributions package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/phitter.discrete.discrete_distributions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="phitter-discrete-discrete-distributions-package">
+<h1>phitter.discrete.discrete_distributions package<a class="headerlink" href="#phitter-discrete-discrete-distributions-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-phitter.discrete.discrete_distributions.bernoulli">
+<span id="phitter-discrete-discrete-distributions-bernoulli-module"></span><h2>phitter.discrete.discrete_distributions.bernoulli module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.bernoulli" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.bernoulli.</span></span><span class="sig-name descname"><span class="pre">Bernoulli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Bernoulli distribution
+- Parameters Bernoulli Distribution: {“p”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/bernoulli">https://phitter.io/distributions/discrete/bernoulli</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“p”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.bernoulli.Bernoulli.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.bernoulli.Bernoulli.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions.binomial">
+<span id="phitter-discrete-discrete-distributions-binomial-module"></span><h2>phitter.discrete.discrete_distributions.binomial module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.binomial" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.binomial.</span></span><span class="sig-name descname"><span class="pre">Binomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Binomial distribution
+- Parameters Binomial Distribution: {“n”: *, “p”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/binomial">https://phitter.io/distributions/discrete/binomial</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“n”: *, “p”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.binomial.Binomial.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.binomial.Binomial.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions.geometric">
+<span id="phitter-discrete-discrete-distributions-geometric-module"></span><h2>phitter.discrete.discrete_distributions.geometric module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.geometric" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.geometric.</span></span><span class="sig-name descname"><span class="pre">Geometric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Geometric distribution
+- Parameters Geometric Distribution: {“p”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/geometric">https://phitter.io/distributions/discrete/geometric</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“p”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.geometric.Geometric.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.geometric.Geometric.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions.hypergeometric">
+<span id="phitter-discrete-discrete-distributions-hypergeometric-module"></span><h2>phitter.discrete.discrete_distributions.hypergeometric module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.hypergeometric" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.hypergeometric.</span></span><span class="sig-name descname"><span class="pre">Hypergeometric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hypergeometric_distribution
+- Parameters Hypergeometric Distribution: {“N”: *, “K”: *, “n”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/hypergeometric">https://phitter.io/distributions/discrete/hypergeometric</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“N”: *, “K”: *, “n”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.hypergeometric.Hypergeometric.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions.logarithmic">
+<span id="phitter-discrete-discrete-distributions-logarithmic-module"></span><h2>phitter.discrete.discrete_distributions.logarithmic module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.logarithmic" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.logarithmic.</span></span><span class="sig-name descname"><span class="pre">Logarithmic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Logarithmic distribution
+- Parameters Logarithmic Distribution: {“p”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/logarithmic">https://phitter.io/distributions/discrete/logarithmic</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“p”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.logarithmic.Logarithmic.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.logarithmic.Logarithmic.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions.negative_binomial">
+<span id="phitter-discrete-discrete-distributions-negative-binomial-module"></span><h2>phitter.discrete.discrete_distributions.negative_binomial module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.negative_binomial" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.negative_binomial.</span></span><span class="sig-name descname"><span class="pre">NegativeBinomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Negative binomial distribution
+- Parameters NegativeBinomial Distribution: {“r”: *, “p”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/negative_binomial">https://phitter.io/distributions/discrete/negative_binomial</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“r”: *, “p”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.negative_binomial.NegativeBinomial.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions.poisson">
+<span id="phitter-discrete-discrete-distributions-poisson-module"></span><h2>phitter.discrete.discrete_distributions.poisson module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.poisson" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.poisson.</span></span><span class="sig-name descname"><span class="pre">Poisson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Poisson distribution
+- Parameters Poisson Distribution: {“lambda”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/poisson">https://phitter.io/distributions/discrete/poisson</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“lambda”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.poisson.Poisson.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.poisson.Poisson.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions.uniform">
+<span id="phitter-discrete-discrete-distributions-uniform-module"></span><h2>phitter.discrete.discrete_distributions.uniform module<a class="headerlink" href="#module-phitter.discrete.discrete_distributions.uniform" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.discrete.discrete_distributions.uniform.</span></span><span class="sig-name descname"><span class="pre">Uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_parameters_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Uniform distribution
+- Parameters Uniform Distribution: {“a”: *, “b”: *}
+- <a class="reference external" href="https://phitter.io/distributions/discrete/uniform">https://phitter.io/distributions/discrete/uniform</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.cdf" title="Link to this definition"></a></dt>
+<dd><p>Cumulative distribution function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.central_moments">
+<span class="sig-name descname"><span class="pre">central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric central moments. µ’[k] = E[(X - E[X])ᵏ] = ∫(x-µ[k])ᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discrete_measures</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.get_parameters" title="Link to this definition"></a></dt>
+<dd><p>Calculate proper parameters of the distribution from sample discrete_measures.
+The parameters are calculated by formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discrete_measures</strong> (<em>MEASUREMESTS</em>) – attributes: mean, std, variance, skewness, kurtosis, median, mode, min, max, size, num_bins, data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>parameters</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{“a”: *, “b”: *}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.kurtosis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kurtosis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.kurtosis" title="Link to this definition"></a></dt>
+<dd><p>Parametric kurtosis</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.mean" title="Link to this definition"></a></dt>
+<dd><p>Parametric mean</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.median" title="Link to this definition"></a></dt>
+<dd><p>Parametric median</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.mode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.mode" title="Link to this definition"></a></dt>
+<dd><p>Parametric mode</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.non_central_moments">
+<span class="sig-name descname"><span class="pre">non_central_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.non_central_moments" title="Link to this definition"></a></dt>
+<dd><p>Parametric no central moments. µ[k] = E[Xᵏ] = ∫xᵏ∙f(x) dx</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.num_parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.num_parameters" title="Link to this definition"></a></dt>
+<dd><p>Number of parameters of the distribution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.parameter_restrictions">
+<span class="sig-name descname"><span class="pre">parameter_restrictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.parameter_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Check parameters restrictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.parameters_example">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_example</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.parameters_example" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.pmf">
+<span class="sig-name descname"><span class="pre">pmf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.pmf" title="Link to this definition"></a></dt>
+<dd><p>Probability mass function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.ppf">
+<span class="sig-name descname"><span class="pre">ppf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.ppf" title="Link to this definition"></a></dt>
+<dd><p>Percent point function. Inverse of Cumulative distribution function. If CDF[x] = u =&gt; PPF[u] = x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample of n elements of ditribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.skewness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skewness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.skewness" title="Link to this definition"></a></dt>
+<dd><p>Parametric skewness</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.standard_deviation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.standard_deviation" title="Link to this definition"></a></dt>
+<dd><p>Parametric standard deviation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="phitter.discrete.discrete_distributions.uniform.Uniform.variance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#phitter.discrete.discrete_distributions.uniform.Uniform.variance" title="Link to this definition"></a></dt>
+<dd><p>Parametric variance</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.discrete.discrete_distributions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-phitter.discrete.discrete_distributions" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="phitter.discrete.html" class="btn btn-neutral float-left" title="phitter.discrete package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="phitter.discrete.discrete_measures.html" class="btn btn-neutral float-right" title="phitter.discrete.discrete_measures package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

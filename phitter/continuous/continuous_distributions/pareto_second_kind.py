@@ -18,7 +18,7 @@ class ParetoSecondKind:
     ):
         """
         - Initializes the ParetoSecondKind Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters ParetoSecondKind Distribution: {"alpha": *, "xm": *, "loc": *}
+        - Parameters ParetoSecondKind Distribution: {"alpha": \*, "xm": \*, "loc": \*}
         - https://phitter.io/distributions/continuous/pareto_second_kind
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -181,7 +181,7 @@ class ParetoSecondKind:
 
         Returns
         =======
-        parameters: {"alpha": *, "xm": *, "loc": *}
+        parameters: {"alpha": \*, "xm": \*, "loc": \*}
         """
 
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

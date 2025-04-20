@@ -5,7 +5,7 @@ import scipy.special
 class Nakagami:
     """
     Nakagami distribution
-    - Parameters Nakagami Distribution: {"m": *, "omega": *}
+    - Parameters Nakagami Distribution: {"m": \*, "omega": \*}
     - https://phitter.io/distributions/continuous/nakagami
     """
 
@@ -17,7 +17,7 @@ class Nakagami:
     ):
         """
         - Initializes the Nakagami Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Nakagami Distribution: {"m": *, "omega": *}
+        - Parameters Nakagami Distribution: {"m": \*, "omega": \*}
         - https://phitter.io/distributions/continuous/nakagami
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -167,7 +167,7 @@ class Nakagami:
 
         Returns
         =======
-        parameters: {"m": *, "omega": *}
+        parameters: {"m": \*, "omega": \*}
         """
         E_x2 = numpy.sum(numpy.power(continuous_measures.data, 2)) / continuous_measures.size
         E_x4 = numpy.sum(numpy.power(continuous_measures.data, 4)) / continuous_measures.size

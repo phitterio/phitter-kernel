@@ -16,7 +16,7 @@ class Semicircular:
     ):
         """
         - Initializes the Semicircular Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Semicircular Distribution: {"loc": *, "R": *}
+        - Parameters Semicircular Distribution: {"loc": \*, "R": \*}
         - https://phitter.io/distributions/continuous/semicircular
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -155,11 +155,11 @@ class Semicircular:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"loc": *, "R": *}
+        parameters: {"loc": \*, "R": \*}
         """
         loc = continuous_measures.mean
         R = numpy.sqrt(4 * continuous_measures.variance)

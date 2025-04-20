@@ -4,7 +4,7 @@ import numpy
 class Laplace:
     """
     Laplace distribution
-    - Parameters Laplace Distribution: {"mu": *, "b": *}
+    - Parameters Laplace Distribution: {"mu": \*, "b": \*}
     - https://phitter.io/distributions/continuous/laplace
     """
 
@@ -16,7 +16,7 @@ class Laplace:
     ):
         """
         - Initializes the Laplace Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Laplace Distribution: {"mu": *, "b": *}
+        - Parameters Laplace Distribution: {"mu": \*, "b": \*}
         - https://phitter.io/distributions/continuous/laplace
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -155,7 +155,7 @@ class Laplace:
 
         Returns
         =======
-        parameters: {"mu": *, "b": *}
+        parameters: {"mu": \*, "b": \*}
         """
         mu = continuous_measures.mean
         b = numpy.sqrt(continuous_measures.variance / 2)

@@ -6,7 +6,7 @@ import scipy.stats
 class Normal:
     """
     Normal distribution
-    - Parameters Normal Distribution: {"mu": *, "sigma": *}
+    - Parameters Normal Distribution: {"mu": \*, "sigma": \*}
     - https://phitter.io/distributions/continuous/normal
     """
 
@@ -18,7 +18,7 @@ class Normal:
     ):
         """
         - Initializes the Normal Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Normal Distribution: {"mu": *, "sigma": *}
+        - Parameters Normal Distribution: {"mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/normal
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -157,11 +157,11 @@ class Normal:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "sigma": *}
+        parameters: {"mu": \*, "sigma": \*}
         """
 
         mu = continuous_measures.mean

@@ -6,7 +6,7 @@ import scipy.stats
 class F:
     """
     F distribution
-    - Parameters F Distribution: {"df1": *, "df2": *}
+    - Parameters F Distribution: {"df1": \*, "df2": \*}
     - https://phitter.io/distributions/continuous/f
     """
 
@@ -18,7 +18,7 @@ class F:
     ):
         """
         - Initializes the F Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters F Distribution: {"df1": *, "df2": *}
+        - Parameters F Distribution: {"df1": \*, "df2": \*}
         - https://phitter.io/distributions/continuous/f
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -182,7 +182,7 @@ class F:
 
         Returns
         =======
-        parameters: {"df1": *, "df2": *}
+        parameters: {"df1": \*, "df2": \*}
         """
         ## Scipy parameters of distribution
         scipy_parameters = scipy.stats.f.fit(continuous_measures.data_to_fit)

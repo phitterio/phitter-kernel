@@ -1,0 +1,475 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phitter.simulation.queueing_simulation package &mdash; Project name not set  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="phitter.simulation.process_simulation package" href="phitter.simulation.process_simulation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Project name not set
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">phitter</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="phitter.html">phitter package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="phitter.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="phitter.continuous.html">phitter.continuous package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phitter.discrete.html">phitter.discrete package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="phitter.simulation.html">phitter.simulation package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phitter.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phitter.html#module-phitter.main">phitter.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phitter.html#module-phitter">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Project name not set</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">phitter</a></li>
+          <li class="breadcrumb-item"><a href="phitter.html">phitter package</a></li>
+          <li class="breadcrumb-item"><a href="phitter.simulation.html">phitter.simulation package</a></li>
+      <li class="breadcrumb-item active">phitter.simulation.queueing_simulation package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/phitter.simulation.queueing_simulation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="phitter-simulation-queueing-simulation-package">
+<h1>phitter.simulation.queueing_simulation package<a class="headerlink" href="#phitter-simulation-queueing-simulation-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-phitter.simulation.queueing_simulation.queueing_simulation">
+<span id="phitter-simulation-queueing-simulation-queueing-simulation-module"></span><h2>phitter.simulation.queueing_simulation.queueing_simulation module<a class="headerlink" href="#module-phitter.simulation.queueing_simulation.queueing_simulation" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phitter.simulation.queueing_simulation.queueing_simulation.</span></span><span class="sig-name descname"><span class="pre">QueueingSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FIFO'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs_distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_elements_queue">
+<span class="sig-name descname"><span class="pre">average_elements_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_elements_queue" title="Link to this definition"></a></dt>
+<dd><p>Average elements in queue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Average elements in queue</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_elements_system">
+<span class="sig-name descname"><span class="pre">average_elements_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_elements_system" title="Link to this definition"></a></dt>
+<dd><p>Average elements in system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Average elements in system</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_queue">
+<span class="sig-name descname"><span class="pre">average_time_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_queue" title="Link to this definition"></a></dt>
+<dd><p>Average time in queue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Average time in queue</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_service">
+<span class="sig-name descname"><span class="pre">average_time_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_service" title="Link to this definition"></a></dt>
+<dd><p>Average time in service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Average time in service</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_system">
+<span class="sig-name descname"><span class="pre">average_time_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_system" title="Link to this definition"></a></dt>
+<dd><p>Average time in system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Average time in system</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.confidence_interval_metrics">
+<span class="sig-name descname"><span class="pre">confidence_interval_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulation_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replications</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.confidence_interval_metrics" title="Link to this definition"></a></dt>
+<dd><p>Generate a confidence interval for probabilities and metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simulation_time</strong> (<em>int</em><em>, </em><em>optional</em>) – Simulation time. Defaults to float(“Inf)</p></li>
+<li><p><strong>confidence_level</strong> (<em>int</em><em>, </em><em>optional</em>) – Confidence level for the confidence interval for all the metrics and probabilities. Defaults to 0.95.</p></li>
+<li><p><strong>replications</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples of simulations to create. Defaults to 30.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns probabilities and metrics dataframe with confidene interval for all metrics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[pd.DataFrame, pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.elements_prob">
+<span class="sig-name descname"><span class="pre">elements_prob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.elements_prob" title="Link to this definition"></a></dt>
+<dd><p>Creates the probability for each number of elements. Example: Probability to be 0, prob. to be 1, prob. to be 2… depending on simulation values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bins</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of intervals to determine the probability to be in each stage. Defaults to 50000.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Element and probability result</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.metrics_summary">
+<span class="sig-name descname"><span class="pre">metrics_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.metrics_summary" title="Link to this definition"></a></dt>
+<dd><p>Returns the summary of the following metrics: Average Time in System, Average Time in Queue, Average Time in Service, Std. Dev. Time in System, Std. Dev. Time in Queue, Std. Dev. Time in Service, Average Elements in System, Average Elements in Queue, Probability to join the System, Probability to finish after Time, Probability to Wait in Line</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns dataframe with all the information</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.no_clients_prob">
+<span class="sig-name descname"><span class="pre">no_clients_prob</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.no_clients_prob" title="Link to this definition"></a></dt>
+<dd><p>Probability of no having clients</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>No clients probability</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.number_elements_prob">
+<span class="sig-name descname"><span class="pre">number_elements_prob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.number_elements_prob" title="Link to this definition"></a></dt>
+<dd><p>Calculates the probability Exact, less or equals or greater or equals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> (<em>int</em>) – Number that we want to identify the different probabilities</p></li>
+<li><p><strong>prob_type</strong> (<em>str</em>) – Could be one of the following options: ‘exact_value’, ‘greater_equals’, ‘less_equals’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Probability of the number of elements</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.number_probability_summary">
+<span class="sig-name descname"><span class="pre">number_probability_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.number_probability_summary" title="Link to this definition"></a></dt>
+<dd><p>Returns the probability for each element. The probability is Exact, less or equals or greater or equals; represented in each column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dataframe with all the needed probabilities for each element.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_finish_after_time">
+<span class="sig-name descname"><span class="pre">probability_to_finish_after_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_finish_after_time" title="Link to this definition"></a></dt>
+<dd><p>Probability to finish after time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Probability to finish after time</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_join_system">
+<span class="sig-name descname"><span class="pre">probability_to_join_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_join_system" title="Link to this definition"></a></dt>
+<dd><p>Probability to join the system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Probability to join the system</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_wait_in_line">
+<span class="sig-name descname"><span class="pre">probability_to_wait_in_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_wait_in_line" title="Link to this definition"></a></dt>
+<dd><p>Probability to wait in the queue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Probability to wait in the queue</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulation_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.run" title="Link to this definition"></a></dt>
+<dd><p>Simulation of any queueing model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simulation_time</strong> (<em>float</em><em>, </em><em>optional</em>) – This variable defines the total duration of the simulation. It sets the length of time over which the simulation will model the system’s behavior. Defaults to float(“inf”)</p></li>
+<li><p><strong>number_of_simulations</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of simulations of the process. Can also be considered as the number of days or number of times you want to simulate your scenario. Defaults to 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.servers_utilization">
+<span class="sig-name descname"><span class="pre">servers_utilization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.servers_utilization" title="Link to this definition"></a></dt>
+<dd><p>Determine the server utilization according to the simulation result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Utilization of all servers, you can find the server number in the rows</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_queue">
+<span class="sig-name descname"><span class="pre">standard_deviation_time_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_queue" title="Link to this definition"></a></dt>
+<dd><p>Standard Deviation time in queue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Standard Deviation time in queue</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_service">
+<span class="sig-name descname"><span class="pre">standard_deviation_time_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_service" title="Link to this definition"></a></dt>
+<dd><p>Standard Deviation time in service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Standard Deviation time in service</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_system">
+<span class="sig-name descname"><span class="pre">standard_deviation_time_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_system" title="Link to this definition"></a></dt>
+<dd><p>Standard Deviation time in system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Standard Deviation time in system</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.system_utilization">
+<span class="sig-name descname"><span class="pre">system_utilization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.system_utilization" title="Link to this definition"></a></dt>
+<dd><p>Returns system utilization according to simulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>System Utilization</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.to_csv">
+<span class="sig-name descname"><span class="pre">to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.to_csv" title="Link to this definition"></a></dt>
+<dd><p>Simulation results to CVS</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – File Name to add to the CSV file. You should include “.csv” at the end of your file</p></li>
+<li><p><strong>index</strong> (<em>bool</em><em>, </em><em>optional</em>) – Defaults to True. Add index in CSV file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.to_excel">
+<span class="sig-name descname"><span class="pre">to_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sheet_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Sheet1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.to_excel" title="Link to this definition"></a></dt>
+<dd><p>Simulation results to Excel File</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – File Name to add to the Excel file. You should include “.xlsx” at the end of your file</p></li>
+<li><p><strong>index</strong> (<em>bool</em><em>, </em><em>optional</em>) – Defaults to True. Add index in Excel file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phitter.simulation.queueing_simulation">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-phitter.simulation.queueing_simulation" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="phitter.simulation.process_simulation.html" class="btn btn-neutral float-left" title="phitter.simulation.process_simulation package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

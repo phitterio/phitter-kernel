@@ -5,7 +5,7 @@ import scipy.stats
 class NegativeBinomial:
     """
     Negative binomial distribution
-    - Parameters NegativeBinomial Distribution: {"r": *, "p": *}
+    - Parameters NegativeBinomial Distribution: {"r": \*, "p": \*}
     - https://phitter.io/distributions/discrete/negative_binomial
     """
 
@@ -17,7 +17,7 @@ class NegativeBinomial:
     ):
         """
         - Initializes the NegativeBinomial Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        - Parameters NegativeBinomial Distribution: {"r": *, "p": *}
+        - Parameters NegativeBinomial Distribution: {"r": \*, "p": \*}
         - https://phitter.io/distributions/continuous/negative_binomial
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
@@ -160,7 +160,7 @@ class NegativeBinomial:
 
         Returns
         =======
-        parameters: {"r": *, "p": *}
+        parameters: {"r": \*, "p": \*}
         """
         p = discrete_measures.mean / discrete_measures.variance
         r = round(discrete_measures.mean * p / (1 - p))

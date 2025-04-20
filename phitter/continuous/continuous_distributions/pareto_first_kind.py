@@ -6,7 +6,7 @@ import scipy.stats
 class ParetoFirstKind:
     """
     Pareto first kind distribution distribution
-    - Parameters ParetoFirstKind Distribution: {"alpha": *, "xm": *, "loc": *}
+    - Parameters ParetoFirstKind Distribution: {"alpha": \*, "xm": \*, "loc": \*}
     - https://phitter.io/distributions/continuous/pareto_first_kind
     """
 
@@ -18,7 +18,7 @@ class ParetoFirstKind:
     ):
         """
         - Initializes the ParetoFirstKind Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters ParetoFirstKind Distribution: {"alpha": *, "xm": *, "loc": *}
+        - Parameters ParetoFirstKind Distribution: {"alpha": \*, "xm": \*, "loc": \*}
         - https://phitter.io/distributions/continuous/pareto_first_kind
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -182,7 +182,7 @@ class ParetoFirstKind:
 
         Returns
         =======
-        parameters: {"alpha": *, "xm": *, "loc": *}
+        parameters: {"alpha": \*, "xm": \*, "loc": \*}
         """
 
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

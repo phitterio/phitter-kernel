@@ -5,7 +5,7 @@ import scipy.stats
 class Bernoulli:
     """
     Bernoulli distribution
-    - Parameters Bernoulli Distribution: {"p": *}
+    - Parameters Bernoulli Distribution: {"p": \*}
     - https://phitter.io/distributions/discrete/bernoulli
     """
 
@@ -17,7 +17,7 @@ class Bernoulli:
     ):
         """
         - Initializes the Bernoulli Distribution by either providing a Discrete Measures instance [DiscreteMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Bernoulli Distribution: {"p": *}
+        - Parameters Bernoulli Distribution: {"p": \*}
         - https://phitter.io/distributions/discrete/bernoulli
         """
         if discrete_measures is None and parameters is None and init_parameters_examples == False:
@@ -155,7 +155,7 @@ class Bernoulli:
 
         Returns
         =======
-        parameters: {"p": *}
+        parameters: {"p": \*}
         """
         p = discrete_measures.mean
         parameters = {"p": p}

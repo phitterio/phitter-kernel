@@ -7,7 +7,7 @@ import scipy.stats
 class NonCentralChiSquare:
     """
     Non-Central Chi Square distribution
-    - Parameters NonCentralChiSquare Distribution: {"lambda": *, "n": *}
+    - Parameters NonCentralChiSquare Distribution: {"lambda": \*, "n": \*}
     - https://phitter.io/distributions/continuous/non_central_chi_square
     """
 
@@ -19,7 +19,7 @@ class NonCentralChiSquare:
     ):
         """
         - Initializes the NonCentralChiSquare Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters NonCentralChiSquare Distribution: {"lambda": *, "n": *}
+        - Parameters NonCentralChiSquare Distribution: {"lambda": \*, "n": \*}
         - https://phitter.io/distributions/continuous/non_central_chi_square
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -183,7 +183,7 @@ class NonCentralChiSquare:
 
         Returns
         =======
-        parameters: {"lambda": *, "n": *}
+        parameters: {"lambda": \*, "n": \*}
         """
 
         # def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

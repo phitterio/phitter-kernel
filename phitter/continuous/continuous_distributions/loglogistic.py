@@ -6,7 +6,7 @@ import scipy.stats
 class LogLogistic:
     """
     Loglogistic distribution
-    - Parameters LogLogistic Distribution: {"alpha": *, "beta": *}
+    - Parameters LogLogistic Distribution: {"alpha": \*, "beta": \*}
     - https://phitter.io/distributions/continuous/loglogistic
     """
 
@@ -18,7 +18,7 @@ class LogLogistic:
     ):
         """
         - Initializes the LogLogistic Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters LogLogistic Distribution: {"alpha": *, "beta": *}
+        - Parameters LogLogistic Distribution: {"alpha": \*, "beta": \*}
         - https://phitter.io/distributions/continuous/loglogistic
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -182,7 +182,7 @@ class LogLogistic:
 
         Returns
         =======
-        parameters: {"alpha": *, "beta": *}
+        parameters: {"alpha": \*, "beta": \*}
         """
 
         def equations(initial_solution, continuous_measures):

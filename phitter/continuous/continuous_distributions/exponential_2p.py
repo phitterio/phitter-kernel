@@ -4,7 +4,7 @@ import numpy
 class Exponential2P:
     """
     Exponential distribution
-    - Parameters Exponential2P Distribution: {"lambda": *, "loc": *}
+    - Parameters Exponential2P Distribution: {"lambda": \*, "loc": \*}
     - https://phitter.io/distributions/continuous/exponential_2p
     """
 
@@ -16,7 +16,7 @@ class Exponential2P:
     ):
         """
         - Initializes the Exponential2P Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Exponential2P Distribution: {"lambda": *, "loc": *}
+        - Parameters Exponential2P Distribution: {"lambda": \*, "loc": \*}
         - https://phitter.io/distributions/continuous/exponential_2p
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -158,7 +158,7 @@ class Exponential2P:
 
         Returns
         =======
-        parameters: {"lambda": *, "loc": *}
+        parameters: {"lambda": \*, "loc": \*}
         """
         ## Method: Solve system
         lambda_ = (1 - numpy.log(2)) / (continuous_measures.mean - continuous_measures.median)

@@ -19,7 +19,7 @@ class Frechet:
     ):
         """
         - Initializes the Frechet Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters Frechet Distribution: {"alpha": *, "loc": *, "scale": *}
+        - Parameters Frechet Distribution: {"alpha": \*, "loc": \*, "scale": \*}
         - https://phitter.io/distributions/continuous/frechet
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -188,7 +188,7 @@ class Frechet:
 
         Returns
         =======
-        parameters: {"alpha": *, "loc": *, "scale": *}
+        parameters: {"alpha": \*, "loc": \*, "scale": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

@@ -18,7 +18,7 @@ class GumbelLeft:
     ):
         """
         - Initializes the GumbelLeft Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters GumbelLeft Distribution: {"mu": *, "sigma": *}
+        - Parameters GumbelLeft Distribution: {"mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/gumbel_left
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -159,7 +159,7 @@ class GumbelLeft:
 
         Returns
         =======
-        parameters: {"mu": *, "sigma": *}
+        parameters: {"mu": \*, "sigma": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

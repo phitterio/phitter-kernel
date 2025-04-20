@@ -22,7 +22,7 @@ class GeneralizedGamma:
     ):
         """
         - Initializes the GeneralizedGamma Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters GeneralizedGamma Distribution: {"a": *, "d": *, "p": *}
+        - Parameters GeneralizedGamma Distribution: {"a": \*, "d": \*, "p": \*}
         - https://phitter.io/distributions/continuous/generalized_gamma
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -189,7 +189,7 @@ class GeneralizedGamma:
 
         Returns
         =======
-        parameters: {"a": *, "d": *, "p": *}
+        parameters: {"a": \*, "d": \*, "p": \*}
         """
 
         def equations(initial_solution: tuple[float], continuous_measures) -> tuple[float]:

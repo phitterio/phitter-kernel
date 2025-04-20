@@ -4,7 +4,7 @@ import numpy
 class HyperbolicSecant:
     """
     Hyperbolic Secant distribution
-    - Parameters HyperbolicSecant Distribution: {"mu": *, "sigma": *}
+    - Parameters HyperbolicSecant Distribution: {"mu": \*, "sigma": \*}
     - https://phitter.io/distributions/continuous/hyperbolic_secant
     """
 
@@ -16,7 +16,7 @@ class HyperbolicSecant:
     ):
         """
         - Initializes the HyperbolicSecant Distribution by either providing a Continuous Measures instance [ContinuousMeasures] or a dictionary with the distribution's parameters.
-        - Parameters HyperbolicSecant Distribution: {"mu": *, "sigma": *}
+        - Parameters HyperbolicSecant Distribution: {"mu": \*, "sigma": \*}
         - https://phitter.io/distributions/continuous/hyperbolic_secant
         """
         if continuous_measures is None and parameters is None and init_parameters_examples == False:
@@ -153,11 +153,11 @@ class HyperbolicSecant:
         Parameters
         ==========
         continuous_measures : dict
-            {"mu": * , "variance": * , "skewness": * , "kurtosis": * , "data": * }
+            {"mu": \* , "variance": \* , "skewness": \* , "kurtosis": \* , "data": \* }
 
         Returns
         =======
-        parameters: {"mu": *, "sigma": *}
+        parameters: {"mu": \*, "sigma": \*}
         """
         mu = continuous_measures.mean
         sigma = numpy.sqrt(continuous_measures.variance)
