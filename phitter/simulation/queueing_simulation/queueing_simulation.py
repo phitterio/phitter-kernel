@@ -161,7 +161,7 @@ class QueueingSimulation:
             number_of_simulations (int, optional): Number of simulations of the process. Can also be considered as the number of days or number of times you want to simulate your scenario. Defaults to 1.
 
         Returns:
-            tuple: [description]
+            pd.Dataframe: Simulation result
         """
 
         # Create a new variable with the simulation time
