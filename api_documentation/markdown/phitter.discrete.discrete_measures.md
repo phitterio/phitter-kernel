@@ -6,22 +6,22 @@
 
 ---
 
-# phitter.discrete.discrete\_measures package[](#phitter-discrete-discrete-measures-package "Link to this heading")
+# phitter.discrete.discrete\_measures package
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.discrete.discrete\_measures.discrete\_measures module[](#module-phitter.discrete.discrete_measures.discrete_measures "Link to this heading")
+## phitter.discrete.discrete\_measures.discrete\_measures module
 
-*class* phitter.discrete.discrete\_measures.discrete\_measures.DiscreteMeasures(*data*, *confidence\_level=0.95*, *subsample\_size=None*, *subsample\_estimation\_size=None*)[](#phitter.discrete.discrete_measures.discrete_measures.DiscreteMeasures "Link to this definition")
+*class* phitter.discrete.discrete\_measures.discrete\_measures.DiscreteMeasures(*data*, *confidence\_level=0.95*, *subsample\_size=None*, *subsample\_estimation\_size=None*)
 :   Bases: `object`
 
-## critical\_value\_chi2(*freedom\_degrees*)[](#phitter.discrete.discrete_measures.discrete_measures.DiscreteMeasures.critical_value_chi2 "Link to this definition")
+## critical\_value\_chi2(*freedom\_degrees*)
 
-## get\_dict()[](#phitter.discrete.discrete_measures.discrete_measures.DiscreteMeasures.get_dict "Link to this definition")
+## get\_dict()
 Return type
 `str`
 
-## Module contents[](#module-phitter.discrete.discrete_measures "Link to this heading")
+## Module contents
 
 [Previous](phitter.discrete.discrete_distributions.html "phitter.discrete.discrete_distributions package")
 [Next](phitter.discrete.discrete_statistical_tests.html "phitter.discrete.discrete_statistical_tests package")

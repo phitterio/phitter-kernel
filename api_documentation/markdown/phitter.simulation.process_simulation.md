@@ -6,16 +6,16 @@
 
 ---
 
-# phitter.simulation.process\_simulation package[](#phitter-simulation-process-simulation-package "Link to this heading")
+# phitter.simulation.process\_simulation package
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.simulation.process\_simulation.process\_simulation module[](#module-phitter.simulation.process_simulation.process_simulation "Link to this heading")
+## phitter.simulation.process\_simulation.process\_simulation module
 
-*class* phitter.simulation.process\_simulation.process\_simulation.ProcessSimulation[](#phitter.simulation.process_simulation.process_simulation.ProcessSimulation "Link to this definition")
+*class* phitter.simulation.process\_simulation.process\_simulation.ProcessSimulation
 :   Bases: `object`
 
-## add\_process(*prob\_distribution*, *parameters*, *process\_id*, *number\_of\_products=1*, *number\_of\_servers=1*, *new\_branch=False*, *previous\_ids=None*)[](#phitter.simulation.process_simulation.process_simulation.ProcessSimulation.add_process "Link to this definition")
+## add\_process(*prob\_distribution*, *parameters*, *process\_id*, *number\_of\_products=1*, *number\_of\_servers=1*, *new\_branch=False*, *previous\_ids=None*)
 Add element to the simulation
 
 #### Parameters
@@ -30,7 +30,7 @@ Add element to the simulation
 #### Return type
 `None`
 
-## process\_graph(*graph\_direction='LR'*, *save\_graph\_pdf=False*)[](#phitter.simulation.process_simulation.process_simulation.ProcessSimulation.process_graph "Link to this definition")
+## process\_graph(*graph\_direction='LR'*, *save\_graph\_pdf=False*)
 Generates the graph of the process
 
 #### Parameters
@@ -40,7 +40,7 @@ Generates the graph of the process
 #### Return type
 `None`
 
-## run(*number\_of\_simulations=1*)[](#phitter.simulation.process_simulation.process_simulation.ProcessSimulation.run "Link to this definition")
+## run(*number\_of\_simulations=1*)
 Simulation of the described process
 
 #### Parameters
@@ -52,7 +52,7 @@ Results of every simulation requested
 #### Return type
 list[float]
 
-## run\_confidence\_interval(*confidence\_level=0.95*, *number\_of\_simulations=1*, *replications=30*)[](#phitter.simulation.process_simulation.process_simulation.ProcessSimulation.run_confidence_interval "Link to this definition")
+## run\_confidence\_interval(*confidence\_level=0.95*, *number\_of\_simulations=1*, *replications=30*)
 Generates a confidence interval for the replications of the requested number of simulations.
 
 #### Parameters
@@ -66,7 +66,7 @@ Returns the lower bound, average, upper bound and standard deviation of the conf
 #### Return type
 tuple[float]
 
-## simulation\_metrics()[](#phitter.simulation.process_simulation.process_simulation.ProcessSimulation.simulation_metrics "Link to this definition")
+## simulation\_metrics()
 Here you can find the average time per process and standard deviation
 
 #### Returns
@@ -75,7 +75,7 @@ Average and Standard deviation
 #### Return type
 pd.DataFrame
 
-## Module contents[](#module-phitter.simulation.process_simulation "Link to this heading")
+## Module contents
 
 [Previous](phitter.simulation.own_distribution.html "phitter.simulation.own_distribution package")
 [Next](phitter.simulation.queueing_simulation.html "phitter.simulation.queueing_simulation package")

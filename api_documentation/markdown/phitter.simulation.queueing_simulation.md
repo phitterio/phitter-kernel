@@ -6,16 +6,16 @@
 
 ---
 
-# phitter.simulation.queueing\_simulation package[](#phitter-simulation-queueing-simulation-package "Link to this heading")
+# phitter.simulation.queueing\_simulation package
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.simulation.queueing\_simulation.queueing\_simulation module[](#module-phitter.simulation.queueing_simulation.queueing_simulation "Link to this heading")
+## phitter.simulation.queueing\_simulation.queueing\_simulation module
 
-*class* phitter.simulation.queueing\_simulation.queueing\_simulation.QueueingSimulation(*a*, *a\_parameters*, *s*, *s\_parameters*, *c*, *k=inf*, *n=inf*, *d='FIFO'*, *pbs\_distribution=None*, *pbs\_parameters=None*)[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation "Link to this definition")
+*class* phitter.simulation.queueing\_simulation.queueing\_simulation.QueueingSimulation(*a*, *a\_parameters*, *s*, *s\_parameters*, *c*, *k=inf*, *n=inf*, *d='FIFO'*, *pbs\_distribution=None*, *pbs\_parameters=None*)
 :   Bases: `object`
 
-## average\_elements\_queue()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_elements_queue "Link to this definition")
+## average\_elements\_queue()
 Average elements in queue
 
 #### Returns
@@ -24,7 +24,7 @@ Average elements in queue
 #### Return type
 float
 
-## average\_elements\_system()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_elements_system "Link to this definition")
+## average\_elements\_system()
 Average elements in system
 
 #### Returns
@@ -33,7 +33,7 @@ Average elements in system
 #### Return type
 float
 
-## average\_time\_queue()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_queue "Link to this definition")
+## average\_time\_queue()
 Average time in queue
 
 #### Returns
@@ -42,7 +42,7 @@ Average time in queue
 #### Return type
 float
 
-## average\_time\_service()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_service "Link to this definition")
+## average\_time\_service()
 Average time in service
 
 #### Returns
@@ -51,7 +51,7 @@ Average time in service
 #### Return type
 float
 
-## average\_time\_system()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.average_time_system "Link to this definition")
+## average\_time\_system()
 Average time in system
 
 #### Returns
@@ -60,7 +60,7 @@ Average time in system
 #### Return type
 float
 
-## confidence\_interval\_metrics(*simulation\_time=inf*, *confidence\_level=0.95*, *replications=30*)[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.confidence_interval_metrics "Link to this definition")
+## confidence\_interval\_metrics(*simulation\_time=inf*, *confidence\_level=0.95*, *replications=30*)
 Generate a confidence interval for probabilities and metrics.
 
 #### Parameters
@@ -74,7 +74,7 @@ Returns probabilities and metrics dataframe with confidene interval for all metr
 #### Return type
 tuple[pd.DataFrame, pd.DataFrame]
 
-## elements\_prob(*bins=50000*)[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.elements_prob "Link to this definition")
+## elements\_prob(*bins=50000*)
 Creates the probability for each number of elements. Example: Probability to be 0, prob. to be 1, prob. to be 2… depending on simulation values
 
 #### Parameters
@@ -86,7 +86,7 @@ Element and probability result
 #### Return type
 dict
 
-## metrics\_summary()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.metrics_summary "Link to this definition")
+## metrics\_summary()
 Returns the summary of the following metrics: Average Time in System, Average Time in Queue, Average Time in Service, Std. Dev. Time in System, Std. Dev. Time in Queue, Std. Dev. Time in Service, Average Elements in System, Average Elements in Queue, Probability to join the System, Probability to finish after Time, Probability to Wait in Line
 
 #### Returns
@@ -95,7 +95,7 @@ Returns dataframe with all the information
 #### Return type
 pd.DataFrame
 
-## no\_clients\_prob()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.no_clients_prob "Link to this definition")
+## no\_clients\_prob()
 Probability of no having clients
 
 #### Returns
@@ -104,7 +104,7 @@ No clients probability
 #### Return type
 float
 
-## number\_elements\_prob(*number*, *prob\_type*)[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.number_elements_prob "Link to this definition")
+## number\_elements\_prob(*number*, *prob\_type*)
 Calculates the probability Exact, less or equals or greater or equals.
 
 #### Parameters
@@ -117,7 +117,7 @@ Probability of the number of elements
 #### Return type
 float
 
-## number\_probability\_summary()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.number_probability_summary "Link to this definition")
+## number\_probability\_summary()
 Returns the probability for each element. The probability is Exact, less or equals or greater or equals; represented in each column.
 
 #### Returns
@@ -126,7 +126,7 @@ Dataframe with all the needed probabilities for each element.
 #### Return type
 pd.DataFrame
 
-## probability\_to\_finish\_after\_time()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_finish_after_time "Link to this definition")
+## probability\_to\_finish\_after\_time()
 Probability to finish after time
 
 #### Returns
@@ -135,7 +135,7 @@ Probability to finish after time
 #### Return type
 float
 
-## probability\_to\_join\_system()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_join_system "Link to this definition")
+## probability\_to\_join\_system()
 Probability to join the system
 
 #### Returns
@@ -144,7 +144,7 @@ Probability to join the system
 #### Return type
 float
 
-## probability\_to\_wait\_in\_line()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.probability_to_wait_in_line "Link to this definition")
+## probability\_to\_wait\_in\_line()
 Probability to wait in the queue
 
 #### Returns
@@ -153,7 +153,7 @@ Probability to wait in the queue
 #### Return type
 float
 
-## run(*simulation\_time=inf*)[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.run "Link to this definition")
+## run(*simulation\_time=inf*)
 Simulation of any queueing model.
 
 #### Parameters
@@ -166,7 +166,7 @@ Simulation of any queueing model.
 #### Return type
 tuple
 
-## servers\_utilization()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.servers_utilization "Link to this definition")
+## servers\_utilization()
 Determine the server utilization according to the simulation result
 
 #### Returns
@@ -175,7 +175,7 @@ Utilization of all servers, you can find the server number in the rows
 #### Return type
 pd.DataFrame
 
-## standard\_deviation\_time\_queue()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_queue "Link to this definition")
+## standard\_deviation\_time\_queue()
 Standard Deviation time in queue
 
 #### Returns
@@ -184,7 +184,7 @@ Standard Deviation time in queue
 #### Return type
 float
 
-## standard\_deviation\_time\_service()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_service "Link to this definition")
+## standard\_deviation\_time\_service()
 Standard Deviation time in service
 
 #### Returns
@@ -193,7 +193,7 @@ Standard Deviation time in service
 #### Return type
 float
 
-## standard\_deviation\_time\_system()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.standard_deviation_time_system "Link to this definition")
+## standard\_deviation\_time\_system()
 Standard Deviation time in system
 
 #### Returns
@@ -202,7 +202,7 @@ Standard Deviation time in system
 #### Return type
 float
 
-## system\_utilization()[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.system_utilization "Link to this definition")
+## system\_utilization()
 Returns system utilization according to simulation
 
 #### Returns
@@ -211,7 +211,7 @@ System Utilization
 #### Return type
 float
 
-## to\_csv(*file\_name*, *index=True*)[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.to_csv "Link to this definition")
+## to\_csv(*file\_name*, *index=True*)
 Simulation results to CVS
 
 #### Parameters
@@ -221,7 +221,7 @@ Simulation results to CVS
 #### Return type
 `None`
 
-## to\_excel(*file\_name*, *sheet\_name='Sheet1'*, *index=True*)[](#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.to_excel "Link to this definition")
+## to\_excel(*file\_name*, *sheet\_name='Sheet1'*, *index=True*)
 Simulation results to Excel File
 
 #### Parameters
@@ -231,7 +231,7 @@ Simulation results to Excel File
 #### Return type
 `None`
 
-## Module contents[](#module-phitter.simulation.queueing_simulation "Link to this heading")
+## Module contents
 
 [Previous](phitter.simulation.process_simulation.html "phitter.simulation.process_simulation package")
 

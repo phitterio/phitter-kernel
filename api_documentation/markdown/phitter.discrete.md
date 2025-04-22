@@ -5,9 +5,9 @@
 
 ---
 
-# phitter.discrete package[](#phitter-discrete-package "Link to this heading")
+# phitter.discrete package
 
-## Subpackages[](#subpackages "Link to this heading")
+## Subpackages
 
 * [phitter.discrete.discrete\_distributions package](phitter.discrete.discrete_distributions.html)
 + [Submodules](phitter.discrete.discrete_distributions.html#submodules)
@@ -187,52 +187,52 @@
 ## - [`evaluate_discrete_test_kolmogorov_smirnov()`](phitter.discrete.discrete_statistical_tests.html#phitter.discrete.discrete_statistical_tests.discrete_test_kolmogorov_smirnov.evaluate_discrete_test_kolmogorov_smirnov)
 + [Module contents](phitter.discrete.discrete_statistical_tests.html#module-phitter.discrete.discrete_statistical_tests)
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.discrete.phitter\_discrete module[](#module-phitter.discrete.phitter_discrete "Link to this heading")
+## phitter.discrete.phitter\_discrete module
 
-*class* phitter.discrete.phitter\_discrete.PhitterDiscrete(*data*, *confidence\_level=0.95*, *minimum\_sse=inf*, *subsample\_size=None*, *subsample\_estimation\_size=None*, *distributions\_to\_fit='all'*, *exclude\_distributions='any'*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete "Link to this definition")
+*class* phitter.discrete.phitter\_discrete.PhitterDiscrete(*data*, *confidence\_level=0.95*, *minimum\_sse=inf*, *subsample\_size=None*, *subsample\_estimation\_size=None*, *distributions\_to\_fit='all'*, *exclude\_distributions='any'*)
 :   Bases: `object`
 
-## fit(*n\_workers=1*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.fit "Link to this definition")
+## fit(*n\_workers=1*)
 
-## parse\_rgba\_color(*rgba\_string*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.parse_rgba_color "Link to this definition")
+## parse\_rgba\_color(*rgba\_string*)
 
-## plot\_distribution\_pmf\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_distribution_pmf_matplotlib "Link to this definition")
+## plot\_distribution\_pmf\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*)
 
-## plot\_distribution\_pmf\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*, *plotly\_plot\_renderer*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_distribution_pmf_plotly "Link to this definition")
+## plot\_distribution\_pmf\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*, *plotly\_plot\_renderer*)
 
-## plot\_ecdf\_distribution\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_bar\_color*, *plot\_empirical\_bargap*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_ecdf_distribution_matplotlib "Link to this definition")
+## plot\_ecdf\_distribution\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_bar\_color*, *plot\_empirical\_bargap*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*)
 
-## plot\_ecdf\_distribution\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_bar\_color*, *plot\_empirical\_bargap*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*, *plotly\_plot\_renderer*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_ecdf_distribution_plotly "Link to this definition")
+## plot\_ecdf\_distribution\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_bar\_color*, *plot\_empirical\_bargap*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*, *plotly\_plot\_renderer*)
 
-## plot\_ecdf\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_ecdf_matplotlib "Link to this definition")
+## plot\_ecdf\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*)
 
-## plot\_ecdf\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_ecdf_plotly "Link to this definition")
+## plot\_ecdf\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)
 
-## plot\_histogram\_distributions\_pmf\_matplotlib(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_histogram_distributions_pmf_matplotlib "Link to this definition")
+## plot\_histogram\_distributions\_pmf\_matplotlib(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)
 
-## plot\_histogram\_distributions\_pmf\_plotly(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_histogram_distributions_pmf_plotly "Link to this definition")
+## plot\_histogram\_distributions\_pmf\_plotly(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)
 
-## plot\_histogram\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_histogram_matplotlib "Link to this definition")
+## plot\_histogram\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)
 
-## plot\_histogram\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.plot_histogram_plotly "Link to this definition")
+## plot\_histogram\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)
 
-## process\_distribution(*id\_distribution*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.process_distribution "Link to this definition")
+## process\_distribution(*id\_distribution*)
 Return type
 `tuple`[`str`, `dict`, `Any`] | `None`
 
-## qq\_plot\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.qq_plot_matplotlib "Link to this definition")
+## qq\_plot\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*)
 
-## qq\_plot\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *plotly\_plot\_renderer*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.qq_plot_plotly "Link to this definition")
+## qq\_plot\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *plotly\_plot\_renderer*)
 
-## qq\_plot\_regression\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.qq_plot_regression_matplotlib "Link to this definition")
+## qq\_plot\_regression\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*)
 
-## qq\_plot\_regression\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*, *plotly\_plot\_renderer*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.qq_plot_regression_plotly "Link to this definition")
+## qq\_plot\_regression\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*, *plotly\_plot\_renderer*)
 
-## test(*test\_function*, *label*, *distribution*)[](#phitter.discrete.phitter_discrete.PhitterDiscrete.test "Link to this definition")
+## test(*test\_function*, *label*, *distribution*)
 
-## Module contents[](#module-phitter.discrete "Link to this heading")
+## Module contents
 
 [Previous](phitter.continuous.continuous_statistical_tests.html "phitter.continuous.continuous_statistical_tests package")
 [Next](phitter.discrete.discrete_distributions.html "phitter.discrete.discrete_distributions package")

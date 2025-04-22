@@ -6,13 +6,13 @@
 
 ---
 
-# phitter.discrete.discrete\_statistical\_tests package[](#phitter-discrete-discrete-statistical-tests-package "Link to this heading")
+# phitter.discrete.discrete\_statistical\_tests package
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.discrete.discrete\_statistical\_tests.discrete\_test\_chi\_square module[](#module-phitter.discrete.discrete_statistical_tests.discrete_test_chi_square "Link to this heading")
+## phitter.discrete.discrete\_statistical\_tests.discrete\_test\_chi\_square module
 
-phitter.discrete.discrete\_statistical\_tests.discrete\_test\_chi\_square.evaluate\_discrete\_test\_chi\_square(*distribution*, *discrete\_measures*)[](#phitter.discrete.discrete_statistical_tests.discrete_test_chi_square.evaluate_discrete_test_chi_square "Link to this definition")
+phitter.discrete.discrete\_statistical\_tests.discrete\_test\_chi\_square.evaluate\_discrete\_test\_chi\_square(*distribution*, *discrete\_measures*)
 :   Chi Square test to evaluate that a sample is distributed according to a probability
 ## distribution.
 
@@ -44,9 +44,9 @@ decision if the null hypothesis is rejected. If it is false, it can be
 ## Return type
 dict
 
-## phitter.discrete.discrete\_statistical\_tests.discrete\_test\_kolmogorov\_smirnov module[](#module-phitter.discrete.discrete_statistical_tests.discrete_test_kolmogorov_smirnov "Link to this heading")
+## phitter.discrete.discrete\_statistical\_tests.discrete\_test\_kolmogorov\_smirnov module
 
-phitter.discrete.discrete\_statistical\_tests.discrete\_test\_kolmogorov\_smirnov.evaluate\_discrete\_test\_kolmogorov\_smirnov(*distribution*, *discrete\_measures*)[](#phitter.discrete.discrete_statistical_tests.discrete_test_kolmogorov_smirnov.evaluate_discrete_test_kolmogorov_smirnov "Link to this definition")
+phitter.discrete.discrete\_statistical\_tests.discrete\_test\_kolmogorov\_smirnov.evaluate\_discrete\_test\_kolmogorov\_smirnov(*distribution*, *discrete\_measures*)
 :   Kolmogorov Smirnov test to evaluate that a sample is distributed according to a probability
 ## distribution.
 
@@ -78,7 +78,7 @@ decision if the null hypothesis is rejected. If it is false, it can be
 ## Return type
 dict
 
-## Module contents[](#module-phitter.discrete.discrete_statistical_tests "Link to this heading")
+## Module contents
 
 [Previous](phitter.discrete.discrete_measures.html "phitter.discrete.discrete_measures package")
 [Next](phitter.simulation.html "phitter.simulation package")

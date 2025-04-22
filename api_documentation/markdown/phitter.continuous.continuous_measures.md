@@ -6,44 +6,44 @@
 
 ---
 
-# phitter.continuous.continuous\_measures package[](#phitter-continuous-continuous-measures-package "Link to this heading")
+# phitter.continuous.continuous\_measures package
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.continuous.continuous\_measures.continuous\_measures module[](#module-phitter.continuous.continuous_measures.continuous_measures "Link to this heading")
+## phitter.continuous.continuous\_measures.continuous\_measures module
 
-*class* phitter.continuous.continuous\_measures.continuous\_measures.ContinuousMeasures(*data*, *num\_bins=None*, *confidence\_level=0.95*, *subsample\_size=None*, *subsample\_estimation\_size=None*)[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures "Link to this definition")
+*class* phitter.continuous.continuous\_measures.continuous\_measures.ContinuousMeasures(*data*, *num\_bins=None*, *confidence\_level=0.95*, *subsample\_size=None*, *subsample\_estimation\_size=None*)
 :   Bases: `object`
 
-## AD(*n*, *z*)[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.AD "Link to this definition")
+## AD(*n*, *z*)
 Return type
 `float`
 
-## ad\_critical\_value(*q*, *n*)[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.ad_critical_value "Link to this definition")
+## ad\_critical\_value(*q*, *n*)
 Return type
 `float`
 
-## ad\_p\_value(*n*, *z*)[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.ad_p_value "Link to this definition")
+## ad\_p\_value(*n*, *z*)
 Return type
 `float`
 
-## adinf(*z*)[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.adinf "Link to this definition")
+## adinf(*z*)
 
-## calculate\_mode()[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.calculate_mode "Link to this definition")
+## calculate\_mode()
 Return type
 `float`
 
-## critical\_value\_chi2(*freedom\_degrees*)[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.critical_value_chi2 "Link to this definition")
+## critical\_value\_chi2(*freedom\_degrees*)
 
-## errfix(*n*, *x*)[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.errfix "Link to this definition")
+## errfix(*n*, *x*)
 Return type
 `float`
 
-## get\_dict()[](#phitter.continuous.continuous_measures.continuous_measures.ContinuousMeasures.get_dict "Link to this definition")
+## get\_dict()
 Return type
 `str`
 
-## Module contents[](#module-phitter.continuous.continuous_measures "Link to this heading")
+## Module contents
 
 [Previous](phitter.continuous.continuous_distributions.html "phitter.continuous.continuous_distributions package")
 [Next](phitter.continuous.continuous_statistical_tests.html "phitter.continuous.continuous_statistical_tests package")

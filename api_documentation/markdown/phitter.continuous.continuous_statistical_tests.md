@@ -6,13 +6,13 @@
 
 ---
 
-# phitter.continuous.continuous\_statistical\_tests package[](#phitter-continuous-continuous-statistical-tests-package "Link to this heading")
+# phitter.continuous.continuous\_statistical\_tests package
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.continuous.continuous\_statistical\_tests.continuous\_test\_anderson\_darling module[](#module-phitter.continuous.continuous_statistical_tests.continuous_test_anderson_darling "Link to this heading")
+## phitter.continuous.continuous\_statistical\_tests.continuous\_test\_anderson\_darling module
 
-phitter.continuous.continuous\_statistical\_tests.continuous\_test\_anderson\_darling.evaluate\_continuous\_test\_anderson\_darling(*distribution*, *continuous\_measures*)[](#phitter.continuous.continuous_statistical_tests.continuous_test_anderson_darling.evaluate_continuous_test_anderson_darling "Link to this definition")
+phitter.continuous.continuous\_statistical\_tests.continuous\_test\_anderson\_darling.evaluate\_continuous\_test\_anderson\_darling(*distribution*, *continuous\_measures*)
 :   Anderson Darling test to evaluate that a sample is distributed according to a probability
 ## distribution.
 
@@ -66,9 +66,9 @@ dict
 ## Distribution of the Anderson - Darling statistic.
 ## The Annals of Mathematical Statistics, 1118 - 1124.
 
-## phitter.continuous.continuous\_statistical\_tests.continuous\_test\_chi\_square module[](#module-phitter.continuous.continuous_statistical_tests.continuous_test_chi_square "Link to this heading")
+## phitter.continuous.continuous\_statistical\_tests.continuous\_test\_chi\_square module
 
-phitter.continuous.continuous\_statistical\_tests.continuous\_test\_chi\_square.evaluate\_continuous\_test\_chi\_square(*distribution*, *continuous\_measures*)[](#phitter.continuous.continuous_statistical_tests.continuous_test_chi_square.evaluate_continuous_test_chi_square "Link to this definition")
+phitter.continuous.continuous\_statistical\_tests.continuous\_test\_chi\_square.evaluate\_continuous\_test\_chi\_square(*distribution*, *continuous\_measures*)
 :   Chi Square test to evaluate that a sample is distributed according to a probability
 ## distribution.
 
@@ -100,9 +100,9 @@ decision if the null hypothesis is rejected. If it is false, it can be
 ## Return type
 dict
 
-## phitter.continuous.continuous\_statistical\_tests.continuous\_test\_kolmogorov\_smirnov module[](#module-phitter.continuous.continuous_statistical_tests.continuous_test_kolmogorov_smirnov "Link to this heading")
+## phitter.continuous.continuous\_statistical\_tests.continuous\_test\_kolmogorov\_smirnov module
 
-phitter.continuous.continuous\_statistical\_tests.continuous\_test\_kolmogorov\_smirnov.evaluate\_continuous\_test\_kolmogorov\_smirnov(*distribution*, *continuous\_measures*)[](#phitter.continuous.continuous_statistical_tests.continuous_test_kolmogorov_smirnov.evaluate_continuous_test_kolmogorov_smirnov "Link to this definition")
+phitter.continuous.continuous\_statistical\_tests.continuous\_test\_kolmogorov\_smirnov.evaluate\_continuous\_test\_kolmogorov\_smirnov(*distribution*, *continuous\_measures*)
 :   Kolmogorov Smirnov test to evaluate that a sample is distributed according to a probability
 ## distribution.
 
@@ -134,7 +134,7 @@ decision if the null hypothesis is rejected. If it is false, it can be
 ## Return type
 dict
 
-## Module contents[](#module-phitter.continuous.continuous_statistical_tests "Link to this heading")
+## Module contents
 
 [Previous](phitter.continuous.continuous_measures.html "phitter.continuous.continuous_measures package")
 [Next](phitter.discrete.html "phitter.discrete package")

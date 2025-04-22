@@ -5,9 +5,9 @@
 
 ---
 
-# phitter.continuous package[](#phitter-continuous-package "Link to this heading")
+# phitter.continuous package
 
-## Subpackages[](#subpackages "Link to this heading")
+## Subpackages
 
 * [phitter.continuous.continuous\_distributions package](phitter.continuous.continuous_distributions.html)
 + [Submodules](phitter.continuous.continuous_distributions.html#submodules)
@@ -1495,52 +1495,52 @@
 ## - [`evaluate_continuous_test_kolmogorov_smirnov()`](phitter.continuous.continuous_statistical_tests.html#phitter.continuous.continuous_statistical_tests.continuous_test_kolmogorov_smirnov.evaluate_continuous_test_kolmogorov_smirnov)
 + [Module contents](phitter.continuous.continuous_statistical_tests.html#module-phitter.continuous.continuous_statistical_tests)
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.continuous.phitter\_continuous module[](#module-phitter.continuous.phitter_continuous "Link to this heading")
+## phitter.continuous.phitter\_continuous module
 
-*class* phitter.continuous.phitter\_continuous.PhitterContinuous(*data*, *num\_bins=None*, *confidence\_level=0.95*, *minimum\_sse=inf*, *subsample\_size=None*, *subsample\_estimation\_size=None*, *distributions\_to\_fit='all'*, *exclude\_distributions='any'*)[](#phitter.continuous.phitter_continuous.PhitterContinuous "Link to this definition")
+*class* phitter.continuous.phitter\_continuous.PhitterContinuous(*data*, *num\_bins=None*, *confidence\_level=0.95*, *minimum\_sse=inf*, *subsample\_size=None*, *subsample\_estimation\_size=None*, *distributions\_to\_fit='all'*, *exclude\_distributions='any'*)
 :   Bases: `object`
 
-## fit(*n\_workers=1*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.fit "Link to this definition")
+## fit(*n\_workers=1*)
 
-## parse\_rgba\_color(*rgba\_string*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.parse_rgba_color "Link to this definition")
+## parse\_rgba\_color(*rgba\_string*)
 
-## plot\_distribution\_pdf\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_distribution_pdf_matplotlib "Link to this definition")
+## plot\_distribution\_pdf\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*)
 
-## plot\_distribution\_pdf\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*, *plotly\_plot\_renderer*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_distribution_pdf_plotly "Link to this definition")
+## plot\_distribution\_pdf\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plot\_line\_color*, *plot\_line\_width*, *plotly\_plot\_renderer*)
 
-## plot\_ecdf\_distribution\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_line\_color*, *plot\_empirical\_line\_width*, *plot\_empirical\_line\_name*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_ecdf_distribution_matplotlib "Link to this definition")
+## plot\_ecdf\_distribution\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_line\_color*, *plot\_empirical\_line\_width*, *plot\_empirical\_line\_name*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*)
 
-## plot\_ecdf\_distribution\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_line\_color*, *plot\_empirical\_line\_width*, *plot\_empirical\_line\_name*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*, *plotly\_plot\_renderer*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_ecdf_distribution_plotly "Link to this definition")
+## plot\_ecdf\_distribution\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_empirical\_line\_color*, *plot\_empirical\_line\_width*, *plot\_empirical\_line\_name*, *plot\_distribution\_line\_color*, *plot\_distribution\_line\_width*, *plotly\_plot\_renderer*)
 
-## plot\_ecdf\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_line\_color*, *plot\_line\_width*, *plot\_line\_name*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_ecdf_matplotlib "Link to this definition")
+## plot\_ecdf\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_line\_color*, *plot\_line\_width*, *plot\_line\_name*)
 
-## plot\_ecdf\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_line\_color*, *plot\_line\_width*, *plot\_line\_name*, *plotly\_plot\_renderer*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_ecdf_plotly "Link to this definition")
+## plot\_ecdf\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_xaxis\_min\_offset*, *plot\_xaxis\_max\_offset*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_line\_color*, *plot\_line\_width*, *plot\_line\_name*, *plotly\_plot\_renderer*)
 
-## plot\_histogram\_distributions\_pdf\_matplotlib(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_histogram_distributions_pdf_matplotlib "Link to this definition")
+## plot\_histogram\_distributions\_pdf\_matplotlib(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)
 
-## plot\_histogram\_distributions\_pdf\_plotly(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_histogram_distributions_pdf_plotly "Link to this definition")
+## plot\_histogram\_distributions\_pdf\_plotly(*n\_distributions*, *n\_distributions\_visible*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)
 
-## plot\_histogram\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_histogram_matplotlib "Link to this definition")
+## plot\_histogram\_matplotlib(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*)
 
-## plot\_histogram\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.plot_histogram_plotly "Link to this definition")
+## plot\_histogram\_plotly(*plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *plot\_bar\_color*, *plot\_bargap*, *plotly\_plot\_renderer*)
 
-## process\_distribution(*id\_distribution*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.process_distribution "Link to this definition")
+## process\_distribution(*id\_distribution*)
 Return type
 `tuple`[`str`, `dict`, `Any`] | `None`
 
-## qq\_plot\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.qq_plot_matplotlib "Link to this definition")
+## qq\_plot\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*)
 
-## qq\_plot\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *plotly\_plot\_renderer*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.qq_plot_plotly "Link to this definition")
+## qq\_plot\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *plotly\_plot\_renderer*)
 
-## qq\_plot\_regression\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.qq_plot_regression_matplotlib "Link to this definition")
+## qq\_plot\_regression\_matplotlib(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*)
 
-## qq\_plot\_regression\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*, *plotly\_plot\_renderer*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.qq_plot_regression_plotly "Link to this definition")
+## qq\_plot\_regression\_plotly(*id\_distribution*, *plot\_title*, *plot\_xaxis\_title*, *plot\_yaxis\_title*, *plot\_legend\_title*, *plot\_height*, *plot\_width*, *qq\_marker\_name*, *qq\_marker\_color*, *qq\_marker\_size*, *regression\_line\_name*, *regression\_line\_color*, *regression\_line\_width*, *plotly\_plot\_renderer*)
 
-## test(*test\_function*, *label*, *distribution*)[](#phitter.continuous.phitter_continuous.PhitterContinuous.test "Link to this definition")
+## test(*test\_function*, *label*, *distribution*)
 
-## Module contents[](#module-phitter.continuous "Link to this heading")
+## Module contents
 
 [Previous](phitter.html "phitter package")
 [Next](phitter.continuous.continuous_distributions.html "phitter.continuous.continuous_distributions package")

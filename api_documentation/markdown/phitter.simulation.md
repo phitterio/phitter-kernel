@@ -5,9 +5,9 @@
 
 ---
 
-# phitter.simulation package[](#phitter-simulation-package "Link to this heading")
+# phitter.simulation package
 
-## Subpackages[](#subpackages "Link to this heading")
+## Subpackages
 
 * [phitter.simulation.own\_distribution package](phitter.simulation.own_distribution.html)
 + [Submodules](phitter.simulation.own_distribution.html#submodules)
@@ -53,7 +53,7 @@
 ## * [`QueueingSimulation.to_excel()`](phitter.simulation.queueing_simulation.html#phitter.simulation.queueing_simulation.queueing_simulation.QueueingSimulation.to_excel)
 + [Module contents](phitter.simulation.queueing_simulation.html#module-phitter.simulation.queueing_simulation)
 
-## Module contents[](#module-phitter.simulation "Link to this heading")
+## Module contents
 
 [Previous](phitter.discrete.discrete_statistical_tests.html "phitter.discrete.discrete_statistical_tests package")
 [Next](phitter.simulation.own_distribution.html "phitter.simulation.own_distribution package")

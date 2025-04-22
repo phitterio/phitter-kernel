@@ -3,7 +3,7 @@
 
 ---
 
-# phitter[](#phitter "Link to this heading")
+# phitter
 
 * [phitter package](phitter.html)
 + [Subpackages](phitter.html#subpackages)

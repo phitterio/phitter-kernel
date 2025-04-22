@@ -4,9 +4,9 @@
 
 ---
 
-# phitter package[](#phitter-package "Link to this heading")
+# phitter package
 
-## Subpackages[](#subpackages "Link to this heading")
+## Subpackages
 
 * [phitter.continuous package](phitter.continuous.html)
 + [Subpackages](phitter.continuous.html#subpackages)
@@ -178,82 +178,82 @@
 ## * [Module contents](phitter.simulation.queueing_simulation.html#module-phitter.simulation.queueing_simulation)
 + [Module contents](phitter.simulation.html#module-phitter.simulation)
 
-## Submodules[](#submodules "Link to this heading")
+## Submodules
 
-## phitter.main module[](#module-phitter.main "Link to this heading")
+## phitter.main module
 
-*class* phitter.main.Phitter(*data*, *fit\_type='continuous'*, *num\_bins=None*, *confidence\_level=0.95*, *minimum\_sse=inf*, *subsample\_size=None*, *subsample\_estimation\_size=None*, *distributions\_to\_fit='all'*, *exclude\_distributions='any'*)[](#phitter.main.Phitter "Link to this definition")
+*class* phitter.main.Phitter(*data*, *fit\_type='continuous'*, *num\_bins=None*, *confidence\_level=0.95*, *minimum\_sse=inf*, *subsample\_size=None*, *subsample\_estimation\_size=None*, *distributions\_to\_fit='all'*, *exclude\_distributions='any'*)
 :   Bases: `object`
 
 ## Fit continuous or discrete distributions to a given dataset.
 
-## *property* best\_distribution[](#phitter.main.Phitter.best_distribution "Link to this definition")
+## *property* best\_distribution
 
-## *property* df\_not\_rejected\_distributions*: DataFrame | None*[](#phitter.main.Phitter.df_not_rejected_distributions "Link to this definition")
+## *property* df\_not\_rejected\_distributions*: DataFrame | None*
 
-## *property* df\_sorted\_distributions\_sse*: DataFrame | None*[](#phitter.main.Phitter.df_sorted_distributions_sse "Link to this definition")
+## *property* df\_sorted\_distributions\_sse*: DataFrame | None*
 
-## dict\_to\_dataframe(*data*)[](#phitter.main.Phitter.dict_to_dataframe "Link to this definition")
+## dict\_to\_dataframe(*data*)
 Return type
 `DataFrame`
 
-## fit(*n\_workers=1*)[](#phitter.main.Phitter.fit "Link to this definition")
+## fit(*n\_workers=1*)
 Fits the appropriate distributions to the data using the specified number of workers.
 
 #### Parameters
 **n\_workers** (*int**,* *optional*) – The number of workers to use for fitting the distributions (default is 1).
 
-## get\_n\_test\_null(*id\_distribution*)[](#phitter.main.Phitter.get_n_test_null "Link to this definition")
+## get\_n\_test\_null(*id\_distribution*)
 Return type
 `int`
 
-## get\_n\_test\_passed(*id\_distribution*)[](#phitter.main.Phitter.get_n_test_passed "Link to this definition")
+## get\_n\_test\_passed(*id\_distribution*)
 Return type
 `int`
 
-## get\_parameters(*id\_distribution*)[](#phitter.main.Phitter.get_parameters "Link to this definition")
+## get\_parameters(*id\_distribution*)
 Return type
 `dict`
 
-## get\_sse(*id\_distribution*)[](#phitter.main.Phitter.get_sse "Link to this definition")
+## get\_sse(*id\_distribution*)
 Return type
 `float`
 
-## get\_test\_anderson\_darling(*id\_distribution*)[](#phitter.main.Phitter.get_test_anderson_darling "Link to this definition")
+## get\_test\_anderson\_darling(*id\_distribution*)
 Return type
 `dict`
 
-## get\_test\_chi\_square(*id\_distribution*)[](#phitter.main.Phitter.get_test_chi_square "Link to this definition")
+## get\_test\_chi\_square(*id\_distribution*)
 Return type
 `dict`
 
-## get\_test\_kolmogorov\_smirnov(*id\_distribution*)[](#phitter.main.Phitter.get_test_kolmogorov_smirnov "Link to this definition")
+## get\_test\_kolmogorov\_smirnov(*id\_distribution*)
 Return type
 `dict`
 
-## *property* not\_rejected\_distributions[](#phitter.main.Phitter.not_rejected_distributions "Link to this definition")
+## *property* not\_rejected\_distributions
 
-## plot\_distribution(*id\_distribution*, *plot\_title='HISTOGRAM'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Probability Density/Mass Function'*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plot\_bargap=0.15*, *plot\_line\_color='rgba(255,0,0,1)'*, *plot\_line\_width=3*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)[](#phitter.main.Phitter.plot_distribution "Link to this definition")
+## plot\_distribution(*id\_distribution*, *plot\_title='HISTOGRAM'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Probability Density/Mass Function'*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plot\_bargap=0.15*, *plot\_line\_color='rgba(255,0,0,1)'*, *plot\_line\_width=3*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)
 
-## plot\_ecdf(*plot\_title='EMPIRICAL CUMULATIVE DISTRIBUTION FUNCTION'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Cumulative Distribution Function'*, *plot\_xaxis\_min\_offset=0.3*, *plot\_xaxis\_max\_offset=0.3*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_line\_color='rgba(255,0,0,1)'*, *plot\_line\_width=2*, *plot\_line\_name='Empirical Distribution'*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)[](#phitter.main.Phitter.plot_ecdf "Link to this definition")
+## plot\_ecdf(*plot\_title='EMPIRICAL CUMULATIVE DISTRIBUTION FUNCTION'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Cumulative Distribution Function'*, *plot\_xaxis\_min\_offset=0.3*, *plot\_xaxis\_max\_offset=0.3*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_line\_color='rgba(255,0,0,1)'*, *plot\_line\_width=2*, *plot\_line\_name='Empirical Distribution'*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)
 
-## plot\_ecdf\_distribution(*id\_distribution*, *plot\_title='ECDF'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Cumulative Distribution Function'*, *plot\_xaxis\_min\_offset=0.3*, *plot\_xaxis\_max\_offset=0.3*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_empirical\_line\_color='rgba(128,128,128,1)'*, *plot\_empirical\_line\_width=4*, *plot\_empirical\_line\_name='Empirical Distribution'*, *plot\_empirical\_bar\_color='rgba(128,128,128,1)'*, *plot\_empirical\_bargap=0.15*, *plot\_distribution\_line\_color='rgba(255,0,0,1)'*, *plot\_distribution\_line\_width=2*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)[](#phitter.main.Phitter.plot_ecdf_distribution "Link to this definition")
+## plot\_ecdf\_distribution(*id\_distribution*, *plot\_title='ECDF'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Cumulative Distribution Function'*, *plot\_xaxis\_min\_offset=0.3*, *plot\_xaxis\_max\_offset=0.3*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_empirical\_line\_color='rgba(128,128,128,1)'*, *plot\_empirical\_line\_width=4*, *plot\_empirical\_line\_name='Empirical Distribution'*, *plot\_empirical\_bar\_color='rgba(128,128,128,1)'*, *plot\_empirical\_bargap=0.15*, *plot\_distribution\_line\_color='rgba(255,0,0,1)'*, *plot\_distribution\_line\_width=2*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)
 
-## plot\_histogram(*plot\_title='HISTOGRAM'*, *plot\_xaxis\_title=None*, *plot\_yaxis\_title=None*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plot\_bargap=0.15*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)[](#phitter.main.Phitter.plot_histogram "Link to this definition")
+## plot\_histogram(*plot\_title='HISTOGRAM'*, *plot\_xaxis\_title=None*, *plot\_yaxis\_title=None*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plot\_bargap=0.15*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)
 
-## plot\_histogram\_distributions(*n\_distributions=10*, *n\_distributions\_visible=1*, *plot\_title='HISTOGRAM'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Probability Density/Mass Function'*, *plot\_legend\_title='DISTRIBUTIONS'*, *plot\_height=400*, *plot\_width=600*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plot\_bargap=0.15*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)[](#phitter.main.Phitter.plot_histogram_distributions "Link to this definition")
+## plot\_histogram\_distributions(*n\_distributions=10*, *n\_distributions\_visible=1*, *plot\_title='HISTOGRAM'*, *plot\_xaxis\_title='Domain'*, *plot\_yaxis\_title='Probability Density/Mass Function'*, *plot\_legend\_title='DISTRIBUTIONS'*, *plot\_height=400*, *plot\_width=600*, *plot\_bar\_color='rgba(128,128,128,1)'*, *plot\_bargap=0.15*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)
 
-## qq\_plot(*id\_distribution*, *plot\_title='QQ PLOT'*, *plot\_xaxis\_title='Theoretical Quantiles'*, *plot\_yaxis\_title='Sample Quantiles'*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *qq\_marker\_name='Markers QQ'*, *qq\_marker\_color='rgba(128,128,128,1)'*, *qq\_marker\_size=6*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)[](#phitter.main.Phitter.qq_plot "Link to this definition")
+## qq\_plot(*id\_distribution*, *plot\_title='QQ PLOT'*, *plot\_xaxis\_title='Theoretical Quantiles'*, *plot\_yaxis\_title='Sample Quantiles'*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *qq\_marker\_name='Markers QQ'*, *qq\_marker\_color='rgba(128,128,128,1)'*, *qq\_marker\_size=6*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)
 
-## qq\_plot\_regression(*id\_distribution*, *plot\_title='QQ PLOT'*, *plot\_xaxis\_title='Theoretical Quantiles'*, *plot\_yaxis\_title='Sample Quantiles'*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *qq\_marker\_name='Markers QQ'*, *qq\_marker\_color='rgba(128,128,128,1)'*, *qq\_marker\_size=6*, *regression\_line\_name='Regression'*, *regression\_line\_color='rgba(255,0,0,1)'*, *regression\_line\_width=2*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)[](#phitter.main.Phitter.qq_plot_regression "Link to this definition")
+## qq\_plot\_regression(*id\_distribution*, *plot\_title='QQ PLOT'*, *plot\_xaxis\_title='Theoretical Quantiles'*, *plot\_yaxis\_title='Sample Quantiles'*, *plot\_legend\_title=None*, *plot\_height=400*, *plot\_width=600*, *qq\_marker\_name='Markers QQ'*, *qq\_marker\_color='rgba(128,128,128,1)'*, *qq\_marker\_size=6*, *regression\_line\_name='Regression'*, *regression\_line\_color='rgba(255,0,0,1)'*, *regression\_line\_width=2*, *plotly\_plot\_renderer=None*, *plot\_engine='plotly'*)
 
-## *property* sorted\_distributions\_sse[](#phitter.main.Phitter.sorted_distributions_sse "Link to this definition")
+## *property* sorted\_distributions\_sse
 
-## summarize(*k=20*)[](#phitter.main.Phitter.summarize "Link to this definition")
+## summarize(*k=20*)
 
-## summarize\_info(*k=10*)[](#phitter.main.Phitter.summarize_info "Link to this definition")
+## summarize\_info(*k=10*)
 
-## Module contents[](#module-phitter "Link to this heading")
+## Module contents
 
 [Previous](modules.html "phitter")
 [Next](phitter.continuous.html "phitter.continuous package")
