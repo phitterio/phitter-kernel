@@ -176,7 +176,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../discrete_distributions_sample/sample_bernoulli.txt"
+    path = "../../../distributions_samples/discrete_distributions_sample/sample_bernoulli.txt"
     data = get_data(path)
     discrete_measures = DiscreteMeasures(data)
     distribution = Bernoulli(discrete_measures=discrete_measures)

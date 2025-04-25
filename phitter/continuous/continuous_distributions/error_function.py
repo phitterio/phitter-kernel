@@ -179,7 +179,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_error_function.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_error_function.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = ErrorFunction(continuous_measures=continuous_measures)

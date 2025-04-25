@@ -241,7 +241,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_beta_prime.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_beta_prime.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = BetaPrime(continuous_measures=continuous_measures)

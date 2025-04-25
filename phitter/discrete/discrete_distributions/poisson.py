@@ -177,7 +177,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../discrete_distributions_sample/sample_poisson.txt"
+    path = "../../../distributions_samples/discrete_distributions_sample/sample_poisson.txt"
     data = get_data(path)
     discrete_measures = DiscreteMeasures(data)
     distribution = Poisson(discrete_measures=discrete_measures)

@@ -210,7 +210,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../discrete_distributions_sample/sample_hypergeometric.txt"
+    path = "../../../distributions_samples/discrete_distributions_sample/sample_hypergeometric.txt"
     data = get_data(path)
     discrete_measures = DiscreteMeasures(data)
     distribution = Hypergeometric(discrete_measures=discrete_measures)

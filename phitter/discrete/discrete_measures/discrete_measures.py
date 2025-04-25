@@ -55,7 +55,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../discrete_distributions_sample/sample_geometric.txt"
+    path = "../../../distributions_samples/discrete_distributions_sample/sample_geometric.txt"
     data = get_data(path)
 
     discrete_measures = DiscreteMeasures(data)

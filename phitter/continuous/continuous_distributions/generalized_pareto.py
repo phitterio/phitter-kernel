@@ -229,7 +229,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_generalized_pareto.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_generalized_pareto.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = GeneralizedPareto(continuous_measures=continuous_measures)

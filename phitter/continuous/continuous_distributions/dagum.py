@@ -260,7 +260,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_dagum.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_dagum.txt"
     data = get_data(path)
 
     data = Dagum(init_parameters_examples=True).sample(10000000)

@@ -231,7 +231,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_weibull.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_weibull.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = Weibull(continuous_measures=continuous_measures)

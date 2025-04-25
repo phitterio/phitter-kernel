@@ -195,7 +195,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../discrete_distributions_sample/sample_logarithmic.txt"
+    path = "../../../distributions_samples/discrete_distributions_sample/sample_logarithmic.txt"
     data = get_data(path)
     discrete_measures = DiscreteMeasures(data)
     distribution = Logarithmic(discrete_measures=discrete_measures)

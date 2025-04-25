@@ -220,7 +220,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_johnson_su.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_johnson_su.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = JohnsonSU(continuous_measures=continuous_measures)

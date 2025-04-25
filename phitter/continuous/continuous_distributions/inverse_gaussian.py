@@ -185,7 +185,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_inverse_gaussian.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_inverse_gaussian.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = InverseGaussian(continuous_measures=continuous_measures)

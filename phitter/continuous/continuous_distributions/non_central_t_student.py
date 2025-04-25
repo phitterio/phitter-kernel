@@ -277,10 +277,10 @@ if __name__ == "__main__":
         sample_distribution_file.close()
         return data
 
-    path = "../continuous_distributions_sample/sample_NON_CENTRAL_T_STUDENT.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_NON_CENTRAL_T_STUDENT.txt"
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_NON_CENTRAL_T_STUDENT.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_NON_CENTRAL_T_STUDENT.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = NonCentralTStudent(continuous_measures=continuous_measures)

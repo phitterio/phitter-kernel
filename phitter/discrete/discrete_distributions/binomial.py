@@ -181,7 +181,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../discrete_distributions_sample/sample_binomial.txt"
+    path = "../../../distributions_samples/discrete_distributions_sample/sample_binomial.txt"
     data = get_data(path)
     discrete_measures = DiscreteMeasures(data)
     distribution = Binomial(discrete_measures=discrete_measures)

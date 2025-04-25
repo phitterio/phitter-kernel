@@ -180,7 +180,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_hyperbolic_secant.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_hyperbolic_secant.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = HyperbolicSecant(continuous_measures=continuous_measures)

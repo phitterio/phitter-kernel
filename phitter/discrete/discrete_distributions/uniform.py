@@ -178,7 +178,7 @@ if __name__ == "__main__":
         sample_distribution_file.close()
         return data
 
-    path = "../discrete_distributions_sample/sample_uniform.txt"
+    path = "../../../distributions_samples/discrete_distributions_sample/sample_uniform.txt"
 
     ## Distribution class
     data = get_data(path)

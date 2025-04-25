@@ -288,7 +288,7 @@ if __name__ == "__main__":
         return data
 
     ## Distribution class
-    path = "../continuous_distributions_sample/sample_non_central_f.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_non_central_f.txt"
     data = get_data(path)
     continuous_measures = ContinuousMeasures(data)
     distribution = NonCentralF(continuous_measures=continuous_measures)

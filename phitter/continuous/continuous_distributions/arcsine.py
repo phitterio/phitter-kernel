@@ -203,7 +203,7 @@ if __name__ == "__main__":
         sample_distribution_file.close()
         return data
 
-    path = "../continuous_distributions_sample/sample_arcsine.txt"
+    path = "../../../distributions_samples/continuous_distributions_sample/sample_arcsine.txt"
 
     ## Distribution class
     data = get_data(path)

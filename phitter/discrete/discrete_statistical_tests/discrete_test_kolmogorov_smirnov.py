@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     for id_distribution, distribution_class in DISCRETE_DISTRIBUTIONS.items():
         print(id_distribution)
-        path = f"../discrete_distributions_sample/sample_{id_distribution}.txt"
+        path = f"../../../distributions_samples/discrete_distributions_sample/sample_{id_distribution}.txt"
         data = get_data(path)
 
         ## Init a instance of class
