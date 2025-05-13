@@ -62,15 +62,35 @@ To address these challenges, there is a clear need for an accessible, open-sourc
 
 # Comparison with Existing Tools
 
-The process of fitting probability distributions to data is a fundamental step in various scientific and analytical disciplines. It allows for the modeling of random phenomena, enabling tasks such as statistical inference, forecasting, and simulation. Several Python libraries have been developed to facilitate this process, providing tools for identifying the best-fitting theoretical distribution for a given dataset. This section describes two such prominent libraries: `distfit` (Taskesen et al., 2020) and `fitter` (Thomas Cokelaer).
+The process of fitting probability distributions to data is a fundamental step in various scientific and analytical disciplines. It allows for the modeling of random phenomena, enabling tasks such as statistical inference, forecasting, and simulation. Several Python libraries have been developed to facilitate this process, providing tools for identifying the best-fitting theoretical distribution for a given dataset. This section describes two such prominent libraries: `distfit` [@Taskesen_distfit_is_a_2020] and `fitter` [@Thomas2024cokelaer].
 
 ## The `distfit` Library
 
 The `distfit` library, created by Erdogan Taskesen and released in 2020, is a Python package designed for fitting probability density functions to univariate data. It can determine the best fit from 89 theoretical distributions using metrics like RSS/SSE, Wasserstein, KS, and Energy. Beyond parametric fitting, `distfit` also supports non-parametric methods (quantile and percentile) and discrete fitting using the binomial distribution. The library offers functionalities for predictions and a range of visualizations, including basic plots, QQ plots, and the ability to overlay multiple fitted distributions. Notably, `distfit` supports parallel computing to enhance performance and is available under the MIT License .
 
-##   The `fitter` Library
+## The `fitter` Library
 
 The `fitter` library, developed by Thomas Cokelaer, is a Python tool for simplifying the process of fitting probability distributions to data. It automatically attempts to fit a dataset to around 80 distributions from the SciPy package, ranking them based on the sum of the square errors (SSE). `fitter` supports parallelism to speed up the fitting process, especially with larger datasets [9, 10, 9]. It also provides a standalone command-line application for fitting distributions from CSV files. Users can manually specify a subset of distributions for fitting if desired. The library is under active development and is licensed under the GNU Library or Lesser General Public License (LGPL).
+
+## Speed Comparison: Phitter vs Distfit vs Fitter
+
+The following table presents a performance comparison of the Phitter, Distfit, and Fitter libraries in terms of parameter estimation time using their default configurations. Each library was evaluated on normally distributed datasets of varying sizes: 100, 1,000, 10,000, 100,000, and 1,000,000 samples.
+
+| Library / Sample Size |    100 |  1,000 | 10,000 | 100,000 | 1,000,000 |
+| :-------------------- | -----: | -----: | -----: | ------: | --------: |
+| **Phitter**           |  1.120 |  1.818 |  9.102 |  79.829 |   791.674 |
+| **Distfit**           |  2.604 |  5.279 | 28.575 | 299.398 |  2726.630 |
+| **Fitter**            | 37.252 | 30.380 | 31.522 | 401.644 |  1322.134 |
+
+-   **Phitter** tests 75 continuous probability distributions.
+-   **Distfit** evaluates 85 continuous distributions. See [Distfit Parametric Distributions](https://erdogant.github.io/distfit/pages/html/Parametric.html).
+-   **Fitter** iterates over all continuous distributions available in `scipy.stats`, automatically excluding those whose parameter estimation exceeds 30 seconds.
+
+## Goodness-of-Fit Comparison
+
+-   **Phitter** supports statistical goodness-of-fit tests including **Chi-Square**, **Kolmogorov–Smirnov**, and **Anderson–Darling**.
+-   **Distfit**, by default, relies on error-based metrics such as **RSS/SSE**, **Wasserstein distance**, and **energy distance**. It does not perform hypothesis testing unless explicitly instructed to use a function from `scipy.stats.goodness_of_fit`.
+-   **Fitter** always reports the **Kolmogorov–Smirnov** test statistic and p-value. However, its primary selection criterion is the minimization of the **sum of squared errors (SSE)**.
 
 # Documentation
 
