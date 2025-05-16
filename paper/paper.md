@@ -1,5 +1,5 @@
 ---
-title: "Phitter: A Python Library for Probability Distribution Fitting and Analysis"
+title: "Phitter: A library designed to streamline the process of fitting andanalyzing probability distributions"
 tags:
     - Python
     - Statistics
