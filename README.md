@@ -33,6 +33,10 @@
     This repository contains the implementation of the python library and the kernel of <a href="https://phitter.io">Phitter Web</a>
 </p>
 
+<p align="center">
+    <img alt="phitter_histogram" src="https://github.com/phitter-core/phitter-kernel/blob/main/multimedia/plot_histogram_distributions.png?raw=true" width="500" />
+</p>
+
 ## 📄 Documentation
 
 Find the complete Phitter documentation [here](https://docs-phitter-kernel.netlify.app/).
@@ -509,8 +513,8 @@ simulation = simulation.ProcessSimulation()
 
 There are two ways to add processes to your simulation instance:
 
-- Adding a **process _without_ preceding process (new branch)**
-- Adding a **process _with_ preceding process (with previous ids)**
+-   Adding a **process _without_ preceding process (new branch)**
+-   Adding a **process _with_ preceding process (with previous ids)**
 
 #### Process _without_ preceding process (new branch)
 
