@@ -21,6 +21,10 @@
     </a>
 </p>
 
+<p align="center">
+    ⭐⭐⭐ <em>If you find this project useful, giving it a star on GitHub. It really helps!</em> ⭐⭐⭐
+</p>
+
 <p>
     Phitter analyzes datasets and determines the best analytical probability distributions that represent them. Phitter studies over 80 probability distributions, both continuous and discrete, 3 goodness-of-fit tests, and interactive visualizations. For each selected probability distribution, a standard modeling guide is provided along with spreadsheets that detail the methodology for using the chosen distribution in data science, operations research, and artificial intelligence.
 </p>
