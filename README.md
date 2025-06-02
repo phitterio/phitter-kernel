@@ -16,10 +16,14 @@
     <a href="https://pypi.org/project/phitter" target="_blank">
         <img src="https://img.shields.io/pypi/pyversions/phitter?color=blue" alt="Supported Python versions">
     </a>
+    <a href="https://doi.org/10.21105/joss.07625">
+        <img src="https://img.shields.io/badge/JOSS-10.21105%2Fjoss.07625-blue" alt="DOI badge">
+    </a>
     <a href="https://github.com/phitter-core/phitter-kernel/actions/workflows/unittest.yml" target="_blank">
         <img src="https://github.com/phitter-core/phitter-kernel/actions/workflows/unittest.yml/badge.svg" alt="Tests">
     </a>
 </p>
+
 
 <p align="center">
     ⭐⭐⭐ <em>If you find this project useful, giving it a star on GitHub. It really helps!</em> ⭐⭐⭐
